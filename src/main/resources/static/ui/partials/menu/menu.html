@@ -1,0 +1,201 @@
+<!-- Always shows a header, even in smaller screens. -->
+<div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+
+    <header class="mdl-layout__header">
+        <div class="mdl-layout-icon">
+            <a class="mdl-button mdl-js-button mdl-button--icon" ui-sref="menu">
+                <i class="material-icons">{{MDLIcon}}</i>
+            </a>
+        </div>
+        <div class="mdl-layout__header-row">
+
+            <button id="menu-lower-left" class="mdl-button mdl-js-button mdl-button--icon" style="margin-right: 15px">
+                <i class="material-icons">more_vert</i>
+            </button>
+            <ul class="mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect mdl-shadow--2dp"
+                for="menu-lower-left">
+                <li class="mdl-list__item mdl-list__item--two-line mdl-menu__item--full-bleed-divider">
+                    <span class="mdl-list__item-primary-content">
+                        <span class="material-icons mdl-list__item-avatar"
+                              ng-style="{'background-image': 'url(' + me.img + ')'}"></span>
+                        <span>{{me.name}}</span>
+                        <span class="mdl-list__item-sub-title">{{me.email}}</span>
+                    </span>
+                </li>
+                <li class="mdl-menu__item mdl-list__item" ng-click="goToHelp()">
+                    <span class="mdl-list__item-primary-content">
+                        <i class="material-icons mdl-list__item-icon">help</i>
+                        <span>المساعدة</span>
+                    </span>
+                </li>
+                <li class="mdl-menu__item mdl-list__item mdl-menu__item--full-bleed-divider" ng-click="goToProfile()">
+                    <span class="mdl-list__item-primary-content">
+                        <i class="material-icons mdl-list__item-icon">account_box</i>
+                        <span>الملف الشخصي</span>
+                    </span>
+                </li>
+                <li class="mdl-menu__item mdl-list__item" ng-click="logout()">
+                    <span class="mdl-list__item-primary-content">
+                        <i class="material-icons mdl-list__item-icon">exit_to_app</i>
+                        <span>تسجيل الخروج</span>
+                    </span>
+                </li>
+            </ul>
+
+            <button id="options-menu-lower-left" class="mdl-button mdl-js-button mdl-button--icon"
+                    style="margin-right: 15px">
+                <i class="material-icons">settings_applications</i>
+            </button>
+            <ul class="mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect mdl-shadow--2dp"
+                for="options-menu-lower-left">
+                <li class="mdl-list__item mdl-menu__item--full-bleed-divider">
+                    <span>خيارات البرنامج</span>
+                </li>
+                <li class="mdl-menu__item mdl-list__item mdl-menu__item--full-bleed-divider"
+                    ng-click="switchDateType()">
+                    <span class="mdl-list__item-primary-content">
+                        <i class="material-icons mdl-list__item-icon">timer</i>
+                        <span ng-if="dateType==='H'">تطبيق التاريخ الميلادي</span>
+                        <span ng-if="dateType==='G'">تطبيق التاريخ الهجري</span>
+                    </span>
+                </li>
+                <li class="mdl-list__item">
+                    <button href=""
+                            ng-click=""
+                            class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">المزيد من الخيارات
+                    </button>
+                </li>
+            </ul>
+
+            <div id="tasks-closed-menu-lower-left" class="material-icons mdl-badge mdl-badge--overlap"
+                 style="margin-right: 15px" data-badge="{{me.tasksClosedThisWeek.length}}">alarm
+            </div>
+            <ul class="mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect mdl-shadow--2dp"
+                for="tasks-closed-menu-lower-left">
+                <li class="mdl-list__item mdl-menu__item--full-bleed-divider">
+                    <span>لديك {{me.tasksClosedThisWeek.length}} مهمة مغلقة هذا الاسبوع</span>
+                </li>
+                <li ng-repeat="taskClosed in me.tasksClosedThisWeek"
+                    class="mdl-menu__item mdl-list__item mdl-menu__item--full-bleed-divider"
+                    ng-click="ModalProvider.openTaskDetailsModel(taskClosed)">
+                    <span class="mdl-list__item-primary-content">
+                        <i class="material-icons mdl-list__item-icon">assignment</i>
+                        <span style="text-overflow: ellipsis;white-space: nowrap;width: 200px; overflow: hidden">[{{taskClosed.code}}] {{taskClosed.title}}</span>
+                    </span>
+                </li>
+                <li class="mdl-list__item">
+                    <button href="" ng-click="ModalProvider.openTasksClosedSoonModel()"
+                            class="mdl-button mdl-js-button mdl-js-ripple-effect">طباعة تقرير
+                    </button>
+                </li>
+            </ul>
+
+            <div class="mdl-layout-spacer"></div>
+
+            <span class="mdl-layout__title">{{pageTitle}}</span>
+
+        </div>
+    </header>
+
+    <main class="mdl-layout__content">
+
+        <div class="row" dir="rtl" style="margin-top: 10px">
+
+            <div class="container">
+
+                <div class="form-group row">
+
+                    <div class="col-xs-6 col-sm-4 col-md-3 col-lg-2 text-center">
+                        <a href="" ng-click="goToHome()" class="card-square mdl-card mdl-shadow--8dp">
+                            <i class="material-icons md-120">dashboard</i>
+                            <p>الرئيسية</p>
+                        </a>
+                    </div>
+
+                    <div class="col-xs-6 col-sm-4 col-md-3 col-lg-2 text-center"
+                         ng-if="contains(authorities, ['ROLE_COMPANY_CREATE', 'ROLE_COMPANY_UPDATE', 'ROLE_COMPANY_DELETE', 'ROLE_COMPANY_REPORT'])">
+                        <a href="" ng-click="goToCompany()" class="card-square mdl-card mdl-shadow--8dp">
+                            <i class="material-icons md-120">business</i>
+                            <p>الشركة</p>
+                        </a>
+                    </div>
+
+                    <div class="col-xs-6 col-sm-4 col-md-3 col-lg-2 text-center"
+                         ng-if="contains(authorities, ['ROLE_REGION_CREATE', 'ROLE_REGION_UPDATE', 'ROLE_REGION_DELETE', 'ROLE_REGION_REPORT'])">
+                        <a href="" ng-click="goToRegion()" class="card-square mdl-card mdl-shadow--8dp">
+                            <i class="material-icons md-120">place</i>
+                            <p>المناطق</p>
+                        </a>
+                    </div>
+
+                    <div class="col-xs-6 col-sm-4 col-md-3 col-lg-2 text-center"
+                         ng-if="contains(authorities, ['ROLE_BRANCH_CREATE', 'ROLE_BRANCH_UPDATE', 'ROLE_BRANCH_DELETE', 'ROLE_BRANCH_REPORT'])">
+                        <a href="" ng-click="goToBranch()" class="card-square mdl-card mdl-shadow--8dp">
+                            <i class="material-icons md-120">layers</i>
+                            <p>الفروع</p>
+                        </a>
+                    </div>
+
+                    <div class="col-xs-6 col-sm-4 col-md-3 col-lg-2 text-center"
+                         ng-if="contains(authorities, ['ROLE_DEPARTMENT_CREATE', 'ROLE_DEPARTMENT_UPDATE', 'ROLE_DEPARTMENT_DELETE', 'ROLE_DEPARTMENT_REPORT'])">
+                        <a href="" ng-click="goToDepartment()" class="card-square mdl-card mdl-shadow--8dp">
+                            <i class="material-icons md-120">store</i>
+                            <p>الأقسام</p>
+                        </a>
+                    </div>
+
+                    <div class="col-xs-6 col-sm-4 col-md-3 col-lg-2 text-center"
+                         ng-if="contains(authorities, ['ROLE_EMPLOYEE_CREATE', 'ROLE_EMPLOYEE_UPDATE', 'ROLE_EMPLOYEE_DELETE', 'ROLE_EMPLOYEE_REPORT'])">
+                        <a href="" ng-click="goToEmployee()" class="card-square mdl-card mdl-shadow--8dp">
+                            <i class="material-icons md-120">person_pin</i>
+                            <p>الموظفون</p>
+                        </a>
+                    </div>
+
+                    <div class="col-xs-6 col-sm-4 col-md-3 col-lg-2 text-center"
+                         ng-if="contains(authorities, ['ROLE_TEAM_CREATE', 'ROLE_TEAM_UPDATE', 'ROLE_TEAM_DELETE', 'ROLE_TEAM_REPORT'])">
+                        <a href="" ng-click="goToTeam()" class="card-square mdl-card mdl-shadow--8dp">
+                            <i class="material-icons md-120">security</i>
+                            <p>الصلاحيات</p>
+                        </a>
+                    </div>
+
+                    <div class="col-xs-6 col-sm-4 col-md-3 col-lg-2 text-center"
+                         ng-if="contains(authorities, ['ROLE_PERSON_CREATE', 'ROLE_PERSON_UPDATE', 'ROLE_PERSON_DELETE', 'ROLE_PERSON_REPORT'])">
+                        <a href="" ng-click="goToPerson()" class="card-square mdl-card mdl-shadow--8dp">
+                            <i class="material-icons md-120">lock</i>
+                            <p>المستخدمون</p>
+                        </a>
+                    </div>
+
+                    <div class="col-xs-6 col-sm-4 col-md-3 col-lg-2 text-center"
+                         ng-if="contains(authorities, ['ROLE_TASK_CREATE', 'ROLE_TASK_UPDATE', 'ROLE_TASK_DELETE', 'ROLE_TASK_REPORT'])">
+                        <a href="" ng-click="goToTask()" class="card-square mdl-card mdl-shadow--8dp">
+                            <i class="material-icons md-120">assignment</i>
+                            <p>المهام</p>
+                        </a>
+                    </div>
+
+                    <div class="col-xs-6 col-sm-4 col-md-3 col-lg-2 text-center">
+                        <a href="" ng-click="goToReportModel()" class="card-square mdl-card mdl-shadow--8dp">
+                            <i class="material-icons md-120">print</i>
+                            <p>نماذج الطباعة</p>
+                        </a>
+                    </div>
+
+                    <div class="col-xs-6 col-sm-4 col-md-3 col-lg-2 text-center">
+                        <a href="" ng-click="goToProfile()" class="card-square mdl-card mdl-shadow--8dp">
+                            <i class="material-icons md-120">account_circle</i>
+                            <p>الحساب الشخصي</p>
+                        </a>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </main>
+
+</div>

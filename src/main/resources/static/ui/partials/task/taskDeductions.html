@@ -1,0 +1,171 @@
+<div dir="rtl">
+
+    <div class="modal-header">
+        <a class="pull-left" href="" ng-click="cancel()">
+            <span class="fa fa-close fa-2x"></span>
+        </a>
+        <h3 class="modal-title text-center" id="modal-title">خصومات المهمة / {{task.title}}</h3>
+    </div>
+
+    <div class="modal-body" id="modal-body">
+
+        <div class="row">
+
+            <div class="form-group text-right col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <div class="panel panel-success">
+                    <div class="panel-heading">
+                        <div class="panel-title-box pull-right">
+                            <h3>البيانات الاساسية</h3>
+                        </div>
+                    </div>
+                    <div class="panel-body panel-body-table">
+                        <div class="table-responsive">
+                            <table class="table table-bordered">
+                                <tbody>
+                                <tr>
+                                    <td>رقم المهمة</td>
+                                    <td>{{task.code}}</td>
+                                </tr>
+                                <tr>
+                                    <td>عنوان المهمة</td>
+                                    <td>{{task.title}}</td>
+                                </tr>
+                                <tr>
+                                    <td>تفاصيل المهمة</td>
+                                    <td>{{task.content}}</td>
+                                </tr>
+                                <tr>
+                                    <td>الحد الأقصى للتحذيرات</td>
+                                    <td>{{task.warn}}</td>
+                                </tr>
+                                <tr>
+                                    <td class="fit">مقدار الحسم عند الوصول للحد الاقصي للتحذيرات</td>
+                                    <td>{{task.deduction}} ريال سعودي</td>
+                                </tr>
+                                <tr>
+                                    <td>مقدار الحسم عند إغلاق المهمة تلقائياً</td>
+                                    <td>{{task.deductionOnAutoClose}} ريال سعودي</td>
+                                </tr>
+                                <tr>
+                                    <td>تاريخ الإنشاء</td>
+                                    <td>
+                                        <span ng-show="dateType==='H'">{{task.startDate | kdate: 'yyyy-mm-dd' : 'ar' : 'ummalqura'}}</span>
+                                        <span ng-show="dateType==='G'">{{task.startDate | date: 'yyyy-MM-dd'}}</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>تاريخ التسليم</td>
+                                    <td>
+                                        <span ng-show="dateType==='H'">{{task.enDate | kdate: 'yyyy-mm-dd' : 'ar' : 'ummalqura'}}</span>
+                                        <span ng-show="dateType==='G'">{{task.enDate | date: 'yyyy-MM-dd'}}</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>جهة التكليف</td>
+                                    <td>{{task.person.nickname}} / {{task.person.name}}</td>
+                                </tr>
+                                <tr>
+                                    <td>الموظفون</td>
+                                    <td>
+                                    <span class="label label-info"
+                                          ng-repeat="to in task.taskTos"
+                                          style="margin: 2px">{{to.person.name}}</span>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group text-right col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <div class="panel panel-warning">
+                    <div class="panel-heading">
+                        <ul class="panel-controls pull-left" style="margin-top: 2px;">
+                            <li>
+                                <a href="" ng-click="findTaskDeductions()" tooltip-append-to-body="true"
+                                   uib-tooltip="تحديث">
+                                    <span class="fa fa-refresh"></span>
+                                </a>
+                                <a href="" ng-click="openCreateDeductionModel()" tooltip-append-to-body="true"
+                                   ng-if="task.person.id===me.id"
+                                   uib-tooltip="اضافة خصم">
+                                    <span class="fa fa-bomb"></span>
+                                </a>
+                            </li>
+                        </ul>
+                        <div class="panel-title-box pull-right">
+                            <h3>الخصومات</h3>
+                        </div>
+                    </div>
+                    <div class="panel-body panel-body-table">
+                        <div class="table-responsive">
+                            <table st-table="collectionDeductions" st-safe-src="task.taskDeductions"
+                                   class="table table-bordered">
+                                <thead>
+                                <tr>
+                                    <th st-sort="code" class="text-center fit">رقم الخصم</th>
+                                    <th st-sort="type" class="text-center fit">نوع الخصم</th>
+                                    <th st-sort="deduction" class="text-center fit">قيمة الخصم</th>
+                                    <th st-sort="toPerson.name" class="text-center">الموظف</th>
+                                    <th st-sort="date" st-sort-default="reverse" class="text-center fit">التاريخ
+                                        والوقت
+                                    </th>
+                                    <th st-sort="content" class="text-center">المحتوى</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr ng-repeat="taskDeduction in collectionDeductions">
+                                    <td>{{taskDeduction.code}}</td>
+                                    <td>{{taskDeduction.type}}</td>
+                                    <td>{{taskDeduction.deduction | currency:'SAR':0}}</td>
+                                    <td class="fit">{{taskDeduction.toPerson.nickname}} /
+                                        {{taskDeduction.toPerson.name}}
+                                    </td>
+                                    <td st-select-row-custom="taskDeduction">
+                                        <span ng-show="dateType==='H'">{{taskDeduction.date | kdate: 'yyyy-mm-dd' : 'ar' : 'ummalqura'}}</span>
+                                        <span ng-show="dateType==='G'">{{taskDeduction.date | date: 'yyyy-MM-dd'}}</span>
+                                        <span class="label label-success">{{taskDeduction.date | date:'h:m a'}}</span>
+                                    </td>
+                                    <td>{{taskDeduction.content}}</td>
+                                </tr>
+                                <tr class="blank_row"
+                                    style="height: 10px !important; background-color: #FFFFFF;"
+                                    ng-show="!collectionDeductions || collectionDeductions.length ==0">
+                                    <td colspan="6">لا توجد خصومات</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="modal-footer">
+
+        <div class="row">
+            <button uib-tooltip="اضافة خصم"
+                    tooltip-append-to-body="true"
+                    type="button"
+                    ng-click="openCreateDeductionModel()"
+                    ng-if="task.person.id===me.id"
+                    class="mdl-button mdl-js-button mdl-js-ripple-effect col-xs-6 col-sm-6 col-md-6">
+                <i class="material-icons">add</i>
+            </button>
+            <button uib-tooltip="خروج"
+                    tooltip-append-to-body="true"
+                    type="button"
+                    ng-click="cancel()"
+                    class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect col-xs-6 col-sm-6 col-md-6 pull-left">
+                <i class="material-icons">power_settings_new</i>
+            </button>
+        </div>
+
+    </div>
+
+</div>

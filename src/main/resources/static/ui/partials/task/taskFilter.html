@@ -1,0 +1,182 @@
+<form dir="rtl" name="form" ng-submit="submit()" novalidate="novalidate" focus-group="" focus-stack=""
+      focus-group-head="loop" focus-group-tail="loop">
+
+    <div class="modal-header">
+        <h3 class="modal-title text-center" id="modal-title">{{modalTitle}}</h3>
+    </div>
+
+    <div class="modal-body" id="modal-body">
+
+        <div class="row">
+
+            <div class="form-group text-right col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <label for="fromPerson" class="control-label">{{buffer.taskType?'الموظف':'جهة التكليف'}}</label>
+                <select id="fromPerson"
+                        data-placeholder="ابحث عن الاسم"
+                        no-results-text="'لا توجد بيانات توافق بحثك'"
+                        placeholder-text-single="'اختر {{buffer.taskType?'الموظف':'جهة التكليف'}}'"
+                        class="form-control text-right"
+                        chosen=""
+                        ng-model="buffer.person"
+                        focus-autofocus="1"
+                        ng-options="(person.nickname + ' / ' + person.name) for person in persons | orderBy:'name' track by person.id">
+                </select>
+            </div>
+
+            <div class="form-group text-right col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <label for="title" class="control-label">عنوان المهمة يحتوي على</label>
+                <input id="title"
+                       type="text"
+                       class="form-control text-right"
+                       placeholder="ادخل نص البحث"
+                       ng-model="buffer.title">
+            </div>
+
+            <div class="form-group row">
+
+                <div class="text-right col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                    <label for="importance" class="control-label">
+                        <span>درجة الأهمية</span>
+                    </label>
+                    <select id="importance"
+                            placeholder="اختر درجة الأهمية للمساعدة فى التصنيف"
+                            class="form-control text-right"
+                            ng-model="buffer.importance">
+                        <option value="Regular">عادية</option>
+                        <option value="Important">متوسطة</option>
+                        <option value="Critical">عاجلة</option>
+                    </select>
+                </div>
+
+            </div>
+
+            <div class="form-group row">
+                <div class="text-right col-xs-12 col-sm-12 col-md-6">
+                    <label for="codeFrom" class="control-label">رقم المهمة من </label>
+                    <input id="codeFrom"
+                           type="number"
+                           min="1"
+                           class="form-control text-right"
+                           placeholder="ادخل رقم المهمة من"
+                           ng-model="buffer.codeFrom">
+                </div>
+
+                <div class="text-right col-xs-12 col-sm-12 col-md-6">
+                    <label for="codeTo" class="control-label">رقم المهمة إلى </label>
+                    <input id="codeTo"
+                           type="number"
+                           min="1"
+                           class="form-control text-right"
+                           placeholder="ادخل رقم المهمة إلى"
+                           ng-model="buffer.codeTo">
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <div class="text-right col-xs-12 col-sm-12 col-md-6">
+                    <label for="startDateFrom" class="control-label">تاريخ إنشاء المهمة من</label>
+                    <div dir="ltr" class="input-group">
+                        <input dir="rtl"
+                               id="startDateFrom"
+                               type="text"
+                               class="form-control text-right is-calendarPicker"
+                               ng-model="buffer.startDateFrom"
+                               calendarType="ummalqura"
+                               language="en"
+                               dateFormat="yyyy/mm/dd"
+                               showOnFocus="false"
+                               readonly="readonly"
+                               placeholder="تاريخ إنشاء المهمة من"
+                               kdatepicker>
+                    </div>
+                </div>
+
+                <div class="text-right col-xs-12 col-sm-12 col-md-6">
+                    <label for="startDateTo" class="control-label">تاريخ إنشاء المهمة إلى</label>
+                    <div dir="ltr" class="input-group">
+                        <input dir="rtl"
+                               id="startDateTo"
+                               type="text"
+                               class="form-control text-right is-calendarPicker"
+                               ng-model="buffer.startDateTo"
+                               calendarType="ummalqura"
+                               language="en"
+                               dateFormat="yyyy/mm/dd"
+                               showOnFocus="false"
+                               placeholder="تاريخ إنشاء المهمة إلى"
+                               readonly="readonly"
+                               kdatepicker>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <div class="text-right col-xs-12 col-sm-12 col-md-6">
+                    <label for="endDateFrom" class="control-label">تاريخ تسليم المهمة من</label>
+                    <div dir="ltr" class="input-group">
+                        <input dir="rtl"
+                               id="endDateFrom"
+                               type="text"
+                               class="form-control text-right is-calendarPicker"
+                               ng-model="buffer.endDateFrom"
+                               calendarType="ummalqura"
+                               language="en"
+                               dateFormat="yyyy/mm/dd"
+                               showOnFocus="false"
+                               readonly="readonly"
+                               placeholder="تاريخ تسليم المهمة من"
+                               kdatepicker>
+                    </div>
+                </div>
+
+                <div class="text-right col-xs-12 col-sm-12 col-md-6">
+                    <label for="endDateTo" class="control-label">تاريخ تسليم المهمة إلى</label>
+                    <div dir="ltr" class="input-group">
+                        <input dir="rtl"
+                               id="endDateTo"
+                               type="text"
+                               class="form-control text-right is-calendarPicker"
+                               ng-model="buffer.endDateTo"
+                               calendarType="ummalqura"
+                               language="en"
+                               dateFormat="yyyy/mm/dd"
+                               showOnFocus="false"
+                               placeholder="تاريخ تسليم المهمة إلى"
+                               readonly="readonly"
+                               kdatepicker>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="modal-footer">
+
+        <div class="row">
+            <button uib-tooltip="بحث"
+                    tooltip-append-to-body="true"
+                    type="submit"
+                    class="mdl-button mdl-js-button mdl-js-ripple-effect col-xs-4 col-sm-4 col-md-4">
+                <i class="material-icons">search</i>
+            </button>
+            <button uib-tooltip="مسح الحقول"
+                    tooltip-append-to-body="true"
+                    type="reset"
+                    ng-click="form.$setPristine()"
+                    class="mdl-button mdl-js-button mdl-js-ripple-effect col-xs-4 col-sm-4 col-md-4">
+                <i class="material-icons">delete</i>
+            </button>
+            <button uib-tooltip="خروج"
+                    tooltip-append-to-body="true"
+                    type="button"
+                    ng-click="cancel()"
+                    class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect col-xs-4 col-sm-4 col-md-4">
+                <i class="material-icons">power_settings_new</i>
+            </button>
+        </div>
+
+    </div>
+
+</form>

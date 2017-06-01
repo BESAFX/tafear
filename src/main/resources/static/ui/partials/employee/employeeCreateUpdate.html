@@ -1,0 +1,109 @@
+<form dir="rtl" name="form" ng-submit="submit()" novalidate="novalidate" focus-group="" focus-stack=""
+      focus-group-head="loop" focus-group-tail="loop">
+
+    <div class="modal-header">
+        <a class="pull-left" href="" ng-click="cancel()">
+            <span class="fa fa-close fa-2x"></span>
+        </a>
+        <h3 class="panel-title mdl-list__item pull-right">
+            <span class="mdl-list__item-primary-content">
+                <i class="material-icons mdl-list__item-icon">{{action==='create' ? 'add' : 'edit'}}</i>
+                <strong>{{title}}</strong>
+            </span>
+        </h3>
+    </div>
+
+    <div class="modal-body" id="modal-body">
+
+        <div class="row">
+
+            <div class="text-right col-xs-12 col-sm-6 col-md-12 col-lg-12"
+                 ng-show="form.$invalid && form.$submitted">
+                <div class="alert alert-danger" role="alert">
+                    <strong>فضلاً اكمل الحقول المطلوبة</strong>
+                </div>
+            </div>
+
+            <div class="col-xs-12 col-sm-6 col-md-12 col-lg-12">
+                <div class="panel panel-info">
+                    <div class="panel-heading">البيانات الأساسية</div>
+                    <div class="panel-body">
+
+                        <div class="form-group text-right col-xs-12 col-sm-6 col-md-12 col-lg-12">
+                            <label for="department" class="control-label">[رقم القسم] اسم القسم</label>
+                            <select id="department"
+                                    data-placeholder="ابحث عن القسم من خلال اسمه"
+                                    no-results-text="'لا توجد بيانات توافق بحثك'"
+                                    placeholder-text-single="'اختر القسم'"
+                                    class="form-control text-right"
+                                    chosen=""
+                                    ng-model="employee.department"
+                                    focus-index="1"
+                                    required="required"
+                                    disable-validation-message=""
+                                    ng-options="(' [ ' + department.code + ' ] ' + department.name) group by department.branch.name for department in departments | orderBy:'code' track by department.id">
+                            </select>
+                        </div>
+
+                        <div class="form-group text-right col-xs-12 col-sm-6 col-md-12 col-lg-12">
+                            <label for="person" class="control-label"> الموظف</label>
+                            <select id="person"
+                                    data-placeholder="ابحث عن حساب المستخدم من خلال الاسم"
+                                    no-results-text="'لا توجد بيانات'"
+                                    placeholder-text-single="'اختر حساب المستخدم'"
+                                    class="form-control text-right"
+                                    chosen=""
+                                    ng-model="employee.person"
+                                    required="required"
+                                    disable-validation-message=""
+                                    ng-options="person.nickname + ' / ' + person.name for person in persons | orderBy:'name' track by person.id">
+                            </select>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="modal-footer">
+
+        <div class="row">
+            <button ng-if="action=='create'"
+                    uib-tooltip="اضافة"
+                    tooltip-append-to-body="true"
+                    focus-index="8"
+                    type="submit"
+                    class="mdl-button mdl-js-button mdl-js-ripple-effect col-xs-4 col-sm-4 col-md-4">
+                <i class="material-icons">add</i>
+            </button>
+            <button ng-if="action=='update'"
+                    uib-tooltip="تعديل"
+                    tooltip-append-to-body="true"
+                    focus-index="9"
+                    type="submit"
+                    class="mdl-button mdl-js-button mdl-js-ripple-effect col-xs-4 col-sm-4 col-md-4">
+                <i class="material-icons">edit</i>
+            </button>
+            <button uib-tooltip="مسح الحقول"
+                    tooltip-append-to-body="true"
+                    type="reset"
+                    ng-click="form.$setPristine()"
+                    class="mdl-button mdl-js-button mdl-js-ripple-effect col-xs-4 col-sm-4 col-md-4">
+                <i class="material-icons">delete</i>
+            </button>
+            <button uib-tooltip="خروج"
+                    tooltip-append-to-body="true"
+                    focus-index="11"
+                    type="button"
+                    ng-click="cancel()"
+                    class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect col-xs-4 col-sm-4 col-md-4">
+                <i class="material-icons">power_settings_new</i>
+            </button>
+        </div>
+
+    </div>
+
+</form>

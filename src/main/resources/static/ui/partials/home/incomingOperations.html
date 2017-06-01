@@ -1,0 +1,95 @@
+<div class="row" ng-init="showBody='true';hideWidget='false'"
+     ng-hide="hideWidget=='true'">
+    <div class="col-md-12">
+        <div class="panel panel-danger">
+            <div class="panel-heading">
+                <ul class="panel-controls pull-left" style="margin-top: 2px;">
+                    <button id="incoming-operations-menu-lower-left" class="mdl-button mdl-js-button mdl-button--icon">
+                        <i class="material-icons">more_vert</i>
+                    </button>
+                    <ul class="mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect"
+                        for="incoming-operations-menu-lower-left">
+                        <li class="mdl-menu__item mdl-list__item"
+                            ng-click="showBody=='true' ? showBody='false' : showBody='true'">
+                            <span>{{showBody=='true' ? 'اخفاء' : 'اظهار'}}</span>
+                        </li>
+                        <li class="mdl-menu__item mdl-list__item mdl-menu__item--full-bleed-divider"
+                            ng-click="hideWidget='true'">
+                            <span>حذف</span>
+                        </li>
+                        <li class="mdl-menu__item mdl-list__item" ng-click="fetchThisDay()">
+                            <span>حركات المهام الواردة هذا اليوم</span>
+                        </li>
+                        <li class="mdl-menu__item mdl-list__item" ng-click="fetchThisWeek()">
+                            <span>حركات المهام الواردة هذا الاسبوع</span>
+                        </li>
+                        <li class="mdl-menu__item mdl-list__item" ng-click="fetchThisMonth()">
+                            <span>حركات المهام الواردة هذا الشهر</span>
+                        </li>
+                        <li class="mdl-menu__item mdl-list__item mdl-menu__item--full-bleed-divider"
+                            ng-click="fetchThisYear()">
+                            <span>حركات المهام الواردة هذا العام</span>
+                        </li>
+                        <li class="mdl-menu__item mdl-list__item" ng-click="refresh()">
+                            <span>تحديث البيانات</span>
+                        </li>
+                    </ul>
+                </ul>
+                <div class="panel-title-box pull-right">
+                    <h3>{{!viewType? 'حركات المهام الواردة حسب الوقت' : viewType}}</h3>
+                    <span>حركات المهام الواردة حسب الوقت، ويمكنك التخصيص من القائمة الجانبية</span>
+                </div>
+            </div>
+            <div class="panel-body panel-body-table" ng-show="showBody=='true'">
+                <div class="table-responsive">
+                    <table st-table="collectionOperation" st-safe-src="incomingOperations"
+                           class="table table-bordered">
+                        <thead>
+                        <tr>
+                            <th st-sort="code" class="text-center fit">رقم الحركة</th>
+                            <th st-sort="task.code" class="text-center fit">[رقم المهمة] عنوان المهمة</th>
+                            <th st-sort="sender.name" class="text-center">المرسل</th>
+                            <th st-sort="date" st-sort-default="reverse" class="text-center fit">التاريخ والوقت</th>
+                            <th st-sort="content" class="text-center">التعليق</th>
+                            <th st-sort="date" class="text-center fit">الوقت المنقضي</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="taskOperation in filteredCollection = (collectionOperation)"
+                            ng-class="{'info':(taskOperation.sender.id===me.manager.id)}">
+                            <td>{{taskOperation.code}}</td>
+                            <td><a href="" ng-click="openDetailsModel(taskOperation.task)">[{{taskOperation.task.code}}]
+                                {{taskOperation.task.title}}</a></td>
+                            <td class="fit">{{taskOperation.sender.nickname}} / {{taskOperation.sender.name}}</td>
+                            <td st-select-row-custom="taskOperation">
+                                <span ng-show="dateType==='H'">{{taskOperation.date | kdate: 'yyyy-mm-dd' : 'ar' : 'ummalqura'}}</span>
+                                <span ng-show="dateType==='G'">{{taskOperation.date | date: 'yyyy-MM-dd'}}</span>
+                                <span class="label label-success">{{taskOperation.date | date:'h:m a'}}</span>
+                            </td>
+                            <td>
+                                {{taskOperation.content}}
+                                <span ng-repeat="taskOperationAttach in taskOperation.taskOperationAttaches"><a
+                                        uib-tooltip="{{taskOperationAttach.name}}" tooltip-append-to-body="true"
+                                        href="" ng-href="{{taskOperationAttach.link}}" target="_blank"><i
+                                        class="fa fa-link fa-lg"></i></a></span>
+                            </td>
+                            <td class="fit">
+                                <timer interval="60000" start-time="taskOperation.date"><span> {{(minutes < 1 && hours < 1 && days < 1 )? 'الآن' : 'منذ'}} </span>
+                                    {{days > 0 ? days : ''}} {{days > 0 ? 'يوم' : ''}} {{hours > 0 ? hours :
+                                    ''}} {{hours > 0 ? 'ساعة' : ''}} {{minutes > 0 ? minutes : ''}} {{minutes >
+                                    0 ? 'دقيقة' : ''}}
+                                </timer>
+                            </td>
+                        </tr>
+                        <tr class="blank_row"
+                            style="height: 10px !important; background-color: #FFFFFF;"
+                            ng-show="!filteredCollection || filteredCollection.length ==0">
+                            <td colspan="6">لا توجد حركات</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
