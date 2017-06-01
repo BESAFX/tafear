@@ -121,7 +121,7 @@
                 </textField>
                 <image scaleImage="FillFrame" hAlign="Center" vAlign="Middle" isUsingCache="true">
                     <reportElement x="5" y="5" width="73" height="30" uuid="1a77595b-7f90-4d6f-8168-b5bf8950312c"/>
-                    <imageExpression><![CDATA["src/main/resources/report/img/LOGO.bmp"]]></imageExpression>
+                    <imageExpression><![CDATA["src/main/resources/report/img/logo.png"]]></imageExpression>
                 </image>
             </frame>
         </band>
