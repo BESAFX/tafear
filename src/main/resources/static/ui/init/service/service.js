@@ -1,56 +1,4 @@
 app.service('ModalProvider', ['$uibModal', '$log', function ($uibModal, $log) {
-    /**************************************************************
-     *                                                            *
-     * Company Model                                              *
-     *                                                            *
-     *************************************************************/
-    this.openCompanyCreateModel = function () {
-        $uibModal.open({
-            animation: true,
-            ariaLabelledBy: 'modal-title',
-            ariaDescribedBy: 'modal-body',
-            templateUrl: '/ui/partials/company/companyCreateUpdate.html',
-            controller: 'companyCreateUpdateCtrl',
-            backdrop: 'static',
-            keyboard: false,
-            size: 'lg',
-            resolve: {
-                title: function () {
-                    return 'اضافة شركة جديدة';
-                },
-                action: function () {
-                    return 'create';
-                },
-                company: function () {
-                    return undefined;
-                }
-            }
-        });
-    };
-
-    this.openCompanyUpdateModel = function (company) {
-        $uibModal.open({
-            animation: true,
-            ariaLabelledBy: 'modal-title',
-            ariaDescribedBy: 'modal-body',
-            templateUrl: '/ui/partials/company/companyCreateUpdate.html',
-            controller: 'companyCreateUpdateCtrl',
-            backdrop: 'static',
-            keyboard: false,
-            size: 'lg',
-            resolve: {
-                title: function () {
-                    return 'تعديل بيانات شركة';
-                },
-                action: function () {
-                    return 'update';
-                },
-                company: function () {
-                    return company;
-                }
-            }
-        });
-    };
 
     /**************************************************************
      *                                                            *
@@ -68,7 +16,7 @@ app.service('ModalProvider', ['$uibModal', '$log', function ($uibModal, $log) {
             keyboard: false,
             resolve: {
                 title: function () {
-                    return 'اضافة منطقة جديدة';
+                    return 'انشاء منطقة جديدة';
                 },
                 action: function () {
                     return 'create';
@@ -120,7 +68,7 @@ app.service('ModalProvider', ['$uibModal', '$log', function ($uibModal, $log) {
             size: 'lg',
             resolve: {
                 title: function () {
-                    return 'اضافة فرع جديد';
+                    return 'انشاء فرع جديد';
                 },
                 action: function () {
                     return 'create';
@@ -172,7 +120,7 @@ app.service('ModalProvider', ['$uibModal', '$log', function ($uibModal, $log) {
             keyboard: false,
             resolve: {
                 title: function () {
-                    return 'اضافة قسم جديد';
+                    return 'انشاء قسم جديد';
                 },
                 action: function () {
                     return 'create';
@@ -223,7 +171,7 @@ app.service('ModalProvider', ['$uibModal', '$log', function ($uibModal, $log) {
             keyboard: false,
             resolve: {
                 title: function () {
-                    return 'اضافة موظف جديد';
+                    return 'انشاء موظف جديد';
                 },
                 action: function () {
                     return 'create';
@@ -275,7 +223,7 @@ app.service('ModalProvider', ['$uibModal', '$log', function ($uibModal, $log) {
             size: 'lg',
             resolve: {
                 title: function () {
-                    return 'اضافة مستخدم جديد';
+                    return 'انشاء مستخدم جديد';
                 },
                 action: function () {
                     return 'create';
@@ -328,7 +276,7 @@ app.service('ModalProvider', ['$uibModal', '$log', function ($uibModal, $log) {
             size: 'lg',
             resolve: {
                 title: function () {
-                    return 'اضافة مجموعة جديدة';
+                    return 'انشاء مجموعة جديدة';
                 },
                 action: function () {
                     return 'create';
@@ -380,7 +328,7 @@ app.service('ModalProvider', ['$uibModal', '$log', function ($uibModal, $log) {
             keyboard: false,
             resolve: {
                 title: function () {
-                    return 'اضافة مهمة جديد';
+                    return 'انشاء مهمة جديد';
                 },
                 action: function () {
                     return 'create';
@@ -841,7 +789,7 @@ app.service('ModalProvider', ['$uibModal', '$log', function ($uibModal, $log) {
             size: 'lg',
             resolve: {
                 title: function () {
-                    return 'اضافة نموذج طباعة جديد';
+                    return 'انشاء نموذج طباعة جديد';
                 },
                 action: function () {
                     return 'create';

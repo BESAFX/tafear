@@ -133,7 +133,6 @@ gulp.task('scripts', function () {
         './partials/home/closedSoonOutgoing.js',
         './partials/chat/chat.js',
         './partials/company/company.js',
-        './partials/company/companyCreateUpdate.js',
         './partials/employee/employee.js',
         './partials/employee/employeeCreateUpdate.js',
         './partials/branch/branch.js',
@@ -180,7 +179,8 @@ gulp.task('scripts', function () {
         './partials/report/task/watchTasksOperations.js',
 
         './partials/help/help.js',
-        './partials/profile/profile.js'
+        './partials/profile/profile.js',
+        './partials/about/about.js'
 
     ])
         .pipe(strip())

@@ -74,6 +74,11 @@ app.run(['$http', '$location', '$state', '$window', 'PersonService', 'FileServic
                     $rootScope.MDLIcon = 'help';
                     break;
                 }
+                case 'about': {
+                    $rootScope.pageTitle = 'عن البرنامج';
+                    $rootScope.MDLIcon = 'info';
+                    break;
+                }
             }
         });
 
@@ -304,6 +309,9 @@ app.run(['$http', '$location', '$state', '$window', 'PersonService', 'FileServic
         };
         $rootScope.goToProfile = function () {
             $state.go('profile');
+        };
+        $rootScope.goToAbout = function () {
+            $state.go('about');
         };
 
     }]);

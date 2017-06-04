@@ -221,6 +221,17 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$cssPr
 
         /**************************************************************
          *                                                            *
+         * About State                                                *
+         *                                                            *
+         *************************************************************/
+        $stateProvider.state("about", {
+            url: "/about",
+            templateUrl: "/ui/partials/about/about.html",
+            controller: "aboutCtrl"
+        });
+
+        /**************************************************************
+         *                                                            *
          * Task State                                                 *
          *                                                            *
          *************************************************************/

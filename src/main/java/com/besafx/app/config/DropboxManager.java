@@ -1,8 +1,8 @@
 package com.besafx.app.config;
+
 import com.dropbox.core.DbxRequestConfig;
 import com.dropbox.core.v2.DbxClientV2;
 import com.dropbox.core.v2.sharing.SharedLinkMetadata;
-import lombok.Getter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.scheduling.annotation.Async;
@@ -19,12 +19,9 @@ import java.util.concurrent.Future;
 public class DropboxManager {
 
     private static final String ACCESS_TOKEN = "lwXbn73MQTAAAAAAAAAACtvJCtgSD7Rp5hwd7V8jM2V4O9I8c9javetzqM49b1-Y";
-
     private final Logger log = LoggerFactory.getLogger(DropboxManager.class);
-
     private DbxRequestConfig config;
 
-    @Getter
     private DbxClientV2 client;
 
     @PostConstruct
@@ -48,8 +45,8 @@ public class DropboxManager {
     public Future<Boolean> uploadFile(MultipartFile file, String path) {
         try {
             log.info("Trying to upload file: " + file.getName());
-            log.info("Sleeping for 5 seconds...");
-            Thread.sleep(5000);
+            log.info("Sleeping for 1 seconds...");
+            Thread.sleep(1000);
             client.files().uploadBuilder(path).uploadAndFinish(file.getInputStream());
             return new AsyncResult<>(true);
         } catch (Exception ex) {
@@ -62,8 +59,8 @@ public class DropboxManager {
     public Future<Boolean> uploadFile(File file, String path) {
         try {
             log.info("Trying to upload file: " + file.getName());
-            log.info("Sleeping for 5 seconds...");
-            Thread.sleep(5000);
+            log.info("Sleeping for 1 seconds...");
+            Thread.sleep(1000);
             client.files().uploadBuilder(path).uploadAndFinish(new FileInputStream(file));
             return new AsyncResult<>(true);
         } catch (Exception ex) {
@@ -76,8 +73,8 @@ public class DropboxManager {
     public Future<Boolean> deleteFile(String path) {
         try {
             log.info("Trying to delete file from path: " + path);
-            log.info("Sleeping for 5 seconds...");
-            Thread.sleep(5000);
+            log.info("Sleeping for 1 seconds...");
+            Thread.sleep(1000);
             client.files().delete(path);
             return new AsyncResult<>(true);
         } catch (Exception ex) {
@@ -92,16 +89,16 @@ public class DropboxManager {
         String link = null;
         try {
             log.info("Trying to share file from path: " + path);
-            log.info("Sleeping for 5 seconds...");
-            //Thread.sleep(5000);
+            log.info("Sleeping for 1 seconds...");
+            Thread.sleep(1000);
             metadata = client.sharing().createSharedLinkWithSettings(path);
             link = metadata.getUrl().replaceAll("dl=0", "raw=1");
         } catch (Exception ex) {
-            log.info(ex.getMessage());
+            log.error(ex.getMessage(), ex);
             try {
                 link = client.sharing().listSharedLinksBuilder().withPath(path).withDirectOnly(true).start().getLinks().get(0).getUrl().replaceAll("dl=0", "raw=1");
             } catch (Exception ex_) {
-                log.info(ex_.getMessage());
+                log.error(ex_.getMessage(), ex_);
             }
         }
         return new AsyncResult<>(link);

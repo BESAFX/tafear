@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonView;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.Data;
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.io.IOException;
@@ -59,6 +60,8 @@ public class Branch implements Serializable {
     @JsonView(Views.Summery.class)
     private String commericalRegisteration;
 
+    @Lob
+    @Type(type = "org.hibernate.type.TextType")
     @JsonView(Views.Summery.class)
     private String logo;
 

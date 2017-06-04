@@ -57,7 +57,8 @@ public class PartialController {
             "/task",
             "/reportModel",
             "/help",
-            "/profile"
+            "/profile",
+            "/about"
     })
     public ModelAndView navToView() {
         return new ModelAndView("forward:/");
