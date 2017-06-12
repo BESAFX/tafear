@@ -117,14 +117,14 @@
                                 <span>عرض البيانات</span>
                             </span>
                         </li>
-                        <li class="mdl-menu__item mdl-list__item" ng-click="openCreateModel()"
+                        <li class="mdl-menu__item mdl-list__item" ng-click="ModalProvider.openDepartmentCreateModel();"
                             ng-if="contains(authorities, ['ROLE_DEPARTMENT_CREATE'])">
                             <span class="mdl-list__item-primary-content">
                                 <i class="material-icons mdl-list__item-icon">add</i>
                                 <span>انشاء قسم جديد</span>
                             </span>
                         </li>
-                        <li class="mdl-menu__item mdl-list__item" ng-click="openUpdateModel()"
+                        <li class="mdl-menu__item mdl-list__item" ng-click="ModalProvider.openDepartmentUpdateModel(selected);"
                             ng-if="contains(authorities, ['ROLE_DEPARTMENT_UPDATE']) && toggleList===1"
                             ng-hide="!departments || departments.length==0">
                             <span class="mdl-list__item-primary-content">
@@ -241,11 +241,15 @@
                         <div class="panel panel-default">
                             <div class="panel-body profile">
                                 <div class="profile-image">
-                                    <img width="100" height="100" src="/ui/img/no-task.png"
-                                         alt="{{task.name}}"/>
+                                    <img width="100" height="100"
+                                         src="/ui/img/no-image.jpg"
+                                         alt="{{department.name}}"/>
                                 </div>
                                 <div class="profile-data">
-                                    <div class="profile-data-name">{{department.name}}</div>
+                                    <div class="profile-data-name">
+                                        [ {{department.code}} ]
+                                        {{department.name}}
+                                    </div>
                                 </div>
                                 <div class="profile-controls">
                                     <!--<a href="" class="profile-control-left"><span class="fa fa-info-circle"></span></a>-->
@@ -255,37 +259,47 @@
                             <div class="panel-body">
                                 <div class="contact-info">
                                     <p>
-                                        <small>مدير القسم</small>
-                                        <br/>{{department.manager.nickname}} / {{department.manager.name}}
+                                        <strong>مدير القسم</strong>
+                                        {{department.manager.nickname}} / {{department.manager.name}}
                                     </p>
+                                    <hr>
                                     <p>
-                                        <small>الفرع</small>
-                                        <br/>{{department.branch.name}}
+                                        <strong>الفرع</strong>
+                                        {{department.branch.name}}
                                     </p>
+                                    <hr>
                                     <p>
-                                        <small>الشركة</small>
-                                        <br/>{{department.branch.region.company.name}}
+                                        <strong>عدد الموظفين</strong>
+                                        {{department.employees.length}}
                                     </p>
                                 </div>
                             </div>
                             <div class="panel-footer">
-                                <div class="btn-group btn-group-justified">
-                                    <a ng-click="openUpdateModel(department)"
-                                       ng-if="contains(authorities, ['ROLE_DEPARTMENT_UPDATE'])"
-                                       uib-tooltip="تعديل"
-                                       tooltip-append-to-body="true"
-                                       type="button"
-                                       class="btn btn-primary">
-                                        <i class="fa fa-edit fa-lg"></i>
-                                    </a>
-                                    <a ng-click="delete(department)"
-                                       ng-if="contains(authorities, ['ROLE_DEPARTMENT_DELETE'])"
-                                       uib-tooltip="حذف"
-                                       tooltip-append-to-body="true"
-                                       type="button"
-                                       class="btn btn-primary">
-                                        <i class="fa fa-trash fa-lg"></i>
-                                    </a>
+                                <div class="row">
+                                    <button uib-tooltip="قسم جديد"
+                                            tooltip-append-to-body="true"
+                                            type="button"
+                                            ng-if="contains(authorities, ['ROLE_DEPARTMENT_CREATE'])"
+                                            ng-click="ModalProvider.openDepartmentCreateModel();"
+                                            class="mdl-button mdl-js-button mdl-js-ripple-effect col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                                        <i class="material-icons">add</i>
+                                    </button>
+                                    <button uib-tooltip="تعديل"
+                                            tooltip-append-to-body="true"
+                                            type="button"
+                                            ng-if="contains(authorities, ['ROLE_DEPARTMENT_UPDATE'])"
+                                            ng-click="ModalProvider.openDepartmentUpdateModel(branch)"
+                                            class="mdl-button mdl-js-button mdl-js-ripple-effect col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                                        <i class="material-icons">edit</i>
+                                    </button>
+                                    <button uib-tooltip="حذف"
+                                            tooltip-append-to-body="true"
+                                            type="button"
+                                            ng-if="contains(authorities, ['ROLE_DEPARTMENT_DELETE'])"
+                                            ng-click="delete(branch)"
+                                            class="mdl-button mdl-js-button mdl-js-ripple-effect col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                                        <i class="material-icons">delete</i>
+                                    </button>
                                 </div>
                             </div>
                         </div>

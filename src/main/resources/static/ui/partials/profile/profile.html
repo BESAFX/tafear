@@ -129,7 +129,7 @@
                                                        ng-model="me.address">
                                             </div>
 
-                                            <div class="form-group text-right col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                            <div class="form-group text-right col-xs-12 col-sm-12 col-md-6 col-lg-6">
                                                 <label for="qualification" class="control-label">المؤهل </label>
                                                 <input id="qualification"
                                                        type="text"
@@ -137,6 +137,15 @@
                                                        disable-validation-message=""
                                                        class="form-control text-right"
                                                        ng-model="me.qualification">
+                                            </div>
+
+                                            <div class="form-group text-right col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                                                <label for="team" class="control-label">مجموعة الصلاحيات</label>
+                                                <input id="team"
+                                                       type="text"
+                                                       readonly
+                                                       class="form-control text-right"
+                                                       ng-model="me.team.name">
                                             </div>
 
                                             <div class="form-group text-right col-xs-12 col-sm-12 col-md-6 col-lg-6">

@@ -586,7 +586,7 @@ app.controller("taskCtrl", ['TaskService', 'TaskToService', 'TaskWarnService', '
         if ($rootScope.contains($rootScope.authorities, ['ROLE_TASK_DELETE'])) {
             $scope.rowMenu.push(
                 {
-                    html: '<div style="cursor: pointer;padding: 10px;text-align: right"> حذف مهمة <span class="fa fa-minus-square-o fa-lg"></span></div>',
+                    html: '<div style="cursor: pointer;padding: 10px;text-align: right"> حذف مهمة <span class="fa fa-trash fa-lg"></span></div>',
                     enabled: function () {
                         return true
                     },

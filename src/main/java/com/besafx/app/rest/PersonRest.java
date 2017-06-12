@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -112,14 +113,16 @@ public class PersonRest {
     @RequestMapping(value = "findAll", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public List<Person> findAll() {
-        return Lists.newArrayList(personService.findAll());
+        List<Person> list = Lists.newArrayList(personService.findAll());
+        list.sort(Comparator.comparing(Person::getName));
+        return list;
     }
 
     @RequestMapping(value = "findAllSummery", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     @JsonView(Views.Summery.class)
     public List<Person> findAllSummery() {
-        return Lists.newArrayList(personService.findAll());
+        return findAll();
     }
 
     @RequestMapping(value = "findOne/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)

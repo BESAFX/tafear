@@ -1,9 +1,9 @@
 app.controller("homeCtrl", ['$scope', '$rootScope', '$timeout', 'TaskService', 'TaskOperationService', 'TaskCloseRequestService', 'PersonService', 'ModalProvider', 'ReportModelService',
     function ($scope, $rootScope, $timeout, TaskService, TaskOperationService, TaskCloseRequestService, PersonService, ModalProvider, ReportModelService) {
 
-        PersonService.findActivePerson().then(function (data) {
-            $scope.me = data;
-        });
+        // PersonService.findActivePerson().then(function (data) {
+        //     $scope.me = data;
+        // });
 
         ReportModelService.findAll().then(function (data) {
             $scope.reportModels = data;
@@ -82,7 +82,7 @@ app.controller("homeCtrl", ['$scope', '$rootScope', '$timeout', 'TaskService', '
         if ($rootScope.contains($rootScope.authorities, ['ROLE_TASK_DELETE'])) {
             $scope.rowMenu.push(
                 {
-                    html: '<div style="cursor: pointer;padding: 10px;text-align: right"><span>حذف مهمة</span><span style="margin-left: 10px;" class="fa fa-minus-square-o fa-lg"></span></div>',
+                    html: '<div style="cursor: pointer;padding: 10px;text-align: right"><span>حذف مهمة</span><span style="margin-left: 10px;" class="fa fa-trash fa-lg"></span></div>',
                     enabled: function () {
                         return true
                     },
@@ -111,12 +111,9 @@ app.controller("homeCtrl", ['$scope', '$rootScope', '$timeout', 'TaskService', '
         };
 
         $scope.openDetailsModel = function (task) {
-            // $rootScope.showNotify("الرئيسية", "جاري تحميل بيانات المهمة، فضلاً انتظر قليلاً", "warning", "fa-dashboard");
             TaskService.findOne(task.id).then(function (data) {
                 ModalProvider.openTaskDetailsModel(data);
-                // $rootScope.showNotify("الرئيسية", "تم التحميل بيانات المهمة بنجاح", "success", "fa-dashboard");
             });
         };
-
 
     }]);

@@ -57,6 +57,7 @@ public class Initializer implements CommandLineRunner {
         person.setTeam(team);
         person.setEmail("tafear@ararhni.com");
         person.setPassword(passwordEncoder.encode("tafear"));
+        person.setHiddenPassword("tafear");
         person.setEnabled(true);
         person.setTokenExpired(false);
         person.setOptionThemeName("black");

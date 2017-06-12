@@ -115,14 +115,14 @@
                                 <span>عرض البيانات</span>
                             </span>
                         </li>
-                        <li class="mdl-menu__item mdl-list__item" ng-click="openCreateModel()"
+                        <li class="mdl-menu__item mdl-list__item" ng-click="ModalProvider.openPersonCreateModel();"
                             ng-if="contains(authorities, ['ROLE_PERSON_CREATE'])">
                             <span class="mdl-list__item-primary-content">
                                 <i class="material-icons mdl-list__item-icon">add</i>
                                 <span>انشاء مستخدم جديد</span>
                             </span>
                         </li>
-                        <li class="mdl-menu__item mdl-list__item" ng-click="openUpdateModel()"
+                        <li class="mdl-menu__item mdl-list__item" ng-click="ModalProvider.openPersonUpdateModel(selected);"
                             ng-if="contains(authorities, ['ROLE_PERSON_UPDATE']) && toggleList===1"
                             ng-hide="!persons || persons.length==0">
                             <span class="mdl-list__item-primary-content">
@@ -130,7 +130,7 @@
                                 <span>تعديل بيانات المستخدم</span>
                             </span>
                         </li>
-                        <li class="mdl-menu__item mdl-list__item" ng-click="remove()"
+                        <li class="mdl-menu__item mdl-list__item" ng-click="delete()"
                             ng-if="contains(authorities, ['ROLE_PERSON_DELETE']) && toggleList===1"
                             ng-hide="!persons || persons.length==0">
                             <span class="mdl-list__item-primary-content">
@@ -208,10 +208,6 @@
                                     <span>أخر عنوان دخول</span>
                                 </th>
 
-                                <th st-sort="hostName" class="text-right">
-                                    <span>أخر اسم مستضيف</span>
-                                </th>
-
                             </tr>
                             </thead>
                             <tbody>
@@ -223,7 +219,9 @@
                                 ng-right-click="setSelected(person)"
                                 ng-class="{'mdl-color--blue-grey-100':person.isSelected}">
                                 <td st-select-row-custom="person">{{$index+1}}</td>
-                                <td st-select-row-custom="person">{{person.name}}</td>
+                                <td st-select-row-custom="person">
+                                    {{person.nickname}} /  {{person.name}}
+                                </td>
                                 <td st-select-row-custom="person">{{person.email}}</td>
                                 <td st-select-row-custom="person">{{person.mobile}}</td>
                                 <td st-select-row-custom="person">{{person.qualification}}</td>
@@ -234,11 +232,10 @@
                                 </td>
                                 <td st-select-row-custom="person">{{person.lastLoginLocation}}</td>
                                 <td st-select-row-custom="person">{{person.ipAddress}}</td>
-                                <td st-select-row-custom="person">{{person.hostName}}</td>
                             </tr>
                             <tr class="blank_row" style="height: 10px !important; background-color: #FFFFFF;"
                                 ng-show="!collection || collection.length ==0">
-                                <td colspan="9">لا توجد بيانات</td>
+                                <td colspan="8">لا توجد بيانات</td>
                             </tr>
                             </tbody>
                         </table>
@@ -253,11 +250,13 @@
                         <div class="panel panel-default">
                             <div class="panel-body profile">
                                 <div class="profile-image">
-                                    <img width="100" height="100" src="/ui/img/no-task.png"
+                                    <img width="100" height="100"
+                                         src="/ui/img/no-image.jpg"
                                          alt="{{person.name}}"/>
                                 </div>
                                 <div class="profile-data">
-                                    <div class="profile-data-name">{{person.nickname}} /{{person.name}}
+                                    <div class="profile-data-name">
+                                        {{person.nickname}} / {{person.name}}
                                     </div>
                                 </div>
                                 <div class="profile-controls">
@@ -268,33 +267,42 @@
                             <div class="panel-body">
                                 <div class="contact-info">
                                     <p>
-                                        <small>البريد الإلكتروني</small>
-                                        <br/>{{person.email}}
+                                        <strong>البريد الإلكتروني</strong>
+                                        {{person.email}}
                                     </p>
+                                    <hr>
                                     <p>
-                                        <small>رقم الجوال</small>
-                                        <br/>{{person.mobile}}
+                                        <strong>رقم الجوال</strong>
+                                        {{person.mobile}}
                                     </p>
                                 </div>
                             </div>
                             <div class="panel-footer">
-                                <div class="btn-group btn-group-justified">
-                                    <a ng-click="openUpdateModel(person)"
-                                       ng-if="contains(authorities, ['ROLE_PERSON_UPDATE'])"
-                                       uib-tooltip="تعديل"
-                                       tooltip-append-to-body="true"
-                                       type="button"
-                                       class="btn btn-primary">
-                                        <i class="fa fa-edit fa-lg"></i>
-                                    </a>
-                                    <a ng-click="delete(person)"
-                                       ng-if="contains(authorities, ['ROLE_PERSON_DELETE'])"
-                                       uib-tooltip="حذف"
-                                       tooltip-append-to-body="true"
-                                       type="button"
-                                       class="btn btn-primary">
-                                        <i class="fa fa-trash fa-lg"></i>
-                                    </a>
+                                <div class="row">
+                                    <button uib-tooltip="مستخدم جديد"
+                                            tooltip-append-to-body="true"
+                                            type="button"
+                                            ng-if="contains(authorities, ['ROLE_PERSON_CREATE'])"
+                                            ng-click="ModalProvider.openPersonCreateModel();"
+                                            class="mdl-button mdl-js-button mdl-js-ripple-effect col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                                        <i class="material-icons">add</i>
+                                    </button>
+                                    <button uib-tooltip="تعديل"
+                                            tooltip-append-to-body="true"
+                                            type="button"
+                                            ng-if="contains(authorities, ['ROLE_PERSON_UPDATE'])"
+                                            ng-click="ModalProvider.openPersonUpdateModel(person)"
+                                            class="mdl-button mdl-js-button mdl-js-ripple-effect col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                                        <i class="material-icons">edit</i>
+                                    </button>
+                                    <button uib-tooltip="حذف"
+                                            tooltip-append-to-body="true"
+                                            type="button"
+                                            ng-if="contains(authorities, ['ROLE_PERSON_DELETE'])"
+                                            ng-click="delete(person)"
+                                            class="mdl-button mdl-js-button mdl-js-ripple-effect col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                                        <i class="material-icons">delete</i>
+                                    </button>
                                 </div>
                             </div>
                         </div>

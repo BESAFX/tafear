@@ -1,30 +1,17 @@
 app.controller('branchCreateUpdateCtrl', ['BranchService', 'PersonService', 'RegionService', 'FileUploader', 'FileService', '$scope', '$rootScope', '$timeout', '$log', '$uibModalInstance', 'title', 'action', 'branch',
     function (BranchService, PersonService, RegionService, FileUploader, FileService, $scope, $rootScope, $timeout, $log, $uibModalInstance, title, action, branch) {
 
-        $scope.fetchPersonData = function () {
+        $timeout(function () {
             PersonService.findAllSummery().then(function (data) {
                 $scope.persons = data;
             });
-        };
-
-        $scope.fetchRegionsData = function () {
             RegionService.fetchTableDataSummery().then(function (data) {
                 $scope.regions = data;
             });
-        };
-
-        $timeout(function () {
-            $scope.fetchRegionsData();
-            $scope.fetchPersonData();
         }, 1500);
 
         if (branch) {
             $scope.branch = branch;
-            if(branch.logo){
-                FileService.getSharedLink(branch.logo).then(function (data) {
-                    $scope.logoLink = data;
-                });
-            }
         } else {
             $scope.branch = {};
         }
@@ -54,7 +41,7 @@ app.controller('branchCreateUpdateCtrl', ['BranchService', 'PersonService', 'Reg
         };
 
         var uploader = $scope.uploader = new FileUploader({
-            url: 'uploadFile'
+            url: 'uploadBranchLogo'
         });
 
         uploader.filters.push({
@@ -77,9 +64,6 @@ app.controller('branchCreateUpdateCtrl', ['BranchService', 'PersonService', 'Reg
 
         uploader.onSuccessItem = function (fileItem, response, status, headers) {
             $scope.branch.logo = response;
-            FileService.getSharedLink(response).then(function (data) {
-                $scope.logoLink = data;
-            });
         };
 
     }]);

@@ -17,13 +17,14 @@
 
         <div class="row">
 
-            <div class="form-group text-right col-md-12" ng-show="form.$invalid && form.$submitted">
+            <div class="form-group text-right col-xs-12 col-sm-12 col-md-12 col-lg-12"
+                 ng-show="form.$invalid && form.$submitted">
                 <div class="alert alert-danger" role="alert">
                     <strong>فضلاً اكمل الحقول المطلوبة</strong>
                 </div>
             </div>
 
-            <div class="form-group text-right col-sm-12">
+            <div class="form-group text-right col-xs-12 col-sm-12 col-md-12 col-lg-12">
 
                 <div class="panel panel-info">
                     <div class="panel-heading">
@@ -33,21 +34,19 @@
                         </h3>
                     </div>
                     <div class="panel-body">
-                        <div class="form-group text-right col-sm-12">
+                        <div class="form-group text-right col-xs-12 col-sm-12 col-md-12 col-lg-12">
                             <label for="name" class="control-label">اسم النموذج</label>
                             <input id="name"
                                    type="text"
-                                   focus-index="1"
                                    class="form-control text-right"
                                    placeholder="ادخل اسم النموذج"
                                    ng-model="reportModel.name">
                         </div>
 
-                        <div class="form-group text-right col-sm-12">
+                        <div class="form-group text-right col-xs-12 col-sm-12 col-md-12 col-lg-12">
                             <label for="description" class="control-label">وصف النموذج</label>
                             <textarea id="description"
                                       type="text"
-                                      focus-index="2"
                                       msd-elastic="\n"
                                       required="required"
                                       class="form-control text-right"
@@ -57,13 +56,12 @@
                             </textarea>
                         </div>
 
-                        <div class="form-group text-right col-md-6">
+                        <div class="form-group text-right col-xs-12 col-sm-12 col-md-6 col-lg-6">
                             <label for="orientation" class="control-label">إتجاة الطباعة</label>
                             <select id="orientation"
                                     style="height: 40px"
                                     class="form-control text-right"
-                                    ng-model="reportProp.orientation"
-                                    focus-index="2">
+                                    ng-model="reportProp.orientation">
                                 <option value="Landscape">
                                     <span>افقي Landscape</span>
                                 </option>
@@ -73,13 +71,12 @@
                             </select>
                         </div>
 
-                        <div class="form-group text-right col-md-6">
+                        <div class="form-group text-right col-xs-12 col-sm-12 col-md-6 col-lg-6">
                             <label for="exportType" class="control-label">نوع الملف المستخرج</label>
                             <select id="exportType"
                                     style="height: 40px"
                                     class="form-control text-right"
-                                    ng-model="reportProp.exportType"
-                                    focus-index="2">
+                                    ng-model="reportProp.exportType">
                                 <option value="pdf">
                                     <span>ملف من نوع PDF</span>
                                 </option>
@@ -113,11 +110,11 @@
                             </select>
                         </div>
 
-                        <div class="form-group text-right col-sm-12">
+                        <div class="form-group text-right col-xs-12 col-sm-12 col-md-12 col-lg-12">
                             <label for="reportTitle" class="control-label">عنوان التقرير</label>
                             <input id="reportTitle"
                                    type="text"
-                                   focus-index="2"
+
                                    class="form-control text-right"
                                    placeholder="ادخل عنوان التقرير"
                                    ng-model="reportProp.title">
@@ -127,7 +124,7 @@
 
             </div>
 
-            <div class="form-group text-right col-sm-12">
+            <div class="form-group text-right col-xs-12 col-sm-12 col-md-12 col-lg-12">
 
                 <div class="panel panel-info">
                     <div class="panel-heading">
@@ -261,33 +258,34 @@
 
     <div class="modal-footer">
 
-        <div class="form-group col-md-12" role="group">
-            <button type="button"
-                    focus-index="5"
+        <div class="row">
+            <button ng-if="action=='create'"
+                    uib-tooltip="اضافة"
+                    tooltip-append-to-body="true"
+                    type="submit"
+                    class="mdl-button mdl-js-button mdl-js-ripple-effect col-xs-4 col-sm-4 col-md-4">
+                <i class="material-icons">add</i>
+            </button>
+            <button ng-if="action=='update'"
+                    uib-tooltip="تعديل"
+                    tooltip-append-to-body="true"
+                    type="submit"
+                    class="mdl-button mdl-js-button mdl-js-ripple-effect col-xs-4 col-sm-4 col-md-4">
+                <i class="material-icons">edit</i>
+            </button>
+            <button uib-tooltip="مسح الحقول"
+                    tooltip-append-to-body="true"
+                    type="reset"
+                    ng-click="form.$setPristine()"
+                    class="mdl-button mdl-js-button mdl-js-ripple-effect col-xs-4 col-sm-4 col-md-4">
+                <i class="material-icons">delete</i>
+            </button>
+            <button uib-tooltip="خروج"
+                    tooltip-append-to-body="true"
+                    type="button"
                     ng-click="cancel()"
-                    class="btn btn-danger pull-left">
-                <span>خروج</span>
-                <i class="fa fa-power-off  fa-lg"></i>
-            </button>
-            <button type="reset"
-                    focus-index="4"
-                    class="btn btn-info pull-left">
-                <span>مسح الحقول</span>
-                <i class="fa fa-recycle  fa-lg"></i>
-            </button>
-            <button ng-show="action=='update'"
-                    type="submit"
-                    focus-index="3"
-                    class="btn btn-warning pull-right">
-                <span>تعديل</span>
-                <i class="fa fa-edit fa-lg"></i>
-            </button>
-            <button ng-show="action=='create'"
-                    type="submit"
-                    focus-index="2"
-                    class="btn btn-success pull-right">
-                <span>اضافة</span>
-                <i class="fa fa-plus-square fa-lg"></i>
+                    class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect col-xs-4 col-sm-4 col-md-4">
+                <i class="material-icons">power_settings_new</i>
             </button>
         </div>
 

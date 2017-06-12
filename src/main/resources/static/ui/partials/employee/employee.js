@@ -23,51 +23,44 @@ app.controller("employeeCtrl", ['EmployeeService', 'ModalProvider', 'FileService
             }
         };
 
-        $scope.reload = function () {
-            $state.reload();
-        };
-
-        $scope.openCreateModel = function () {
-            ModalProvider.openEmployeeCreateModel();
-        };
-
-        $scope.openUpdateModel = function (employee) {
-            if (employee) {
-                ModalProvider.openEmployeeUpdateModel(employee);
-                return;
-            }
-            ModalProvider.openEmployeeUpdateModel($scope.selected);
-        };
-
         $scope.delete = function (employee) {
             if (employee) {
-                EmployeeService.remove(employee.id);
+                $rootScope.showConfirmNotify("حذف البيانات", "هل تود حذف الموظف فعلاً؟", "error", "fa-trash", function () {
+                    EmployeeService.remove(employee.id).then(function () {
+                        $scope.removeRow(employee.id);
+                    });
+                });
                 return;
             }
-            EmployeeService.remove($scope.selected.id);
+
+            $rootScope.showConfirmNotify("حذف البيانات", "هل تود حذف الموظف فعلاً؟", "error", "fa-trash", function () {
+                EmployeeService.remove($scope.selected.id).then(function () {
+                    $scope.removeRow(employee.id);
+                });
+            });
         };
 
         $scope.rowMenu = [
             {
-                html: '<div style="cursor: pointer;padding: 10px"><span class="fa fa-plus-square-o fa-lg"></span> اضافة</div>',
+                html: '<div class="drop-menu">انشاء موظف جديد<span class="fa fa-pencil fa-lg"></span></div>',
                 enabled: function () {
                     return true
                 },
                 click: function ($itemScope, $event, value) {
-                    $scope.openCreateModel();
+                    ModalProvider.openEmployeeUpdateModel();
                 }
             },
             {
-                html: '<div style="cursor: pointer;padding: 10px"><span class="fa fa-edit fa-lg"></span> تعديل</div>',
+                html: '<div class="drop-menu">تعديل بيانات الموظف<span class="fa fa-edit fa-lg"></span></div>',
                 enabled: function () {
                     return true
                 },
                 click: function ($itemScope, $event, value) {
-                    $scope.openUpdateModel($itemScope.employee);
+                    ModalProvider.openEmployeeUpdateModel($itemScope.employee);
                 }
             },
             {
-                html: '<div style="cursor: pointer;padding: 10px"><span class="fa fa-minus-square-o fa-lg"></span> حذف</div>',
+                html: '<div class="drop-menu">حذف الموظف<span class="fa fa-trash fa-lg"></span></div>',
                 enabled: function () {
                     return true
                 },
@@ -79,6 +72,7 @@ app.controller("employeeCtrl", ['EmployeeService', 'ModalProvider', 'FileService
 
         $timeout(function () {
             window.componentHandler.upgradeAllRegistered();
+            $scope.fetchTableData();
         }, 1500);
 
     }]);

@@ -358,3 +358,17 @@ ul.breadcrumb li a:hover {
 select {
     height: 40px !important;
 }
+
+.drop-menu {
+    cursor: pointer;
+    padding: 10px;
+    text-align: right;
+}
+
+.drop-menu .fa{
+    margin-left: 10px;
+}
+
+.drop-menu:hover{
+    background-color: lightgrey;
+}

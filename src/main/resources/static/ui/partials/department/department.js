@@ -23,22 +23,6 @@ app.controller("departmentCtrl", ['DepartmentService', 'ModalProvider', '$scope'
             }
         };
 
-        $scope.reload = function () {
-            $state.reload();
-        };
-
-        $scope.openCreateModel = function () {
-            ModalProvider.openDepartmentCreateModel();
-        };
-
-        $scope.openUpdateModel = function (department) {
-            if (department) {
-                ModalProvider.openDepartmentUpdateModel(department);
-                return;
-            }
-            ModalProvider.openDepartmentUpdateModel($scope.selected);
-        };
-
         $scope.removeRow = function (id) {
             var index = -1;
             var departmentsArr = eval($scope.departments);
@@ -56,14 +40,14 @@ app.controller("departmentCtrl", ['DepartmentService', 'ModalProvider', '$scope'
 
         $scope.delete = function (department) {
             if (department) {
-                $rootScope.showConfirmNotify("المهام", "هل تود حذف القسم فعلاً؟", "error", "fa-database", function () {
+                $rootScope.showConfirmNotify("حذف البيانات", "هل تود حذف القسم فعلاً؟", "error", "fa-trash", function () {
                     DepartmentService.remove(department.id).then(function () {
                         $scope.removeRow(department.id);
                     });
                 });
                 return;
             }
-            $rootScope.showConfirmNotify("المهام", "هل تود حذف القسم فعلاً؟", "error", "fa-database", function () {
+            $rootScope.showConfirmNotify("حذف البيانات", "هل تود حذف القسم فعلاً؟", "error", "fa-trash", function () {
                 DepartmentService.remove($scope.selected.id).then(function () {
                     $scope.removeRow(department.id);
                 });
@@ -72,25 +56,25 @@ app.controller("departmentCtrl", ['DepartmentService', 'ModalProvider', '$scope'
 
         $scope.rowMenu = [
             {
-                html: '<div style="cursor: pointer;padding: 10px"><span class="fa fa-plus-square-o fa-lg"></span> اضافة</div>',
+                html: '<div class="drop-menu">انشاء قسم جديد<span class="fa fa-pencil fa-lg"></span></div>',
                 enabled: function () {
                     return true
                 },
                 click: function ($itemScope, $event, value) {
-                    $scope.openCreateModel();
+                    ModalProvider.openDepartmentCreateModel();
                 }
             },
             {
-                html: '<div style="cursor: pointer;padding: 10px"><span class="fa fa-edit fa-lg"></span> تعديل</div>',
+                html: '<div class="drop-menu">تعديل بيانات القسم<span class="fa fa-edit fa-lg"></span></div>',
                 enabled: function () {
                     return true
                 },
                 click: function ($itemScope, $event, value) {
-                    $scope.openUpdateModel($itemScope.department);
+                    ModalProvider.openDepartmentUpdateModel($itemScope.department);
                 }
             },
             {
-                html: '<div style="cursor: pointer;padding: 10px"><span class="fa fa-minus-square-o fa-lg"></span> حذف</div>',
+                html: '<div class="drop-menu">حذف القسم<span class="fa fa-trash fa-lg"></span></div>',
                 enabled: function () {
                     return true
                 },
@@ -102,6 +86,7 @@ app.controller("departmentCtrl", ['DepartmentService', 'ModalProvider', '$scope'
 
         $timeout(function () {
             window.componentHandler.upgradeAllRegistered();
+            $scope.fetchTableData();
         }, 1500);
 
     }]);

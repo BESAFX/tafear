@@ -1,14 +1,12 @@
-app.controller("reportModelCtrl", ['ReportModelService', 'PersonService', 'ModalProvider', 'FileService', '$scope', '$rootScope', '$state', '$timeout',
-    function (ReportModelService, PersonService, ModalProvider, FileService, $scope, $rootScope, $state, $timeout) {
+app.controller("reportModelCtrl", ['ReportModelService', 'ModalProvider', '$scope', '$rootScope', '$state', '$timeout',
+    function (ReportModelService, ModalProvider, $scope, $rootScope, $state, $timeout) {
 
         $scope.selected = {};
 
         $scope.fetchTableData = function () {
-            $rootScope.showNotify("نماذج الطباعة", "فضلاً انتظر قليلاً حتى الانتهاء من تحميل النماذج", "warning", "fa-print");
             ReportModelService.findAll().then(function (data) {
                 $scope.reportModels = data;
                 $scope.setSelected(data[0]);
-                $rootScope.showNotify("نماذج الطباعة", "تم الانتهاء من تحميل البيانات المطلوبة بنجاح، يمكنك متابعة عملك الآن", "success", "fa-print");
             });
         };
 
@@ -25,51 +23,59 @@ app.controller("reportModelCtrl", ['ReportModelService', 'PersonService', 'Modal
             }
         };
 
-        $scope.reload = function () {
-            $state.reload();
-        };
-
-        $scope.openCreateModel = function () {
-            ModalProvider.openReportModelCreateModel();
-        };
-
-        $scope.openUpdateModel = function (reportModel) {
-            if (reportModel) {
-                ModalProvider.openReportModelUpdateModel(reportModel);
-                return;
+        $scope.removeRow = function (id) {
+            var index = -1;
+            var reportModelsArr = eval($scope.reportModels);
+            for (var i = 0; i < reportModelsArr.length; i++) {
+                if (reportModelsArr[i].id === id) {
+                    index = i;
+                    break;
+                }
             }
-            ModalProvider.openReportModelUpdateModel($scope.selected);
+            if (index === -1) {
+                alert("Something gone wrong");
+            }
+            $scope.reportModels.splice(index, 1);
         };
 
         $scope.delete = function (reportModel) {
             if (reportModel) {
-                ReportModelService.remove(reportModel);
+                $rootScope.showConfirmNotify("حذف البيانات", "هل تود حذف النموذج فعلاً؟", "error", "fa-trash", function () {
+                    ReportModelService.remove(reportModel.id).then(function () {
+                        $scope.removeRow(reportModel.id);
+                    });
+                });
                 return;
             }
-            ReportModelService.remove($scope.selected);
+
+            $rootScope.showConfirmNotify("حذف البيانات", "هل تود حذف النموذج فعلاً؟", "error", "fa-trash", function () {
+                ReportModelService.remove($scope.selected.id).then(function () {
+                    $scope.removeRow(reportModel.id);
+                });
+            });
         };
 
         $scope.rowMenu = [
             {
-                html: '<div style="cursor: pointer;padding: 10px"><span class="fa fa-plus-square-o fa-lg"></span> اضافة</div>',
+                html: '<div class="drop-menu">إنشاء نموذج جديد<span class="fa fa-pencil fa-lg"></span></div>',
                 enabled: function () {
                     return true
                 },
                 click: function ($itemScope, $event, value) {
-                    $scope.openCreateModel();
+                    ModalProvider.openReportModelCreateModel();
                 }
             },
             {
-                html: '<div style="cursor: pointer;padding: 10px"><span class="fa fa-edit fa-lg"></span> تعديل</div>',
+                html: '<div class="drop-menu">تعديل بيانات النموذج<span class="fa fa-edit fa-lg"></span></div>',
                 enabled: function () {
                     return true
                 },
                 click: function ($itemScope, $event, value) {
-                    $scope.openUpdateModel($itemScope.reportModel);
+                    ModalProvider.openReportModelCreateModel($itemScope.reportModel);
                 }
             },
             {
-                html: '<div style="cursor: pointer;padding: 10px"><span class="fa fa-minus-square-o fa-lg"></span> حذف</div>',
+                html: '<div class="drop-menu">حذف النموذج<span class="fa fa-trash fa-lg"></span></div>',
                 enabled: function () {
                     return true
                 },
@@ -81,6 +87,7 @@ app.controller("reportModelCtrl", ['ReportModelService', 'PersonService', 'Modal
 
         $timeout(function () {
             window.componentHandler.upgradeAllRegistered();
+            $scope.fetchTableData();
         }, 1500);
 
     }]);

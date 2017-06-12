@@ -1,21 +1,13 @@
 app.controller('regionCreateUpdateCtrl', ['RegionService', 'PersonService', 'CompanyService', '$scope', '$rootScope', '$timeout', '$log', '$uibModalInstance', 'title', 'action', 'region',
     function (RegionService, PersonService, CompanyService, $scope, $rootScope, $timeout, $log, $uibModalInstance, title, action, region) {
 
-        $scope.fetchPersonData = function () {
+        $timeout(function () {
             PersonService.findAllSummery().then(function (data) {
                 $scope.persons = data;
             });
-        };
-
-        $scope.fetchCompaniesData = function () {
             CompanyService.fetchTableDataSummery().then(function (data) {
                 $scope.companies = data;
             });
-        };
-
-        $timeout(function () {
-            $scope.fetchCompaniesData();
-            $scope.fetchPersonData();
         }, 1500);
 
         if (region) {

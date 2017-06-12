@@ -32,10 +32,10 @@
                             <label for="name" class="control-label">اسم المنطقة</label>
                             <input id="name"
                                    type="text"
-                                   focus-index="1"
                                    required="required"
                                    disable-validation-message=""
                                    class="form-control text-right"
+                                   focus-autofocus="1"
                                    placeholder="اسم المنطقة"
                                    ng-model="region.name">
                         </div>
@@ -44,7 +44,6 @@
                             <label for="address" class="control-label">العنوان</label>
                             <input id="address"
                                    type="text"
-                                   focus-index="1"
                                    required="required"
                                    disable-validation-message=""
                                    class="form-control text-right"
@@ -61,7 +60,6 @@
                                     class="form-control text-right"
                                     chosen=""
                                     ng-model="region.company"
-                                    focus-index="1"
                                     required="required"
                                     disable-validation-message=""
                                     ng-options="(' [ ' + company.code + ' ] ' + company.name) for company in companies | orderBy:'code' track by company.id">
@@ -96,7 +94,6 @@
             <button ng-if="action=='create'"
                     uib-tooltip="اضافة"
                     tooltip-append-to-body="true"
-                    focus-index="8"
                     type="submit"
                     class="mdl-button mdl-js-button mdl-js-ripple-effect col-xs-4 col-sm-4 col-md-4">
                 <i class="material-icons">add</i>
@@ -104,7 +101,6 @@
             <button ng-if="action=='update'"
                     uib-tooltip="تعديل"
                     tooltip-append-to-body="true"
-                    focus-index="9"
                     type="submit"
                     class="mdl-button mdl-js-button mdl-js-ripple-effect col-xs-4 col-sm-4 col-md-4">
                 <i class="material-icons">edit</i>
@@ -118,7 +114,6 @@
             </button>
             <button uib-tooltip="خروج"
                     tooltip-append-to-body="true"
-                    focus-index="11"
                     type="button"
                     ng-click="cancel()"
                     class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect col-xs-4 col-sm-4 col-md-4">

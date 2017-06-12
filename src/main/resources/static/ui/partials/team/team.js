@@ -51,7 +51,7 @@ app.controller("teamCtrl", ['TeamService', 'ModalProvider', '$rootScope', '$scop
 
         $scope.rowMenu = [
             {
-                html: '<div style="cursor: pointer;padding: 10px"><span class="fa fa-plus-square-o fa-lg"></span> اضافة</div>',
+                html: '<div class="drop-menu"><span class="fa fa-pencil fa-lg"></span> اضافة</div>',
                 enabled: function () {
                     return true
                 },
@@ -60,7 +60,7 @@ app.controller("teamCtrl", ['TeamService', 'ModalProvider', '$rootScope', '$scop
                 }
             },
             {
-                html: '<div style="cursor: pointer;padding: 10px"><span class="fa fa-edit fa-lg"></span> تعديل</div>',
+                html: '<div class="drop-menu"><span class="fa fa-edit fa-lg"></span> تعديل</div>',
                 enabled: function () {
                     return true
                 },
@@ -69,7 +69,7 @@ app.controller("teamCtrl", ['TeamService', 'ModalProvider', '$rootScope', '$scop
                 }
             },
             {
-                html: '<div style="cursor: pointer;padding: 10px"><span class="fa fa-minus-square-o fa-lg"></span> حذف</div>',
+                html: '<div class="drop-menu"><span class="fa fa-trash fa-lg"></span> حذف</div>',
                 enabled: function () {
                     return true
                 },

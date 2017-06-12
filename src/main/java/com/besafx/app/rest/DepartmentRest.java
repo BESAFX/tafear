@@ -9,6 +9,7 @@ import com.besafx.app.ws.Notification;
 import com.besafx.app.ws.NotificationService;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.google.common.collect.Lists;
+import org.hibernate.annotations.OrderBy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -123,6 +125,7 @@ public class DepartmentRest {
         person.getDepartments().stream().forEach(department -> list.add(department));
         person.getEmployees().stream().forEach(employee -> list.add(employee.getDepartment()));
         list.addAll(person.getDepartments());
+        list.sort(Comparator.comparing(Department::getCode));
         return list.stream().distinct().collect(Collectors.toList());
     }
 

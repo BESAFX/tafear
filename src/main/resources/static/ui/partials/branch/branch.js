@@ -23,22 +23,6 @@ app.controller("branchCtrl", ['BranchService', 'PersonService', 'ModalProvider',
             }
         };
 
-        $scope.reload = function () {
-            $state.reload();
-        };
-
-        $scope.openCreateModel = function () {
-            ModalProvider.openBranchCreateModel();
-        };
-
-        $scope.openUpdateModel = function (branch) {
-            if (branch) {
-                ModalProvider.openBranchUpdateModel(branch);
-                return;
-            }
-            ModalProvider.openBranchUpdateModel($scope.selected);
-        };
-
         $scope.removeRow = function (id) {
             var index = -1;
             var branchesArr = eval($scope.branches);
@@ -56,7 +40,7 @@ app.controller("branchCtrl", ['BranchService', 'PersonService', 'ModalProvider',
 
         $scope.delete = function (branch) {
             if (branch) {
-                $rootScope.showConfirmNotify("المهام", "هل تود حذف الفرع فعلاً؟", "error", "fa-database", function () {
+                $rootScope.showConfirmNotify("حذف البيانات", "هل تود حذف الفرع فعلاً؟", "error", "fa-trash", function () {
                     BranchService.remove(branch.id).then(function () {
                         $scope.removeRow(branch.id);
                     });
@@ -64,7 +48,7 @@ app.controller("branchCtrl", ['BranchService', 'PersonService', 'ModalProvider',
                 return;
             }
 
-            $rootScope.showConfirmNotify("المهام", "هل تود حذف الفرع فعلاً؟", "error", "fa-database", function () {
+            $rootScope.showConfirmNotify("حذف البيانات", "هل تود حذف الفرع فعلاً؟", "error", "fa-trash", function () {
                 BranchService.remove($scope.selected.id).then(function () {
                     $scope.removeRow(branch.id);
                 });
@@ -73,25 +57,25 @@ app.controller("branchCtrl", ['BranchService', 'PersonService', 'ModalProvider',
 
         $scope.rowMenu = [
             {
-                html: '<div style="cursor: pointer;padding: 10px"><span class="fa fa-plus-square-o fa-lg"></span> اضافة</div>',
+                html: '<div class="drop-menu">انشاء فرع جديد<span class="fa fa-pencil fa-lg"></span></div>',
                 enabled: function () {
                     return true
                 },
                 click: function ($itemScope, $event, value) {
-                    $scope.openCreateModel();
+                    ModalProvider.openBranchCreateModel();
                 }
             },
             {
-                html: '<div style="cursor: pointer;padding: 10px"><span class="fa fa-edit fa-lg"></span> تعديل</div>',
+                html: '<div class="drop-menu">تعديل بيانات الفرع<span class="fa fa-edit fa-lg"></span></div>',
                 enabled: function () {
                     return true
                 },
                 click: function ($itemScope, $event, value) {
-                    $scope.openUpdateModel($itemScope.branch);
+                    ModalProvider.openBranchUpdateModel($itemScope.branch);
                 }
             },
             {
-                html: '<div style="cursor: pointer;padding: 10px"><span class="fa fa-minus-square-o fa-lg"></span> حذف</div>',
+                html: '<div class="drop-menu">حذف الفرع<span class="fa fa-trash fa-lg"></span></div>',
                 enabled: function () {
                     return true
                 },
@@ -103,6 +87,7 @@ app.controller("branchCtrl", ['BranchService', 'PersonService', 'ModalProvider',
 
         $timeout(function () {
             window.componentHandler.upgradeAllRegistered();
+            $scope.fetchTableData();
         }, 1500);
 
     }]);

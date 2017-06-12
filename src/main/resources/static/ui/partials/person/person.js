@@ -23,37 +23,41 @@ app.controller("personCtrl", ['PersonService', 'ModalProvider', 'FileService', '
             }
         };
 
-        $scope.reload = function () {
-            $state.reload();
-        };
-
-        $scope.openCreateModel = function () {
-            ModalProvider.openPersonCreateModel();
-        };
-
-        $scope.openUpdateModel = function (person) {
-            if (person) {
-                ModalProvider.openPersonUpdateModel(person);
-                return;
+        $scope.removeRow = function (id) {
+            var index = -1;
+            var personsArr = eval($scope.persons);
+            for (var i = 0; i < personsArr.length; i++) {
+                if (personsArr[i].id === id) {
+                    index = i;
+                    break;
+                }
             }
-            ModalProvider.openPersonUpdateModel($scope.selected);
-        };
-
-        $scope.openReportPersonsModel = function () {
-            ModalProvider.openPersonsReportModel($scope.persons);
+            if (index === -1) {
+                alert("Something gone wrong");
+            }
+            $scope.persons.splice(index, 1);
         };
 
         $scope.delete = function (person) {
             if (person) {
-                PersonService.remove(person);
+                $rootScope.showConfirmNotify("حذف البيانات", "هل تود حذف المستخدم فعلاً؟", "error", "fa-trash", function () {
+                    PersonService.remove(person.id).then(function () {
+                        $scope.removeRow(person.id);
+                    });
+                });
                 return;
             }
-            PersonService.remove($scope.selected);
+
+            $rootScope.showConfirmNotify("حذف البيانات", "هل تود حذف المستخدم فعلاً؟", "error", "fa-trash", function () {
+                PersonService.remove($scope.selected.id).then(function () {
+                    $scope.removeRow(person.id);
+                });
+            });
         };
 
         $scope.rowMenu = [
             {
-                html: '<div style="cursor: pointer;padding: 10px"><span class="fa fa-plus-square-o fa-lg"></span> اضافة</div>',
+                html: '<div class="drop-menu">انشاء مستخدم جديد<span class="fa fa-pencil fa-lg"></span></div>',
                 enabled: function () {
                     return true
                 },
@@ -62,7 +66,7 @@ app.controller("personCtrl", ['PersonService', 'ModalProvider', 'FileService', '
                 }
             },
             {
-                html: '<div style="cursor: pointer;padding: 10px"><span class="fa fa-edit fa-lg"></span> تعديل</div>',
+                html: '<div class="drop-menu">تعديل بيانات المستخدم<span class="fa fa-edit fa-lg"></span></div>',
                 enabled: function () {
                     return true
                 },
@@ -71,7 +75,7 @@ app.controller("personCtrl", ['PersonService', 'ModalProvider', 'FileService', '
                 }
             },
             {
-                html: '<div style="cursor: pointer;padding: 10px"><span class="fa fa-minus-square-o fa-lg"></span> حذف</div>',
+                html: '<div class="drop-menu">حذف المستخدم<span class="fa fa-trash fa-lg"></span></div>',
                 enabled: function () {
                     return true
                 },
@@ -80,18 +84,19 @@ app.controller("personCtrl", ['PersonService', 'ModalProvider', 'FileService', '
                 }
             },
             {
-                html: '<div style="cursor: pointer;padding: 10px"><span class="fa fa-print fa-lg"></span> طباعة تقرير مختصر </div>',
+                html: '<div class="drop-menu"><span class="fa fa-print fa-lg"></span> طباعة تقرير مختصر </div>',
                 enabled: function () {
                     return true
                 },
                 click: function ($itemScope, $event, value) {
-                    $scope.openReportPersonsModel();
+                    ModalProvider.openPersonsReportModel($scope.persons);
                 }
             }
         ];
 
         $timeout(function () {
             window.componentHandler.upgradeAllRegistered();
+            $scope.fetchTableData();
         }, 1500);
 
     }]);

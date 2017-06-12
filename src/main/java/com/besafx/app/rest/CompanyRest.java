@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -109,6 +110,7 @@ public class CompanyRest {
         person.getBranches().stream().forEach(branch -> list.add(branch.getRegion().getCompany()));
         person.getDepartments().stream().forEach(department -> list.add(department.getBranch().getRegion().getCompany()));
         person.getEmployees().stream().forEach(employee -> list.add(employee.getDepartment().getBranch().getRegion().getCompany()));
+        list.sort(Comparator.comparing(Company::getCode));
         return list.stream().distinct().collect(Collectors.toList());
     }
 

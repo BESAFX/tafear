@@ -1,21 +1,13 @@
 app.controller('departmentCreateUpdateCtrl', ['DepartmentService', 'BranchService', 'PersonService', '$scope', '$rootScope', '$timeout', '$log', '$uibModalInstance', 'title', 'action', 'department',
     function (DepartmentService, BranchService, PersonService, $scope, $rootScope, $timeout, $log, $uibModalInstance, title, action, department) {
 
-        $scope.fetchBranchData = function () {
+        $timeout(function () {
             BranchService.fetchTableDataSummery().then(function (data) {
                 $scope.branches = data;
             });
-        };
-
-        $scope.fetchPersonData = function () {
             PersonService.findAllSummery().then(function (data) {
                 $scope.persons = data;
             });
-        };
-
-        $timeout(function () {
-            $scope.fetchBranchData();
-            $scope.fetchPersonData();
         }, 1500);
 
         if (department) {

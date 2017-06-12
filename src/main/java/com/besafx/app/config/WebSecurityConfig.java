@@ -103,25 +103,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Bean
     public ServletListenerRegistrationBean<HttpSessionEventPublisher> httpSessionEventPublisher() {
         return new ServletListenerRegistrationBean<>(new HttpSessionEventPublisher() {
-            @Override
-            public void sessionCreated(HttpSessionEvent event) {
-                HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
-                log.info("RemoteUser " + request.getRemoteUser());
-                log.info("RequestURI " + request.getRequestURI());
-                log.info("LocalAddr " + request.getLocalAddr());
-                log.info("LocalName " + request.getLocalName());
-                log.info("RemoteAddr " + request.getRemoteAddr());
-                try {
-                    InetAddress inetAddress = InetAddress.getByName(request.getRemoteAddr());
-                    log.info("PC Name: " + getHostName(inetAddress));
-                } catch (UnknownHostException e) {
-                    e.printStackTrace();
-                }
-                log.info("RemoteHost " + request.getRemoteHost());
-                log.info("ServerName " + request.getServerName());
-                log.info("RemotePort " + request.getRemotePort());
-                super.sessionCreated(event);
-            }
 
             @Override
             public void sessionDestroyed(HttpSessionEvent event) {

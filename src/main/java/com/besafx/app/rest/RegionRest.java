@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -123,6 +124,7 @@ public class RegionRest {
         person.getDepartments().stream().forEach(department -> list.add(department.getBranch().getRegion()));
         person.getEmployees().stream().forEach(employee -> list.add(employee.getDepartment().getBranch().getRegion()));
         list.addAll(person.getRegions());
+        list.sort(Comparator.comparing(Region::getCode));
         return list.stream().distinct().collect(Collectors.toList());
     }
 

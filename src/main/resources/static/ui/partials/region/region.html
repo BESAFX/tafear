@@ -117,14 +117,14 @@
                                 <span>عرض البيانات</span>
                             </span>
                         </li>
-                        <li class="mdl-menu__item mdl-list__item" ng-click="openCreateModel()"
+                        <li class="mdl-menu__item mdl-list__item" ng-click="ModalProvider.openRegionCreateModel();"
                             ng-if="contains(authorities, ['ROLE_REGION_CREATE'])">
                             <span class="mdl-list__item-primary-content">
                                 <i class="material-icons mdl-list__item-icon">add</i>
                                 <span>انشاء منطقة جديدة</span>
                             </span>
                         </li>
-                        <li class="mdl-menu__item mdl-list__item" ng-click="openUpdateModel()"
+                        <li class="mdl-menu__item mdl-list__item" ng-click="ModalProvider.openRegionUpdateModel(selected);"
                             ng-if="contains(authorities, ['ROLE_REGION_UPDATE']) && toggleList===1"
                             ng-hide="!regions || regions.length==0">
                             <span class="mdl-list__item-primary-content">
@@ -132,7 +132,7 @@
                                 <span>تعديل بيانات المنطقة</span>
                             </span>
                         </li>
-                        <li class="mdl-menu__item mdl-list__item" ng-click="remove()"
+                        <li class="mdl-menu__item mdl-list__item" ng-click="delete()"
                             ng-if="contains(authorities, ['ROLE_REGION_DELETE']) && toggleList===1"
                             ng-hide="!regions || regions.length==0">
                             <span class="mdl-list__item-primary-content">
@@ -215,7 +215,9 @@
                                 <td st-select-row-custom="region">{{region.code}}</td>
                                 <td st-select-row-custom="region">{{region.name}}</td>
                                 <td st-select-row-custom="region">{{region.company.name}}</td>
-                                <td st-select-row-custom="region">{{region.manager.name}}</td>
+                                <td st-select-row-custom="region">
+                                    {{region.manager.nickname}} / {{region.manager.name}}
+                                </td>
                                 <td st-select-row-custom="region">{{region.branches.length}}</td>
                             </tr>
                             <tr class="blank_row"
@@ -236,11 +238,15 @@
                         <div class="panel panel-default">
                             <div class="panel-body profile">
                                 <div class="profile-image">
-                                    <img width="100" height="100" src="/ui/img/no-task.png"
+                                    <img width="100" height="100"
+                                         src="/ui/img/no-image.jpg"
                                          alt="{{task.name}}"/>
                                 </div>
                                 <div class="profile-data">
-                                    <div class="profile-data-name">{{region.name}}</div>
+                                    <div class="profile-data-name">
+                                        [ {{region.code}} ]
+                                        {{region.name}}
+                                    </div>
                                 </div>
                                 <div class="profile-controls">
                                     <!--<a href="" class="profile-control-left"><span class="fa fa-info-circle"></span></a>-->
@@ -250,32 +256,42 @@
                             <div class="panel-body">
                                 <div class="contact-info">
                                     <p>
-                                        <small>مسئول المنطقة</small>
-                                        <br/>{{region.manager.nickname}} / {{region.manager.name}}
+                                        <strong>مدير المنطقة</strong>
+                                        {{region.manager.nickname}} / {{region.manager.name}}
                                     </p>
+                                    <hr>
                                     <p>
-                                        <small>الشركة</small>
-                                        <br/>{{region.company.name}}
+                                        <strong>عدد الفروع</strong>
+                                        {{region.branches.length}}
                                     </p>
                                 </div>
                             </div>
                             <div class="panel-footer">
-                                <div class="btn-group btn-group-justified">
-                                    <a ng-click="openUpdateModel(region)"
-                                       ng-if="contains(authorities, ['ROLE_REGION_UPDATE'])"
-                                       uib-tooltip="تعديل"
-                                       tooltip-append-to-body="true"
-                                       type="button"
-                                       class="btn btn-primary">
-                                        <i class="fa fa-edit fa-lg"></i>
-                                    </a>
-                                    <a ng-click="delete(region)" ng-if="contains(authorities, ['ROLE_REGION_DELETE'])"
-                                       uib-tooltip="حذف"
-                                       tooltip-append-to-body="true"
-                                       type="button"
-                                       class="btn btn-primary">
-                                        <i class="fa fa-trash fa-lg"></i>
-                                    </a>
+                                <div class="row">
+                                    <button uib-tooltip="منطقة جديدة"
+                                            tooltip-append-to-body="true"
+                                            type="button"
+                                            ng-if="contains(authorities, ['ROLE_REGION_CREATE'])"
+                                            ng-click="ModalProvider.openRegionCreateModel();"
+                                            class="mdl-button mdl-js-button mdl-js-ripple-effect col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                                        <i class="material-icons">add</i>
+                                    </button>
+                                    <button uib-tooltip="تعديل"
+                                            tooltip-append-to-body="true"
+                                            type="button"
+                                            ng-if="contains(authorities, ['ROLE_REGION_UPDATE'])"
+                                            ng-click="ModalProvider.openRegionUpdateModel(region)"
+                                            class="mdl-button mdl-js-button mdl-js-ripple-effect col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                                        <i class="material-icons">edit</i>
+                                    </button>
+                                    <button uib-tooltip="حذف"
+                                            tooltip-append-to-body="true"
+                                            type="button"
+                                            ng-if="contains(authorities, ['ROLE_REGION_DELETE'])"
+                                            ng-click="delete(region)"
+                                            class="mdl-button mdl-js-button mdl-js-ripple-effect col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                                        <i class="material-icons">delete</i>
+                                    </button>
                                 </div>
                             </div>
                         </div>

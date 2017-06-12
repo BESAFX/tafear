@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -128,6 +129,7 @@ public class EmployeeRest {
         person.getBranches().stream().forEach(branch -> branch.getDepartments().stream().forEach(department -> list.addAll(department.getEmployees())));
         person.getDepartments().stream().forEach(department -> list.addAll(department.getEmployees()));
         list.addAll(person.getEmployees());
+        list.sort(Comparator.comparing(employee -> employee.getPerson().getName()));
         return list.stream().distinct().collect(Collectors.toList());
     }
 

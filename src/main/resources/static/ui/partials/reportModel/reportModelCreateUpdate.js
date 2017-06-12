@@ -1,13 +1,6 @@
 app.controller('reportModelCreateUpdateCtrl', ['ReportModelService', 'ScreenService', 'PersonService', '$scope', '$rootScope', '$timeout', '$log', '$uibModalInstance', 'title', 'action', 'reportModel',
     function (ReportModelService, ScreenService, PersonService, $scope, $rootScope, $timeout, $log, $uibModalInstance, title, action, reportModel) {
 
-        $scope.fetchScreenData = function () {
-            ScreenService.findAll().then(function (data) {
-                $scope.screens = data;
-                $rootScope.showNotify("نماذج الطباعة", "تم تحميل بيانات الشاشات بنجاح", "success", "fa-print");
-            });
-        };
-
         if (reportModel) {
             $scope.reportModel = reportModel;
             $scope.reportProp = JSON.parse($scope.reportModel.template);
@@ -131,6 +124,9 @@ app.controller('reportModelCreateUpdateCtrl', ['ReportModelService', 'ScreenServ
 
         $scope.cancel = function () {
             $uibModalInstance.dismiss('cancel');
+            ScreenService.findAll().then(function (data) {
+                $scope.screens = data;
+            });
         };
 
     }]);

@@ -1,21 +1,13 @@
 app.controller('employeeCreateUpdateCtrl', ['EmployeeService', 'DepartmentService', 'PersonService', '$scope', '$rootScope', '$timeout', '$log', '$uibModalInstance', 'title', 'action', 'employee',
     function (EmployeeService, DepartmentService, PersonService, $scope, $rootScope, $timeout, $log, $uibModalInstance, title, action, employee) {
 
-        $scope.fetchDepartmentData = function () {
+        $timeout(function () {
             DepartmentService.fetchTableDataSummery().then(function (data) {
                 $scope.departments = data;
             });
-        };
-
-        $scope.fetchPersonData = function () {
             PersonService.findAllSummery().then(function (data) {
                 $scope.persons = data;
             });
-        };
-
-        $timeout(function () {
-            $scope.fetchDepartmentData();
-            $scope.fetchPersonData();
         }, 1500);
 
         if (employee) {

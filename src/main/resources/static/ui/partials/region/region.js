@@ -23,51 +23,59 @@ app.controller("regionCtrl", ['RegionService', 'PersonService', 'ModalProvider',
             }
         };
 
-        $scope.reload = function () {
-            $state.reload();
-        };
-
-        $scope.openCreateModel = function () {
-            ModalProvider.openRegionCreateModel();
-        };
-
-        $scope.openUpdateModel = function (region) {
-            if (region) {
-                ModalProvider.openRegionUpdateModel(region);
-                return;
+        $scope.removeRow = function (id) {
+            var index = -1;
+            var regionsArr = eval($scope.regions);
+            for (var i = 0; i < regionsArr.length; i++) {
+                if (regionsArr[i].id === id) {
+                    index = i;
+                    break;
+                }
             }
-            ModalProvider.openRegionUpdateModel($scope.selected);
+            if (index === -1) {
+                alert("Something gone wrong");
+            }
+            $scope.regions.splice(index, 1);
         };
 
         $scope.delete = function (region) {
             if (region) {
-                RegionService.remove(region);
+                $rootScope.showConfirmNotify("المهام", "هل تود حذف المنطقة فعلاً؟", "error", "fa-trash", function () {
+                    RegionService.remove(region.id).then(function () {
+                        $scope.removeRow(region.id);
+                    });
+                });
                 return;
             }
-            RegionService.remove($scope.selected);
+
+            $rootScope.showConfirmNotify("المهام", "هل تود حذف المنطقة فعلاً؟", "error", "fa-trash", function () {
+                RegionService.remove($scope.selected.id).then(function () {
+                    $scope.removeRow(region.id);
+                });
+            });
         };
 
         $scope.rowMenu = [
             {
-                html: '<div style="cursor: pointer;padding: 10px"><span class="fa fa-plus-square-o fa-lg"></span> اضافة</div>',
+                html: '<div class="drop-menu">انشاء منطقة جديدة<span class="fa fa-pencil fa-lg"></span></div>',
+                enabled: function () {
+                    return $rootScope.contains($rootScope.authorities, ['ROLE_REGION_CREATE']);
+                },
+                click: function ($itemScope, $event, value) {
+                    ModalProvider.openRegionCreateModel();
+                }
+            },
+            {
+                html: '<div class="drop-menu">تعديل بيانات المنطقة<span class="fa fa-edit fa-lg"></span></div>',
                 enabled: function () {
                     return true
                 },
                 click: function ($itemScope, $event, value) {
-                    $scope.openCreateModel();
+                    ModalProvider.openRegionUpdateModel($itemScope.region);
                 }
             },
             {
-                html: '<div style="cursor: pointer;padding: 10px"><span class="fa fa-edit fa-lg"></span> تعديل</div>',
-                enabled: function () {
-                    return true
-                },
-                click: function ($itemScope, $event, value) {
-                    $scope.openUpdateModel($itemScope.region);
-                }
-            },
-            {
-                html: '<div style="cursor: pointer;padding: 10px"><span class="fa fa-minus-square-o fa-lg"></span> حذف</div>',
+                html: '<div class="drop-menu">حذف المنطقة<span class="fa fa-trash fa-lg"></span></div>',
                 enabled: function () {
                     return true
                 },
@@ -79,6 +87,7 @@ app.controller("regionCtrl", ['RegionService', 'PersonService', 'ModalProvider',
 
         $timeout(function () {
             window.componentHandler.upgradeAllRegistered();
+            $scope.fetchTableData();
         }, 1500);
 
     }]);
