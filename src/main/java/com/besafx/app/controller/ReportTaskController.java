@@ -38,6 +38,9 @@ public class ReportTaskController {
     private final Logger log = LoggerFactory.getLogger(ReportTaskController.class);
 
     @Autowired
+    private CompanyService companyService;
+
+    @Autowired
     private PersonService personService;
 
     @Autowired
@@ -85,9 +88,9 @@ public class ReportTaskController {
          */
         Map<String, Object> map = new HashMap<>();
         StringBuilder param1 = new StringBuilder();
-        param1.append("المعهد الأهلي العالي للتدريب");
+        param1.append("طيف العربية");
         param1.append("\n");
-        param1.append("تحت إشراف المؤسسة العامة للتدريب المهني والتقني");
+        param1.append("للتعليم والتدريب التقني");
         if (startDate == null && endDate == null) {
             param1.append("\n");
             param1.append("تقرير عن حركات المهام بدون تحديد فترة");
@@ -95,7 +98,14 @@ public class ReportTaskController {
             param1.append("\n");
             param1.append("تقرير عن حركات المهام حسب الفترة من: " + DateConverter.getHijriStringFromDateLTR(startDate) + " إلى الفترة: " + DateConverter.getHijriStringFromDateLTR(endDate));
         }
-        map.put("title", param1.toString());
+        map.put("TITLE", param1.toString());
+        Lists.newArrayList(companyService.findAll()).stream().findAny().ifPresent(company -> {
+            map.put("COMPANY_NAME", company.getName());
+            map.put("COMPANY_PHONE", "الهاتف: " + company.getPhone());
+            map.put("COMPANY_MOBILE","الجوال: " +  company.getMobile());
+            map.put("COMPANY_FAX", "الفاكس: " + company.getFax());
+            map.put("COMPANY_COMMERCIAL_REGISTER", "السجل التجاري: " + company.getCommericalRegisteration());
+        });
         List<WrapperUtil> list = new ArrayList<>();
         ListIterator<Long> listIterator = tasksList.listIterator();
         while (listIterator.hasNext()) {
@@ -140,13 +150,20 @@ public class ReportTaskController {
          */
         Map<String, Object> map = new HashMap<>();
         StringBuilder param1 = new StringBuilder();
-        param1.append("المعهد الأهلي العالي للتدريب");
+        param1.append("طيف العربية");
         param1.append("\n");
-        param1.append("تحت إشراف المؤسسة العامة للتدريب المهني والتقني");
+        param1.append("للتعليم والتدريب التقني");
         param1.append("\n");
         param1.append("تقرير مختصر عن المهام");
-        map.put("title", param1.toString());
-        map.put("tasks", tasksList.stream().map(value -> taskService.findOne(value)).collect(Collectors.toList()));
+        map.put("TITLE", param1.toString());
+        map.put("TASKS", tasksList.stream().map(value -> taskService.findOne(value)).collect(Collectors.toList()));
+        Lists.newArrayList(companyService.findAll()).stream().findAny().ifPresent(company -> {
+            map.put("COMPANY_NAME", company.getName());
+            map.put("COMPANY_PHONE", "الهاتف: " + company.getPhone());
+            map.put("COMPANY_MOBILE","الجوال: " +  company.getMobile());
+            map.put("COMPANY_FAX", "الفاكس: " + company.getFax());
+            map.put("COMPANY_COMMERCIAL_REGISTER", "السجل التجاري: " + company.getCommericalRegisteration());
+        });
         ClassPathResource jrxmlFile = new ClassPathResource("/report/task/Tasks.jrxml");
         JasperReport jasperReport = JasperCompileManager.compileReport(jrxmlFile.getInputStream());
         JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, map);
@@ -170,12 +187,19 @@ public class ReportTaskController {
          */
         Map<String, Object> map = new HashMap<>();
         StringBuilder param1 = new StringBuilder();
-        param1.append("المعهد الأهلي العالي للتدريب");
+        param1.append("طيف العربية");
         param1.append("\n");
-        param1.append("تحت إشراف المؤسسة العامة للتدريب المهني والتقني");
+        param1.append("للتعليم والتدريب التقني");
         param1.append("\n");
         param1.append("تقرير متابعة مهام إدارية");
-        map.put("title", param1.toString());
+        map.put("TITLE", param1.toString());
+        Lists.newArrayList(companyService.findAll()).stream().findAny().ifPresent(company -> {
+            map.put("COMPANY_NAME", company.getName());
+            map.put("COMPANY_PHONE", "الهاتف: " + company.getPhone());
+            map.put("COMPANY_MOBILE","الجوال: " +  company.getMobile());
+            map.put("COMPANY_FAX", "الفاكس: " + company.getFax());
+            map.put("COMPANY_COMMERCIAL_REGISTER", "السجل التجاري: " + company.getCommericalRegisteration());
+        });
         List<WrapperUtil> list = new ArrayList<>();
         initTaskTosCheckList(tasksList, list);
         ClassPathResource jrxmlFile = new ClassPathResource("/report/task/TaskTosCheck.jrxml");
@@ -202,9 +226,9 @@ public class ReportTaskController {
          */
         Map<String, Object> map = new HashMap<>();
         StringBuilder param1 = new StringBuilder();
-        param1.append("المعهد الأهلي العالي للتدريب");
+        param1.append("طيف العربية");
         param1.append("\n");
-        param1.append("تحت إشراف المؤسسة العامة للتدريب المهني والتقني");
+        param1.append("للتعليم والتدريب التقني");
         param1.append("\n");
         if (startDate != null && endDate != null) {
             param1.append("تقرير مختصر بخصومات المهام الصادرة من " + person.getNickname() + " / " + person.getName());
@@ -215,9 +239,16 @@ public class ReportTaskController {
         } else {
             param1.append("تقرير مختصر بخصومات المهام الصادرة من " + person.getNickname() + " / " + person.getName());
         }
-        map.put("title", param1.toString());
+        map.put("TITLE", param1.toString());
+        Lists.newArrayList(companyService.findAll()).stream().findAny().ifPresent(company -> {
+            map.put("COMPANY_NAME", company.getName());
+            map.put("COMPANY_PHONE", "الهاتف: " + company.getPhone());
+            map.put("COMPANY_MOBILE","الجوال: " +  company.getMobile());
+            map.put("COMPANY_FAX", "الفاكس: " + company.getFax());
+            map.put("COMPANY_COMMERCIAL_REGISTER", "السجل التجاري: " + company.getCommericalRegisteration());
+        });
         List<WrapperUtil> list = initOutgoingTasksDeductionsList(personId, closeType, startDate, endDate);
-        map.put("list", list);
+        map.put("LIST", list);
         log.info("عدد العناصر يساوي: " + list.size());
         ClassPathResource jrxmlFile = new ClassPathResource("/report/task/OutgoingTasksDeductions.jrxml");
         JasperReport jasperReport = JasperCompileManager.compileReport(jrxmlFile.getInputStream());
@@ -245,9 +276,9 @@ public class ReportTaskController {
          */
         Map<String, Object> map = new HashMap<>();
         StringBuilder param1 = new StringBuilder();
-        param1.append("المعهد الأهلي العالي للتدريب");
+        param1.append("طيف العربية");
         param1.append("\n");
-        param1.append("تحت إشراف المؤسسة العامة للتدريب المهني والتقني");
+        param1.append("للتعليم والتدريب التقني");
         param1.append("\n");
         if (startDate != null && endDate != null) {
             param1.append("تقرير مختصر بخصومات المهام الواردة إلى الموظفين");
@@ -258,9 +289,16 @@ public class ReportTaskController {
         } else {
             param1.append("تقرير مختصر بخصومات المهام الواردة إلى الموظفين");
         }
-        map.put("title", param1.toString());
+        map.put("TITLE", param1.toString());
+        Lists.newArrayList(companyService.findAll()).stream().findAny().ifPresent(company -> {
+            map.put("COMPANY_NAME", company.getName());
+            map.put("COMPANY_PHONE", "الهاتف: " + company.getPhone());
+            map.put("COMPANY_MOBILE","الجوال: " +  company.getMobile());
+            map.put("COMPANY_FAX", "الفاكس: " + company.getFax());
+            map.put("COMPANY_COMMERCIAL_REGISTER", "السجل التجاري: " + company.getCommericalRegisteration());
+        });
         List<WrapperUtil> list = initIncomingTasksDeductionsList(personList, closeType, startDate, endDate);
-        map.put("list", list);
+        map.put("LIST", list);
         log.info("عدد العناصر يساوي: " + list.size());
         ClassPathResource jrxmlFile = new ClassPathResource("/report/task/IncomingTasksDeductions.jrxml");
         JasperReport jasperReport = JasperCompileManager.compileReport(jrxmlFile.getInputStream());
@@ -287,15 +325,22 @@ public class ReportTaskController {
          */
         Map<String, Object> map = new HashMap<>();
         StringBuilder param1 = new StringBuilder();
-        param1.append("المعهد الأهلي العالي للتدريب");
+        param1.append("طيف العربية");
         param1.append("\n");
-        param1.append("تحت إشراف المؤسسة العامة للتدريب المهني والتقني");
+        param1.append("للتعليم والتدريب التقني");
         param1.append("\n");
         param1.append("تقرير مختصر لمراقبة حركة العمل على المهام للمكلفين");
         //
-        map.put("title", param1.toString());
+        map.put("TITLE", param1.toString());
+        Lists.newArrayList(companyService.findAll()).stream().findAny().ifPresent(company -> {
+            map.put("COMPANY_NAME", company.getName());
+            map.put("COMPANY_PHONE", "الهاتف: " + company.getPhone());
+            map.put("COMPANY_MOBILE","الجوال: " +  company.getMobile());
+            map.put("COMPANY_FAX", "الفاكس: " + company.getFax());
+            map.put("COMPANY_COMMERCIAL_REGISTER", "السجل التجاري: " + company.getCommericalRegisteration());
+        });
         List<WrapperUtil> list = initWatchTasksOperationsList(personList, closeType);
-        map.put("list", list);
+        map.put("LIST", list);
         log.info("عدد العناصر يساوي: " + list.size());
         ClassPathResource jrxmlFile = new ClassPathResource("/report/task/WatchTasksOperations.jrxml");
         JasperReport jasperReport = JasperCompileManager.compileReport(jrxmlFile.getInputStream());
@@ -321,9 +366,9 @@ public class ReportTaskController {
          */
         Map<String, Object> map = new HashMap<>();
         StringBuilder param1 = new StringBuilder();
-        param1.append("المعهد الأهلي العالي للتدريب");
+        param1.append("طيف العربية");
         param1.append("\n");
-        param1.append("تحت إشراف المؤسسة العامة للتدريب المهني والتقني");
+        param1.append("للتعليم والتدريب التقني");
         param1.append("\n");
         if (startDate != null && endDate != null) {
             param1.append("تقرير مختصر بخصومات المهام الواردة إلى الموظفين");
@@ -334,9 +379,16 @@ public class ReportTaskController {
         } else {
             param1.append("تقرير مختصر بخصومات المهام الواردة إلى الموظفين");
         }
-        map.put("title", param1.toString());
+        map.put("TITLE", param1.toString());
+        Lists.newArrayList(companyService.findAll()).stream().findAny().ifPresent(company -> {
+            map.put("COMPANY_NAME", company.getName());
+            map.put("COMPANY_PHONE", "الهاتف: " + company.getPhone());
+            map.put("COMPANY_MOBILE","الجوال: " +  company.getMobile());
+            map.put("COMPANY_FAX", "الفاكس: " + company.getFax());
+            map.put("COMPANY_COMMERCIAL_REGISTER", "السجل التجاري: " + company.getCommericalRegisteration());
+        });
         List<WrapperUtil> list = initIncomingTasksDeductionsList(personList, closeType, startDate, endDate);
-        map.put("list", list);
+        map.put("LIST", list);
         log.info("عدد العناصر يساوي: " + list.size());
         ClassPathResource jrxmlFile = new ClassPathResource("/report/task/IncomingTasksDeductions.jrxml");
         JasperReport jasperReport = JasperCompileManager.compileReport(jrxmlFile.getInputStream());
@@ -367,14 +419,21 @@ public class ReportTaskController {
          */
         Map<String, Object> map = new HashMap<>();
         StringBuilder param1 = new StringBuilder();
-        param1.append("المعهد الأهلي العالي للتدريب");
+        param1.append("طيف العربية");
         param1.append("\n");
-        param1.append("تحت إشراف المؤسسة العامة للتدريب المهني والتقني");
+        param1.append("للتعليم والتدريب التقني");
         param1.append("\n");
         param1.append("تقرير عن المهام الباقي على تاريخ إغلاقها أقل من 72 ساعة (ثلاث أيام) من تاريخ اليوم للموظف / " + person.getName());
-        map.put("title", param1.toString());
+        map.put("TITLE", param1.toString());
+        Lists.newArrayList(companyService.findAll()).stream().findAny().ifPresent(company -> {
+            map.put("COMPANY_NAME", company.getName());
+            map.put("COMPANY_PHONE", "الهاتف: " + company.getPhone());
+            map.put("COMPANY_MOBILE","الجوال: " +  company.getMobile());
+            map.put("COMPANY_FAX", "الفاكس: " + company.getFax());
+            map.put("COMPANY_COMMERCIAL_REGISTER", "السجل التجاري: " + company.getCommericalRegisteration());
+        });
         List<WrapperUtil> list = initTasksClosedSoonNotifyList(personId);
-        map.put("list", list);
+        map.put("LIST", list);
         ClassPathResource jrxmlFile = new ClassPathResource("/report/task/TasksClosedSoonNotify.jrxml");
         JasperReport jasperReport = JasperCompileManager.compileReport(jrxmlFile.getInputStream());
         JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, map);
@@ -398,14 +457,21 @@ public class ReportTaskController {
          */
         Map<String, Object> map = new HashMap<>();
         StringBuilder param1 = new StringBuilder();
-        param1.append("المعهد الأهلي العالي للتدريب");
+        param1.append("طيف العربية");
         param1.append("\n");
-        param1.append("تحت إشراف المؤسسة العامة للتدريب المهني والتقني");
+        param1.append("للتعليم والتدريب التقني");
         param1.append("\n");
         param1.append(Optional.ofNullable(title).isPresent() ? title : "تقرير عن حركات المهام الصادرة من " + person.getNickname() + " / " + person.getName());
-        map.put("title", param1.toString());
+        map.put("TITLE", param1.toString());
+        Lists.newArrayList(companyService.findAll()).stream().findAny().ifPresent(company -> {
+            map.put("COMPANY_NAME", company.getName());
+            map.put("COMPANY_PHONE", "الهاتف: " + company.getPhone());
+            map.put("COMPANY_MOBILE","الجوال: " +  company.getMobile());
+            map.put("COMPANY_FAX", "الفاكس: " + company.getFax());
+            map.put("COMPANY_COMMERCIAL_REGISTER", "السجل التجاري: " + company.getCommericalRegisteration());
+        });
         List<WrapperUtil> list = initTasksOperationsTodayList(personId);
-        map.put("list", list);
+        map.put("LIST", list);
         //
         ClassPathResource jrxmlFile = new ClassPathResource("/report/task/TasksOperationsToday.jrxml");
         JasperReport jasperReport = JasperCompileManager.compileReport(jrxmlFile.getInputStream());
@@ -420,12 +486,19 @@ public class ReportTaskController {
          */
         Map<String, Object> map = new HashMap<>();
         StringBuilder param1 = new StringBuilder();
-        param1.append("المعهد الأهلي العالي للتدريب");
+        param1.append("طيف العربية");
         param1.append("\n");
-        param1.append("تحت إشراف المؤسسة العامة للتدريب المهني والتقني");
+        param1.append("للتعليم والتدريب التقني");
         param1.append("\n");
         param1.append("تقرير متابعة مهام إدارية");
-        map.put("title", param1.toString());
+        map.put("TITLE", param1.toString());
+        Lists.newArrayList(companyService.findAll()).stream().findAny().ifPresent(company -> {
+            map.put("COMPANY_NAME", company.getName());
+            map.put("COMPANY_PHONE", "الهاتف: " + company.getPhone());
+            map.put("COMPANY_MOBILE","الجوال: " +  company.getMobile());
+            map.put("COMPANY_FAX", "الفاكس: " + company.getFax());
+            map.put("COMPANY_COMMERCIAL_REGISTER", "السجل التجاري: " + company.getCommericalRegisteration());
+        });
         List<WrapperUtil> list = new ArrayList<>();
         initTaskTosCheckList(tasksList, list);
         try {
@@ -446,14 +519,21 @@ public class ReportTaskController {
          */
         Map<String, Object> map = new HashMap<>();
         StringBuilder param1 = new StringBuilder();
-        param1.append("المعهد الأهلي العالي للتدريب");
+        param1.append("طيف العربية");
         param1.append("\n");
-        param1.append("تحت إشراف المؤسسة العامة للتدريب المهني والتقني");
+        param1.append("للتعليم والتدريب التقني");
         param1.append("\n");
         param1.append("تقرير عن المهام الباقي على تاريخ إغلاقها أقل من 72 ساعة (ثلاث أيام) من تاريخ اليوم");
-        map.put("title", param1.toString());
+        map.put("TITLE", param1.toString());
+        Lists.newArrayList(companyService.findAll()).stream().findAny().ifPresent(company -> {
+            map.put("COMPANY_NAME", company.getName());
+            map.put("COMPANY_PHONE", "الهاتف: " + company.getPhone());
+            map.put("COMPANY_MOBILE","الجوال: " +  company.getMobile());
+            map.put("COMPANY_FAX", "الفاكس: " + company.getFax());
+            map.put("COMPANY_COMMERCIAL_REGISTER", "السجل التجاري: " + company.getCommericalRegisteration());
+        });
         List<WrapperUtil> list = initTasksClosedSoonNotifyList(personId);
-        map.put("list", list);
+        map.put("LIST", list);
         if (list.isEmpty()) {
             return null;
         }
@@ -475,14 +555,21 @@ public class ReportTaskController {
          */
         Map<String, Object> map = new HashMap<>();
         StringBuilder param1 = new StringBuilder();
-        param1.append("المعهد الأهلي العالي للتدريب");
+        param1.append("طيف العربية");
         param1.append("\n");
-        param1.append("تحت إشراف المؤسسة العامة للتدريب المهني والتقني");
+        param1.append("للتعليم والتدريب التقني");
         param1.append("\n");
         param1.append("تقرير عن حركات الموظفين على المهام الإدارية");
-        map.put("title", param1.toString());
+        map.put("TITLE", param1.toString());
+        Lists.newArrayList(companyService.findAll()).stream().findAny().ifPresent(company -> {
+            map.put("COMPANY_NAME", company.getName());
+            map.put("COMPANY_PHONE", "الهاتف: " + company.getPhone());
+            map.put("COMPANY_MOBILE","الجوال: " +  company.getMobile());
+            map.put("COMPANY_FAX", "الفاكس: " + company.getFax());
+            map.put("COMPANY_COMMERCIAL_REGISTER", "السجل التجاري: " + company.getCommericalRegisteration());
+        });
         List<WrapperUtil> list = initTasksOperationsTodayList(personId);
-        map.put("list", list);
+        map.put("LIST", list);
         if (list.isEmpty()) {
             return null;
         }
@@ -505,14 +592,21 @@ public class ReportTaskController {
          */
         Map<String, Object> map = new HashMap<>();
         StringBuilder param1 = new StringBuilder();
-        param1.append("المعهد الأهلي العالي للتدريب");
+        param1.append("طيف العربية");
         param1.append("\n");
-        param1.append("تحت إشراف المؤسسة العامة للتدريب المهني والتقني");
+        param1.append("للتعليم والتدريب التقني");
         param1.append("\n");
         param1.append("تقرير مختصر بإجمالي خصومات المهام الصادرة من " + person.getNickname() + " / " + person.getName());
-        map.put("title", param1.toString());
+        map.put("TITLE", param1.toString());
+        Lists.newArrayList(companyService.findAll()).stream().findAny().ifPresent(company -> {
+            map.put("COMPANY_NAME", company.getName());
+            map.put("COMPANY_PHONE", "الهاتف: " + company.getPhone());
+            map.put("COMPANY_MOBILE","الجوال: " +  company.getMobile());
+            map.put("COMPANY_FAX", "الفاكس: " + company.getFax());
+            map.put("COMPANY_COMMERCIAL_REGISTER", "السجل التجاري: " + company.getCommericalRegisteration());
+        });
         List<WrapperUtil> list = initOutgoingTasksDeductionsList(personId, null, null, null);
-        map.put("list", list);
+        map.put("LIST", list);
         if (list.isEmpty()) {
             return null;
         }
@@ -534,14 +628,21 @@ public class ReportTaskController {
          */
         Map<String, Object> map = new HashMap<>();
         StringBuilder param1 = new StringBuilder();
-        param1.append("المعهد الأهلي العالي للتدريب");
+        param1.append("طيف العربية");
         param1.append("\n");
-        param1.append("تحت إشراف المؤسسة العامة للتدريب المهني والتقني");
+        param1.append("للتعليم والتدريب التقني");
         param1.append("\n");
         param1.append("تقرير مختصر لمراقبة حركة العمل على المهام للمكلفين");
-        map.put("title", param1.toString());
+        map.put("TITLE", param1.toString());
+        Lists.newArrayList(companyService.findAll()).stream().findAny().ifPresent(company -> {
+            map.put("COMPANY_NAME", company.getName());
+            map.put("COMPANY_PHONE", "الهاتف: " + company.getPhone());
+            map.put("COMPANY_MOBILE","الجوال: " +  company.getMobile());
+            map.put("COMPANY_FAX", "الفاكس: " + company.getFax());
+            map.put("COMPANY_COMMERCIAL_REGISTER", "السجل التجاري: " + company.getCommericalRegisteration());
+        });
         List<WrapperUtil> list = initWatchTasksOperationsList(personsList, Task.CloseType.Pending);
-        map.put("list", list);
+        map.put("LIST", list);
         if (list.isEmpty()) {
             return null;
         }

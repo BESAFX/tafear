@@ -84,7 +84,7 @@ app.controller("personCtrl", ['PersonService', 'ModalProvider', '$scope', '$root
                 }
             },
             {
-                html: '<div class="drop-menu"><span class="fa fa-print fa-lg"></span> طباعة تقرير مختصر </div>',
+                html: '<div class="drop-menu">طباعة تقرير مختصر<span class="fa fa-print fa-lg"></span></div>',
                 enabled: function () {
                     return true
                 },
