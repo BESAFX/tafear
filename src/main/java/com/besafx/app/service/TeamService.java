@@ -9,4 +9,8 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public interface TeamService extends PagingAndSortingRepository<Team, Long>, JpaSpecificationExecutor<Team> {
 
+    Team findTopByOrderByCodeDesc();
+    Team findByCodeAndIdIsNot(Integer code, Long id);
+    Team findByAuthorities(String authorities);
+    Team findByName(String code);
 }

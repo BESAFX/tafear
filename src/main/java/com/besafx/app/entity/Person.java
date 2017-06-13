@@ -67,16 +67,16 @@ public class Person implements Serializable {
     @JsonView(Views.Summery.class)
     private String password;
 
-    @JsonView(Views.Summery.class)
+    @Column(columnDefinition = "boolean default false", nullable = false)
+    private Boolean technicalSupport;
+
+    @Column(columnDefinition = "boolean default true", nullable = false)
     private Boolean enabled;
 
-    @JsonView(Views.Summery.class)
+    @Column(columnDefinition = "boolean default false", nullable = false)
     private Boolean tokenExpired;
 
-    @JsonView(Views.Summery.class)
-    private String optionThemeName;
-
-    @JsonView(Views.Summery.class)
+    @Column(columnDefinition = "boolean default false", nullable = false)
     private Boolean active;
 
     @JsonIgnore

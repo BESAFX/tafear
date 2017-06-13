@@ -23,53 +23,43 @@ app.controller("teamCtrl", ['TeamService', 'ModalProvider', '$rootScope', '$scop
             }
         };
 
-        $scope.reload = function () {
-            $state.reload();
-        };
-
-        $scope.openCreateModel = function () {
-            ModalProvider.openTeamCreateModel();
-        };
-
-        $scope.openUpdateModel = function (team) {
+        $scope.delete = function (team) {
             if (team) {
-                ModalProvider.openTeamUpdateModel(team);
+                $rootScope.showConfirmNotify("حذف البيانات", "هل تود حذف المجموعة فعلاً؟", "error", "fa-trash", function () {
+                    TeamService.remove(team.id).then(function () {
+
+                    });
+                });
                 return;
             }
-            ModalProvider.openTeamUpdateModel($scope.selected);
-        };
+            $rootScope.showConfirmNotify("حذف البيانات", "هل تود حذف المجموعة فعلاً؟", "error", "fa-trash", function () {
+                TeamService.remove($scope.selected.id).then(function () {
 
-        $scope.delete = function (team) {
-            if (team.persons.length == 0) {
-                TeamService.remove(team.id).then(function () {
-                    $rootScope.showNotify("المجموعات", "تم الحذف بنجاح، يمكنك متابعة عملك الآن", "success", "fa-shield");
                 });
-            } else {
-                $rootScope.showNotify("المجموعات", "لا يمكنك الحذف نظراً لاستخدامها من قبل بعض المستخدمين", "error", "fa-shield");
-            }
+            });
         };
 
         $scope.rowMenu = [
             {
-                html: '<div class="drop-menu"><span class="fa fa-pencil fa-lg"></span> اضافة</div>',
+                html: '<div class="drop-menu">انشاء مجموعة جديدة<span class="fa fa-pencil fa-lg"></span></div>',
                 enabled: function () {
                     return true
                 },
                 click: function ($itemScope, $event, value) {
-                    $scope.openCreateModel();
+                    ModalProvider.openTeamCreateModel();
                 }
             },
             {
-                html: '<div class="drop-menu"><span class="fa fa-edit fa-lg"></span> تعديل</div>',
+                html: '<div class="drop-menu">تعديل بيانات المجموعة<span class="fa fa-edit fa-lg"></span></div>',
                 enabled: function () {
                     return true
                 },
                 click: function ($itemScope, $event, value) {
-                    $scope.openUpdateModel($itemScope.team);
+                    ModalProvider.openTeamUpdateModel($itemScope.team);
                 }
             },
             {
-                html: '<div class="drop-menu"><span class="fa fa-trash fa-lg"></span> حذف</div>',
+                html: '<div class="drop-menu">حذف المجموعة<span class="fa fa-trash fa-lg"></span></div>',
                 enabled: function () {
                     return true
                 },
@@ -81,6 +71,7 @@ app.controller("teamCtrl", ['TeamService', 'ModalProvider', '$rootScope', '$scop
 
         $timeout(function () {
             window.componentHandler.upgradeAllRegistered();
+            $scope.fetchTableData();
         }, 1500);
 
     }]);

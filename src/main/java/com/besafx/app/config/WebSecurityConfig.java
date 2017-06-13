@@ -1,9 +1,6 @@
 package com.besafx.app.config;
-import com.besafx.app.component.LocationFinder;
 import com.besafx.app.entity.Person;
-import com.besafx.app.service.PersonService;
-import com.besafx.app.service.RoleService;
-import com.besafx.app.ws.NotificationService;
+import com.besafx.app.service.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +18,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.context.SecurityContextImpl;
 import org.springframework.security.core.session.SessionRegistry;
 import org.springframework.security.core.session.SessionRegistryImpl;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -31,51 +29,50 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSessionEvent;
-import java.lang.reflect.Constructor;
-import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-import java.net.InetAddress;
-import java.net.UnknownHostException;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
-public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+public class
+WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final static Logger log = LoggerFactory.getLogger(WebSecurityConfig.class);
+
+    @Autowired
+    private CompanyService companyService;
+
+    @Autowired
+    private RegionService regionService;
+
+    @Autowired
+    private BranchService branchService;
+
+    @Autowired
+    private DepartmentService departmentService;
+
+    @Autowired
+    private EmployeeService employeeService;
 
     @Autowired
     private PersonService personService;
 
     @Autowired
-    private RoleService roleService;
-
-    @Autowired
     private PasswordEncoder passwordEncoder;
-
-    @Autowired
-    private NotificationService notificationService;
-
-    @Autowired
-    private LocationFinder locationFinder;
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
                 .antMatchers("/ui/**").permitAll()
                 .antMatchers("/api/**").permitAll()
-                .antMatchers("/company").access("hasRole('ROLE_COMPANY_CREATE') or hasRole('ROLE_COMPANY_UPDATE') or hasRole('ROLE_COMPANY_DELETE') or hasRole('ROLE_COMPANY_REPORT')")
-                .antMatchers("/branch").access("hasRole('ROLE_BRANCH_CREATE') or hasRole('ROLE_BRANCH_UPDATE') or hasRole('ROLE_BRANCH_DELETE') or hasRole('ROLE_BRANCH_REPORT')")
-                .antMatchers("/department").access("hasRole('ROLE_DEPARTMENT_CREATE') or hasRole('ROLE_DEPARTMENT_UPDATE') or hasRole('ROLE_DEPARTMENT_DELETE') or hasRole('ROLE_DEPARTMENT_REPORT')")
-                .antMatchers("/employee").access("hasRole('ROLE_EMPLOYEE_CREATE') or hasRole('ROLE_EMPLOYEE_UPDATE') or hasRole('ROLE_EMPLOYEE_DELETE') or hasRole('ROLE_EMPLOYEE_REPORT')")
-                .antMatchers("/team").access("hasRole('ROLE_TEAM_CREATE') or hasRole('ROLE_TEAM_UPDATE') or hasRole('ROLE_TEAM_DELETE') or hasRole('ROLE_TEAM_REPORT')")
-                .antMatchers("/task").access("hasRole('ROLE_TASK_CREATE') or hasRole('ROLE_TASK_UPDATE') or hasRole('ROLE_TASK_DELETE') or hasRole('ROLE_TASK_REPORT')")
-                .antMatchers("/person").access("hasRole('ROLE_PERSON_CREATE') or hasRole('ROLE_PERSON_UPDATE') or hasRole('ROLE_PERSON_DELETE') or hasRole('ROLE_PERSON_REPORT')")
+                .antMatchers("/company").access("hasRole('ROLE_COMPANY_UPDATE')")
+                .antMatchers("/region").access("hasRole('ROLE_REGION_CREATE') or hasRole('ROLE_REGION_UPDATE') or hasRole('ROLE_REGION_DELETE')")
+                .antMatchers("/branch").access("hasRole('ROLE_BRANCH_CREATE') or hasRole('ROLE_BRANCH_UPDATE') or hasRole('ROLE_BRANCH_DELETE')")
+                .antMatchers("/department").access("hasRole('ROLE_DEPARTMENT_CREATE') or hasRole('ROLE_DEPARTMENT_UPDATE') or hasRole('ROLE_DEPARTMENT_DELETE')")
+                .antMatchers("/employee").access("hasRole('ROLE_EMPLOYEE_CREATE') or hasRole('ROLE_EMPLOYEE_UPDATE') or hasRole('ROLE_EMPLOYEE_DELETE')")
+                .antMatchers("/team").access("hasRole('ROLE_TEAM_CREATE') or hasRole('ROLE_TEAM_UPDATE') or hasRole('ROLE_TEAM_DELETE')")
+                .antMatchers("/task").access("hasRole('ROLE_TASK_CREATE') or hasRole('ROLE_TASK_UPDATE') or hasRole('ROLE_TASK_DELETE')")
+                .antMatchers("/person").access("hasRole('ROLE_PERSON_CREATE') or hasRole('ROLE_PERSON_UPDATE') or hasRole('ROLE_PERSON_DELETE')")
                 .anyRequest().authenticated();
         http.formLogin()
                 .loginPage("/login")
@@ -103,7 +100,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Bean
     public ServletListenerRegistrationBean<HttpSessionEventPublisher> httpSessionEventPublisher() {
         return new ServletListenerRegistrationBean<>(new HttpSessionEventPublisher() {
-
             @Override
             public void sessionDestroyed(HttpSessionEvent event) {
                 SecurityContextImpl securityContext = (SecurityContextImpl) event.getSession().getAttribute("SPRING_SECURITY_CONTEXT");
@@ -126,79 +122,36 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         auth.userDetailsService((String email) -> {
                     Person person = personService.findByEmail(email);
                     List<GrantedAuthority> authorities = new ArrayList<>();
+                    authorities.add(new SimpleGrantedAuthority("ROLE_PROFILE_UPDATE"));
                     if (SecurityContextHolder.getContext().getAuthentication() == null) {
+                        log.info("فحص وجود المستخدم");
                         if (person == null) {
-                            throw new UsernameNotFoundException(email);
+                            log.info("هذا المستخدم غير موجود");
+                            throw new UsernameNotFoundException("هذا المستخدم غير موجود");
+                        }
+                        log.info("فحص إذا كان المستخدم ليس دعماً فنياً");
+                        if (person.getTechnicalSupport()) {
+                            log.info("السماح بمرور الدعم الفني");
+                        } else {
+                            log.info("فحص هل هذا المستخدم يشغل مناصب داخل النظام");
+                            if (companyService.findByManager(person).isEmpty()
+                                    && regionService.findByManager(person).isEmpty()
+                                    && branchService.findByManager(person).isEmpty()
+                                    && departmentService.findByManager(person).isEmpty()
+                                    && employeeService.findByPerson(person).isEmpty()) {
+                                log.info("هذا المستخدم لا يشغل مناصب وظيفية داخل النظام");
+                                throw new UsernameNotFoundException("هذا المستخدم لا يشغل مناصب وظيفية داخل النظام");
+                            }
                         }
                         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
-                        person.setLastLoginLocation(
-                                (Optional.ofNullable(locationFinder.getCountry(request.getRemoteAddr())).isPresent() ? (locationFinder.getCountry(request.getRemoteAddr()).getName() + "، ") : "")
-                                        + (Optional.ofNullable(locationFinder.getCity(request.getRemoteAddr())).isPresent() ? (locationFinder.getCity(request.getRemoteAddr()).getName() + "، ") : "")
-                                        + (Optional.ofNullable(locationFinder.getMostSpecificSubdivision(request.getRemoteAddr())).isPresent() ? locationFinder.getMostSpecificSubdivision(request.getRemoteAddr()).getName() : ""));
                         person.setLastLoginDate(new Date());
-                        person.setLastUpdate(new Date());
                         person.setActive(true);
                         person.setIpAddress(request.getRemoteAddr());
-                        try {
-                            InetAddress inetAddress = InetAddress.getByName(request.getRemoteAddr());
-                            person.setHostName(getHostName(inetAddress));
-                        } catch (UnknownHostException e) {
-                            e.printStackTrace();
-                        }
                         personService.save(person);
-                        authorities.add(new SimpleGrantedAuthority("ROLE_PROFILE_UPDATE"));
-                        roleService.findByTeam(person.getTeam()).stream().forEach(role -> {
-                            if (role.getPermission().getCreateEntity()) {
-                                SimpleGrantedAuthority simpleGrantedAuthority = new SimpleGrantedAuthority("ROLE_" + role.getPermission().getScreen().getCode() + "_CREATE");
-                                authorities.add(simpleGrantedAuthority);
-                            }
-                            if (role.getPermission().getUpdateEntity()) {
-                                SimpleGrantedAuthority simpleGrantedAuthority = new SimpleGrantedAuthority("ROLE_" + role.getPermission().getScreen().getCode() + "_UPDATE");
-                                authorities.add(simpleGrantedAuthority);
-                            }
-                            if (role.getPermission().getDeleteEntity()) {
-                                SimpleGrantedAuthority simpleGrantedAuthority = new SimpleGrantedAuthority("ROLE_" + role.getPermission().getScreen().getCode() + "_DELETE");
-                                authorities.add(simpleGrantedAuthority);
-                            }
-                            if (role.getPermission().getReportEntity()) {
-                                SimpleGrantedAuthority simpleGrantedAuthority = new SimpleGrantedAuthority("ROLE_" + role.getPermission().getScreen().getCode() + "_REPORT");
-                                authorities.add(simpleGrantedAuthority);
-                            }
-                        });
-
+                        Optional.ofNullable(person.getTeam().getAuthorities()).ifPresent(value -> Arrays.asList(value.split(",")).stream().forEach(s -> authorities.add(new SimpleGrantedAuthority(s))));
                     }
-                    return new org.springframework.security.core.userdetails.User(person.getEmail(), person.getPassword(),
-                            person.getEnabled(), true, true, true, authorities);
+                    return new User(person.getEmail(), person.getPassword(), person.getEnabled(), true, true, true, authorities);
                 }
         ).passwordEncoder(passwordEncoder);
-
-    }
-
-    private String getHostName(InetAddress inaHost) throws UnknownHostException {
-        try {
-            Class clazz = Class.forName("java.net.InetAddress");
-            Constructor[] constructors = clazz.getDeclaredConstructors();
-            constructors[0].setAccessible(true);
-            InetAddress ina = (InetAddress) constructors[0].newInstance();
-            Field[] fields = ina.getClass().getDeclaredFields();
-            for (Field field : fields) {
-                if (field.getName().equals("nameService")) {
-                    field.setAccessible(true);
-                    Method[] methods = field.get(null).getClass().getDeclaredMethods();
-                    for (Method method : methods) {
-                        if (method.getName().equals("getHostByAddr")) {
-                            method.setAccessible(true);
-                            return (String) method.invoke(field.get(null), inaHost.getAddress());
-                        }
-                    }
-                }
-            }
-        } catch (ClassNotFoundException cnfe) {
-        } catch (IllegalAccessException iae) {
-        } catch (InstantiationException ie) {
-        } catch (InvocationTargetException ite) {
-            throw (UnknownHostException) ite.getCause();
-        }
-        return null;
     }
 }

@@ -5,11 +5,9 @@ import com.fasterxml.jackson.annotation.JsonView;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.Data;
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Type;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -36,7 +34,15 @@ public class Team implements Serializable {
     private Long id;
 
     @JsonView(Views.Summery.class)
+    private Integer code;
+
+    @JsonView(Views.Summery.class)
     private String name;
+
+    @Lob
+    @Type(type = "org.hibernate.type.TextType")
+    @JsonView(Views.Summery.class)
+    private String authorities;
 
     @OneToMany(mappedBy = "team")
     @JsonIgnoreProperties(value = {"companies", "regions", "branches", "departments", "employees"}, allowSetters = true)

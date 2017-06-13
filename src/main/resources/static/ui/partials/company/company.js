@@ -1,5 +1,5 @@
-app.controller("companyCtrl", ['CompanyService', 'PersonService', 'ModalProvider', 'FileUploader', 'FileService', '$scope', '$rootScope', '$log', '$http', '$state', '$timeout',
-    function (CompanyService, PersonService, ModalProvider, FileUploader, FileService, $scope, $rootScope, $log, $http, $state, $timeout) {
+app.controller("companyCtrl", ['CompanyService', 'PersonService', 'ModalProvider', 'FileUploader', '$scope', '$rootScope', '$log', '$http', '$state', '$timeout',
+    function (CompanyService, PersonService, ModalProvider, FileUploader, $scope, $rootScope, $log, $http, $state, $timeout) {
 
         $scope.selected = {};
 
@@ -34,19 +34,11 @@ app.controller("companyCtrl", ['CompanyService', 'PersonService', 'ModalProvider
 
         uploader.onSuccessItem = function (fileItem, response, status, headers) {
             $scope.selected.logo = response;
-            FileService.getSharedLink(response).then(function (data) {
-                $scope.logoLink = data;
-            });
         };
 
         $timeout(function () {
             CompanyService.fetchTableData().then(function (data) {
                 $scope.selected = data[0];
-                if ($scope.selected.logo) {
-                    FileService.getSharedLink(data[0].logo).then(function (data) {
-                        $scope.logoLink = data;
-                    });
-                }
             });
             PersonService.findAllSummery().then(function (data) {
                 $scope.persons = data;

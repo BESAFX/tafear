@@ -1,5 +1,5 @@
-app.controller("personCtrl", ['PersonService', 'ModalProvider', 'FileService', '$scope', '$rootScope', '$state', '$timeout',
-    function (PersonService, ModalProvider, FileService, $scope, $rootScope, $state, $timeout) {
+app.controller("personCtrl", ['PersonService', 'ModalProvider', '$scope', '$rootScope', '$state', '$timeout',
+    function (PersonService, ModalProvider, $scope, $rootScope, $state, $timeout) {
 
         $scope.selected = {};
 

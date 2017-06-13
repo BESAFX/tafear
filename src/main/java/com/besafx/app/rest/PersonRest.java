@@ -42,9 +42,6 @@ public class PersonRest {
     private PersonService personService;
 
     @Autowired
-    private TeamService teamService;
-
-    @Autowired
     private PasswordEncoder passwordEncoder;
 
     @Autowired
@@ -61,7 +58,6 @@ public class PersonRest {
         person.setPassword(passwordEncoder.encode(person.getPassword()));
         person.setEnabled(true);
         person.setTokenExpired(false);
-        person.setOptionThemeName("black");
         person = personService.save(person);
         notificationService.notifyOne(Notification
                 .builder()
@@ -179,12 +175,6 @@ public class PersonRest {
         }
     }
 
-    @RequestMapping("findAuthorities")
-    @ResponseBody
-    public List<String> findAuthorities(Authentication authentication) {
-        return authentication.getAuthorities().stream().map(item -> item.getAuthority()).collect(Collectors.toList());
-    }
-
     @RequestMapping("findHiddenPassword/{email:.+}")
     @ResponseBody
     public String findHiddenPassword(@PathVariable(value = "email") String email, Authentication authentication) {
@@ -198,12 +188,6 @@ public class PersonRest {
         } else {
             return "غير مصرح لك";
         }
-    }
-
-    @RequestMapping(value = "countPersonsByTeam/{id}", method = RequestMethod.GET)
-    @ResponseBody
-    public Integer countPersonsByTeam(@PathVariable(value = "id") Long id) {
-        return personService.countByTeam(teamService.findOne(id));
     }
 
     @RequestMapping(value = "findPersonUnderMe", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)

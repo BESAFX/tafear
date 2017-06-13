@@ -130,22 +130,22 @@
                                                 <ul class="mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect"
                                                     for="closed-soon-outgoing-menu-lower-left-{{task.id}}">
                                                     <li class="mdl-menu__item mdl-list__item"
-                                                        ng-if="contains(authorities, ['ROLE_TASK_DELETE'])"
+                                                        ng-if="contains(me.team.authorities, ['ROLE_TASK_DELETE'])"
                                                         ng-click="delete(task)">
                                                         <span>حذف</span>
                                                     </li>
                                                     <li class="mdl-menu__item mdl-list__item mdl-menu__item--full-bleed-divider"
-                                                        ng-if="contains(authorities, ['ROLE_TASK_UPDATE'])"
+                                                        ng-if="contains(me.team.authorities, ['ROLE_TASK_UPDATE'])"
                                                         ng-click="openUpdateModel(task)">
                                                         <span>تعديل</span>
                                                     </li>
                                                     <li class="mdl-menu__item mdl-list__item"
-                                                        ng-if="contains(authorities, ['ROLE_TASK_OPERATION_CREATE'])"
+                                                        ng-if="contains(me.team.authorities, ['ROLE_TASK_OPERATION_CREATE'])"
                                                         ng-click="openCreateOperationModel(task)">
                                                         <span>اضافة حركة</span>
                                                     </li>
                                                     <li class="mdl-menu__item mdl-list__item"
-                                                        ng-if="contains(authorities, ['ROLE_TASK_CREATE'])"
+                                                        ng-if="contains(me.team.authorities, ['ROLE_TASK_CREATE'])"
                                                         ng-click="openCreateModel(task)">
                                                         <span>اضافة مهمة</span>
                                                     </li>

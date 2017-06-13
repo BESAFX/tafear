@@ -1,5 +1,5 @@
-app.controller('branchCreateUpdateCtrl', ['BranchService', 'PersonService', 'RegionService', 'FileUploader', 'FileService', '$scope', '$rootScope', '$timeout', '$log', '$uibModalInstance', 'title', 'action', 'branch',
-    function (BranchService, PersonService, RegionService, FileUploader, FileService, $scope, $rootScope, $timeout, $log, $uibModalInstance, title, action, branch) {
+app.controller('branchCreateUpdateCtrl', ['BranchService', 'PersonService', 'RegionService', 'FileUploader', '$scope', '$rootScope', '$timeout', '$log', '$uibModalInstance', 'title', 'action', 'branch',
+    function (BranchService, PersonService, RegionService, FileUploader,  $scope, $rootScope, $timeout, $log, $uibModalInstance, title, action, branch) {
 
         $timeout(function () {
             PersonService.findAllSummery().then(function (data) {

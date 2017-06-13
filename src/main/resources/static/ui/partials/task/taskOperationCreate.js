@@ -1,5 +1,5 @@
-app.controller('taskOperationCreateCtrl', ['TaskService', 'TaskOperationService', 'TaskOperationAttachService', 'FileUploader', 'FileService', '$scope', '$rootScope', '$timeout', '$log', '$uibModalInstance', 'task',
-    function (TaskService, TaskOperationService, TaskOperationAttachService, FileUploader, FileService, $scope, $rootScope, $timeout, $log, $uibModalInstance, task) {
+app.controller('taskOperationCreateCtrl', ['TaskService', 'TaskOperationService', 'TaskOperationAttachService', 'FileUploader',  '$scope', '$rootScope', '$timeout', '$log', '$uibModalInstance', 'task',
+    function (TaskService, TaskOperationService, TaskOperationAttachService, FileUploader, $scope, $rootScope, $timeout, $log, $uibModalInstance, task) {
 
         $scope.taskOperation = {};
 

@@ -1,8 +1,8 @@
 package com.besafx.app.rest;
+import com.besafx.app.config.CustomException;
 import com.besafx.app.entity.Team;
 import com.besafx.app.entity.Views;
 import com.besafx.app.service.PersonService;
-import com.besafx.app.service.RoleService;
 import com.besafx.app.service.TeamService;
 import com.besafx.app.ws.Notification;
 import com.besafx.app.ws.NotificationService;
@@ -14,6 +14,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
+import java.util.Comparator;
 import java.util.List;
 
 @RestController
@@ -21,13 +22,7 @@ import java.util.List;
 public class TeamRest {
 
     @Autowired
-    private PersonService personService;
-
-    @Autowired
     private TeamService teamService;
-
-    @Autowired
-    private RoleService roleService;
 
     @Autowired
     private NotificationService notificationService;
@@ -36,11 +31,20 @@ public class TeamRest {
     @ResponseBody
     @PreAuthorize("hasRole('ROLE_TEAM_CREATE')")
     public Team create(@RequestBody Team team, Principal principal) {
+        if (teamService.findByAuthorities(team.getAuthorities()) != null) {
+            throw new CustomException("هذة المجموعة موجودة بالفعل.");
+        }
+        Team topTeam = teamService.findTopByOrderByCodeDesc();
+        if (topTeam == null) {
+            team.setCode(1);
+        } else {
+            team.setCode(topTeam.getCode() + 1);
+        }
         team = teamService.save(team);
         notificationService.notifyOne(Notification
                 .builder()
-                .title("العمليات على المجموعات")
-                .message("تم اضافة مجموعة صلاحيات جديدة بنجاح")
+                .title("انشاء بيانات")
+                .message("تم انشاء مجموعة صلاحيات جديدة بنجاح")
                 .type("success")
                 .icon("fa-plus-circle")
                 .build(), principal.getName());
@@ -51,12 +55,15 @@ public class TeamRest {
     @ResponseBody
     @PreAuthorize("hasRole('ROLE_TEAM_UPDATE')")
     public Team update(@RequestBody Team team, Principal principal) {
+        if (teamService.findByCodeAndIdIsNot(team.getCode(), team.getId()) != null) {
+            throw new CustomException("هذا الكود مستخدم سابقاً، فضلاً قم بتغير الكود.");
+        }
         Team object = teamService.findOne(team.getId());
         if (object != null) {
             team = teamService.save(team);
             notificationService.notifyOne(Notification
                     .builder()
-                    .title("العمليات على مجموعات المستخدمين")
+                    .title("تعديل بيانات")
                     .message("تم تعديل بيانات المجموعة بنجاح")
                     .type("success")
                     .icon("fa-edit")
@@ -70,25 +77,36 @@ public class TeamRest {
     @RequestMapping(value = "delete/{id}", method = RequestMethod.DELETE)
     @ResponseBody
     @PreAuthorize("hasRole('ROLE_TEAM_DELETE')")
-    public void delete(@PathVariable Long id) {
+    public void delete(@PathVariable Long id, Principal principal) {
         Team team = teamService.findOne(id);
         if (team != null) {
-            roleService.findByTeam(team).stream().forEach(role -> roleService.delete(role));
+            if (!team.getPersons().isEmpty()) {
+                throw new CustomException("لا يمكن حذف هذة المجموعة لإعتماد بعض المستخدمين عليها.");
+            }
             teamService.delete(id);
+            notificationService.notifyOne(Notification
+                    .builder()
+                    .title("حذف بيانات")
+                    .message("تم حذف مجموعة الصلاحيات بنجاح")
+                    .type("error")
+                    .icon("fa-ban")
+                    .build(), principal.getName());
         }
     }
 
     @RequestMapping(value = "findAll", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public List<Team> findAll() {
-        return Lists.newArrayList(teamService.findAll());
+        List<Team> list = Lists.newArrayList(teamService.findAll());
+        list.sort(Comparator.comparing(Team::getCode));
+        return list;
     }
 
     @RequestMapping(value = "findAllSummery", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     @JsonView(Views.Summery.class)
     public List<Team> findAllSummery() {
-        return Lists.newArrayList(teamService.findAll());
+        return findAll();
     }
 
     @RequestMapping(value = "findOne/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)

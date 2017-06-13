@@ -1,5 +1,5 @@
-app.controller("regionCtrl", ['RegionService', 'PersonService', 'ModalProvider', 'FileService', '$scope', '$rootScope', '$state', '$timeout',
-    function (RegionService, PersonService, ModalProvider, FileService, $scope, $rootScope, $state, $timeout) {
+app.controller("regionCtrl", ['RegionService', 'PersonService', 'ModalProvider', '$scope', '$rootScope', '$state', '$timeout',
+    function (RegionService, PersonService, ModalProvider,  $scope, $rootScope, $state, $timeout) {
 
         $scope.selected = {};
 

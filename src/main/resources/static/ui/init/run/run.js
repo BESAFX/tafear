@@ -1,5 +1,5 @@
-app.run(['$http', '$location', '$state', '$window', 'PersonService', 'FileService', 'TaskService', '$rootScope', '$log', '$stomp', 'defaultErrorMessageResolver', 'ModalProvider',
-    function ($http, $location, $state, $window, PersonService, FileService, TaskService, $rootScope, $log, $stomp, defaultErrorMessageResolver, ModalProvider) {
+app.run(['$http', '$location', '$state', '$window', 'PersonService', 'TaskService', '$rootScope', '$log', '$stomp', 'defaultErrorMessageResolver', 'ModalProvider',
+    function ($http, $location, $state, $window, PersonService,  TaskService, $rootScope, $log, $stomp, defaultErrorMessageResolver, ModalProvider) {
 
         defaultErrorMessageResolver.getErrorMessages().then(function (errorMessages) {
             errorMessages['fieldRequired'] = 'هذا الحقل مطلوب';
@@ -83,7 +83,7 @@ app.run(['$http', '$location', '$state', '$window', 'PersonService', 'FileServic
         });
 
         $rootScope.contains = function (list, values) {
-            return _.intersection(values, list).length > 0;
+            return list ? _.intersection(values, list.split(',')).length > 0 : false;
         };
 
         $rootScope.logout = function () {
@@ -118,18 +118,12 @@ app.run(['$http', '$location', '$state', '$window', 'PersonService', 'FileServic
             })
         };
 
-        PersonService.findAuthorities().then(function (data) {
-            $rootScope.authorities = data;
-            $rootScope.me = {};
-            PersonService.findActivePerson().then(function (data) {
-                $rootScope.me = data;
-                FileService.getSharedLink($rootScope.me.photo).then(function (data) {
-                    $rootScope.me.img = data;
-                });
-                PersonService.findActivePersonManagerSummery().then(function (data) {
-                    $rootScope.me.manager = data;
-                    $rootScope.fetchTasksClosedThisWeek();
-                });
+        $rootScope.me = {};
+        PersonService.findActivePerson().then(function (data) {
+            $rootScope.me = data;
+            PersonService.findActivePersonManagerSummery().then(function (data) {
+                $rootScope.me.manager = data;
+                $rootScope.fetchTasksClosedThisWeek();
             });
         });
 

@@ -2,6 +2,7 @@ package com.besafx.app;
 import com.besafx.app.component.ScheduledTasks;
 import com.besafx.app.config.DropboxManager;
 import com.besafx.app.controller.ReportTaskController;
+import com.besafx.app.entity.Team;
 import com.besafx.app.rest.PersonRest;
 import com.besafx.app.rest.TaskOperationRest;
 import com.besafx.app.search.TaskSearch;
@@ -82,7 +83,11 @@ public class MainTests {
     @Autowired
     private TaskOperationAttachService taskOperationAttachService;
 
+    @Autowired
+    private TeamService teamService;
+
     @Test
     public void contextLoads() throws MessagingException {
+
     }
 }

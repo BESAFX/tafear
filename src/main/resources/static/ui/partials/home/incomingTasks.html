@@ -111,7 +111,7 @@
                                                     </li>
                                                     <li>
                                                         <a href=""
-                                                           ng-if="contains(authorities, ['ROLE_TASK_DELETE'])"
+                                                           ng-if="contains(me.team.authorities, ['ROLE_TASK_DELETE'])"
                                                            ng-click="delete(task)" tooltip-append-to-body="true"
                                                            uib-tooltip="حذف">
                                                             <span class="fa fa-trash"></span>
@@ -119,7 +119,7 @@
                                                     </li>
                                                     <li>
                                                         <a href=""
-                                                           ng-if="contains(authorities, ['ROLE_TASK_UPDATE'])"
+                                                           ng-if="contains(me.team.authorities, ['ROLE_TASK_UPDATE'])"
                                                            ng-click="openUpdateModel(task)"
                                                            tooltip-append-to-body="true"
                                                            uib-tooltip="تعديل">
@@ -128,7 +128,7 @@
                                                     </li>
                                                     <li>
                                                         <a href=""
-                                                           ng-if="contains(authorities, ['ROLE_TASK_OPERATION_CREATE'])"
+                                                           ng-if="contains(me.team.authorities, ['ROLE_TASK_OPERATION_CREATE'])"
                                                            ng-click="openCreateOperationModel(task)"
                                                            tooltip-append-to-body="true"
                                                            uib-tooltip="اضافة حركة">
@@ -137,7 +137,7 @@
                                                     </li>
                                                     <li>
                                                         <a href=""
-                                                           ng-if="contains(authorities, ['ROLE_TASK_CREATE'])"
+                                                           ng-if="contains(me.team.authorities, ['ROLE_TASK_CREATE'])"
                                                            ng-click="openCreateModel(task)"
                                                            tooltip-append-to-body="true"
                                                            uib-tooltip="اضافة مهمة">

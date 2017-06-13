@@ -1,5 +1,5 @@
-app.controller("branchCtrl", ['BranchService', 'PersonService', 'ModalProvider', 'FileService', '$scope', '$rootScope', '$state', '$timeout',
-    function (BranchService, PersonService, ModalProvider, FileService, $scope, $rootScope, $state, $timeout) {
+app.controller("branchCtrl", ['BranchService', 'PersonService', 'ModalProvider',  '$scope', '$rootScope', '$state', '$timeout',
+    function (BranchService, PersonService, ModalProvider,  $scope, $rootScope, $state, $timeout) {
 
         $scope.selected = {};
 
