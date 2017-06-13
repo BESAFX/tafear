@@ -10,7 +10,7 @@ app.controller("companyCtrl", ['CompanyService', 'PersonService', 'ModalProvider
         };
 
         var uploader = $scope.uploader = new FileUploader({
-            url: 'uploadFile'
+            url: 'uploadCompanyLogo'
         });
 
         uploader.filters.push({
@@ -19,7 +19,6 @@ app.controller("companyCtrl", ['CompanyService', 'PersonService', 'ModalProvider
                 return this.queue.length < 10;
             }
         });
-
 
         uploader.filters.push({
             name: 'asyncFilter',
