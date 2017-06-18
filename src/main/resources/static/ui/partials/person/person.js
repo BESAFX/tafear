@@ -62,7 +62,7 @@ app.controller("personCtrl", ['PersonService', 'ModalProvider', '$scope', '$root
                     return true
                 },
                 click: function ($itemScope, $event, value) {
-                    $scope.openCreateModel();
+                    ModalProvider.openPersonCreateModel();
                 }
             },
             {
@@ -71,7 +71,7 @@ app.controller("personCtrl", ['PersonService', 'ModalProvider', '$scope', '$root
                     return true
                 },
                 click: function ($itemScope, $event, value) {
-                    $scope.openUpdateModel($itemScope.person);
+                    ModalProvider.openPersonUpdateModel($itemScope.person);
                 }
             },
             {

@@ -91,9 +91,6 @@ public class Person implements Serializable {
     @JsonView(Views.Summery.class)
     private String ipAddress;
 
-    @JsonView(Views.Summery.class)
-    private String hostName;
-
     @ManyToOne
     @JoinColumn(name = "Team")
     @JsonIgnoreProperties(value = {"persons"}, allowSetters = true)

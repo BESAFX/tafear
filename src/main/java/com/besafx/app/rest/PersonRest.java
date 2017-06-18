@@ -58,6 +58,8 @@ public class PersonRest {
         person.setPassword(passwordEncoder.encode(person.getPassword()));
         person.setEnabled(true);
         person.setTokenExpired(false);
+        person.setActive(false);
+        person.setTechnicalSupport(false);
         person = personService.save(person);
         notificationService.notifyOne(Notification
                 .builder()
@@ -82,6 +84,7 @@ public class PersonRest {
             } else {
                 person.setHiddenPassword(object.getHiddenPassword());
             }
+            person.setTechnicalSupport(false);
             person = personService.save(person);
             notificationService.notifyOne(Notification
                     .builder()
