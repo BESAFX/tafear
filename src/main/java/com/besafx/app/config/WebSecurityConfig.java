@@ -109,7 +109,6 @@ WebSecurityConfig extends WebSecurityConfigurerAdapter {
                     person.setActive(false);
                     HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
                     person.setIpAddress(request.getRemoteAddr());
-                    person.setHostName(request.getRemoteHost());
                     personService.save(person);
                 }
                 super.sessionDestroyed(event);
