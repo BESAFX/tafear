@@ -84,6 +84,9 @@ public class PersonRest {
             } else {
                 person.setHiddenPassword(object.getHiddenPassword());
             }
+            person.setEnabled(true);
+            person.setTokenExpired(false);
+            person.setActive(false);
             person.setTechnicalSupport(false);
             person = personService.save(person);
             notificationService.notifyOne(Notification
