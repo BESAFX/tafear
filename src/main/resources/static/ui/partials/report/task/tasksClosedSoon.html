@@ -24,7 +24,7 @@
                         required="required"
                         disable-validation-message=""
                         focus-autofocus="1"
-                        ng-options="(taskPerson.nickname + ' / ' + taskPerson.name) for taskPerson in persons | orderBy:'name' track by person.id">
+                        ng-options="(taskPerson.nickname + ' / ' + taskPerson.name) for taskPerson in persons | orderBy:'name' track by taskPerson.id">
                 </select>
             </div>
 
