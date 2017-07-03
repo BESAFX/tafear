@@ -102,7 +102,7 @@ public class ReportTaskController {
         Lists.newArrayList(companyService.findAll()).stream().findAny().ifPresent(company -> {
             map.put("COMPANY_NAME", company.getName());
             map.put("COMPANY_PHONE", "الهاتف: " + company.getPhone());
-            map.put("COMPANY_MOBILE","الجوال: " +  company.getMobile());
+            map.put("COMPANY_MOBILE", "الجوال: " + company.getMobile());
             map.put("COMPANY_FAX", "الفاكس: " + company.getFax());
             map.put("COMPANY_COMMERCIAL_REGISTER", "السجل التجاري: " + company.getCommericalRegisteration());
         });
@@ -160,7 +160,7 @@ public class ReportTaskController {
         Lists.newArrayList(companyService.findAll()).stream().findAny().ifPresent(company -> {
             map.put("COMPANY_NAME", company.getName());
             map.put("COMPANY_PHONE", "الهاتف: " + company.getPhone());
-            map.put("COMPANY_MOBILE","الجوال: " +  company.getMobile());
+            map.put("COMPANY_MOBILE", "الجوال: " + company.getMobile());
             map.put("COMPANY_FAX", "الفاكس: " + company.getFax());
             map.put("COMPANY_COMMERCIAL_REGISTER", "السجل التجاري: " + company.getCommericalRegisteration());
         });
@@ -196,7 +196,7 @@ public class ReportTaskController {
         Lists.newArrayList(companyService.findAll()).stream().findAny().ifPresent(company -> {
             map.put("COMPANY_NAME", company.getName());
             map.put("COMPANY_PHONE", "الهاتف: " + company.getPhone());
-            map.put("COMPANY_MOBILE","الجوال: " +  company.getMobile());
+            map.put("COMPANY_MOBILE", "الجوال: " + company.getMobile());
             map.put("COMPANY_FAX", "الفاكس: " + company.getFax());
             map.put("COMPANY_COMMERCIAL_REGISTER", "السجل التجاري: " + company.getCommericalRegisteration());
         });
@@ -243,7 +243,7 @@ public class ReportTaskController {
         Lists.newArrayList(companyService.findAll()).stream().findAny().ifPresent(company -> {
             map.put("COMPANY_NAME", company.getName());
             map.put("COMPANY_PHONE", "الهاتف: " + company.getPhone());
-            map.put("COMPANY_MOBILE","الجوال: " +  company.getMobile());
+            map.put("COMPANY_MOBILE", "الجوال: " + company.getMobile());
             map.put("COMPANY_FAX", "الفاكس: " + company.getFax());
             map.put("COMPANY_COMMERCIAL_REGISTER", "السجل التجاري: " + company.getCommericalRegisteration());
         });
@@ -293,7 +293,7 @@ public class ReportTaskController {
         Lists.newArrayList(companyService.findAll()).stream().findAny().ifPresent(company -> {
             map.put("COMPANY_NAME", company.getName());
             map.put("COMPANY_PHONE", "الهاتف: " + company.getPhone());
-            map.put("COMPANY_MOBILE","الجوال: " +  company.getMobile());
+            map.put("COMPANY_MOBILE", "الجوال: " + company.getMobile());
             map.put("COMPANY_FAX", "الفاكس: " + company.getFax());
             map.put("COMPANY_COMMERCIAL_REGISTER", "السجل التجاري: " + company.getCommericalRegisteration());
         });
@@ -335,7 +335,7 @@ public class ReportTaskController {
         Lists.newArrayList(companyService.findAll()).stream().findAny().ifPresent(company -> {
             map.put("COMPANY_NAME", company.getName());
             map.put("COMPANY_PHONE", "الهاتف: " + company.getPhone());
-            map.put("COMPANY_MOBILE","الجوال: " +  company.getMobile());
+            map.put("COMPANY_MOBILE", "الجوال: " + company.getMobile());
             map.put("COMPANY_FAX", "الفاكس: " + company.getFax());
             map.put("COMPANY_COMMERCIAL_REGISTER", "السجل التجاري: " + company.getCommericalRegisteration());
         });
@@ -383,7 +383,7 @@ public class ReportTaskController {
         Lists.newArrayList(companyService.findAll()).stream().findAny().ifPresent(company -> {
             map.put("COMPANY_NAME", company.getName());
             map.put("COMPANY_PHONE", "الهاتف: " + company.getPhone());
-            map.put("COMPANY_MOBILE","الجوال: " +  company.getMobile());
+            map.put("COMPANY_MOBILE", "الجوال: " + company.getMobile());
             map.put("COMPANY_FAX", "الفاكس: " + company.getFax());
             map.put("COMPANY_COMMERCIAL_REGISTER", "السجل التجاري: " + company.getCommericalRegisteration());
         });
@@ -407,6 +407,7 @@ public class ReportTaskController {
     @ResponseBody
     public void ReportTasksClosedSoon(
             @RequestParam(value = "personId") Long personId,
+            @RequestParam(value = "taskPersonId") Long taskPersonId,
             HttpServletResponse response)
             throws JRException, IOException {
         Person person = personService.findOne(personId);
@@ -428,11 +429,11 @@ public class ReportTaskController {
         Lists.newArrayList(companyService.findAll()).stream().findAny().ifPresent(company -> {
             map.put("COMPANY_NAME", company.getName());
             map.put("COMPANY_PHONE", "الهاتف: " + company.getPhone());
-            map.put("COMPANY_MOBILE","الجوال: " +  company.getMobile());
+            map.put("COMPANY_MOBILE", "الجوال: " + company.getMobile());
             map.put("COMPANY_FAX", "الفاكس: " + company.getFax());
             map.put("COMPANY_COMMERCIAL_REGISTER", "السجل التجاري: " + company.getCommericalRegisteration());
         });
-        List<WrapperUtil> list = initTasksClosedSoonNotifyList(personId);
+        List<WrapperUtil> list = initTasksClosedSoonNotifyList(personId, taskPersonId);
         map.put("LIST", list);
         ClassPathResource jrxmlFile = new ClassPathResource("/report/task/TasksClosedSoonNotify.jrxml");
         JasperReport jasperReport = JasperCompileManager.compileReport(jrxmlFile.getInputStream());
@@ -466,7 +467,7 @@ public class ReportTaskController {
         Lists.newArrayList(companyService.findAll()).stream().findAny().ifPresent(company -> {
             map.put("COMPANY_NAME", company.getName());
             map.put("COMPANY_PHONE", "الهاتف: " + company.getPhone());
-            map.put("COMPANY_MOBILE","الجوال: " +  company.getMobile());
+            map.put("COMPANY_MOBILE", "الجوال: " + company.getMobile());
             map.put("COMPANY_FAX", "الفاكس: " + company.getFax());
             map.put("COMPANY_COMMERCIAL_REGISTER", "السجل التجاري: " + company.getCommericalRegisteration());
         });
@@ -495,7 +496,7 @@ public class ReportTaskController {
         Lists.newArrayList(companyService.findAll()).stream().findAny().ifPresent(company -> {
             map.put("COMPANY_NAME", company.getName());
             map.put("COMPANY_PHONE", "الهاتف: " + company.getPhone());
-            map.put("COMPANY_MOBILE","الجوال: " +  company.getMobile());
+            map.put("COMPANY_MOBILE", "الجوال: " + company.getMobile());
             map.put("COMPANY_FAX", "الفاكس: " + company.getFax());
             map.put("COMPANY_COMMERCIAL_REGISTER", "السجل التجاري: " + company.getCommericalRegisteration());
         });
@@ -528,7 +529,7 @@ public class ReportTaskController {
         Lists.newArrayList(companyService.findAll()).stream().findAny().ifPresent(company -> {
             map.put("COMPANY_NAME", company.getName());
             map.put("COMPANY_PHONE", "الهاتف: " + company.getPhone());
-            map.put("COMPANY_MOBILE","الجوال: " +  company.getMobile());
+            map.put("COMPANY_MOBILE", "الجوال: " + company.getMobile());
             map.put("COMPANY_FAX", "الفاكس: " + company.getFax());
             map.put("COMPANY_COMMERCIAL_REGISTER", "السجل التجاري: " + company.getCommericalRegisteration());
         });
@@ -564,7 +565,7 @@ public class ReportTaskController {
         Lists.newArrayList(companyService.findAll()).stream().findAny().ifPresent(company -> {
             map.put("COMPANY_NAME", company.getName());
             map.put("COMPANY_PHONE", "الهاتف: " + company.getPhone());
-            map.put("COMPANY_MOBILE","الجوال: " +  company.getMobile());
+            map.put("COMPANY_MOBILE", "الجوال: " + company.getMobile());
             map.put("COMPANY_FAX", "الفاكس: " + company.getFax());
             map.put("COMPANY_COMMERCIAL_REGISTER", "السجل التجاري: " + company.getCommericalRegisteration());
         });
@@ -601,7 +602,7 @@ public class ReportTaskController {
         Lists.newArrayList(companyService.findAll()).stream().findAny().ifPresent(company -> {
             map.put("COMPANY_NAME", company.getName());
             map.put("COMPANY_PHONE", "الهاتف: " + company.getPhone());
-            map.put("COMPANY_MOBILE","الجوال: " +  company.getMobile());
+            map.put("COMPANY_MOBILE", "الجوال: " + company.getMobile());
             map.put("COMPANY_FAX", "الفاكس: " + company.getFax());
             map.put("COMPANY_COMMERCIAL_REGISTER", "السجل التجاري: " + company.getCommericalRegisteration());
         });
@@ -637,7 +638,7 @@ public class ReportTaskController {
         Lists.newArrayList(companyService.findAll()).stream().findAny().ifPresent(company -> {
             map.put("COMPANY_NAME", company.getName());
             map.put("COMPANY_PHONE", "الهاتف: " + company.getPhone());
-            map.put("COMPANY_MOBILE","الجوال: " +  company.getMobile());
+            map.put("COMPANY_MOBILE", "الجوال: " + company.getMobile());
             map.put("COMPANY_FAX", "الفاكس: " + company.getFax());
             map.put("COMPANY_COMMERCIAL_REGISTER", "السجل التجاري: " + company.getCommericalRegisteration());
         });
@@ -683,7 +684,37 @@ public class ReportTaskController {
 
     private List<WrapperUtil> initTasksClosedSoonNotifyList(Long personId) {
         log.info("قراءة كل المهام الواردة لهذا المستخدم...");
-        List<Task> tasks = taskSearch.search(null, null, Task.CloseType.Pending, null, null, null, null, null, null, true, true, "All", personId);
+//        List<Task> tasks = taskSearch.search(null, null, Task.CloseType.Pending, null, null, null, null, null, null, true, true, "All", personId);
+        List<Task> tasks = taskToService.findByPersonIdAndClosedIsNullAndTaskCloseType(personId, Task.CloseType.Pending).stream().map(TaskTo::getTask).collect(Collectors.toList());
+        log.info("عدد المهام المكلف بها = " + tasks.size());
+        log.info("فحص كل مهمة على حدا");
+        List<WrapperUtil> list = new ArrayList<>();
+        tasks.stream().forEach(task -> {
+            log.info("فحص المهمة رقم : " + task.getCode());
+            DateTime now = new DateTime();
+            DateTime taskEndDate = new DateTime(task.getEndDate());
+            int hours = Hours.hoursBetween(now.withTimeAtStartOfDay(), taskEndDate).getHours();
+            log.info("عدد الساعات بين تاريخ نهاية المهمة والآن: " + hours);
+            log.info("فحص إذا كانت الساعات المتبقية أقل من 3 * 24 ساعة (ثلاث أيام)");
+            if (hours < 72) {
+                WrapperUtil wrapperUtil = new WrapperUtil();
+                wrapperUtil.setObj1("[" + task.getCode() + "]" + " " + task.getTitle());
+                wrapperUtil.setObj2(hours + " ساعة");
+                wrapperUtil.setObj3(taskCloseRequestService.findByTaskIdAndPersonIdAndTypeAndApprovedIsNull(task.getId(), personId, false).size());
+                wrapperUtil.setObj4(taskCloseRequestService.findByTaskIdAndPersonIdAndTypeAndApprovedIsNull(task.getId(), personId, false).size());
+                wrapperUtil.setObj5(taskWarnService.findByTaskIdAndToPersonId(task.getId(), personId).size());
+                wrapperUtil.setObj6(taskDeductionService.findByTaskIdAndToPersonId(task.getId(), personId).size());
+                wrapperUtil.setObj7(DateConverter.getHijriStringFromDateRTLWithTime(task.getEndDate()));
+                list.add(wrapperUtil);
+            }
+        });
+        return list;
+    }
+
+    private List<WrapperUtil> initTasksClosedSoonNotifyList(Long personId, Long taskPersonId) {
+        log.info("قراءة كل المهام الواردة لهذا المستخدم...");
+//        List<Task> tasks = taskSearch.search(null, null, Task.CloseType.Pending, null, null, null, null, null, null, true, true, "All", personId);
+        List<Task> tasks = taskToService.findByPersonIdAndClosedIsNullAndTaskCloseTypeAndTaskPersonId(personId, Task.CloseType.Pending, taskPersonId).stream().map(TaskTo::getTask).collect(Collectors.toList());
         log.info("عدد المهام المكلف بها = " + tasks.size());
         log.info("فحص كل مهمة على حدا");
         List<WrapperUtil> list = new ArrayList<>();

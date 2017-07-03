@@ -10,6 +10,23 @@
 
         <div class="row">
 
+            <div class="form-group text-right col-xs-12 col-sm-12 col-md-12">
+                <label for="taskPerson" class="control-label">
+                    <span>جهة التكليف</span>
+                </label>
+                <select id="taskPerson"
+                        data-placeholder="ابحث عن البريد الإلكتروني"
+                        no-results-text="'لا توجد بيانات توافق بحثك'"
+                        placeholder-text-single="'اختر حساب جهة التكليف'"
+                        class="form-control text-right"
+                        chosen=""
+                        ng-model="buffer.taskPerson"
+                        required="required"
+                        disable-validation-message=""
+                        focus-autofocus="1"
+                        ng-options="(taskPerson.nickname + ' / ' + taskPerson.name) for taskPerson in persons | orderBy:'name' track by person.id">
+                </select>
+            </div>
 
             <div class="form-group text-right col-xs-12 col-sm-12 col-md-12">
                 <label for="person" class="control-label">
@@ -18,13 +35,12 @@
                 <select id="person"
                         data-placeholder="ابحث عن البريد الإلكتروني"
                         no-results-text="'لا توجد بيانات توافق بحثك'"
-                        placeholder-text-single="'اختر الحساب الشخصي'"
+                        placeholder-text-single="'اختر حساب الموظف'"
                         class="form-control text-right"
                         chosen=""
                         ng-model="buffer.person"
                         required="required"
                         disable-validation-message=""
-                        focus-index="1"
                         ng-options="(person.nickname + ' / ' + person.name) for person in persons | orderBy:'name' track by person.id">
                 </select>
             </div>

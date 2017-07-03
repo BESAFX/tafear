@@ -8,6 +8,9 @@ app.controller('tasksClosedSoonCtrl', ['$scope', '$rootScope', '$timeout', '$uib
             search.push('personId=');
             search.push($scope.buffer.person.id);
             search.push('&');
+            search.push('taskPersonId=');
+            search.push($scope.buffer.taskPerson.id);
+            search.push('&');
             window.open('/report/TasksClosedSoon?' + search.join(""));
         };
 
