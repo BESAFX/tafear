@@ -92,9 +92,14 @@ app.run(['$http', '$location', '$state', '$window', 'PersonService', 'TaskServic
         };
 
         $rootScope.dateType = 'H';
+        $rootScope.lang = 'AR';
 
         $rootScope.switchDateType = function () {
             $rootScope.dateType === 'H' ? $rootScope.dateType = 'G' : $rootScope.dateType = 'H';
+        };
+
+        $rootScope.switchLang = function () {
+            $rootScope.lang === 'AR' ? $rootScope.lang = 'EN' : $rootScope.lang = 'AR';
         };
 
         $rootScope.ModalProvider = ModalProvider;
