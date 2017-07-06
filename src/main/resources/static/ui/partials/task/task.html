@@ -126,86 +126,100 @@
                     </ul>
                 </div>
                 <div class="row">
-                    <div class="col-xs-4 col-sm-2 col-md-2 col-lg-2 pull-right">
+                    <div ng-class="{'pull-right' : lang==='AR', 'pull-left' : lang==='EN'}" class="col-xs-4 col-sm-2 col-md-2 col-lg-2">
                         <button id="view-menu-lower-right" style="width: 100%;"
                                 class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect">
-                            <span>عرض البيانات</span>
+                            <span ng-if="lang==='AR'">عرض البيانات</span>
+                            <span ng-if="lang==='EN'">View</span>
                         </button>
-                        <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect"
+                        <ul ng-class="{'mdl-menu--bottom-right' : lang==='AR', 'mdl-menu--bottom-left' : lang==='EN'}"
+                            class="mdl-menu mdl-js-menu mdl-js-ripple-effect"
                             for="view-menu-lower-right">
                             <li class="mdl-menu__item mdl-list__item mdl-list__item mdl-menu__item--full-bleed-divider"
                                 ng-click="showSlideOperation()">
                                 <span class="mdl-list__item-primary-content">
                                     <i class="material-icons mdl-list__item-icon">settings</i>
-                                    <span>لوحة التحكم</span>
+                                    <span ng-if="lang==='AR'">لوحة التحكم</span>
+                                    <span ng-if="lang==='EN'">Personal Control Center</span>
                                 </span>
                             </li>
                             <li class="list__item--border-top"></li>
                             <li class="mdl-menu__item mdl-list__item" ng-click="openFetchOutgoingPending()">
                                 <span class="mdl-list__item-primary-content">
                                     <i class="material-icons mdl-list__item-icon">flag</i>
-                                    <span>المهام الصادرة / تحت التنفيذ</span>
+                                    <span ng-if="lang==='AR'">المهام الصادرة / تحت التنفيذ</span>
+                                    <span ng-if="lang==='EN'">Pending Outgoing Tasks</span>
                                 </span>
                             </li>
                             <li class="mdl-menu__item mdl-list__item" ng-click="openFetchOutgoingAuto()">
                                 <span class="mdl-list__item-primary-content">
                                     <i class="material-icons mdl-list__item-icon">battery_alert</i>
-                                    <span>المهام الصادرة / المغلقة تلقائي</span>
+                                    <span ng-if="lang==='AR'">المهام الصادرة / المغلقة تلقائي</span>
+                                    <span ng-if="lang==='EN'">Closed Outgoing Tasks</span>
                                 </span>
                             </li>
                             <li class="mdl-menu__item mdl-list__item mdl-menu__item--full-bleed-divider"
                                 ng-click="openFetchOutgoingManual()">
                                 <span class="mdl-list__item-primary-content">
                                     <i class="material-icons mdl-list__item-icon">archive</i>
-                                    <span>المهام الصادرة / الارشيف</span>
+                                    <span ng-if="lang==='AR'">المهام الصادرة / الارشيف</span>
+                                    <span ng-if="lang==='EN'">Outgoing Tasks Archive</span>
                                 </span>
                             </li>
                             <li class="mdl-menu__item mdl-list__item" ng-click="openFetchIncomingPending()">
                                 <span class="mdl-list__item-primary-content">
                                     <i class="material-icons mdl-list__item-icon">flag</i>
-                                    <span>المهام الواردة / تحت التنفيذ</span>
+                                    <span ng-if="lang==='AR'">المهام الواردة / تحت التنفيذ</span>
+                                    <span ng-if="lang==='EN'">Pending Incoming Tasks</span>
                                 </span>
                             </li>
                             <li class="mdl-menu__item mdl-list__item" ng-click="openFetchIncomingAuto()">
                                 <span class="mdl-list__item-primary-content">
                                     <i class="material-icons mdl-list__item-icon">battery_alert</i>
-                                    <span>المهام الواردة / المغلقة تلقائي</span>
+                                    <span ng-if="lang==='AR'">المهام الواردة / المغلقة تلقائي</span>
+                                    <span ng-if="lang==='EN'">Closed Incoming Tasks</span>
                                 </span>
                             </li>
                             <li class="mdl-menu__item mdl-list__item mdl-menu__item--full-bleed-divider"
                                 ng-click="openFetchIncomingManual()">
                                 <span class="mdl-list__item-primary-content">
                                     <i class="material-icons mdl-list__item-icon">archive</i>
-                                    <span>المهام الواردة / الارشيف</span>
+                                    <span ng-if="lang==='AR'">المهام الواردة / الارشيف</span>
+                                    <span ng-if="lang==='EN'">Incoming Tasks Archive</span>
                                 </span>
                             </li>
                             <li class="mdl-menu__item mdl-list__item" ng-click="showSlideFilter()">
                                 <span class="mdl-list__item-primary-content">
                                     <i class="material-icons mdl-list__item-icon">search</i>
-                                   <span>بحث تفصيلي</span>
+                                   <span ng-if="lang==='AR'">بحث تفصيلي</span>
+                                   <span ng-if="lang==='EN'">Filter</span>
                                 </span>
                             </li>
                         </ul>
                     </div>
-                    <div class="col-xs-4 col-sm-2 col-md-2 col-lg-2 pull-right">
+                    <div ng-class="{'pull-right' : lang==='AR', 'pull-left' : lang==='EN'}" class="col-xs-4 col-sm-2 col-md-2 col-lg-2">
                         <button style="width:100%" id="menu-lower-right" style="width: 100%;"
                                 class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect">
-                            <span>العمليات</span>
+                            <span ng-if="lang==='AR'">العمليات</span>
+                            <span ng-if="lang==='EN'">Actions</span>
                         </button>
-                        <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect"
+                        <ul ng-class="{'mdl-menu--bottom-right' : lang==='AR', 'mdl-menu--bottom-left' : lang==='EN'}"
+                            class="mdl-menu mdl-js-menu mdl-js-ripple-effect"
                             for="menu-lower-right">
                             <li class="mdl-menu__item mdl-list__item mdl-menu__item--full-bleed-divider"
                                 ng-click="filter()">
                                 <span class="mdl-list__item-primary-content">
                                     <i class="material-icons mdl-list__item-icon">cached</i>
-                                    <span>تحديث البيانات</span>
+                                    <span ng-if="lang==='AR'">تحديث البيانات</span>
+                                    <span ng-if="lang==='EN'">Reload Data</span>
                                 </span>
                             </li>
                             <li class="mdl-menu__item mdl-list__item" ng-click="openCreateModel()"
                                 ng-if="contains(me.team.authorities, ['ROLE_TASK_CREATE'])">
                                 <span class="mdl-list__item-primary-content">
                                     <i class="material-icons mdl-list__item-icon">assignment_ind</i>
-                                    <span>اضافة مهمة</span>
+                                    <span ng-if="lang==='AR'">اضافة مهمة</span>
+                                    <span ng-if="lang==='EN'">New...</span>
                                 </span>
                             </li>
                             <li class="mdl-menu__item mdl-list__item" ng-click="openUpdateModel()"
@@ -213,7 +227,8 @@
                                 ng-if="contains(me.team.authorities, ['ROLE_TASK_UPDATE']) && toggleList===1">
                                 <span class="mdl-list__item-primary-content">
                                     <i class="material-icons mdl-list__item-icon">edit</i>
-                                    <span>تعديل بيانات المهمة</span>
+                                    <span ng-if="lang==='AR'">تعديل بيانات المهمة</span>
+                                    <span ng-if="lang==='EN'">Edit...</span>
                                 </span>
                             </li>
                             <li class="mdl-menu__item mdl-list__item" ng-click="delete()"
@@ -221,7 +236,8 @@
                                 ng-if="contains(me.team.authorities, ['ROLE_TASK_DELETE']) && toggleList===1">
                                 <span class="mdl-list__item-primary-content">
                                     <i class="material-icons mdl-list__item-icon">delete</i>
-                                    <span>حذف المهمة</span>
+                                    <span ng-if="lang==='AR'">حذف المهمة</span>
+                                    <span ng-if="lang==='EN'">Delete</span>
                                 </span>
                             </li>
                             <li class="mdl-menu__item mdl-list__item mdl-menu__item--full-bleed-divider"
@@ -230,7 +246,8 @@
                                 ng-if="contains(me.team.authorities, ['ROLE_TASK_DELETE']) && toggleList===1">
                                 <span class="mdl-list__item-primary-content">
                                     <i class="material-icons mdl-list__item-icon">archive</i>
-                                    <span>ارشفة المهمة</span>
+                                    <span ng-if="lang==='AR'">ارشفة المهمة</span>
+                                    <span ng-if="lang==='EN'">Archive</span>
                                 </span>
                             </li>
                             <li class="mdl-menu__item mdl-list__item" ng-click="openCreateOperationModel()"
@@ -238,21 +255,24 @@
                                 ng-if="contains(me.team.authorities, ['ROLE_TASK_OPERATION_CREATE']) && toggleList===1">
                                 <span class="mdl-list__item-primary-content">
                                     <i class="material-icons mdl-list__item-icon">timer</i>
-                                    <span>اضافة حركة</span>
+                                    <span ng-if="lang==='AR'">اضافة حركة</span>
+                                    <span ng-if="lang==='EN'">Comment...</span>
                                 </span>
                             </li>
                             <li class="mdl-menu__item mdl-list__item" ng-click="openRequestCloseModel()"
                                 ng-hide="!tasks || tasks.length==0" ng-if="toggleList===1">
                                 <span class="mdl-list__item-primary-content">
                                     <i class="material-icons mdl-list__item-icon">close</i>
-                                    <span>طلب إغلاق</span>
+                                    <span ng-if="lang==='AR'">طلب إغلاق</span>
+                                    <span ng-if="lang==='EN'">Close Request...</span>
                                 </span>
                             </li>
                             <li class="mdl-menu__item mdl-list__item" ng-click="openRequestExtensionModel()"
                                 ng-hide="!tasks || tasks.length==0" ng-if="toggleList===1">
                                 <span class="mdl-list__item-primary-content">
                                     <i class="material-icons mdl-list__item-icon">battery_full</i>
-                                    <span>طلب تمديد</span>
+                                    <span ng-if="lang==='AR'">طلب تمديد</span>
+                                    <span ng-if="lang==='EN'">Extend Request...</span>
                                 </span>
                             </li>
                             <li class="mdl-menu__item mdl-list__item" ng-click="openDetailsModel()"
@@ -260,86 +280,102 @@
                                 ng-hide="!tasks || tasks.length==0">
                                 <span class="mdl-list__item-primary-content">
                                     <i class="material-icons mdl-list__item-icon">info</i>
-                                    <span>التفاصيل</span>
+                                    <span ng-if="lang==='AR'">التفاصيل</span>
+                                    <span ng-if="lang==='EN'">Details...</span>
                                 </span>
                             </li>
                         </ul>
                     </div>
-                    <div class="col-xs-4 col-sm-2 col-md-2 col-lg-2 pull-right">
+                    <div ng-class="{'pull-right' : lang==='AR', 'pull-left' : lang==='EN'}"
+                         class="col-xs-4 col-sm-2 col-md-2 col-lg-2">
                         <button style="width:100%" id="report-menu-lower-right" style="width: 100%;"
                                 class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect">
-                            <span>التقارير</span>
+                            <span ng-if="lang==='AR'">التقارير</span>
+                            <span ng-if="lang==='EN'">Reports</span>
                         </button>
-                        <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect"
+                        <ul ng-class="{'mdl-menu--bottom-right' : lang==='AR', 'mdl-menu--bottom-left' : lang==='EN'}"
+                            class="mdl-menu mdl-js-menu mdl-js-ripple-effect"
                             for="report-menu-lower-right">
-                            <li class="mdl-menu__item mdl-list__item" ng-click="openTaskOperationsReportModel()"
+                            <li class="mdl-menu__item mdl-list__item"
+                                ng-click="openTaskOperationsReportModel()"
                                 ng-if="toggleList===1"
                                 ng-hide="!tasks || tasks.length==0">
                                 <span class="mdl-list__item-primary-content">
                                     <i class="material-icons mdl-list__item-icon">print</i>
-                                   <span>تقرير الحركات</span>
+                                   <span ng-if="lang==='AR'">تقرير الحركات</span>
+                                   <span ng-if="lang==='EN'">Comments Reports...</span>
                                 </span>
                             </li>
                             <li class="mdl-menu__item mdl-list__item mdl-menu__item--full-bleed-divider"
-                                ng-click="openReportTasksModel()" ng-if="toggleList===1"
-                                ng-hide="!tasks || tasks.length==0">
-                                <span class="mdl-list__item-primary-content">
-                                    <i class="material-icons mdl-list__item-icon">print</i>
-                                   <span>تقرير مهام مختصر</span>
-                                </span>
-                            </li>
-                            <li class="mdl-menu__item mdl-list__item" ng-click="openTaskTosReportModel()"
+                                ng-click="openReportTasksModel()"
                                 ng-if="toggleList===1"
                                 ng-hide="!tasks || tasks.length==0">
                                 <span class="mdl-list__item-primary-content">
                                     <i class="material-icons mdl-list__item-icon">print</i>
-                                   <span>تقرير متابعة الموظفين</span>
+                                   <span ng-if="lang==='AR'">تقرير مهام مختصر</span>
+                                   <span ng-if="lang==='EN'">Tasks Summery Report...</span>
+                                </span>
+                            </li>
+                            <li class="mdl-menu__item mdl-list__item"
+                                ng-click="openTaskTosReportModel()"
+                                ng-if="toggleList===1"
+                                ng-hide="!tasks || tasks.length==0">
+                                <span class="mdl-list__item-primary-content">
+                                    <i class="material-icons mdl-list__item-icon">print</i>
+                                   <span ng-if="lang==='AR'">تقرير متابعة الموظفين</span>
+                                   <span ng-if="lang==='EN'">Employees Observation Report...</span>
                                 </span>
                             </li>
                             <li class="mdl-menu__item mdl-list__item mdl-menu__item--full-bleed-divider"
                                 ng-click="openTasksClosedSoonReportModel()">
                                 <span class="mdl-list__item-primary-content">
                                     <i class="material-icons mdl-list__item-icon">print</i>
-                                   <span>تقرير المهام المغلقة قريباً</span>
+                                   <span ng-if="lang==='AR'">تقرير المهام المغلقة قريباً</span>
+                                   <span ng-if="lang==='EN'">Tasks Closed Soon Report...</span>
                                 </span>
                             </li>
                             <li class="mdl-menu__item mdl-list__item"
                                 ng-click="ModalProvider.openOutgoingTasksOperationsTodayModel()">
                                 <span class="mdl-list__item-primary-content">
                                     <i class="material-icons mdl-list__item-icon">print</i>
-                                   <span>تقرير بحركات المهام الصادرة</span>
+                                   <span ng-if="lang==='AR'">تقرير بحركات المهام الصادرة</span>
+                                   <span ng-if="lang==='EN'">Outgoing Task Comments Report...</span>
                                 </span>
                             </li>
                             <li class="mdl-menu__item mdl-list__item mdl-menu__item--full-bleed-divider">
                                 <span class="mdl-list__item-primary-content">
                                     <i class="material-icons mdl-list__item-icon">print</i>
-                                   <span>تقرير بحركات المهام الواردة</span>
+                                   <span ng-if="lang==='AR'">تقرير بحركات المهام الواردة</span>
+                                   <span ng-if="lang==='EN'">Incoming Task Comments Report...</span>
                                 </span>
                             </li>
                             <li class="mdl-menu__item mdl-list__item"
                                 ng-click="openOutgoingTasksDeductionsReportModel()">
                                 <span class="mdl-list__item-primary-content">
                                     <i class="material-icons mdl-list__item-icon">print</i>
-                                   <span>تقرير بخصومات المهام الصادرة</span>
+                                   <span ng-if="lang==='AR'">تقرير بخصومات المهام الصادرة</span>
+                                   <span ng-if="lang==='EN'">Outgoing Tasks Deduction Report...</span>
                                 </span>
                             </li>
                             <li class="mdl-menu__item mdl-list__item mdl-menu__item--full-bleed-divider"
                                 ng-click="openIncomingTasksDeductionsReportModel()">
                                 <span class="mdl-list__item-primary-content">
                                     <i class="material-icons mdl-list__item-icon">print</i>
-                                   <span>تقرير بخصومات المهام الواردة</span>
+                                   <span ng-if="lang==='AR'">تقرير بخصومات المهام الواردة</span>
+                                   <span ng-if="lang==='EN'">Incoming Tasks Deduction Report...</span>
                                 </span>
                             </li>
                             <li class="mdl-menu__item mdl-list__item"
                                 ng-click="ModalProvider.openWatchTasksOperationsModel()">
                                 <span class="mdl-list__item-primary-content">
                                     <i class="material-icons mdl-list__item-icon">print</i>
-                                   <span>تقرير مراقبة حركة العمل اليومية</span>
+                                   <span ng-if="lang==='AR'">تقرير مراقبة حركة العمل اليومية</span>
+                                   <span ng-if="lang==='EN'">Daily Tasks Observation Report...</span>
                                 </span>
                             </li>
                         </ul>
                     </div>
-                    <div class="pull-left" ng-init="toggleList=1">
+                    <div ng-class="{'pull-left' : lang==='AR', 'pull-right' : lang==='EN'}" ng-init="toggleList=1">
                         <div class="btn-toolbar">
                             <div class="btn-group" data-toggle="buttons">
                                 <button class="btn btn-default mdl-button mdl-js-button mdl-js-ripple-effect"
@@ -370,7 +406,7 @@
 
     <main class="mdl-layout__content">
 
-        <div dir="rtl" class="row" style="margin-top: 10px">
+        <div class="row" style="margin-top: 10px">
 
             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" ng-show="toggleList===1">
                 <div class="panel panel-body">
@@ -379,44 +415,54 @@
                                class="mdl-data-table mdl-js-data-table mdl-shadow--2dp">
                             <thead>
                             <tr>
-                                <th class="text-right">
-                                    <span>م</span>
-                                    <a href="" ng-click="showSlideFilter()">
-                                        <span style="font-size: 25px" class="fa fa-filter fa-lg"></span>
-                                    </a>
+                                <th>
+                                    <span ng-if="lang==='AR'">م</span>
+                                    <span ng-if="lang==='EN'">#</span>
                                 </th>
-                                <th st-sort="code" class="text-right">
-                                    <span> الرقم</span>
+                                <th st-sort="code">
+                                    <span ng-if="lang==='AR'"> الرقم</span>
+                                    <span ng-if="lang==='EN'">Code</span>
                                 </th>
-                                <th st-sort="title" class="text-right">
-                                    <span>العنوان</span>
+                                <th st-sort="title">
+                                    <span ng-if="lang==='AR'">العنوان</span>
+                                    <span ng-if="lang==='EN'">Title</span>
                                 </th>
-                                <th st-sort="startDate" class="text-right">
-                                    <span>تاريخ الإنشاء</span>
+                                <th st-sort="startDate">
+                                    <span ng-if="lang==='AR'">تاريخ الإنشاء</span>
+                                    <span ng-if="lang==='EN'">Start Date</span>
                                 </th>
-                                <th st-sort="person.name" class="text-right">
-                                    <span>جهة التكليف</span>
+                                <th st-sort="person.name">
+                                    <span ng-if="lang==='AR'">جهة التكليف</span>
+                                    <span ng-if="lang==='EN'">Creator</span>
                                 </th>
-                                <th st-sort="importance" class="text-right">
-                                    <span>درجة الأهمية</span>
+                                <th st-sort="importance">
+                                    <span ng-if="lang==='AR'">درجة الأهمية</span>
+                                    <span ng-if="lang==='EN'">Importance</span>
                                 </th>
-                                <th st-sort="closeType" class="text-right">
-                                    <span>حالة الإغلاق</span>
+                                <th st-sort="closeType">
+                                    <span ng-if="lang==='AR'">حالة الإغلاق</span>
+                                    <span ng-if="lang==='EN'">Condition</span>
                                 </th>
-                                <th st-sort="taskTos[0].person.name" class="text-right">
-                                    <span>الموظفون</span>
+                                <th st-sort="taskTos[0].person.name">
+                                    <span ng-if="lang==='AR'">الموظفون</span>
+                                    <span ng-if="lang==='EN'">Employees</span>
                                 </th>
-                                <th st-sort="endDate" class="text-right">
-                                    <span>تاريخ التسليم</span>
+                                <th st-sort="endDate">
+                                    <span ng-if="lang==='AR'">تاريخ التسليم</span>
+                                    <span ng-if="lang==='EN'">End Date</span>
                                 </th>
                             </tr>
                             <tr>
-                                <th colspan="10"><input st-search="" class="form-control" placeholder="بحث شامل وسريع..." type="text"/></th>
+                                <th colspan="10">
+                                    <input st-search=""
+                                           class="form-control"
+                                           placeholder="{{lang==='AR' ? 'بحث شامل وسريع...' : 'Search...'}}"
+                                           type="text"/>
+                                </th>
                             </tr>
                             </thead>
                             <tbody>
-                            <tr class="text-right"
-                                ng-repeat="task in collection"
+                            <tr ng-repeat="task in collection"
                                 context-menu="rowMenu"
                                 ng-click="setSelected(task)"
                                 ng-dblclick="openDetailsModel(task)"
@@ -466,7 +512,10 @@
                             <tr class="blank_row"
                                 style="height: 10px !important; background-color: #FFFFFF;"
                                 ng-show="!collection || collection.length ==0">
-                                <td colspan="10">لا توجد بيانات</td>
+                                <td colspan="10">
+                                    <span ng-if="lang==='AR'">لا توجد بيانات</span>
+                                    <span ng-if="lang==='EN'">No Data Found.</span>
+                                </td>
                             </tr>
                             </tbody>
                         </table>
@@ -495,24 +544,29 @@
                             <div class="panel-body">
                                 <div class="contact-info">
                                     <p>
-                                        <small>جهة التكليف</small>
+                                        <small ng-if="lang==='AR'">جهة التكليف</small>
+                                        <small ng-if="lang==='EN'">Creator</small>
                                         <br/>{{task.person.nickname}} / {{task.person.name}}
                                     </p>
                                     <p>
-                                        <small>تاريخ التسليم</small>
+                                        <small ng-if="lang==='AR'">تاريخ التسليم</small>
+                                        <small ng-if="lang==='EN'">End Date</small>
                                         <br/>
                                         <span ng-show="dateType==='H'">{{task.endDate | kdate: 'yyyy-mm-dd' : 'ar' : 'ummalqura'}}</span>
                                         <span ng-show="dateType==='G'">{{task.endDate | date: 'yyyy-MM-dd'}}</span>
                                     </p>
                                     <p>
-                                        <a href="" ng-click="openDetailsModel(task)">المزيد...</a>
+                                        <a href="" ng-click="openDetailsModel(task)">
+                                            <span ng-if="lang==='AR'">المزيد...</span>
+                                            <span ng-if="lang==='EN'">More Info...</span>
+                                        </a>
                                     </p>
                                 </div>
                             </div>
                             <div class="panel-footer">
                                 <div class="btn-group btn-group-justified">
                                     <a ng-if="contains(me.team.authorities, ['ROLE_TASK_UPDATE'])"
-                                       uib-tooltip="تعديل"
+                                       uib-tooltip="{{lang==='AR' ? 'تعديل' : 'Edit...'}}"
                                        tooltip-append-to-body="true"
                                        type="button"
                                        ng-click="openUpdateModel(task)"
@@ -520,7 +574,7 @@
                                         <i class="fa fa-edit fa-lg"></i>
                                     </a>
                                     <a ng-if="contains(me.team.authorities, ['ROLE_TASK_DELETE'])"
-                                       uib-tooltip="حذف"
+                                       uib-tooltip="{{lang==='AR' ? 'حذف' : 'Delete'}}"
                                        tooltip-append-to-body="true"
                                        type="button"
                                        ng-click="delete(task)"
@@ -528,21 +582,21 @@
                                         <i class="fa fa-trash fa-lg"></i>
                                     </a>
                                     <a ng-if="contains(me.team.authorities, ['ROLE_TASK_OPERATION_CREATE'])"
-                                       uib-tooltip="اضافة حركة"
+                                       uib-tooltip="{{lang==='AR' ? 'تعليق' : 'Comment...'}}"
                                        tooltip-append-to-body="true"
                                        type="button"
                                        ng-click="openCreateOperationModel(task)"
                                        class="btn btn-primary">
                                         <i class="fa fa-clock-o fa-lg"></i>
                                     </a>
-                                    <a uib-tooltip="طلب إغلاق"
+                                    <a uib-tooltip="{{lang==='AR' ? 'طلب إغلاق' : 'Close Request...'}}"
                                        tooltip-append-to-body="true"
                                        type="button"
                                        ng-click="openRequestCloseModel(task)"
                                        class="btn btn-primary">
                                         <i class="fa fa-power-off fa-lg"></i>
                                     </a>
-                                    <a uib-tooltip="طلب تمديد"
+                                    <a uib-tooltip="{{lang==='AR' ? 'طلب تمديد' : 'Extend Request...'}}"
                                        tooltip-append-to-body="true"
                                        type="button"
                                        ng-click="openRequestExtensionModel(task)"

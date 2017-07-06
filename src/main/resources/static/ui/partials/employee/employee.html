@@ -117,25 +117,29 @@
         </div>
         <div class="mdl-layout__header-row" style="height: auto!important;padding: 0px !important;">
             <div class="panel panel-body" style="width: 100%; margin-bottom: 0px !important;">
-                <div class="col-xs-6 col-sm-2 col-md-2 col-lg-2 pull-right">
+                <div ng-class="{'pull-right' : lang==='AR', 'pull-left' : lang==='EN'}" class="col-xs-6 col-sm-2 col-md-2 col-lg-2">
                     <button id="demo-menu-lower-right" style="width: 100%;"
                             class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect">
-                        <span>العمليات</span>
+                        <span ng-if="lang==='AR'">العمليات</span>
+                        <span ng-if="lang==='EN'">Actions</span>
                     </button>
-                    <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect"
+                    <ul ng-class="{'mdl-menu--bottom-right' : lang==='AR', 'mdl-menu--bottom-left' : lang==='EN'}"
+                        class="mdl-menu mdl-js-menu mdl-js-ripple-effect"
                         for="demo-menu-lower-right">
                         <li class="mdl-menu__item mdl-list__item mdl-menu__item--full-bleed-divider"
                             ng-click="fetchTableData()">
                             <span class="mdl-list__item-primary-content">
                                 <i class="material-icons mdl-list__item-icon">visibility</i>
-                                <span>عرض البيانات</span>
+                                <span ng-if="lang==='AR'">عرض البيانات</span>
+                                <span ng-if="lang==='EN'">View</span>
                             </span>
                         </li>
                         <li class="mdl-menu__item mdl-list__item" ng-click="ModalProvider.openEmployeeCreateModel();"
                             ng-if="contains(me.team.authorities, ['ROLE_EMPLOYEE_CREATE'])">
                             <span class="mdl-list__item-primary-content">
                                 <i class="material-icons mdl-list__item-icon">add</i>
-                                <span>اضافة موظف جديد</span>
+                                <span ng-if="lang==='AR'">انشاء الموظف جديد</span>
+                                <span ng-if="lang==='EN'">New...</span>
                             </span>
                         </li>
                         <li class="mdl-menu__item mdl-list__item" ng-click="ModalProvider.openEmployeeUpdateModel(selected);"
@@ -143,7 +147,8 @@
                             ng-hide="!employees || employees.length==0">
                             <span class="mdl-list__item-primary-content">
                                 <i class="material-icons mdl-list__item-icon">edit</i>
-                                <span>تعديل بيانات الموظف</span>
+                                <span ng-if="lang==='AR'">تعديل بيانات الموظف</span>
+                                <span ng-if="lang==='EN'">Edit...</span>
                             </span>
                         </li>
                         <li class="mdl-menu__item mdl-list__item" ng-click="delete()"
@@ -151,13 +156,14 @@
                             ng-hide="!employees || employees.length==0">
                             <span class="mdl-list__item-primary-content">
                                 <i class="material-icons mdl-list__item-icon">delete</i>
-                                <span>حذف الموظف</span>
+                                <span ng-if="lang==='AR'">حذف الموظف</span>
+                                <span ng-if="lang==='EN'">Delete</span>
                             </span>
                         </li>
                     </ul>
                 </div>
 
-                <div class="pull-left" ng-init="toggleList=1">
+                <div ng-class="{'pull-left' : lang==='AR', 'pull-right' : lang==='EN'}" ng-init="toggleList=1">
                     <div class="btn-toolbar">
                         <div class="btn-group" data-toggle="buttons">
                             <button class="btn btn-default mdl-button mdl-js-button mdl-js-ripple-effect"
@@ -181,7 +187,7 @@
 
     <main class="mdl-layout__content">
 
-        <div dir="rtl" class="row" style="margin-top: 10px">
+        <div class="row" style="margin-top: 10px">
 
             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" ng-show="toggleList===1">
                 <div class="panel panel-body">
@@ -192,46 +198,58 @@
                             <thead>
                             <tr>
 
-                                <th class="text-center">
-                                    <span>م</span>
+                                <th>
+                                    <span ng-if="lang==='AR'">م</span>
+                                    <span ng-if="lang==='EN'">#</span>
                                 </th>
 
-                                <th st-sort="person.name" class="text-right">
-                                    <span>اسم الموظف</span>
+                                <th st-sort="person.name">
+                                    <span ng-if="lang==='AR'">اسم الموظف</span>
+                                    <span ng-if="lang==='EN'">Name</span>
                                 </th>
 
-                                <th st-sort="person.email" class="text-right">
-                                    <span>البريد الإلكتروني</span>
+                                <th st-sort="person.email">
+                                    <span ng-if="lang==='AR'">البريد الإلكتروني</span>
+                                    <span ng-if="lang==='EN'">Email</span>
                                 </th>
 
-                                <th st-sort="person.mobile" class="text-right">
-                                    <span>الجوال</span>
+                                <th st-sort="person.mobile">
+                                    <span ng-if="lang==='AR'">الجوال</span>
+                                    <span ng-if="lang==='EN'">Mobile</span>
                                 </th>
 
-                                <th st-sort="person.qualification" class="text-right">
-                                    <span>المؤهل</span>
+                                <th st-sort="person.qualification">
+                                    <span ng-if="lang==='AR'">المؤهل</span>
+                                    <span ng-if="lang==='EN'">Qualification</span>
                                 </th>
 
-                                <th st-sort="department.name" class="text-right">
-                                    <span>القسم</span>
+                                <th st-sort="department.name">
+                                    <span ng-if="lang==='AR'">القسم</span>
+                                    <span ng-if="lang==='EN'">Department</span>
                                 </th>
 
-                                <th st-sort="department.branch.name" class="text-right">
-                                    <span>الفرع</span>
+                                <th st-sort="department.branch.name">
+                                    <span ng-if="lang==='AR'">الفرع</span>
+                                    <span ng-if="lang==='EN'">Branch</span>
                                 </th>
 
-                                <th st-sort="department.branch.region.name" class="text-right">
-                                    <span>المنطقة</span>
+                                <th st-sort="department.branch.region.name">
+                                    <span ng-if="lang==='AR'">المنطقة</span>
+                                    <span ng-if="lang==='EN'">Region</span>
                                 </th>
 
                             </tr>
                             <tr>
-                                <th colspan="8"><input st-search="" class="form-control" placeholder="بحث شامل وسريع..." type="text"/></th>
+                                <th colspan="8">
+                                    <input st-search=""
+                                           class="form-control"
+                                           placeholder="{{lang==='AR' ? 'بحث شامل وسريع...' : 'Search...'}}"
+                                           type="text"/>
+                                </th>
                             </tr>
                             </thead>
                             <tbody>
-                            <tr class="text-right"
-                                ng-repeat="employee in collection"
+                            <tr ng-repeat="employee in collection"
                                 st-select-mode="single"
                                 context-menu="rowMenu"
                                 ng-click="setSelected(employee)"
@@ -251,7 +269,10 @@
                             <tr class="blank_row"
                                 style="height: 10px !important; background-color: #FFFFFF;"
                                 ng-show="!collection || collection.length ==0">
-                                <td colspan="8">لا توجد بيانات</td>
+                                <td colspan="8">
+                                    <span ng-if="lang==='AR'">لا توجد بيانات</span>
+                                    <span ng-if="lang==='EN'">No Data Found.</span>
+                                </td>
                             </tr>
                             </tbody>
                         </table>
@@ -283,24 +304,27 @@
                             <div class="panel-body">
                                 <div class="contact-info">
                                     <p>
-                                        <strong>القسم</strong>
+                                        <strong ng-if="lang==='AR'">القسم</strong>
+                                        <strong ng-if="lang==='EN'">Department</strong>
                                         {{employee.department.name}}
                                     </p>
                                     <hr>
                                     <p>
-                                        <strong>الفرع</strong>
+                                        <strong ng-if="lang==='AR'">الفرع</strong>
+                                        <strong ng-if="lang==='EN'">Branch</strong>
                                         {{employee.department.branch.name}}
                                     </p>
                                     <hr>
                                     <p>
-                                        <strong>البريد الإلكتروني</strong>
+                                        <strong ng-if="lang==='AR'">البريد الإلكتروني</strong>
+                                        <strong ng-if="lang==='EN'">Email</strong>
                                         {{employee.person.email}}
                                     </p>
                                 </div>
                             </div>
                             <div class="panel-footer">
                                 <div class="row">
-                                    <button uib-tooltip="موظف جديد"
+                                    <button uib-tooltip="{{lang==='AR' ? 'موظف جديد' : 'New...'}}"
                                             tooltip-append-to-body="true"
                                             type="button"
                                             ng-if="contains(me.team.authorities, ['ROLE_EMPLOYEE_CREATE'])"
@@ -308,19 +332,19 @@
                                             class="mdl-button mdl-js-button mdl-js-ripple-effect col-xs-4 col-sm-4 col-md-4 col-lg-4">
                                         <i class="material-icons">add</i>
                                     </button>
-                                    <button uib-tooltip="تعديل"
+                                    <button uib-tooltip="{{lang==='AR' ? 'تعديل' : 'Edit...'}}"
                                             tooltip-append-to-body="true"
                                             type="button"
                                             ng-if="contains(me.team.authorities, ['ROLE_EMPLOYEE_UPDATE'])"
-                                            ng-click="ModalProvider.openEmployeeUpdateModel(branch)"
+                                            ng-click="ModalProvider.openEmployeeUpdateModel(employee)"
                                             class="mdl-button mdl-js-button mdl-js-ripple-effect col-xs-4 col-sm-4 col-md-4 col-lg-4">
                                         <i class="material-icons">edit</i>
                                     </button>
-                                    <button uib-tooltip="حذف"
+                                    <button uib-tooltip="{{lang==='AR' ? 'حذف' : 'Delete'}}"
                                             tooltip-append-to-body="true"
                                             type="button"
                                             ng-if="contains(me.team.authorities, ['ROLE_EMPLOYEE_DELETE'])"
-                                            ng-click="delete(branch)"
+                                            ng-click="delete(employee)"
                                             class="mdl-button mdl-js-button mdl-js-ripple-effect col-xs-4 col-sm-4 col-md-4 col-lg-4">
                                         <i class="material-icons">delete</i>
                                     </button>

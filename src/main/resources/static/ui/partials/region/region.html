@@ -195,7 +195,7 @@
                             <thead>
                             <tr>
 
-                                <th class="text-center">
+                                <th>
                                     <span ng-if="lang==='AR'">م</span>
                                     <span ng-if="lang==='EN'">#</span>
                                 </th>
@@ -227,7 +227,12 @@
 
                             </tr>
                             <tr>
-                                <th colspan="6"><input st-search="" class="form-control" placeholder="{{lang==='AR' ? 'بحث شامل وسريع...' : 'Search...'}}" type="text"/></th>
+                                <th colspan="6">
+                                    <input st-search=""
+                                           class="form-control"
+                                           placeholder="{{lang==='AR' ? 'بحث شامل وسريع...' : 'Search...'}}"
+                                           type="text"/>
+                                </th>
                             </tr>
                             </thead>
                             <tbody>
