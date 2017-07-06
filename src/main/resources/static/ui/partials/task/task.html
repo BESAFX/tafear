@@ -617,7 +617,7 @@
                     <div class="panel panel-success">
 
                         <div class="panel-heading">
-                            <ul class="panel-controls pull-left" style="margin-top: 2px;">
+                            <ul ng-class="{'pull-left' : lang==='AR', 'pull-right' : lang==='EN'}" class="panel-controls" style="margin-top: 2px;">
                                 <li>
                                     <a href="" ng-click="openCreateWarnModel()"
                                        ng-show="tasks.length > 0"
@@ -641,9 +641,10 @@
                                     </a>
                                 </li>
                             </ul>
-                            <h3 class="panel-title pull-right">
+                            <h3 ng-class="{'pull-right' : lang==='AR', 'pull-left' : lang==='EN'}" class="panel-title">
                                 <span class="fa fa-tasks"></span>
-                                <span>المهام</span>
+                                <span ng-if="lang==='AR'">المهام</span>
+                                <span ng-if="lang==='EN'">Tasks</span>
                             </h3>
                         </div>
 
@@ -725,7 +726,10 @@
                                                     <tr class="blank_row"
                                                         style="height: 10px !important; background-color: #FFFFFF;"
                                                         ng-show="!collection || collection.length ==0">
-                                                        <td colspan="1">لا توجد مهام</td>
+                                                        <td colspan="1">
+                                                            <span ng-if="lang==='AR'">لا توجد بيانات</span>
+                                                            <span ng-if="lang==='EN'">No Data Found.</span>
+                                                        </td>
                                                     </tr>
                                                     </tbody>
                                                 </table>
@@ -744,7 +748,7 @@
                     <div class="panel panel-warning">
 
                         <div class="panel-heading">
-                            <ul class="panel-controls pull-left" style="margin-top: 2px;">
+                            <ul ng-class="{'pull-left' : lang==='AR', 'pull-right' : lang==='EN'}" class="panel-controls" style="margin-top: 2px;">
                                 <li>
                                     <a href=""
                                        ng-show="tasks.length > 0"
@@ -762,9 +766,10 @@
                                     </a>
                                 </li>
                             </ul>
-                            <h3 class="panel-title pull-right">
+                            <h3 ng-class="{'pull-right' : lang==='AR', 'pull-left' : lang==='EN'}" class="panel-title">
                                 <span class="fa fa-comments-o"></span>
-                                <span>الحركات</span>
+                                <span ng-if="lang==='AR'">الحركات</span>
+                                <span ng-if="lang==='EN'">Comments</span>
                             </h3>
                         </div>
 
@@ -819,7 +824,10 @@
                                                     <tr class="blank_row"
                                                         style="height: 10px !important; background-color: #FFFFFF;"
                                                         ng-show="!collection2 || collection2.length ==0">
-                                                        <td colspan="1">لا توجد حركات</td>
+                                                        <td colspan="1">
+                                                            <span ng-if="lang==='AR'">لا توجد بيانات</span>
+                                                            <span ng-if="lang==='EN'">No Data Found.</span>
+                                                        </td>
                                                     </tr>
                                                     </tbody>
                                                 </table>
@@ -837,7 +845,7 @@
                     <div class="panel panel-danger">
 
                         <div class="panel-heading">
-                            <ul class="panel-controls pull-left" style="margin-top: 2px;">
+                            <ul ng-class="{'pull-left' : lang==='AR', 'pull-right' : lang==='EN'}" class="panel-controls" style="margin-top: 2px;">
                                 <li>
                                     <a href=""
                                        ng-show="tasks.length > 0"
@@ -848,9 +856,10 @@
                                     </a>
                                 </li>
                             </ul>
-                            <h3 class="panel-title pull-right">
+                            <h3 ng-class="{'pull-right' : lang==='AR', 'pull-left' : lang==='EN'}" class="panel-title">
                                 <span class="fa fa-power-off"></span>
-                                <span>طلبات الإغلاق</span>
+                                <span ng-if="lang==='AR'">طلبات الإغلاق</span>
+                                <span ng-if="lang==='EN'">Close Requests</span>
                             </h3>
                         </div>
 
@@ -894,7 +903,10 @@
                                                     <tr class="blank_row"
                                                         style="height: 10px !important; background-color: #FFFFFF;"
                                                         ng-show="!collectionCloseRequests || collectionCloseRequests.length ==0">
-                                                        <td colspan="1">لا توجد طلبات إغلاق</td>
+                                                        <td colspan="1">
+                                                            <span ng-if="lang==='AR'">لا توجد بيانات</span>
+                                                            <span ng-if="lang==='EN'">No Data Found.</span>
+                                                        </td>
                                                     </tr>
                                                     </tbody>
                                                 </table>
