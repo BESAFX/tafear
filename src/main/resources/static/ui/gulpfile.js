@@ -20,10 +20,10 @@ gulp.task('css', function () {
         './bootstrap-select/css/nya-bs-select.css',
         './css/font-awesome-animation.css',
         './kdate/css/jquery.calendars.picker.css',
-        './chosen/chosen.css',
-        './css/mdl-style.css',
-        './css/theme-black.css',
-        './css/style.css'
+        './chosen/chosen.css'
+        // './css/mdl-style.css',
+        // './css/theme-black.css',
+        // './css/style.css'
     ])
         .pipe(replace('/*!', '/*'))
         .pipe(concat('app.css'))

@@ -29,6 +29,11 @@ app.factory("PersonService",
                     return response.data;
                 });
             },
+            setGUILang: function (lang) {
+                return $http.get("/api/person/setGUILang/" + lang).then(function (response) {
+                    return response.data;
+                });
+            },
             findActivePerson: function () {
                 return $http.get("/api/person/findActivePerson").then(function (response) {
                     return response.data;

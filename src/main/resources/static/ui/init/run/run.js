@@ -1,5 +1,7 @@
-app.run(['$http', '$location', '$state', '$window', 'PersonService', 'TaskService', '$rootScope', '$log', '$stomp', 'defaultErrorMessageResolver', 'ModalProvider',
-    function ($http, $location, $state, $window, PersonService,  TaskService, $rootScope, $log, $stomp, defaultErrorMessageResolver, ModalProvider) {
+app.run(['$http', '$location', '$state', '$timeout', '$window', 'PersonService', 'TaskService', '$rootScope', '$log', '$css', '$stomp', 'defaultErrorMessageResolver', 'ModalProvider',
+    function ($http, $location, $state, $timeout, $window, PersonService, TaskService, $rootScope, $log, $css, $stomp, defaultErrorMessageResolver, ModalProvider) {
+
+        $rootScope.state = $state;
 
         defaultErrorMessageResolver.getErrorMessages().then(function (errorMessages) {
             errorMessages['fieldRequired'] = 'هذا الحقل مطلوب';
@@ -10,73 +12,157 @@ app.run(['$http', '$location', '$state', '$window', 'PersonService', 'TaskServic
             $.noty.closeAll(); // Close all notifications
             switch (toState.name) {
                 case 'home': {
-                    $rootScope.pageTitle = 'الرئيسية';
+                    $rootScope.applyTitleLang();
                     $rootScope.MDLIcon = 'dashboard';
+                    $css.removeAll();
+                    $css.add([
+                        '/ui/css/mdl-style.css',
+                        '/ui/css/theme-black.css'
+                    ]);
+                    $rootScope.applyCssLang();
                     break;
                 }
                 case 'menu': {
-                    $rootScope.pageTitle = 'البرامج';
+                    $rootScope.applyTitleLang();
                     $rootScope.MDLIcon = 'widgets';
+                    $css.removeAll();
+                    $css.add([
+                        '/ui/css/mdl-style.css',
+                        '/ui/css/theme-black.css'
+                    ]);
+                    $rootScope.applyCssLang();
                     break;
                 }
                 case 'company': {
-                    $rootScope.pageTitle = 'الشركة';
+                    $rootScope.applyTitleLang();
                     $rootScope.MDLIcon = 'business';
+                    $css.removeAll();
+                    $css.add([
+                        '/ui/css/mdl-style-purple-pink.css',
+                        '/ui/css/theme-black.css'
+                    ]);
+                    $rootScope.applyCssLang();
                     break;
                 }
                 case 'region': {
-                    $rootScope.pageTitle = 'المناطق';
+                    $rootScope.applyTitleLang();
                     $rootScope.MDLIcon = 'place';
+                    $css.removeAll();
+                    $css.add([
+                        '/ui/css/mdl-style-lime-orange.css',
+                        '/ui/css/theme-black.css'
+                    ]);
+                    $rootScope.applyCssLang();
                     break;
                 }
                 case 'branch': {
-                    $rootScope.pageTitle = 'الفروع';
+                    $rootScope.applyTitleLang();
                     $rootScope.MDLIcon = 'layers';
+                    $css.removeAll();
+                    $css.add([
+                        '/ui/css/mdl-style-indigo-pink.css',
+                        '/ui/css/theme-black.css'
+                    ]);
+                    $rootScope.applyCssLang();
                     break;
                 }
                 case 'department': {
-                    $rootScope.pageTitle = 'الأقسام';
+                    $rootScope.applyTitleLang();
                     $rootScope.MDLIcon = 'store';
+                    $css.removeAll();
+                    $css.add([
+                        '/ui/css/mdl-style-grey-deep_orange.css',
+                        '/ui/css/theme-black.css'
+                    ]);
+                    $rootScope.applyCssLang();
                     break;
                 }
                 case 'employee': {
-                    $rootScope.pageTitle = 'الموظفون';
+                    $rootScope.applyTitleLang();
                     $rootScope.MDLIcon = 'person_pin';
+                    $css.removeAll();
+                    $css.add([
+                        '/ui/css/mdl-style-indigo-pink.css',
+                        '/ui/css/theme-black.css'
+                    ]);
+                    $rootScope.applyCssLang();
                     break;
                 }
                 case 'team': {
-                    $rootScope.pageTitle = 'الصلاحيات';
+                    $rootScope.applyTitleLang();
                     $rootScope.MDLIcon = 'security';
+                    $css.removeAll();
+                    $css.add([
+                        '/ui/css/mdl-style-green-orange.css',
+                        '/ui/css/theme-black.css'
+                    ]);
+                    $rootScope.applyCssLang();
                     break;
                 }
                 case 'person': {
-                    $rootScope.pageTitle = 'المستخدمون';
+                    $rootScope.applyTitleLang();
                     $rootScope.MDLIcon = 'lock';
+                    $css.removeAll();
+                    $css.add([
+                        '/ui/css/mdl-style-brown-deep_orange.css',
+                        '/ui/css/theme-black.css'
+                    ]);
+                    $rootScope.applyCssLang();
                     break;
                 }
                 case 'profile': {
-                    $rootScope.pageTitle = 'الملف الشخصي';
+                    $rootScope.applyTitleLang();
                     $rootScope.MDLIcon = 'account_circle';
+                    $css.removeAll();
+                    $css.add([
+                        '/ui/css/mdl-style-light_green-lime.css',
+                        '/ui/css/theme-black.css'
+                    ]);
+                    $rootScope.applyCssLang();
                     break;
                 }
                 case 'task': {
-                    $rootScope.pageTitle = 'إدارة المهام';
+                    $rootScope.applyTitleLang();
                     $rootScope.MDLIcon = 'assignment';
+                    $css.removeAll();
+                    $css.add([
+                        '/ui/css/mdl-style-red-deep_orange.css',
+                        '/ui/css/theme-black.css'
+                    ]);
+                    $rootScope.applyCssLang();
                     break;
                 }
                 case 'reportModel': {
-                    $rootScope.pageTitle = 'نماذج الطباعة';
+                    $rootScope.applyTitleLang();
                     $rootScope.MDLIcon = 'print';
+                    $css.removeAll();
+                    $css.add([
+                        '/ui/css/mdl-style-indigo-pink.css',
+                        '/ui/css/theme-black.css'
+                    ]);
+                    $rootScope.applyCssLang();
                     break;
                 }
                 case 'help': {
-                    $rootScope.pageTitle = 'المساعدة';
+                    $rootScope.applyTitleLang();
                     $rootScope.MDLIcon = 'help';
+                    $css.removeAll();
+                    $css.add([
+                        '/ui/css/mdl-style-indigo-pink.css',
+                        '/ui/css/theme-black.css'
+                    ]);
+                    $rootScope.applyCssLang();
                     break;
                 }
                 case 'about': {
-                    $rootScope.pageTitle = 'عن البرنامج';
+                    $rootScope.applyTitleLang();
                     $rootScope.MDLIcon = 'info';
+                    $css.removeAll();
+                    $css.add([
+                        '/ui/css/mdl-style-indigo-pink.css',
+                        '/ui/css/theme-black.css'
+                    ]);
+                    $rootScope.applyCssLang();
                     break;
                 }
             }
@@ -99,7 +185,140 @@ app.run(['$http', '$location', '$state', '$window', 'PersonService', 'TaskServic
         };
 
         $rootScope.switchLang = function () {
-            $rootScope.lang === 'AR' ? $rootScope.lang = 'EN' : $rootScope.lang = 'AR';
+            switch ($rootScope.lang) {
+                case 'AR':
+                    $rootScope.lang = 'EN'
+                    $css.remove('/ui/css/style.css');
+                    $css.add('/ui/css/style-en.css');
+                    break;
+                case 'EN':
+                    $rootScope.lang = 'AR'
+                    $css.remove('/ui/css/style-en.css');
+                    $css.add('/ui/css/style.css');
+                    break;
+            }
+            $rootScope.applyTitleLang();
+            window.componentHandler.upgradeAllRegistered();
+            $rootScope.state.reload();
+            PersonService.setGUILang($rootScope.lang);
+        };
+
+        $rootScope.applyTitleLang = function () {
+            $timeout(function () {
+                switch ($rootScope.state.current.name) {
+                    case 'home':
+                        if ($rootScope.lang === 'AR') {
+                            $rootScope.pageTitle = 'الرئيسية';
+                        } else {
+                            $rootScope.pageTitle = 'Dashboard';
+                        }
+                        break;
+                    case 'menu':
+                        if ($rootScope.lang === 'AR') {
+                            $rootScope.pageTitle = 'البرامج';
+                        } else {
+                            $rootScope.pageTitle = 'Application';
+                        }
+                        break;
+                    case 'company':
+                        if ($rootScope.lang === 'AR') {
+                            $rootScope.pageTitle = 'الشركة';
+                        } else {
+                            $rootScope.pageTitle = 'Company';
+                        }
+                        break;
+                    case 'region':
+                        if ($rootScope.lang === 'AR') {
+                            $rootScope.pageTitle = 'المناطق';
+                        } else {
+                            $rootScope.pageTitle = 'Regions';
+                        }
+                        break;
+                    case 'branch':
+                        if ($rootScope.lang === 'AR') {
+                            $rootScope.pageTitle = 'الفروع';
+                        } else {
+                            $rootScope.pageTitle = 'Branches';
+                        }
+                        break;
+                    case 'department':
+                        if ($rootScope.lang === 'AR') {
+                            $rootScope.pageTitle = 'الأقسام';
+                        } else {
+                            $rootScope.pageTitle = 'Departments';
+                        }
+                        break;
+                    case 'employee':
+                        if ($rootScope.lang === 'AR') {
+                            $rootScope.pageTitle = 'الموظفون';
+                        } else {
+                            $rootScope.pageTitle = 'Employees';
+                        }
+                        break;
+                    case 'team':
+                        if ($rootScope.lang === 'AR') {
+                            $rootScope.pageTitle = 'الصلاحيات';
+                        } else {
+                            $rootScope.pageTitle = 'Privileges';
+                        }
+                        break;
+                    case 'person':
+                        if ($rootScope.lang === 'AR') {
+                            $rootScope.pageTitle = 'المستخدمون';
+                        } else {
+                            $rootScope.pageTitle = 'Users';
+                        }
+                        break;
+                    case 'profile':
+                        if ($rootScope.lang === 'AR') {
+                            $rootScope.pageTitle = 'الملف الشخصي';
+                        } else {
+                            $rootScope.pageTitle = 'Profile';
+                        }
+                        break;
+                    case 'task':
+                        if ($rootScope.lang === 'AR') {
+                            $rootScope.pageTitle = 'المهام';
+                        } else {
+                            $rootScope.pageTitle = 'Tasks';
+                        }
+                        break;
+                    case 'reportModel':
+                        if ($rootScope.lang === 'AR') {
+                            $rootScope.pageTitle = 'نماذج التقارير';
+                        } else {
+                            $rootScope.pageTitle = 'Report Customization';
+                        }
+                        break;
+                    case 'help':
+                        if ($rootScope.lang === 'AR') {
+                            $rootScope.pageTitle = 'المساعدة';
+                        } else {
+                            $rootScope.pageTitle = 'Help';
+                        }
+                        break;
+                    case 'about':
+                        if ($rootScope.lang === 'AR') {
+                            $rootScope.pageTitle = 'عن البرنامج';
+                        } else {
+                            $rootScope.pageTitle = 'About';
+                        }
+                        break;
+                }
+            }, 1000);
+        };
+
+        $rootScope.applyCssLang = function () {
+            switch ($rootScope.lang) {
+                case 'AR':
+                    $css.remove('/ui/css/style-en.css');
+                    $css.add('/ui/css/style.css');
+                    break;
+                case 'EN':
+                    $css.remove('/ui/css/style.css');
+                    $css.add('/ui/css/style-en.css');
+                    break;
+            }
         };
 
         $rootScope.ModalProvider = ModalProvider;
@@ -126,6 +345,11 @@ app.run(['$http', '$location', '$state', '$window', 'PersonService', 'TaskServic
         $rootScope.me = {};
         PersonService.findActivePerson().then(function (data) {
             $rootScope.me = data;
+            $rootScope.lang = $rootScope.me.options;
+            $rootScope.applyTitleLang();
+            $rootScope.applyCssLang();
+            window.componentHandler.upgradeAllRegistered();
+            $rootScope.state.reload();
             PersonService.findActivePersonManagerSummery().then(function (data) {
                 $rootScope.me.manager = data;
                 $rootScope.fetchTasksClosedThisWeek();

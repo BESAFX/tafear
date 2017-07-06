@@ -2,18 +2,12 @@ app.controller("profileCtrl", ['PersonService', 'FileUploader', '$rootScope', '$
     function (PersonService, FileUploader, $rootScope, $scope, $timeout, $log) {
 
         $timeout(function () {
-            PersonService.findActivePerson().then(function (data) {
-                $scope.me = data;
-            });
-        }, 2000);
-
-        $timeout(function () {
             window.componentHandler.upgradeAllRegistered();
         }, 1500);
 
         $scope.submit = function () {
-            PersonService.update($scope.me).then(function (data) {
-                $scope.me = data;
+            PersonService.update($rootScope.me).then(function (data) {
+                $rootScope.me = data;
             });
         };
         var uploader = $scope.uploader = new FileUploader({
@@ -35,7 +29,7 @@ app.controller("profileCtrl", ['PersonService', 'FileUploader', '$rootScope', '$
             uploader.uploadAll();
         };
         uploader.onSuccessItem = function (fileItem, response, status, headers) {
-            $scope.me.photo = response;
+            $rootScope.me.photo = response;
         };
 
     }]);

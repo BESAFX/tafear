@@ -133,7 +133,7 @@ input, .btn {
 }
 
 .panel .panel-title {
-    float: right !important;
+    float: left !important;
 }
 
 .panel {
@@ -161,13 +161,13 @@ input[type=checkbox] {
 }
 
 .mdl-layout__header > .mdl-layout-icon {
-    left: auto !important;
-    right: 15px !important;
+    right: auto !important;
+    left: 15px !important;
 }
 
 .mdl-layout__header {
     min-height: 50px !important;
-    direction: rtl !important;
+    direction: ltr !important;
 }
 
 .mdl-layout__header-row .mdl-navigation {
@@ -179,7 +179,7 @@ input[type=checkbox] {
 }
 
 .mdl-layout__header-row {
-    padding: 0px 50px 0px 20px !important;
+    padding: 0px 20px 0px 50px !important;
     height: 50px !important;
 }
 
@@ -193,16 +193,16 @@ input[type=checkbox] {
 }
 
 .mdl-list__item--two-line .mdl-list__item-primary-content {
-    text-align: right !important;
+    text-align: left !important;
 }
 
 .mdl-list__item--two-line .mdl-list__item-primary-content .mdl-list__item-avatar {
-    float: right;
+    float: left;
 }
 
 .mdl-list__item .mdl-list__item-primary-content .mdl-list__item-avatar {
-    margin-right: 0px !important;
-    margin-left: 16px !important;
+    margin-left: 0px !important;
+    margin-right: 16px !important;
     background-size: cover;
 }
 
@@ -211,13 +211,13 @@ input[type=checkbox] {
 }
 
 .mdl-menu, .mdl-menu__item {
-    text-align: right;
-    direction: rtl;
+    text-align: left;
+    direction: ltr;
 }
 
 .mdl-list__item .mdl-list__item-primary-content .mdl-list__item-icon {
-    margin-left: 10px !important;
-    margin-right: 0px !important;
+    margin-right: 10px !important;
+    margin-left: 0px !important;
 }
 
 .mdl-data-table {
@@ -280,7 +280,7 @@ input[type=checkbox] {
 .col-sm-1, .col-sm-10, .col-sm-11, .col-sm-12, .col-sm-2, .col-sm-3, .col-sm-4, .col-sm-5, .col-sm-6, .col-sm-7, .col-sm-8, .col-sm-9,
 .col-md-1, .col-md-10, .col-md-11, .col-md-12, .col-md-2, .col-md-3, .col-md-4, .col-md-5, .col-md-6, .col-md-7, .col-md-8, .col-md-9,
 .col-lg-1, .col-lg-10, .col-lg-11, .col-lg-12, .col-lg-2, .col-lg-3, .col-lg-4, .col-lg-5, .col-lg-6, .col-lg-7, .col-lg-8, .col-lg-9 {
-    float: right !important;
+    float: left !important;
 }
 
 .noty_buttons {
@@ -351,19 +351,19 @@ select {
 }
 
 .mdl-icon-margin{
-    margin-right: 15px !important;
+    margin-left: 15px !important;
 }
 
 .mdl-layout__content{
-    direction: rtl !important;
+    direction: ltr !important;
 }
 
 .form-group, .form-control{
-    text-align: right !important;
+    text-align: left !important;
 }
 
 .mdl-data-table thead th,
 .mdl-data-table tbody tr,
 .mdl-data-table tbody tr td{
-    text-align: right !important;
+    text-align: left !important;
 }

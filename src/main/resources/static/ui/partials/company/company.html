@@ -9,10 +9,72 @@
         </div>
         <div class="mdl-layout__header-row">
 
-            <button id="menu-lower-left" class="mdl-button mdl-js-button mdl-button--icon" style="margin-right: 15px">
+            <span class="mdl-layout__title">{{pageTitle}}</span>
+
+            <div class="mdl-layout-spacer"></div>
+
+            <div id="tasks-closed-menu-lower-left" class="material-icons mdl-badge mdl-badge--overlap mdl-icon-margin" data-badge="{{me.tasksClosedThisWeek.length}}">alarm</div>
+            <ul ng-class="{'mdl-menu--bottom-left' : lang==='AR', 'mdl-menu--bottom-right' : lang==='EN'}" class="mdl-menu mdl-js-menu mdl-js-ripple-effect mdl-shadow--2dp"
+                for="tasks-closed-menu-lower-left">
+                <li class="mdl-list__item mdl-menu__item--full-bleed-divider">
+                    <span ng-if="lang==='AR'">لديك {{me.tasksClosedThisWeek.length}} مهمة مغلقة هذا الاسبوع</span>
+                    <span ng-if="lang==='EN'">{{me.tasksClosedThisWeek.length}} Tasks will be closed this week</span>
+                </li>
+                <li ng-repeat="taskClosed in me.tasksClosedThisWeek"
+                    class="mdl-menu__item mdl-list__item mdl-menu__item--full-bleed-divider"
+                    ng-click="ModalProvider.openTaskDetailsModel(taskClosed)">
+                    <span class="mdl-list__item-primary-content">
+                        <i class="material-icons mdl-list__item-icon">assignment</i>
+                        <span style="text-overflow: ellipsis;white-space: nowrap;width: 200px; overflow: hidden">[{{taskClosed.code}}] {{taskClosed.title}}</span>
+                    </span>
+                </li>
+                <li class="mdl-list__item">
+                    <button href="" ng-click="ModalProvider.openTasksClosedSoonModel()" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">
+                        <span ng-if="lang==='AR'">طباعة تقرير</span>
+                        <span ng-if="lang==='EN'">Print...</span>
+                    </button>
+                </li>
+            </ul>
+
+            <button id="options-menu-lower-left" class="mdl-button mdl-js-button mdl-button--icon mdl-icon-margin">
+                <i class="material-icons">settings_applications</i>
+            </button>
+            <ul ng-class="{'mdl-menu--bottom-left' : lang==='AR', 'mdl-menu--bottom-right' : lang==='EN'}" class="mdl-menu mdl-js-menu mdl-js-ripple-effect mdl-shadow--2dp"
+                for="options-menu-lower-left">
+                <li class="mdl-list__item mdl-menu__item--full-bleed-divider">
+                    <span ng-if="lang==='AR'">خيارات البرنامج</span>
+                    <span ng-if="lang==='EN'">PREFERENCES</span>
+                </li>
+                <li class="mdl-menu__item mdl-list__item"
+                    ng-click="switchDateType()">
+                    <span class="mdl-list__item-primary-content">
+                        <i class="material-icons mdl-list__item-icon">timer</i>
+                        <span ng-if="dateType==='H' && lang==='AR'">تطبيق التاريخ الميلادي</span>
+                        <span ng-if="dateType==='H' && lang==='EN'">GREGORIAN DATE</span>
+                        <span ng-if="dateType==='G' && lang==='AR'">تطبيق التاريخ الهجري</span>
+                        <span ng-if="dateType==='G' && lang==='EN'">HIJRI DATE</span>
+                    </span>
+                </li>
+                <li class="mdl-menu__item mdl-list__item mdl-menu__item--full-bleed-divider"
+                    ng-click="switchLang()">
+                    <span class="mdl-list__item-primary-content">
+                        <i class="material-icons mdl-list__item-icon">language</i>
+                        <span ng-if="lang==='EN'">ARABIC GUI</span>
+                        <span ng-if="lang==='AR'">تطبيق الواجهة الإنجليزية</span>
+                    </span>
+                </li>
+                <li class="mdl-list__item">
+                    <button href="" ng-click="" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">
+                        <span ng-if="lang==='AR'">المزيد من الخيارات</span>
+                        <span ng-if="lang==='EN'">MORE...</span>
+                    </button>
+                </li>
+            </ul>
+
+            <button id="menu-lower-left" class="mdl-button mdl-js-button mdl-button--icon mdl-icon-margin">
                 <i class="material-icons">more_vert</i>
             </button>
-            <ul class="mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect mdl-shadow--2dp"
+            <ul ng-class="{'mdl-menu--bottom-left' : lang==='AR', 'mdl-menu--bottom-right' : lang==='EN'}" class="mdl-menu mdl-js-menu mdl-js-ripple-effect mdl-shadow--2dp"
                 for="menu-lower-left">
                 <li class="mdl-list__item mdl-list__item--two-line mdl-menu__item--full-bleed-divider">
                     <span class="mdl-list__item-primary-content">
@@ -25,89 +87,41 @@
                 <li class="mdl-menu__item mdl-list__item" ng-click="goToHelp()">
                     <span class="mdl-list__item-primary-content">
                         <i class="material-icons mdl-list__item-icon">help</i>
-                        <span>المساعدة</span>
+                        <span ng-if="lang==='AR'">المساعدة</span>
+                        <span ng-if="lang==='EN'">HELP</span>
                     </span>
                 </li>
                 <li class="mdl-menu__item mdl-list__item" ng-click="goToAbout()">
                     <span class="mdl-list__item-primary-content">
                         <i class="material-icons mdl-list__item-icon">info</i>
-                        <span>عن البرنامج</span>
+                        <span ng-if="lang==='AR'">عن البرنامج</span>
+                        <span ng-if="lang==='EN'">ABOUT</span>
                     </span>
                 </li>
                 <li class="mdl-menu__item mdl-list__item mdl-menu__item--full-bleed-divider" ng-click="goToProfile()">
                     <span class="mdl-list__item-primary-content">
                         <i class="material-icons mdl-list__item-icon">account_box</i>
-                        <span>الملف الشخصي</span>
+                        <span ng-if="lang==='AR'">الملف الشخصي</span>
+                        <span ng-if="lang==='EN'">PROFILE</span>
                     </span>
                 </li>
                 <li class="mdl-menu__item mdl-list__item" ng-click="logout()">
                     <span class="mdl-list__item-primary-content">
                         <i class="material-icons mdl-list__item-icon">exit_to_app</i>
-                        <span>تسجيل الخروج</span>
+                        <span ng-if="lang==='AR'">تسجيل الخروج</span>
+                        <span ng-if="lang==='EN'">SIGN OUT</span>
                     </span>
                 </li>
             </ul>
-
-            <button id="options-menu-lower-left" class="mdl-button mdl-js-button mdl-button--icon"
-                    style="margin-right: 15px">
-                <i class="material-icons">settings_applications</i>
-            </button>
-            <ul class="mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect mdl-shadow--2dp"
-                for="options-menu-lower-left">
-                <li class="mdl-list__item mdl-menu__item--full-bleed-divider">
-                    <span>خيارات البرنامج</span>
-                </li>
-                <li class="mdl-menu__item mdl-list__item mdl-menu__item--full-bleed-divider"
-                    ng-click="switchDateType()">
-                    <span class="mdl-list__item-primary-content">
-                        <i class="material-icons mdl-list__item-icon">timer</i>
-                        <span ng-if="dateType==='H'">تطبيق التاريخ الميلادي</span>
-                        <span ng-if="dateType==='G'">تطبيق التاريخ الهجري</span>
-                    </span>
-                </li>
-                <li class="mdl-list__item">
-                    <button href=""
-                            ng-click=""
-                            class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">المزيد من الخيارات
-                    </button>
-                </li>
-            </ul>
-
-            <div id="tasks-closed-menu-lower-left" class="material-icons mdl-badge mdl-badge--overlap"
-                 style="margin-right: 15px" data-badge="{{me.tasksClosedThisWeek.length}}">alarm
-            </div>
-            <ul class="mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect mdl-shadow--2dp"
-                for="tasks-closed-menu-lower-left">
-                <li class="mdl-list__item mdl-menu__item--full-bleed-divider">
-                    <span>لديك {{me.tasksClosedThisWeek.length}} مهمة مغلقة هذا الاسبوع</span>
-                </li>
-                <li ng-repeat="taskClosed in me.tasksClosedThisWeek"
-                    class="mdl-menu__item mdl-list__item mdl-menu__item--full-bleed-divider"
-                    ng-click="ModalProvider.openTaskDetailsModel(taskClosed)">
-                    <span class="mdl-list__item-primary-content">
-                        <i class="material-icons mdl-list__item-icon">assignment</i>
-                        <span style="text-overflow: ellipsis;white-space: nowrap;width: 200px; overflow: hidden">[{{taskClosed.code}}] {{taskClosed.title}}</span>
-                    </span>
-                </li>
-                <li class="mdl-list__item">
-                    <button href="" ng-click="ModalProvider.openTasksClosedSoonModel()"
-                            class="mdl-button mdl-js-button mdl-js-ripple-effect">طباعة تقرير
-                    </button>
-                </li>
-            </ul>
-
-            <div class="mdl-layout-spacer"></div>
-
-            <span class="mdl-layout__title">{{pageTitle}}</span>
 
         </div>
     </header>
 
     <main class="mdl-layout__content">
 
-        <div dir="rtl" class="row" style="margin-top: 10px">
+        <div class="row" style="margin-top: 10px">
 
-            <form dir="rtl" name="from" ng-submit="submit()" novalidate="novalidate" focus-group="" focus-stack=""
+            <form name="from" ng-submit="submit()" novalidate="novalidate" focus-group="" focus-stack=""
                   focus-group-head="loop" focus-group-tail="loop">
 
                 <div class="col-xs-12 col-sm-12 col-sm-12">
@@ -118,110 +132,134 @@
 
                                 <div class="text-right col-xs-12 col-sm-6 col-md-12 col-lg-12" ng-show="form.$invalid && form.$submitted">
                                     <div class="alert alert-danger" role="alert">
-                                        <strong>فضلاً اكمل الحقول المطلوبة</strong>
+                                        <strong ng-if="lang==='AR'">فضلاً اكمل الحقول المطلوبة</strong>
+                                        <strong ng-if="lang==='EN'">Please Complete Required Fields.</strong>
                                     </div>
                                 </div>
 
                                 <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
                                     <div class="panel panel-info">
-                                        <div class="panel-heading">البيانات الاساسية</div>
+                                        <div class="panel-heading">
+                                            <span ng-if="lang==='AR'">البيانات الاساسية</span>
+                                            <span ng-if="lang==='EN'">The General Information</span>
+                                        </div>
                                         <div class="panel-body">
 
-                                            <div class="form-group text-right col-xs-12 col-sm-6 col-md-12 col-lg-12">
-                                                <label for="name" class="control-label">اسم الشركة</label>
+                                            <div class="form-group col-xs-12 col-sm-6 col-md-12 col-lg-12">
+                                                <label for="name" class="control-label">
+                                                    <span ng-if="lang==='AR'">اسم الشركة</span>
+                                                    <span ng-if="lang==='EN'">Name</span>
+                                                </label>
                                                 <input id="name"
                                                        type="text"
-                                                       focus-index="1"
+                                                       focus-autofocus="1"
                                                        required="required"
                                                        disable-validation-message=""
-                                                       class="form-control text-right"
+                                                       class="form-control"
                                                        ng-model="selected.name">
                                             </div>
 
-                                            <div class="form-group text-right col-xs-12 col-sm-6 col-md-12 col-lg-12">
-                                                <label for="address" class="control-label">العنوان</label>
+                                            <div class="form-group col-xs-12 col-sm-6 col-md-12 col-lg-12">
+                                                <label for="address" class="control-label">
+                                                    <span ng-if="lang==='AR'">العنوان</span>
+                                                    <span ng-if="lang==='EN'">Address</span>
+                                                </label>
                                                 <input id="address"
                                                        type="text"
-                                                       focus-index="1"
                                                        required="required"
                                                        disable-validation-message=""
-                                                       class="form-control text-right"
+                                                       class="form-control"
                                                        ng-model="selected.address">
                                             </div>
 
-                                            <div class="form-group text-right col-xs-12 col-sm-6 col-md-12 col-lg-12">
-                                                <label for="phone" class="control-label">الهاتف</label>
+                                            <div class="form-group col-xs-12 col-sm-6 col-md-12 col-lg-12">
+                                                <label for="phone" class="control-label">
+                                                    <span ng-if="lang==='AR'">الهاتف</span>
+                                                    <span ng-if="lang==='EN'">Phone</span>
+                                                </label>
                                                 <input id="phone"
                                                        type="text"
-                                                       focus-index="1"
                                                        required="required"
                                                        disable-validation-message=""
-                                                       class="form-control text-right"
+                                                       class="form-control"
                                                        ng-model="selected.phone">
                                             </div>
 
-                                            <div class="form-group text-right col-xs-12 col-sm-6 col-md-12 col-lg-12">
-                                                <label for="mobile" class="control-label">الجوال</label>
+                                            <div class="form-group col-xs-12 col-sm-6 col-md-12 col-lg-12">
+                                                <label for="mobile" class="control-label">
+                                                    <span ng-if="lang==='AR'">الجوال</span>
+                                                    <span ng-if="lang==='EN'">Mobile</span>
+                                                </label>
                                                 <input id="mobile"
                                                        type="text"
-                                                       focus-index="1"
                                                        required="required"
                                                        disable-validation-message=""
-                                                       class="form-control text-right"
+                                                       class="form-control"
                                                        ng-model="selected.mobile">
                                             </div>
 
-                                            <div class="form-group text-right col-xs-12 col-sm-6 col-md-12 col-lg-12">
-                                                <label for="fax" class="control-label">الفاكس</label>
+                                            <div class="form-group col-xs-12 col-sm-6 col-md-12 col-lg-12">
+                                                <label for="fax" class="control-label">
+                                                    <span ng-if="lang==='AR'">الفاكس</span>
+                                                    <span ng-if="lang==='EN'">Fax</span>
+                                                </label>
                                                 <input id="fax"
                                                        type="text"
-                                                       focus-index="1"
                                                        required="required"
                                                        disable-validation-message=""
-                                                       class="form-control text-right"
+                                                       class="form-control"
                                                        ng-model="selected.fax">
                                             </div>
 
-                                            <div class="form-group text-right col-xs-12 col-sm-6 col-md-12 col-lg-12">
-                                                <label for="email" class="control-label">البريد الإلكتروني</label>
+                                            <div class="form-group col-xs-12 col-sm-6 col-md-12 col-lg-12">
+                                                <label for="email" class="control-label">
+                                                    <span ng-if="lang==='AR'">البريد الإلكتروني</span>
+                                                    <span ng-if="lang==='EN'">Email</span>
+                                                </label>
                                                 <input id="email"
                                                        type="email"
-                                                       focus-index="1"
                                                        required="required"
                                                        disable-validation-message=""
-                                                       class="form-control text-right"
+                                                       class="form-control"
                                                        ng-model="selected.email">
                                             </div>
 
-                                            <div class="form-group text-right col-xs-12 col-sm-6 col-md-12 col-lg-12">
-                                                <label for="website" class="control-label">الموقع الرسمي</label>
+                                            <div class="form-group col-xs-12 col-sm-6 col-md-12 col-lg-12">
+                                                <label for="website" class="control-label">
+                                                    <span ng-if="lang==='AR'">الموقع الرسمي</span>
+                                                    <span ng-if="lang==='EN'">Website</span>
+                                                </label>
                                                 <input id="website"
                                                        type="text"
-                                                       focus-index="1"
                                                        required="required"
                                                        disable-validation-message=""
-                                                       class="form-control text-right"
+                                                       class="form-control"
                                                        ng-model="selected.website">
                                             </div>
 
-                                            <div class="form-group text-right col-xs-12 col-sm-6 col-md-12 col-lg-12">
-                                                <label for="commericalRegisteration" class="control-label">السجل التجاري</label>
+                                            <div class="form-group col-xs-12 col-sm-6 col-md-12 col-lg-12">
+                                                <label for="commericalRegisteration" class="control-label">
+                                                    <span ng-if="lang==='AR'">السجل التجاري</span>
+                                                    <span ng-if="lang==='EN'">Commercial Registration</span>
+                                                </label>
                                                 <input id="commericalRegisteration"
                                                        type="text"
-                                                       focus-index="1"
                                                        required="required"
                                                        disable-validation-message=""
-                                                       class="form-control text-right"
+                                                       class="form-control"
                                                        ng-model="selected.commericalRegisteration">
                                             </div>
 
-                                            <div class="form-group text-right col-xs-12 col-sm-6 col-md-12 col-lg-12">
-                                                <label for="person" class="control-label"> المدير</label>
+                                            <div class="form-group col-xs-12 col-sm-6 col-md-12 col-lg-12">
+                                                <label for="person" class="control-label">
+                                                    <span ng-if="lang==='AR'">المدير</span>
+                                                    <span ng-if="lang==='EN'">Manager</span>
+                                                </label>
                                                 <select id="person"
                                                         data-placeholder="ابحث عن حساب المستخدم من خلال الاسم"
                                                         no-results-text="'لا توجد بيانات'"
                                                         placeholder-text-single="'اختر حساب المستخدم'"
-                                                        class="form-control text-right"
+                                                        class="form-control"
                                                         chosen=""
                                                         ng-model="selected.manager"
                                                         required="required"
@@ -236,7 +274,10 @@
 
                                 <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
                                     <div class="panel panel-info">
-                                        <div class="panel-heading">الشعار الرسمي</div>
+                                        <div class="panel-heading">
+                                            <span ng-if="lang==='AR'">الشعار الرسمي</span>
+                                            <span ng-if="lang==='EN'">Official Logo</span>
+                                        </div>
                                         <div class="panel-body">
                                             <input type="file" nv-file-select="" uploader="uploader" accept="image/*"/>
                                             <img ng-src="{{selected.logo}}" style="width: 100%; height: 100%"/>
@@ -257,13 +298,15 @@
 
                             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 
-                                <button uib-tooltip="حفظ"
+                                <button uib-tooltip="{{lang==='AR' ? 'حفظ' : 'Save'}}"
                                         tooltip-append-to-body="true"
                                         type="submit"
-                                        class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect pull-left">
+                                        ng-class="{'pull-left' : lang==='AR', 'pull-right' : lang==='EN'}"
+                                        class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">
                                     <span class="mdl-list__item-primary-content">
                                         <i class="material-icons mdl-list__item-icon">save</i>
-                                        <span>حفظ البيانات</span>
+                                        <span ng-if="lang==='AR'">حفظ البيانات</span>
+                                        <span ng-if="lang==='EN'">Save</span>
                                     </span>
                                 </button>
 

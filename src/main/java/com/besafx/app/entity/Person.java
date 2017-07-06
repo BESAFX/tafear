@@ -56,6 +56,11 @@ public class Person implements Serializable {
     @Lob
     @Type(type = "org.hibernate.type.TextType")
     @JsonView(Views.Summery.class)
+    private String options;
+
+    @Lob
+    @Type(type = "org.hibernate.type.TextType")
+    @JsonView(Views.Summery.class)
     private String photo;
 
     @JsonView(Views.Summery.class)

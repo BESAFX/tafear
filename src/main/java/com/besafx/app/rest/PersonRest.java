@@ -102,6 +102,15 @@ public class PersonRest {
         }
     }
 
+    @RequestMapping(value = "setGUILang/{lang}", method = RequestMethod.GET)
+    @ResponseBody
+    @PreAuthorize("hasRole('ROLE_PROFILE_UPDATE')")
+    public void setGUILang(@PathVariable(value = "lang") String lang,  Principal principal) {
+        Person person = personService.findByEmail(principal.getName());
+        person.setOptions(lang);
+        personService.save(person);
+    }
+
     @RequestMapping(value = "delete/{id}", method = RequestMethod.DELETE)
     @ResponseBody
     @PreAuthorize("hasRole('ROLE_PERSON_DELETE')")
