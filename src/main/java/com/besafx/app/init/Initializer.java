@@ -12,6 +12,10 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
+import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+
 @Component
 public class Initializer implements CommandLineRunner {
 
@@ -34,6 +38,17 @@ public class Initializer implements CommandLineRunner {
         if (personService.count() == 0) {
             runForFirstTimeOnly();
         }
+
+        log.info("Create Options File...");
+        File file = new File("options.txt");
+        if(!file.exists()){
+            file.createNewFile();
+        }
+        log.info("Write Some Text To File...");
+        Files.write(Paths.get("options.txt"), "Hello World".getBytes());
+        log.info("Read Options...");
+        log.info(new String(Files.readAllBytes(Paths.get("options.txt"))));
+
     }
 
     private void runForFirstTimeOnly() {
