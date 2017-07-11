@@ -40,7 +40,7 @@ app.controller("companyCtrl", ['CompanyService', 'PersonService', 'ModalProvider
         //////////////////////////File Manager///////////////////////////////////
 
         $timeout(function () {
-            CompanyService.fetchTableData().then(function (data) {
+            CompanyService.fetchTableDataSummery().then(function (data) {
                 $scope.selected = data[0];
                 $scope.options = JSON.parse(data[0].options);
             });
