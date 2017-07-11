@@ -2,6 +2,8 @@ package com.besafx.app.rest;
 import com.besafx.app.config.CustomException;
 import com.besafx.app.entity.*;
 import com.besafx.app.service.*;
+import com.besafx.app.util.JSONConverter;
+import com.besafx.app.util.Options;
 import com.besafx.app.ws.Notification;
 import com.besafx.app.ws.NotificationService;
 import com.fasterxml.jackson.annotation.JsonView;
@@ -107,7 +109,20 @@ public class PersonRest {
     @PreAuthorize("hasRole('ROLE_PROFILE_UPDATE')")
     public void setGUILang(@PathVariable(value = "lang") String lang,  Principal principal) {
         Person person = personService.findByEmail(principal.getName());
-        person.setOptions(lang);
+        Options options = JSONConverter.toObject(person.getOptions(), Options.class);
+        options.setLang(lang);
+        person.setOptions(JSONConverter.toString(options));
+        personService.save(person);
+    }
+
+    @RequestMapping(value = "setDateType/{type}", method = RequestMethod.GET)
+    @ResponseBody
+    @PreAuthorize("hasRole('ROLE_PROFILE_UPDATE')")
+    public void setDateType(@PathVariable(value = "type") String type,  Principal principal) {
+        Person person = personService.findByEmail(principal.getName());
+        Options options = JSONConverter.toObject(person.getOptions(), Options.class);
+        options.setDateType(type);
+        person.setOptions(JSONConverter.toString(options));
         personService.save(person);
     }
 

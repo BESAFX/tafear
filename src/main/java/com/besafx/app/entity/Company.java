@@ -65,6 +65,16 @@ public class Company implements Serializable {
     @JsonView(Views.Summery.class)
     private String logo;
 
+    /**
+     * Depends on WrapperUtil.class
+     * obj1:activeWarnMessage
+     * obj2:activeDeductionMessage
+     */
+    @Lob
+    @Type(type = "org.hibernate.type.TextType")
+    @JsonView(Views.Summery.class)
+    private String options;
+
     @ManyToOne
     @JoinColumn(name = "Manager")
     @JsonIgnoreProperties(value = {"companies", "regions", "branches", "departments", "employees"}, allowSetters = true)

@@ -5,6 +5,8 @@ import com.besafx.app.entity.*;
 import com.besafx.app.search.TaskSearch;
 import com.besafx.app.service.*;
 import com.besafx.app.util.DateConverter;
+import com.besafx.app.util.JSONConverter;
+import com.besafx.app.util.WrapperUtil;
 import com.google.common.collect.Lists;
 import net.sf.jasperreports.engine.JRException;
 import org.apache.commons.io.FileUtils;
@@ -12,11 +14,13 @@ import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.charset.Charset;
 import java.util.*;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
@@ -193,11 +197,14 @@ public class ScheduledTasks {
             taskWarnService.save(taskWarn);
             log.info("تم حفظ التحذير الآلي باسم الموظف");
         }
-//        ClassPathResource classPathResource = new ClassPathResource("/mailTemplate/NoTaskOperationsWarning.html");
-//        String message = org.apache.commons.io.IOUtils.toString(classPathResource.getInputStream(), Charset.defaultCharset());
-//        message = message.replaceAll("MESSAGE", content.toString());
-//        String title = "تحذير يومي بشأن عدم التعامل مع المهام";
-//        emailSender.send(title, message, to.getEmail());
+        WrapperUtil wrapperUtil = JSONConverter.toObject(Lists.newArrayList(companyService.findAll()).get(0).getOptions(), WrapperUtil.class);
+        if(wrapperUtil.getObj1().equals(true)){
+            ClassPathResource classPathResource = new ClassPathResource("/mailTemplate/NoTaskOperationsWarning.html");
+            String message = org.apache.commons.io.IOUtils.toString(classPathResource.getInputStream(), Charset.defaultCharset());
+            message = message.replaceAll("MESSAGE", content.toString());
+            String title = "تحذير يومي بشأن عدم التعامل مع المهام";
+            emailSender.send(title, message, to.getEmail());
+        }
     }
 
     private void createDeductionEmail(List<Task> tasks, String content, Person to) throws IOException {
@@ -222,11 +229,14 @@ public class ScheduledTasks {
             taskDeductionService.save(taskDeduction);
             log.info("تم حفظ الخصم الآلي باسم الموظف");
         }
-//        ClassPathResource classPathResource = new ClassPathResource("/mailTemplate/NoTaskOperationsWarning.html");
-//        String message = org.apache.commons.io.IOUtils.toString(classPathResource.getInputStream(), Charset.defaultCharset());
-//        message = message.replaceAll("MESSAGE", content.toString());
-//        String title = "خصم يومي بشأن عدم التعامل مع المهام";
-//        emailSender.send(title, message, to.getEmail());
+        WrapperUtil wrapperUtil = JSONConverter.toObject(Lists.newArrayList(companyService.findAll()).get(0).getOptions(), WrapperUtil.class);
+        if(wrapperUtil.getObj2().equals(true)){
+            ClassPathResource classPathResource = new ClassPathResource("/mailTemplate/NoTaskOperationsWarning.html");
+            String message = org.apache.commons.io.IOUtils.toString(classPathResource.getInputStream(), Charset.defaultCharset());
+            message = message.replaceAll("MESSAGE", content.toString());
+            String title = "خصم يومي بشأن عدم التعامل مع المهام";
+            emailSender.send(title, message, to.getEmail());
+        }
     }
 
     //@Scheduled(cron = "0 0 9 * * SUN,MON,TUE,WED,THU")

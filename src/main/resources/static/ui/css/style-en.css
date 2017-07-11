@@ -45,8 +45,8 @@ body {
 .chosen-container-multi .chosen-choices div,
 .chosen-container-single .chosen-single div {
     top: 5px !important;
-    left: 5px !important;
-    right: auto !important;
+    right: 5px !important;
+    left: auto !important;
 }
 
 .table td.fit,

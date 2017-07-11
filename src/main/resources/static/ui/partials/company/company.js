@@ -1,7 +1,9 @@
-app.controller("companyCtrl", ['CompanyService', 'PersonService', 'ModalProvider', 'FileUploader', '$scope', '$rootScope', '$log', '$http', '$state', '$timeout',
-    function (CompanyService, PersonService, ModalProvider, FileUploader, $scope, $rootScope, $log, $http, $state, $timeout) {
+app.controller("companyCtrl", ['CompanyService', 'PersonService', 'ModalProvider', '$scope', '$rootScope', '$log', '$http', '$state', '$timeout',
+    function (CompanyService, PersonService, ModalProvider, $scope, $rootScope, $log, $http, $state, $timeout) {
 
         $scope.selected = {};
+
+        $scope.options = {};
 
         $scope.submit = function () {
             CompanyService.update($scope.selected).then(function (data) {
@@ -9,35 +11,38 @@ app.controller("companyCtrl", ['CompanyService', 'PersonService', 'ModalProvider
             });
         };
 
-        var uploader = $scope.uploader = new FileUploader({
-            url: 'uploadCompanyLogo'
-        });
-
-        uploader.filters.push({
-            name: 'syncFilter',
-            fn: function (item, options) {
-                return this.queue.length < 10;
+        $scope.switchWarnMessageState = function () {
+            if ($scope.options.obj1) {
+                CompanyService.activateWarnMessage();
+            } else {
+                CompanyService.deactivateWarnMessage();
             }
-        });
-
-        uploader.filters.push({
-            name: 'asyncFilter',
-            fn: function (item, options, deferred) {
-                setTimeout(deferred.resolve, 1e3);
-            }
-        });
-
-        uploader.onAfterAddingFile = function (fileItem) {
-            uploader.uploadAll();
         };
 
-        uploader.onSuccessItem = function (fileItem, response, status, headers) {
-            $scope.selected.logo = response;
+        $scope.switchDeductionMessageState = function () {
+            if ($scope.options.obj2) {
+                CompanyService.activateDeductionMessage();
+            } else {
+                CompanyService.deactivateDeductionMessage();
+            }
         };
+
+        //////////////////////////File Manager///////////////////////////////////
+        $scope.uploadFile = function () {
+            document.getElementById('uploader').click();
+        };
+
+        $scope.uploadCompanyLogo = function (files) {
+            CompanyService.uploadCompanyLogo(files[0]).then(function (data) {
+                $scope.selected.logo = data;
+            });
+        };
+        //////////////////////////File Manager///////////////////////////////////
 
         $timeout(function () {
             CompanyService.fetchTableData().then(function (data) {
                 $scope.selected = data[0];
+                $scope.options = JSON.parse(data[0].options);
             });
             PersonService.findAllSummery().then(function (data) {
                 $scope.persons = data;

@@ -182,6 +182,7 @@ app.run(['$http', '$location', '$state', '$timeout', '$window', 'PersonService',
 
         $rootScope.switchDateType = function () {
             $rootScope.dateType === 'H' ? $rootScope.dateType = 'G' : $rootScope.dateType = 'H';
+            PersonService.setDateType($rootScope.dateType);
         };
 
         $rootScope.switchLang = function () {
@@ -345,7 +346,9 @@ app.run(['$http', '$location', '$state', '$timeout', '$window', 'PersonService',
         $rootScope.me = {};
         PersonService.findActivePerson().then(function (data) {
             $rootScope.me = data;
-            $rootScope.lang = $rootScope.me.options;
+            $rootScope.options = JSON.parse($rootScope.me.options);
+            $rootScope.lang = $rootScope.options.lang;
+            $rootScope.dateType = $rootScope.options.dateType;
             $rootScope.applyTitleLang();
             $rootScope.applyCssLang();
             window.componentHandler.upgradeAllRegistered();

@@ -4,10 +4,14 @@ import com.besafx.app.entity.Person;
 import com.besafx.app.entity.Views;
 import com.besafx.app.service.CompanyService;
 import com.besafx.app.service.PersonService;
+import com.besafx.app.util.JSONConverter;
+import com.besafx.app.util.WrapperUtil;
 import com.besafx.app.ws.Notification;
 import com.besafx.app.ws.NotificationService;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.google.common.collect.Lists;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -22,6 +26,8 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping(value = "/api/company/")
 public class CompanyRest {
+
+    private final static Logger log = LoggerFactory.getLogger(CompanyRest.class);
 
     @Autowired
     private PersonService personService;
@@ -72,6 +78,54 @@ public class CompanyRest {
         } else {
             return null;
         }
+    }
+
+    @RequestMapping(value = "activateWarnMessage", method = RequestMethod.GET)
+    @ResponseBody
+    @PreAuthorize("hasRole('ROLE_PROFILE_UPDATE')")
+    public void activateWarnMessage() {
+        log.info("Activate Warn Email Messages");
+        Company company = Lists.newArrayList(companyService.findAll()).get(0);
+        WrapperUtil options = JSONConverter.toObject(company.getOptions(), WrapperUtil.class);
+        options.setObj1(true);
+        company.setOptions(JSONConverter.toString(options));
+        companyService.save(company);
+    }
+
+    @RequestMapping(value = "deactivateWarnMessage", method = RequestMethod.GET)
+    @ResponseBody
+    @PreAuthorize("hasRole('ROLE_PROFILE_UPDATE')")
+    public void deactivateWarnMessage() {
+        log.info("Deactivate Warn Email Messages");
+        Company company = Lists.newArrayList(companyService.findAll()).get(0);
+        WrapperUtil options = JSONConverter.toObject(company.getOptions(), WrapperUtil.class);
+        options.setObj1(false);
+        company.setOptions(JSONConverter.toString(options));
+        companyService.save(company);
+    }
+
+    @RequestMapping(value = "activateDeductionMessage", method = RequestMethod.GET)
+    @ResponseBody
+    @PreAuthorize("hasRole('ROLE_PROFILE_UPDATE')")
+    public void activateDeductionMessage() {
+        log.info("Activate Deduction Email Messages");
+        Company company = Lists.newArrayList(companyService.findAll()).get(0);
+        WrapperUtil options = JSONConverter.toObject(company.getOptions(), WrapperUtil.class);
+        options.setObj2(true);
+        company.setOptions(JSONConverter.toString(options));
+        companyService.save(company);
+    }
+
+    @RequestMapping(value = "deactivateDeductionMessage", method = RequestMethod.GET)
+    @ResponseBody
+    @PreAuthorize("hasRole('ROLE_PROFILE_UPDATE')")
+    public void deactivateDeductionMessage() {
+        log.info("Deactivate Deduction Email Messages");
+        Company company = Lists.newArrayList(companyService.findAll()).get(0);
+        WrapperUtil options = JSONConverter.toObject(company.getOptions(), WrapperUtil.class);
+        options.setObj2(false);
+        company.setOptions(JSONConverter.toString(options));
+        companyService.save(company);
     }
 
     @RequestMapping(value = "delete/{id}", method = RequestMethod.DELETE)

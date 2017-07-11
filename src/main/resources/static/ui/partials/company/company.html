@@ -121,29 +121,59 @@
 
         <div class="row" style="margin-top: 10px">
 
-            <form name="from" ng-submit="submit()" novalidate="novalidate" focus-group="" focus-stack=""
-                  focus-group-head="loop" focus-group-tail="loop">
-
-                <div class="col-xs-12 col-sm-12 col-sm-12">
+                <div class="col-xs-12 col-sm-12 col-sm-12 col-lg-12">
                     <div class="panel panel-default">
                         <div class="panel-body">
 
                             <div class="row">
 
-                                <div class="text-right col-xs-12 col-sm-6 col-md-12 col-lg-12" ng-show="form.$invalid && form.$submitted">
-                                    <div class="alert alert-danger" role="alert">
-                                        <strong ng-if="lang==='AR'">فضلاً اكمل الحقول المطلوبة</strong>
-                                        <strong ng-if="lang==='EN'">Please Complete Required Fields.</strong>
+                                <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                    <div class="panel panel-info">
+                                        <div class="panel-heading">
+                                            <ul class="panel-controls" ng-class="{'pull-left' : lang==='AR', 'pull-right' : lang==='EN'}" style="margin-top: 2px;">
+                                                <li>
+                                                    <a href=""
+                                                       ng-click="uploadFile()"
+                                                       tooltip-append-to-body="true"
+                                                       uib-tooltip="تحميل">
+                                                        <span class="fa fa-paperclip"></span>
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                            <div class="panel-title-box" ng-class="{'pull-right' : lang==='AR', 'pull-left' : lang==='EN'}">
+                                                <h3 ng-if="lang==='AR'">الشعار الرسمي</h3>
+                                                <h3 ng-if="lang==='EN'">Official Logo</h3>
+                                                <span ng-if="lang==='AR'">شركة طيف العربية</span>
+                                                <span ng-if="lang==='EN'">Tafear Company</span>
+                                            </div>
+                                        </div>
+                                        <div class="panel-body">
+                                            <input id="uploader" style="display: none" type="file" accept="image/*" onchange="angular.element(this).scope().uploadCompanyLogo(this.files)"/>
+                                            <img ng-src="{{selected.logo}}" style="width: 100%; height: 100%"/>
+                                        </div>
                                     </div>
                                 </div>
 
-                                <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                                <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                    <form name="from" ng-submit="submit()" novalidate="novalidate" focus-group="" focus-stack=""
+                                          focus-group-head="loop" focus-group-tail="loop">
                                     <div class="panel panel-info">
                                         <div class="panel-heading">
-                                            <span ng-if="lang==='AR'">البيانات الاساسية</span>
-                                            <span ng-if="lang==='EN'">The General Information</span>
+                                            <div class="panel-title-box" ng-class="{'pull-right' : lang==='AR', 'pull-left' : lang==='EN'}">
+                                                <h3 ng-if="lang==='AR'">البيانات الاساسية</h3>
+                                                <h3 ng-if="lang==='EN'">The General Information</h3>
+                                                <span ng-if="lang==='AR'">كل التقارير تعتمد على هذة البيانات</span>
+                                                <span ng-if="lang==='EN'">All Reports Depends On This Information</span>
+                                            </div>
                                         </div>
                                         <div class="panel-body">
+
+                                            <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12" ng-show="form.$invalid && form.$submitted">
+                                                <div class="alert alert-danger" role="alert">
+                                                    <strong ng-if="lang==='AR'">فضلاً اكمل الحقول المطلوبة</strong>
+                                                    <strong ng-if="lang==='EN'">Please Complete Required Fields.</strong>
+                                                </div>
+                                            </div>
 
                                             <div class="form-group col-xs-12 col-sm-6 col-md-12 col-lg-12">
                                                 <label for="name" class="control-label">
@@ -172,7 +202,7 @@
                                                        ng-model="selected.address">
                                             </div>
 
-                                            <div class="form-group col-xs-12 col-sm-6 col-md-12 col-lg-12">
+                                            <div class="form-group col-xs-12 col-sm-6 col-md-6 col-lg-6">
                                                 <label for="phone" class="control-label">
                                                     <span ng-if="lang==='AR'">الهاتف</span>
                                                     <span ng-if="lang==='EN'">Phone</span>
@@ -185,7 +215,7 @@
                                                        ng-model="selected.phone">
                                             </div>
 
-                                            <div class="form-group col-xs-12 col-sm-6 col-md-12 col-lg-12">
+                                            <div class="form-group col-xs-12 col-sm-6 col-md-6 col-lg-6">
                                                 <label for="mobile" class="control-label">
                                                     <span ng-if="lang==='AR'">الجوال</span>
                                                     <span ng-if="lang==='EN'">Mobile</span>
@@ -198,7 +228,7 @@
                                                        ng-model="selected.mobile">
                                             </div>
 
-                                            <div class="form-group col-xs-12 col-sm-6 col-md-12 col-lg-12">
+                                            <div class="form-group col-xs-12 col-sm-6 col-md-6 col-lg-6">
                                                 <label for="fax" class="control-label">
                                                     <span ng-if="lang==='AR'">الفاكس</span>
                                                     <span ng-if="lang==='EN'">Fax</span>
@@ -211,7 +241,7 @@
                                                        ng-model="selected.fax">
                                             </div>
 
-                                            <div class="form-group col-xs-12 col-sm-6 col-md-12 col-lg-12">
+                                            <div class="form-group col-xs-12 col-sm-6 col-md-6 col-lg-6">
                                                 <label for="email" class="control-label">
                                                     <span ng-if="lang==='AR'">البريد الإلكتروني</span>
                                                     <span ng-if="lang==='EN'">Email</span>
@@ -224,7 +254,7 @@
                                                        ng-model="selected.email">
                                             </div>
 
-                                            <div class="form-group col-xs-12 col-sm-6 col-md-12 col-lg-12">
+                                            <div class="form-group col-xs-12 col-sm-6 col-md-6 col-lg-6">
                                                 <label for="website" class="control-label">
                                                     <span ng-if="lang==='AR'">الموقع الرسمي</span>
                                                     <span ng-if="lang==='EN'">Website</span>
@@ -237,7 +267,7 @@
                                                        ng-model="selected.website">
                                             </div>
 
-                                            <div class="form-group col-xs-12 col-sm-6 col-md-12 col-lg-12">
+                                            <div class="form-group col-xs-12 col-sm-6 col-md-6 col-lg-6">
                                                 <label for="commericalRegisteration" class="control-label">
                                                     <span ng-if="lang==='AR'">السجل التجاري</span>
                                                     <span ng-if="lang==='EN'">Commercial Registration</span>
@@ -250,7 +280,7 @@
                                                        ng-model="selected.commericalRegisteration">
                                             </div>
 
-                                            <div class="form-group col-xs-12 col-sm-6 col-md-12 col-lg-12">
+                                            <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12">
                                                 <label for="person" class="control-label">
                                                     <span ng-if="lang==='AR'">المدير</span>
                                                     <span ng-if="lang==='EN'">Manager</span>
@@ -269,54 +299,74 @@
                                             </div>
 
                                         </div>
-                                    </div>
-                                </div>
+                                        <div class="panel-footer">
 
-                                <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-                                    <div class="panel panel-info">
-                                        <div class="panel-heading">
-                                            <span ng-if="lang==='AR'">الشعار الرسمي</span>
-                                            <span ng-if="lang==='EN'">Official Logo</span>
-                                        </div>
-                                        <div class="panel-body">
-                                            <input type="file" nv-file-select="" uploader="uploader" accept="image/*"/>
-                                            <img ng-src="{{selected.logo}}" style="width: 100%; height: 100%"/>
-                                            <div ng-show="uploader.queue.length > 0" ng-hide="uploader.queue[0].isSuccess">
-                                                <div class="progress" style="margin-bottom: 0;">
-                                                    <div class="progress-bar progress-bar-striped active" role="progressbar"
-                                                         ng-style="{ 'width': uploader.queue[0].progress + '%' }"></div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 
-                            </div>
-
-                        </div>
-                        <div class="panel-footer">
-
-                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-
-                                <button uib-tooltip="{{lang==='AR' ? 'حفظ' : 'Save'}}"
-                                        tooltip-append-to-body="true"
-                                        type="submit"
-                                        ng-class="{'pull-left' : lang==='AR', 'pull-right' : lang==='EN'}"
-                                        class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">
+                                                <button uib-tooltip="{{lang==='AR' ? 'حفظ' : 'Save'}}"
+                                                        tooltip-append-to-body="true"
+                                                        type="submit"
+                                                        ng-class="{'pull-left' : lang==='AR', 'pull-right' : lang==='EN'}"
+                                                        class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">
                                     <span class="mdl-list__item-primary-content">
                                         <i class="material-icons mdl-list__item-icon">save</i>
                                         <span ng-if="lang==='AR'">حفظ البيانات</span>
                                         <span ng-if="lang==='EN'">Save</span>
                                     </span>
-                                </button>
+                                                </button>
+
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    </form>
+                                </div>
+
+                                <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                    <form name="from" ng-submit="submit()" novalidate="novalidate" focus-group="" focus-stack=""
+                                          focus-group-head="loop" focus-group-tail="loop">
+                                        <div class="panel panel-info">
+                                            <div class="panel-heading">
+                                                <div class="panel-title-box" ng-class="{'pull-right' : lang==='AR', 'pull-left' : lang==='EN'}">
+                                                    <h3 ng-if="lang==='AR'">إعدادات التقارير المتزامنة</h3>
+                                                    <h3 ng-if="lang==='EN'">Synchronized Reports Settings</h3>
+                                                    <span ng-if="lang==='AR'">ضبط وإعداد مواقيت إرسال التقارير</span>
+                                                    <span ng-if="lang==='EN'">Setup Synchronized Reports Settings</span>
+                                                </div>
+                                            </div>
+                                            <div class="panel-body">
+
+                                                <div class="form-group col-xs-12 col-sm-6 col-md-12 col-lg-12">
+                                                    <label class="help-block">
+                                                        <input style="height: 10px !important;"
+                                                               type="checkbox"
+                                                               ng-change="switchWarnMessageState()"
+                                                               ng-model="options.obj1"/>
+                                                        <span ng-if="lang==='AR'">إرسال رسالة بالتحذيرات بشأن عدم التعامل مع المهمام يومياً للموظفين.</span>
+                                                        <span ng-if="lang==='EN'">Sending a Daily Warn Message To Employees In Case Of No Interacting With Tasks.</span>
+                                                    </label>
+                                                </div>
+                                                <div class="form-group col-xs-12 col-sm-6 col-md-12 col-lg-12">
+                                                    <label class="help-block">
+                                                        <input style="height: 10px !important;"
+                                                               type="checkbox"
+                                                               ng-change="switchDeductionMessageState()"
+                                                               ng-model="options.obj2"/>
+                                                        <span ng-if="lang==='AR'">إرسال رسالة بالخصومات الموقعة على الموظفين إلكترونياً يومياً بشأن عدم التعامل مع المهام</span>
+                                                        <span ng-if="lang==='EN'">Sending a Daily Deduction Message To Employees In Case Of No Interacting With Tasks.</span>
+                                                    </label>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
 
                             </div>
 
                         </div>
                     </div>
                 </div>
-
-            </form>
 
         </div>
 

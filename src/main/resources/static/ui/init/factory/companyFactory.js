@@ -38,6 +38,33 @@ app.factory("CompanyService",
                 return $http.get("/api/company/fetchTableDataSummery").then(function (response) {
                     return response.data;
                 });
+            },
+            uploadCompanyLogo: function (file) {
+                var fd = new FormData();
+                fd.append('file', file);
+                return $http.post("/uploadCompanyLogo", fd, {transformRequest: angular.identity, headers: {'Content-Type': undefined}}).then(function (response) {
+                    return response.data;
+                });
+            },
+            activateWarnMessage: function () {
+                return $http.get("/api/company/activateWarnMessage").then(function (response) {
+                    return response.data;
+                });
+            },
+            deactivateWarnMessage: function () {
+                return $http.get("/api/company/deactivateWarnMessage").then(function (response) {
+                    return response.data;
+                });
+            },
+            activateDeductionMessage: function () {
+                return $http.get("/api/company/activateDeductionMessage").then(function (response) {
+                    return response.data;
+                });
+            },
+            deactivateDeductionMessage: function () {
+                return $http.get("/api/company/deactivateDeductionMessage").then(function (response) {
+                    return response.data;
+                });
             }
         };
     }]);
