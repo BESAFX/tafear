@@ -62,6 +62,7 @@ public class PersonRest {
         person.setTokenExpired(false);
         person.setActive(false);
         person.setTechnicalSupport(false);
+        person.setOptions(JSONConverter.toString(Options.builder().lang("AR").dateType("H")));
         person = personService.save(person);
         notificationService.notifyOne(Notification
                 .builder()

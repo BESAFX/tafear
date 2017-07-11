@@ -5,6 +5,9 @@ import com.besafx.app.entity.Team;
 import com.besafx.app.service.CompanyService;
 import com.besafx.app.service.PersonService;
 import com.besafx.app.service.TeamService;
+import com.besafx.app.util.JSONConverter;
+import com.besafx.app.util.Options;
+import com.besafx.app.util.WrapperUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -87,6 +90,7 @@ public class Initializer implements CommandLineRunner {
         person.setActive(false);
         person.setTechnicalSupport(false);
         person.setTeam(team);
+        person.setOptions(JSONConverter.toString(Options.builder().lang("AR").dateType("H")));
         personService.save(person);
         //
         log.info("انشاء الشركة");
@@ -98,6 +102,7 @@ public class Initializer implements CommandLineRunner {
         company.setEmail("info@tafear.com");
         company.setWebsite("www.tafear.com");
         company.setManager(person);
+        company.setOptions(JSONConverter.toString(WrapperUtil.builder().obj1(false).obj1(false).build()));
         companyService.save(company);
     }
 }
