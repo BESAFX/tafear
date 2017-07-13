@@ -4,6 +4,7 @@ import com.besafx.app.controller.ReportTaskController;
 import com.besafx.app.entity.*;
 import com.besafx.app.search.TaskSearch;
 import com.besafx.app.service.*;
+import com.besafx.app.util.AppOptions;
 import com.besafx.app.util.DateConverter;
 import com.besafx.app.util.JSONConverter;
 import com.besafx.app.util.WrapperUtil;
@@ -198,7 +199,7 @@ public class ScheduledTasks {
             log.info("تم حفظ التحذير الآلي باسم الموظف");
         }
         WrapperUtil wrapperUtil = JSONConverter.toObject(Lists.newArrayList(companyService.findAll()).get(0).getOptions(), WrapperUtil.class);
-        if(wrapperUtil.getObj1().equals(true)){
+        if (wrapperUtil.getObj1().equals(true)) {
             ClassPathResource classPathResource = new ClassPathResource("/mailTemplate/NoTaskOperationsWarning.html");
             String message = org.apache.commons.io.IOUtils.toString(classPathResource.getInputStream(), Charset.defaultCharset());
             message = message.replaceAll("MESSAGE", content.toString());
@@ -230,7 +231,7 @@ public class ScheduledTasks {
             log.info("تم حفظ الخصم الآلي باسم الموظف");
         }
         WrapperUtil wrapperUtil = JSONConverter.toObject(Lists.newArrayList(companyService.findAll()).get(0).getOptions(), WrapperUtil.class);
-        if(wrapperUtil.getObj2().equals(true)){
+        if (wrapperUtil.getObj2().equals(true)) {
             ClassPathResource classPathResource = new ClassPathResource("/mailTemplate/NoTaskOperationsWarning.html");
             String message = org.apache.commons.io.IOUtils.toString(classPathResource.getInputStream(), Charset.defaultCharset());
             message = message.replaceAll("MESSAGE", content.toString());
@@ -479,5 +480,34 @@ public class ScheduledTasks {
             }
         }
         log.info("نهاية الفحص بنجاح.");
+    }
+
+    @Scheduled(cron = "0 0 9 25 * *")
+    public void notifyAboutIncomingTasksDeductions() {
+        log.info("بداية فحص خصومات المهام الواردة للموظفين...");
+        log.info("نهاية الفحص بنجاح.");
+        Optional.ofNullable(Lists.newArrayList(companyService.findAll()).get(0).getOptions()).ifPresent(v -> {
+            try {
+                AppOptions appOptions = JSONConverter.toObject(v, AppOptions.class);
+                DateTime monthStart = new DateTime().withDayOfMonth(1);
+                DateTime monthEnd = monthStart.plusMonths(1).minusDays(1);
+                Future<byte[]> work = reportTaskController.ReportIncomingTasksDeductions(appOptions.getEmailDeductionPersonsList(), appOptions.getEmailDeductionCloseType(), monthStart.toDate().getTime(), monthEnd.toDate().getTime());
+                byte[] fileBytes = work.get();
+                if (fileBytes == null) {
+                    return;
+                }
+                String randomFileName = "IncomingTasksDeductions-" + ThreadLocalRandom.current().nextInt(1, 50000);
+                log.info("جاري إنشاء ملف التقرير: " + randomFileName);
+                File reportFile = File.createTempFile(randomFileName, ".pdf");
+                FileUtils.writeByteArrayToFile(reportFile, fileBytes);
+                List<String> emails = Arrays.asList(appOptions.getEmailDeductionEmails().split(","));
+                log.info("Emails To Send: " + emails);
+                Future<Boolean> mail = emailSender.send(appOptions.getEmailDeductionTitle(), "<strong dir=\"rtl\" style=\"text-align: center; color: red\">" + appOptions.getEmailDeductionBody() + "</strong>", emails, Lists.newArrayList(reportFile));
+                mail.get();
+                log.info("تم إرسال الملف فى البريد الإلكتروني بنجاح");
+            } catch (Exception ex) {
+                log.info(ex.getMessage(), ex);
+            }
+        });
     }
 }

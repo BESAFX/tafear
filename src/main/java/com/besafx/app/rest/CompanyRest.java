@@ -4,6 +4,7 @@ import com.besafx.app.entity.Person;
 import com.besafx.app.entity.Views;
 import com.besafx.app.service.CompanyService;
 import com.besafx.app.service.PersonService;
+import com.besafx.app.util.AppOptions;
 import com.besafx.app.util.JSONConverter;
 import com.besafx.app.util.WrapperUtil;
 import com.besafx.app.ws.Notification;
@@ -21,6 +22,7 @@ import java.security.Principal;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
@@ -51,7 +53,7 @@ public class CompanyRest {
         company = companyService.save(company);
         notificationService.notifyOne(Notification
                 .builder()
-                .title("العمليات على الشركات")
+                .title("العمليات على قواعد البيانات")
                 .message("تم اضافة شركة جديدة بنجاح")
                 .type("success")
                 .icon("fa-plus-circle")
@@ -69,7 +71,7 @@ public class CompanyRest {
             company = companyService.save(company);
             notificationService.notifyOne(Notification
                     .builder()
-                    .title("العمليات على الشركات")
+                    .title("العمليات على قواعد البيانات")
                     .message("تم تعديل بيانات الشركة بنجاح")
                     .type("success")
                     .icon("fa-edit")
@@ -82,50 +84,110 @@ public class CompanyRest {
 
     @RequestMapping(value = "activateWarnMessage", method = RequestMethod.GET)
     @ResponseBody
-    @PreAuthorize("hasRole('ROLE_PROFILE_UPDATE')")
-    public void activateWarnMessage() {
+    @PreAuthorize("hasRole('ROLE_COMPANY_UPDATE')")
+    public void activateWarnMessage(Principal principal) {
         log.info("Activate Warn Email Messages");
         Company company = Lists.newArrayList(companyService.findAll()).get(0);
-        WrapperUtil options = JSONConverter.toObject(company.getOptions(), WrapperUtil.class);
-        options.setObj1(true);
-        company.setOptions(JSONConverter.toString(options));
-        companyService.save(company);
+        Optional.ofNullable(company.getOptions()).ifPresent(v ->{
+            AppOptions options = JSONConverter.toObject(v, AppOptions.class);
+            options.setActivateWarnMessage(true);
+            company.setOptions(JSONConverter.toString(options));
+            companyService.save(company);
+            notificationService.notifyOne(Notification
+                    .builder()
+                    .title("العمليات على قواعد البيانات")
+                    .message("تم الحفظ بنجاح")
+                    .type("success")
+                    .icon("fa-edit")
+                    .build(), principal.getName());
+        });
     }
 
     @RequestMapping(value = "deactivateWarnMessage", method = RequestMethod.GET)
     @ResponseBody
-    @PreAuthorize("hasRole('ROLE_PROFILE_UPDATE')")
-    public void deactivateWarnMessage() {
+    @PreAuthorize("hasRole('ROLE_COMPANY_UPDATE')")
+    public void deactivateWarnMessage(Principal principal) {
         log.info("Deactivate Warn Email Messages");
         Company company = Lists.newArrayList(companyService.findAll()).get(0);
-        WrapperUtil options = JSONConverter.toObject(company.getOptions(), WrapperUtil.class);
-        options.setObj1(false);
+        AppOptions options = JSONConverter.toObject(company.getOptions(), AppOptions.class);
+        options.setActivateWarnMessage(false);
         company.setOptions(JSONConverter.toString(options));
         companyService.save(company);
+        notificationService.notifyOne(Notification
+                    .builder()
+                    .title("العمليات على قواعد البيانات")
+                    .message("تم الحفظ بنجاح")
+                    .type("success")
+                    .icon("fa-edit")
+                    .build(), principal.getName());
     }
 
     @RequestMapping(value = "activateDeductionMessage", method = RequestMethod.GET)
     @ResponseBody
-    @PreAuthorize("hasRole('ROLE_PROFILE_UPDATE')")
-    public void activateDeductionMessage() {
+    @PreAuthorize("hasRole('ROLE_COMPANY_UPDATE')")
+    public void activateDeductionMessage(Principal principal) {
         log.info("Activate Deduction Email Messages");
         Company company = Lists.newArrayList(companyService.findAll()).get(0);
-        WrapperUtil options = JSONConverter.toObject(company.getOptions(), WrapperUtil.class);
-        options.setObj2(true);
-        company.setOptions(JSONConverter.toString(options));
-        companyService.save(company);
+        Optional.ofNullable(company.getOptions()).ifPresent(v -> {
+            AppOptions options = JSONConverter.toObject(v, AppOptions.class);
+            options.setActivateDeductionMessage(true);
+            company.setOptions(JSONConverter.toString(options));
+            companyService.save(company);
+            notificationService.notifyOne(Notification
+                    .builder()
+                    .title("العمليات على قواعد البيانات")
+                    .message("تم الحفظ بنجاح")
+                    .type("success")
+                    .icon("fa-edit")
+                    .build(), principal.getName());
+        });
     }
 
     @RequestMapping(value = "deactivateDeductionMessage", method = RequestMethod.GET)
     @ResponseBody
-    @PreAuthorize("hasRole('ROLE_PROFILE_UPDATE')")
-    public void deactivateDeductionMessage() {
+    @PreAuthorize("hasRole('ROLE_COMPANY_UPDATE')")
+    public void deactivateDeductionMessage(Principal principal) {
         log.info("Deactivate Deduction Email Messages");
         Company company = Lists.newArrayList(companyService.findAll()).get(0);
-        WrapperUtil options = JSONConverter.toObject(company.getOptions(), WrapperUtil.class);
-        options.setObj2(false);
-        company.setOptions(JSONConverter.toString(options));
-        companyService.save(company);
+        Optional.ofNullable(company.getOptions()).ifPresent(v -> {
+            AppOptions options = JSONConverter.toObject(v, AppOptions.class);
+            options.setActivateDeductionMessage(false);
+            company.setOptions(JSONConverter.toString(options));
+            companyService.save(company);
+            notificationService.notifyOne(Notification
+                    .builder()
+                    .title("العمليات على قواعد البيانات")
+                    .message("تم الحفظ بنجاح")
+                    .type("success")
+                    .icon("fa-edit")
+                    .build(), principal.getName());
+        });
+    }
+
+    @RequestMapping(value = "setEmailDeductionOptions", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    @PreAuthorize("hasRole('ROLE_COMPANY_UPDATE')")
+    public void setEmailDeductionOptions(@RequestBody String properties, Principal principal) {
+        log.info("Email Deduction Options");
+        Company company = Lists.newArrayList(companyService.findAll()).get(0);
+        Optional.ofNullable(company.getOptions()).ifPresent(v -> {
+            AppOptions appOptions = JSONConverter.toObject(v, AppOptions.class);
+            AppOptions appProperties = JSONConverter.toObject(properties, AppOptions.class);
+            appOptions.setEmailDeductionPersonsList(appProperties.getEmailDeductionPersonsList());
+            appOptions.setEmailDeductionCloseType(appProperties.getEmailDeductionCloseType());
+            appOptions.setEmailDeductionEmails(appProperties.getEmailDeductionEmails());
+            appOptions.setEmailDeductionTitle(appProperties.getEmailDeductionTitle());
+            appOptions.setEmailDeductionBody(appProperties.getEmailDeductionBody());
+            company.setOptions(JSONConverter.toString(appOptions));
+            companyService.save(company);
+            notificationService.notifyOne(Notification
+                    .builder()
+                    .title("العمليات على قواعد البيانات")
+                    .message("تم الحفظ بنجاح")
+                    .type("success")
+                    .icon("fa-edit")
+                    .build(), principal.getName());
+        });
     }
 
     @RequestMapping(value = "delete/{id}", method = RequestMethod.DELETE)

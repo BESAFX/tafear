@@ -86,7 +86,7 @@ public class EmailSender {
     }
 
     @Async("threadPoolEmailSender")
-    public void send(String title, String content, List<String> toEmailList, List<File> files) {
+    public Future<Boolean> send(String title, String content, List<String> toEmailList, List<File> files) {
         try {
             log.info("Sleeping for 10 seconds");
             Thread.sleep(10000);
@@ -123,10 +123,12 @@ public class EmailSender {
             transport.sendMessage(message, message.getRecipients(Message.RecipientType.TO));
             transport.close();
             log.info("Sending email successfully to this destinations: " + toEmailList);
+            return new AsyncResult<>(true);
         } catch (Exception ex) {
             log.info(ex.getMessage());
             resend();
             send(title, content, toEmailList, files);
+            return new AsyncResult<>(false);
         }
     }
 

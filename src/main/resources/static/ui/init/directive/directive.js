@@ -237,3 +237,38 @@ app.directive("filesModel", [function () {
     }
 }]);
 
+app.directive('multipleEmails', function () {
+    // Constants
+    var EMAIL_REGEXP = /^[a-z0-9!#$%&'*+/=?^_`{|}~.-]+@[a-z0-9-]+(\.[a-z0-9-]+)*$/i;
+
+    // DDO
+    return {
+        restrict: 'A',
+        require: 'ngModel',
+        link: multipleEmailsPostLink
+    };
+
+    // Function Definitions
+    function isValidEmail(email) {
+        return EMAIL_REGEXP.test(email.trim());
+    }
+
+    function multipleEmailsPostLink(scope, elem, attrs, modelCtrl) {
+        modelCtrl.$formatters.push(multipleEmailsValidator);
+        modelCtrl.$parsers.push(multipleEmailsValidator);
+
+        // Helpers
+        function multipleEmailsValidator(value) {
+            return validateAll(modelCtrl, 'multipleEmails', value);
+        }
+    }
+
+    function validateAll(ctrl, validatorName, value) {
+        var validity = ctrl.$isEmpty(value) || value.split(',').every(isValidEmail);
+
+        ctrl.$setValidity(validatorName, validity);
+
+        return validity ? value : undefined;
+    }
+});
+

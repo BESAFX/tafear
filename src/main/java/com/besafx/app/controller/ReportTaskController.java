@@ -623,6 +623,54 @@ public class ReportTaskController {
     }
 
     @Async("threadPoolReportGenerator")
+    public Future<byte[]> ReportIncomingTasksDeductions(List<Long> personList, Task.CloseType closeType, Long startDate, Long endDate) {
+        if (personList.isEmpty()) {
+            throw new CustomException("فضلاً اختر موظف واحد على الاقل.");
+        }
+        /**
+         * Insert Parameters
+         */
+        Map<String, Object> map = new HashMap<>();
+        StringBuilder param1 = new StringBuilder();
+        param1.append("طيف العربية");
+        param1.append("\n");
+        param1.append("للتعليم والتدريب التقني");
+        param1.append("\n");
+        if (startDate != null && endDate != null) {
+            param1.append("تقرير مختصر بخصومات المهام الواردة إلى الموظفين");
+            param1.append(" ");
+            param1.append("من الفترة " + " ( " + DateConverter.getHijriStringFromDateLTR(startDate) + " ) ");
+            param1.append(" ");
+            param1.append("إلى الفترة " + " ( " + DateConverter.getHijriStringFromDateLTR(endDate) + " ) ");
+        } else {
+            param1.append("تقرير مختصر بخصومات المهام الواردة إلى الموظفين");
+        }
+        map.put("TITLE", param1.toString());
+        Lists.newArrayList(companyService.findAll()).stream().findAny().ifPresent(company -> {
+            map.put("COMPANY_NAME", company.getName());
+            map.put("COMPANY_PHONE", "الهاتف: " + company.getPhone());
+            map.put("COMPANY_MOBILE", "الجوال: " + company.getMobile());
+            map.put("COMPANY_FAX", "الفاكس: " + company.getFax());
+            map.put("COMPANY_COMMERCIAL_REGISTER", "السجل التجاري: " + company.getCommericalRegisteration());
+        });
+        List<WrapperUtil> list = initIncomingTasksDeductionsList(personList, closeType, startDate, endDate);
+        map.put("LIST", list);
+        if (list.isEmpty()) {
+            return null;
+        }
+        try {
+            log.info("عدد العناصر يساوي: " + list.size());
+            ClassPathResource jrxmlFile = new ClassPathResource("/report/task/IncomingTasksDeductions.jrxml");
+            JasperReport jasperReport = JasperCompileManager.compileReport(jrxmlFile.getInputStream());
+            JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, map);
+            return new AsyncResult<>(JasperExportManager.exportReportToPdf(jasperPrint));
+        } catch (Exception ex) {
+            log.error(ex.getMessage(), ex);
+            return null;
+        }
+    }
+
+    @Async("threadPoolReportGenerator")
     public Future<byte[]> ReportWatchTasksOperations(List<Long> personsList) {
         /**
          * Insert Parameters

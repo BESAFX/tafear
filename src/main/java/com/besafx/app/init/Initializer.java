@@ -5,6 +5,7 @@ import com.besafx.app.entity.Team;
 import com.besafx.app.service.CompanyService;
 import com.besafx.app.service.PersonService;
 import com.besafx.app.service.TeamService;
+import com.besafx.app.util.AppOptions;
 import com.besafx.app.util.JSONConverter;
 import com.besafx.app.util.Options;
 import com.besafx.app.util.WrapperUtil;
@@ -102,7 +103,7 @@ public class Initializer implements CommandLineRunner {
         company.setEmail("info@tafear.com");
         company.setWebsite("www.tafear.com");
         company.setManager(person);
-        company.setOptions(JSONConverter.toString(WrapperUtil.builder().obj1(false).obj1(false).build()));
+        company.setOptions(JSONConverter.toString(AppOptions.builder().activateWarnMessage(false).activateDeductionMessage(false).build()));
         companyService.save(company);
     }
 }

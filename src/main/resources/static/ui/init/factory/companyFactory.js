@@ -65,6 +65,11 @@ app.factory("CompanyService",
                 return $http.get("/api/company/deactivateDeductionMessage").then(function (response) {
                     return response.data;
                 });
+            },
+            setEmailDeductionOptions: function (emailDeductionOptions) {
+                return $http.put("/api/company/setEmailDeductionOptions", emailDeductionOptions).then(function (response) {
+                    return response.data;
+                });
             }
         };
     }]);

@@ -178,6 +178,7 @@ app.run(['$http', '$location', '$state', '$timeout', '$window', 'PersonService',
         };
 
         $rootScope.dateType = 'H';
+
         $rootScope.lang = 'AR';
 
         $rootScope.switchDateType = function () {

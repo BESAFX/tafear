@@ -3,16 +3,28 @@ app.controller("companyCtrl", ['CompanyService', 'PersonService', 'ModalProvider
 
         $scope.selected = {};
 
+        $scope.buffer = {};
+
+        $scope.buffer.personsList = [];
+
         $scope.options = {};
 
-        $scope.submit = function () {
+        $scope.submit1 = function () {
             CompanyService.update($scope.selected).then(function (data) {
                 $scope.selected = data;
             });
         };
+        $scope.submit2 = function () {
+            var listId = [];
+            for (var i = 0; i < $scope.buffer.personsList.length; i++) {
+                listId[i] = $scope.buffer.personsList[i].id;
+            }
+            $scope.options.emailDeductionPersonsList = listId;
+            CompanyService.setEmailDeductionOptions($scope.options);
+        };
 
         $scope.switchWarnMessageState = function () {
-            if ($scope.options.obj1) {
+            if ($scope.options.activateWarnMessage) {
                 CompanyService.activateWarnMessage();
             } else {
                 CompanyService.deactivateWarnMessage();
@@ -20,7 +32,7 @@ app.controller("companyCtrl", ['CompanyService', 'PersonService', 'ModalProvider
         };
 
         $scope.switchDeductionMessageState = function () {
-            if ($scope.options.obj2) {
+            if ($scope.options.activateDeductionMessage) {
                 CompanyService.activateDeductionMessage();
             } else {
                 CompanyService.deactivateDeductionMessage();
@@ -43,9 +55,16 @@ app.controller("companyCtrl", ['CompanyService', 'PersonService', 'ModalProvider
             CompanyService.fetchTableDataSummery().then(function (data) {
                 $scope.selected = data[0];
                 $scope.options = JSON.parse(data[0].options);
-            });
-            PersonService.findAllSummery().then(function (data) {
-                $scope.persons = data;
+                PersonService.findAllSummery().then(function (data) {
+                    $scope.persons = data;
+                    angular.forEach($scope.options.emailDeductionPersonsList, function (o) {
+                        angular.forEach($scope.persons, function (p) {
+                            if(o === p.id){
+                                $scope.buffer.personsList.push(p);
+                            }
+                        })
+                    });
+                });
             });
             window.componentHandler.upgradeAllRegistered();
         }, 1500);
