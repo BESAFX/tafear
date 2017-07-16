@@ -100,7 +100,6 @@ public class TaskRest {
         } else {
             task.setCode(topTask.getCode() + 1);
         }
-        task.setStartDate(new Date());
         task.setEndDate(new DateTime(task.getEndDate()).withHourOfDay(23).withMinuteOfHour(59).withSecondOfMinute(59).withMillisOfSecond(59).toDate());
         task.setCloseType(Task.CloseType.Pending);
         task.setPerson(person);
@@ -152,7 +151,6 @@ public class TaskRest {
             }
             entityManager.detach(task);
             task.setId(null);
-            task.setStartDate(new Date());
             task.setEndDate(new DateTime(task.getEndDate()).withHourOfDay(23).withMinuteOfHour(59).withSecondOfMinute(59).withMillisOfSecond(59).toDate());
             task.setCloseType(Task.CloseType.Pending);
             task.setPerson(person);
