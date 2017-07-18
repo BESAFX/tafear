@@ -2,6 +2,7 @@ app.controller('taskFilterCtrl', ['$scope', '$rootScope', '$timeout', '$log', '$
     function ($scope, $rootScope, $timeout, $log, $uibModalInstance, title, taskType, closeType) {
 
         $scope.modalTitle = title;
+        $scope.buffer.person = $rootScope.me;
         $scope.buffer.taskType = taskType;
         $scope.buffer.closeType = closeType;
 

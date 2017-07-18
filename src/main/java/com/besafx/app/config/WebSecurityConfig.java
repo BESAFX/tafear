@@ -144,6 +144,7 @@ WebSecurityConfig extends WebSecurityConfigurerAdapter {
                         }
                         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
                         person.setLastLoginDate(new Date());
+                        person.setLastUpdate(new Date());
                         person.setActive(true);
                         person.setIpAddress(request.getRemoteAddr());
                         personService.save(person);
