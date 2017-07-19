@@ -1,11 +1,11 @@
-<form dir="rtl" name="form" ng-submit="submit()" novalidate="novalidate" focus-group="" focus-stack=""
+<form name="form" ng-submit="submit()" novalidate="novalidate" focus-group="" focus-stack=""
       focus-group-head="loop" focus-group-tail="loop">
 
     <div class="modal-header">
-        <a class="pull-left" href="" ng-click="cancel()">
+        <a ng-class="{'pull-left' : lang==='AR', 'pull-right' : lang==='EN'}" href="" ng-click="cancel()">
             <span class="fa fa-close fa-2x"></span>
         </a>
-        <h3 class="panel-title mdl-list__item pull-right">
+        <h3 ng-class="{'pull-right' : lang==='AR', 'pull-left' : lang==='EN'}" class="panel-title mdl-list__item">
             <span class="mdl-list__item-primary-content">
                 <i class="material-icons mdl-list__item-icon">{{action==='create' ? 'add' : 'edit'}}</i>
                 <strong>{{title}}</strong>
@@ -17,24 +17,26 @@
 
         <div class="row">
 
-            <div class="form-group text-right col-xs-12 col-sm-12 col-md-12 col-lg-12"
+            <div class="form-group col-xs-12 col-sm-6 col-md-12 col-lg-12"
                  ng-show="form.$invalid && form.$submitted">
                 <div class="alert alert-danger" role="alert">
-                    <strong>فضلاً اكمل الحقول المطلوبة</strong>
+                    <strong ng-if="lang==='AR'">فضلاً اكمل الحقول المطلوبة</strong>
+                    <strong ng-if="lang==='EN'">Please Complete Required Fields</strong>
                 </div>
             </div>
 
-            <div class="form-group text-right col-xs-12 col-sm-12 col-md-12 col-lg-12" ng-show="action=='create'">
+            <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12" ng-show="action=='create'">
                 <label for="master" class="control-label">
-                    <span>الموظفون</span>
-                    <span class="fa fa-info-circle" tooltip-append-to-body="true"
-                          uib-tooltip="يمكنك تكليف عدد غير محدود من الموظفين بنفس المهمة"></span>
+                    <span>
+                        <span ng-if="lang==='AR'">الموظفون</span>
+                        <span ng-if="lang==='EN'">Employees</span>
+                    </span>
                 </label>
                 <select id="master"
-                        data-placeholder="ابحث عن البريد الإلكتروني"
-                        no-results-text="'لا توجد بيانات توافق بحثك'"
-                        placeholder-text-multiple="'اختر الحساب الشخصي'"
-                        class="form-control text-right"
+                        data-placeholder="{{lang==='AR' ? 'ابحث عن الموظف' : 'Search For Employee...'}}"
+                        no-results-text="'{{lang==='AR' ? 'لا توجد بيانات توافق بحثك' : 'No Reqults.'}}'"
+                        placeholder-text-multiple="'{{lang==='AR' ? 'اختر الحساب الشخصي' : 'Please Select Employee...'}}'"
+                        class="form-control"
                         chosen=""
                         multiple
                         ng-model="buffer.toPersonList"
@@ -45,76 +47,90 @@
                 </select>
             </div>
 
-            <div class="form-group text-right col-xs-12 col-sm-12 col-md-12 col-lg-12" ng-if="action==='update'">
-                <label for="code" class="control-label"> رقم المهمة </label>
+            <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12" ng-if="action==='update'">
+                <label for="code" class="control-label">
+                    <span ng-if="lang==='AR'">رقم المهمة</span>
+                    <span ng-if="lang==='EN'">Task Code</span>
+                </label>
                 <input id="code"
                        type="text"
-                       class="form-control text-right"
+                       class="form-control"
                        readonly
                        ng-model="task.code">
             </div>
 
-            <div class="form-group text-right col-xs-12 col-sm-12 col-md-12 col-lg-12" ng-show="action=='create'">
+            <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12" ng-show="action=='create'">
                 <label for="structure" class="control-label">
-                    <span>نوع المهمة</span>
-                    <span class="fa fa-info-circle" tooltip-append-to-body="true"
-                          uib-tooltip="المقصود بالمشتركة هو ان المهمة ستكون واحدة برقم موحد لكل المكلفين، اما المنفردة فسيتم فيها انشاء مهمة لكل موظف برقم مختلف"></span>
+                    <span ng-if="lang==='AR'">نوع المهمة</span>
+                    <span ng-if="lang==='EN'">Task Structure</span>
                 </label>
                 <select id="structure"
-                        placeholder="اختر نوع المهمة"
-                        class="form-control text-right"
+                        placeholder="{{lang==='AR' ? 'اختر نوع المهمة' : 'Select Task Structure'}}"
+                        class="form-control"
                         required="required"
                         disable-validation-message=""
                         ng-model="buffer.structure">
-                    <option value="true">منفردة</option>
-                    <option value="false">مشتركة</option>
+                    <option ng-if="lang==='AR'" value="true">منفردة</option>
+                    <option ng-if="lang==='EN'" value="true">Single</option>
+                    <option ng-if="lang==='AR'" value="false">مشتركة</option>
+                    <option ng-if="lang==='EN'" value="false">Common</option>
                 </select>
             </div>
 
 
-            <div class="form-group text-right col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                <label for="title" class="control-label"> عنوان المهمة </label>
+            <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <label for="title" class="control-label">
+                    <span ng-if="lang==='AR'">عنوان المهمة</span>
+                    <span ng-if="lang==='EN'">Title</span>
+                </label>
                 <input id="title"
                        type="text"
-                       class="form-control text-right"
+                       class="form-control"
                        required="required"
                        disable-validation-message=""
                        ng-model="task.title">
             </div>
 
-            <div class="form-group text-right col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                <label for="content" class="control-label">تفاصيل المهمة</label>
+            <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <label for="content" class="control-label">
+                    <span ng-if="lang==='AR'">تفاصيل المهمة</span>
+                    <span ng-if="lang==='EN'">Details</span>
+                </label>
                 <textarea id="content"
                           type="text"
                           msd-elastic="\n"
                           required="required"
-                          class="form-control text-right"
+                          class="form-control"
                           disable-validation-message=""
-                          placeholder="تفاصيل المهمة"
+                          placeholder="{{lang==='AR' ? 'تفاصيل المهمة' : 'Type Details...'}}"
                           ng-model="task.content">
                 </textarea>
             </div>
 
             <div class="form-group row">
 
-                <div class="form-group text-right col-xs-12 col-sm-12 col-md-6 col-lg-6"
+                <div class="form-group col-xs-12 col-sm-12 col-md-6 col-lg-6"
                      ng-init="action==='create' ? (task.commentType='Day') : ''">
                     <label for="commentType" class="control-label">
-                        <span>فترة السماح للتعليق</span>
+                        <span ng-if="lang==='AR'">فترة السماح للتعليق</span>
+                        <span ng-if="lang==='EN'">فترة السماح للتعليق</span>
                     </label>
                     <select id="commentType"
                             placeholder="اختر نوع الفترة المسموح بها لإرسال التعليقات"
-                            class="form-control text-right"
+                            class="form-control"
                             required="required"
                             disable-validation-message=""
                             ng-model="task.commentType">
-                        <option value="Day">يومياً</option>
-                        <option value="Week">اسبوعياً</option>
-                        <option value="Month">شهرياً</option>
+                        <option ng-if="lang==='AR'" value="Day">يومياً</option>
+                        <option ng-if="lang==='EN'" value="Day">Daily</option>
+                        <option ng-if="lang==='AR'" value="Week">اسبوعياً</option>
+                        <option ng-if="lang==='EN'" value="Week">Weekly</option>
+                        <option ng-if="lang==='AR'" value="Month">شهرياً</option>
+                        <option ng-if="lang==='EN'" value="Month">Monthly</option>
                     </select>
                 </div>
 
-                <div class="form-group text-right col-xs-12 col-sm-12 col-md-6 col-lg-6"
+                <div class="form-group col-xs-12 col-sm-12 col-md-6 col-lg-6"
                      ng-init="action==='create' ? (task.commentTypeCount = 1) : ''">
                     <label for="commentTypeCount" class="control-label">{{task.commentType==='Day' ? 'الحد الأقصى لعدد
                         الأيام دون تعليق' : (task.commentType==='Week' ? 'الحد الأقصى لعدد الاسابيع دون تعليق' : 'الحد
@@ -122,7 +138,7 @@
                     <input id="commentTypeCount"
                            type="number"
                            ng-min="1"
-                           class="form-control text-right"
+                           class="form-control"
                            ng-required="required"
                            disable-validation-message=""
                            ng-model="task.commentTypeCount">
@@ -131,29 +147,36 @@
             </div>
 
             <div class="form-group row">
-                <div class="form-group text-right col-xs-12 col-sm-12 col-md-6 col-lg-6"
+                <div class="form-group col-xs-12 col-sm-12 col-md-6 col-lg-6"
                      ng-init="action==='create' ? (task.importance='Regular') : ''">
                     <label for="importance" class="control-label">
-                        <span>درجة الأهمية</span>
+                        <span ng-if="lang==='AR'">درجة الأهمية</span>
+                        <span ng-if="lang==='EN'">Importance</span>
                     </label>
                     <select id="importance"
                             placeholder="اختر درجة الأهمية للمساعدة فى التصنيف"
-                            class="form-control text-right"
+                            class="form-control"
                             required="required"
                             disable-validation-message=""
                             ng-model="task.importance">
-                        <option value="Regular">عادية</option>
-                        <option value="Important">متوسطة</option>
-                        <option value="Critical">عاجلة</option>
+                        <option ng-if="lang==='AR'" value="Regular">عادية</option>
+                        <option ng-if="lang==='EN'" value="Regular">Regular</option>
+                        <option ng-if="lang==='AR'" value="Important">متوسطة</option>
+                        <option ng-if="lang==='EN'" value="Important">Important</option>
+                        <option ng-if="lang==='AR'" value="Critical">عاجلة</option>
+                        <option ng-if="lang==='EN'" value="Critical">Critical</option>
                     </select>
                 </div>
 
-                <div class="form-group text-right col-xs-12 col-sm-12 col-md-6 col-lg-6">
-                    <label for="warn" class="control-label"> الحد الأقصى للتحذيرات </label>
+                <div class="form-group col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                    <label for="warn" class="control-label">
+                        <span ng-if="lang==='AR'">الحد الأقصى للتحذيرات</span>
+                        <span ng-if="lang==='EN'">Warns Limit</span>
+                    </label>
                     <input id="warn"
                            type="number"
                            min="0"
-                           class="form-control text-right"
+                           class="form-control"
                            required="required"
                            disable-validation-message=""
                            ng-model="task.warn">
@@ -163,32 +186,37 @@
 
             <div class="row">
 
-                <div class="form-group text-right col-xs-12 col-sm-12 col-md-6 col-lg-6">
-                    <label for="deduction" class="control-label"> مقدار الحسم عند الوصول للحد الاقصي للتحذيرات </label>
+                <div class="form-group col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                    <label for="deduction" class="control-label">
+                        <span ng-if="lang==='AR'">مقدار الحسم عند الوصول للحد الاقصي للتحذيرات</span>
+                        <span ng-if="lang==='EN'">Deduction Amount On Exceeding Warnings Limit</span>
+                    </label>
                     <div dir="ltr" class="input-group" id="deduction">
-                        <span class="input-group-addon">ريال</span>
+                        <span class="input-group-addon">SAR</span>
                         <input dir="rtl"
                                type="number"
                                min="0"
                                required="required"
                                disable-validation-message=""
-                               class="form-control text-right "
+                               class="form-control "
                                ng-model="task.deduction">
                     </div>
                 </div>
 
 
-                <div class="form-group text-right col-xs-12 col-sm-12 col-md-6 col-lg-6">
-                    <label for="deductionOnAutoClose" class="control-label"> مقدار الحسم عند إغلاق المهمة
-                        تلقائياً </label>
+                <div class="form-group col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                    <label for="deductionOnAutoClose" class="control-label">
+                        <span ng-if="lang==='AR'">مقدار الحسم عند إغلاق المهمة تلقائيا</span>
+                        <span ng-if="lang==='EN'">Deduction Amount On Auto Close</span>
+                    </label>
                     <div dir="ltr" class="input-group" id="deductionOnAutoClose">
-                        <span class="input-group-addon">ريال</span>
+                        <span class="input-group-addon">SAR</span>
                         <input dir="rtl"
                                type="number"
                                min="0"
                                required="required"
                                disable-validation-message=""
-                               class="form-control text-right "
+                               class="form-control "
                                ng-model="task.deductionOnAutoClose">
                     </div>
                 </div>
@@ -197,13 +225,16 @@
 
             <div class="row">
 
-                <div class="form-group text-right col-xs-12 col-sm-12 col-md-6 col-lg-6" ng-if="dateType==='H' && action==='create'">
-                    <label for="startDate" class="control-label">تاريخ البدء</label>
+                <div class="form-group col-xs-12 col-sm-12 col-md-6 col-lg-6" ng-if="dateType==='H' && action==='create'">
+                    <label for="startDate" class="control-label">
+                        <span ng-if="lang==='AR'">تاريخ البدء</span>
+                        <span ng-if="lang==='EN'">Start Date</span>
+                    </label>
                     <div dir="ltr" class="input-group">
                         <input dir="rtl"
                                id="startDate"
                                type="text"
-                               class="form-control text-right is-calendarPicker"
+                               class="form-control is-calendarPicker"
                                ng-model="task.startDate"
                                ng-required="dateType==='H' && action==='create'"
                                disable-validation-message=""
@@ -216,10 +247,13 @@
                     </div>
                 </div>
 
-                <div class="form-group text-right col-xs-12 col-sm-12 col-md-6 col-lg-6" ng-if="dateType==='G' && action==='create'">
-                    <label for="G-startDate" class="control-label"> تاريخ البدء </label>
+                <div class="form-group col-xs-12 col-sm-12 col-md-6 col-lg-6" ng-if="dateType==='G' && action==='create'">
+                    <label for="G-startDate" class="control-label">
+                        <span ng-if="lang==='AR'">تاريخ البدء</span>
+                        <span ng-if="lang==='EN'">Start Date</span>
+                    </label>
                     <input id="G-startDate"
-                           class="form-control text-right "
+                           class="form-control "
                            type="datetime-local"
                            name="input"
                            ng-model="task.startDate"
@@ -230,13 +264,16 @@
                            disable-validation-message=""/>
                 </div>
 
-                <div class="form-group text-right col-xs-12 col-sm-12 col-md-6 col-lg-6" ng-if="dateType==='H' && action==='create'">
-                    <label for="endDate" class="control-label">تاريخ التسليم</label>
+                <div class="form-group col-xs-12 col-sm-12 col-md-6 col-lg-6" ng-if="dateType==='H' && action==='create'">
+                    <label for="endDate" class="control-label">
+                        <span ng-if="lang==='AR'">تاريخ التسليم</span>
+                        <span ng-if="lang==='EN'">End Date</span>
+                    </label>
                     <div dir="ltr" class="input-group">
                         <input dir="rtl"
                                id="endDate"
                                type="text"
-                               class="form-control text-right is-calendarPicker"
+                               class="form-control is-calendarPicker"
                                ng-model="task.endDate"
                                ng-required="dateType==='H' && action==='create'"
                                disable-validation-message=""
@@ -249,10 +286,13 @@
                     </div>
                 </div>
 
-                <div class="form-group text-right col-xs-12 col-sm-12 col-md-6 col-lg-6" ng-if="dateType==='G' && action==='create'">
-                    <label for="G-endDate" class="control-label"> تاريخ التسليم </label>
+                <div class="form-group col-xs-12 col-sm-12 col-md-6 col-lg-6" ng-if="dateType==='G' && action==='create'">
+                    <label for="G-endDate" class="control-label">
+                        <span ng-if="lang==='AR'">تاريخ التسليم</span>
+                        <span ng-if="lang==='EN'">End Date</span>
+                    </label>
                     <input id="G-endDate"
-                           class="form-control text-right "
+                           class="form-control "
                            type="datetime-local"
                            name="input"
                            ng-model="task.endDate"
@@ -273,27 +313,27 @@
 
         <div class="row">
             <button ng-if="action=='create'"
-                    uib-tooltip="اضافة"
+                    uib-tooltip="{{lang==='AR' ? 'اضافة' : 'Save'}}"
                     tooltip-append-to-body="true"
                     type="submit"
                     class="mdl-button mdl-js-button mdl-js-ripple-effect col-xs-4 col-sm-4 col-md-4">
                 <i class="material-icons">add</i>
             </button>
             <button ng-if="action=='update'"
-                    uib-tooltip="تعديل"
+                    uib-tooltip="{{lang==='AR' ? 'تعديل' : 'Edit'}}"
                     tooltip-append-to-body="true"
                     type="submit"
                     class="mdl-button mdl-js-button mdl-js-ripple-effect col-xs-4 col-sm-4 col-md-4">
                 <i class="material-icons">edit</i>
             </button>
-            <button uib-tooltip="مسح الحقول"
+            <button uib-tooltip="{{lang==='AR' ? 'مسح الحقول' : 'Clear'}}"
                     tooltip-append-to-body="true"
                     type="reset"
                     ng-click="form.$setPristine()"
                     class="mdl-button mdl-js-button mdl-js-ripple-effect col-xs-4 col-sm-4 col-md-4">
                 <i class="material-icons">delete</i>
             </button>
-            <button uib-tooltip="خروج"
+            <button uib-tooltip="{{lang==='AR' ? 'خروج' : 'Exit'}}"
                     tooltip-append-to-body="true"
                     type="button"
                     ng-click="cancel()"

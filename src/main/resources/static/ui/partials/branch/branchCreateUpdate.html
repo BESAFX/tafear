@@ -51,50 +51,56 @@
                             </div>
                         </div>
 
-                        <div class="form-group col-xs-12 col-sm-6 col-md-12 col-lg-12">
-                            <label for="name" class="control-label">
-                                <span ng-if="lang==='AR'">اسم الفرع</span>
-                                <span ng-if="lang==='EN'">Name</span>
-                            </label>
-                            <input id="name"
-                                   type="text"
-                                   required="required"
-                                   disable-validation-message=""
-                                   class="form-control "
-                                   focus-autofocus="1"
-                                   placeholder="{{lang==='AR' ? 'اسم الفرع' : 'Name...'}}"
-                                   ng-model="branch.name">
+                        <div class="row">
+
+                            <div class="form-group col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                                <label for="name" class="control-label">
+                                    <span ng-if="lang==='AR'">اسم الفرع</span>
+                                    <span ng-if="lang==='EN'">Name</span>
+                                </label>
+                                <input id="name"
+                                       type="text"
+                                       required="required"
+                                       disable-validation-message=""
+                                       class="form-control "
+                                       focus-autofocus="1"
+                                       placeholder="{{lang==='AR' ? 'اسم الفرع' : 'Name...'}}"
+                                       ng-model="branch.name">
+                            </div>
+
+                            <div class="form-group  col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                                <label for="address" class="control-label">
+                                    <span ng-if="lang==='AR'">العنوان</span>
+                                    <span ng-if="lang==='EN'">Address</span>
+                                </label>
+                                <input id="address"
+                                       type="text"
+                                       required="required"
+                                       disable-validation-message=""
+                                       class="form-control "
+                                       placeholder="{{lang==='AR' ? 'العنوان' : 'Address...'}}"
+                                       ng-model="branch.address">
+                            </div>
+
                         </div>
 
-                        <div class="form-group  col-xs-12 col-sm-6 col-md-12 col-lg-12">
-                            <label for="address" class="control-label">
-                                <span ng-if="lang==='AR'">العنوان</span>
-                                <span ng-if="lang==='EN'">Address</span>
-                            </label>
-                            <input id="address"
-                                   type="text"
-                                   required="required"
-                                   disable-validation-message=""
-                                   class="form-control "
-                                   placeholder="{{lang==='AR' ? 'العنوان' : 'Address...'}}"
-                                   ng-model="branch.address">
-                        </div>
+                        <div class="row">
 
-                        <div class="form-group  col-xs-12 col-sm-6 col-md-12 col-lg-12">
-                            <label for="phone" class="control-label">
-                                <span ng-if="lang==='AR'">الهاتف</span>
-                                <span ng-if="lang==='EN'">Phone</span>
-                            </label>
-                            <input id="phone"
-                                   type="text"
-                                   required="required"
-                                   disable-validation-message=""
-                                   class="form-control "
-                                   placeholder="{{lang==='AR' ? 'الهاتف' : 'Phone...'}}"
-                                   ng-model="branch.phone">
-                        </div>
+                            <div class="form-group  col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                                <label for="phone" class="control-label">
+                                    <span ng-if="lang==='AR'">الهاتف</span>
+                                    <span ng-if="lang==='EN'">Phone</span>
+                                </label>
+                                <input id="phone"
+                                       type="text"
+                                       required="required"
+                                       disable-validation-message=""
+                                       class="form-control "
+                                       placeholder="{{lang==='AR' ? 'الهاتف' : 'Phone...'}}"
+                                       ng-model="branch.phone">
+                            </div>
 
-                        <div class="form-group  col-xs-12 col-sm-6 col-md-12 col-lg-12">
+                            <div class="form-group  col-xs-12 col-sm-6 col-md-6 col-lg-6">
                             <label for="mobile" class="control-label">
                                 <span ng-if="lang==='AR'">الجوال</span>
                                 <span ng-if="lang==='EN'">Mobile</span>
@@ -108,21 +114,25 @@
                                    ng-model="branch.mobile">
                         </div>
 
-                        <div class="form-group  col-xs-12 col-sm-6 col-md-12 col-lg-12">
-                            <label for="fax" class="control-label">
-                                <span ng-if="lang==='AR'">الفاكس</span>
-                                <span ng-if="lang==='EN'">Fax</span>
-                            </label>
-                            <input id="fax"
-                                   type="text"
-                                   required="required"
-                                   disable-validation-message=""
-                                   class="form-control "
-                                   placeholder="{{lang==='AR' ? 'الفاكس' : 'Fax...'}}"
-                                   ng-model="branch.fax">
                         </div>
 
-                        <div class="form-group  col-xs-12 col-sm-6 col-md-12 col-lg-12">
+                        <div class="row">
+
+                            <div class="form-group  col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                                <label for="fax" class="control-label">
+                                    <span ng-if="lang==='AR'">الفاكس</span>
+                                    <span ng-if="lang==='EN'">Fax</span>
+                                </label>
+                                <input id="fax"
+                                       type="text"
+                                       required="required"
+                                       disable-validation-message=""
+                                       class="form-control "
+                                       placeholder="{{lang==='AR' ? 'الفاكس' : 'Fax...'}}"
+                                       ng-model="branch.fax">
+                            </div>
+
+                            <div class="form-group  col-xs-12 col-sm-6 col-md-6 col-lg-6">
                             <label for="email" class="control-label">
                                 <span ng-if="lang==='AR'">البريد الإلكتروني</span>
                                 <span ng-if="lang==='EN'">Email</span>
@@ -136,21 +146,25 @@
                                    ng-model="branch.email">
                         </div>
 
-                        <div class="form-group col-xs-12 col-sm-6 col-md-12 col-lg-12">
-                            <label for="website" class="control-label">
-                                <span ng-if="lang==='AR'">الموقع الرسمي</span>
-                                <span ng-if="lang==='EN'">Website</span>
-                            </label>
-                            <input id="website"
-                                   type="text"
-                                   required="required"
-                                   disable-validation-message=""
-                                   class="form-control "
-                                   placeholder="{{lang==='AR' ? 'الموقع الرسمي' : 'Website...'}}"
-                                   ng-model="branch.website">
                         </div>
 
-                        <div class="form-group col-xs-12 col-sm-6 col-md-12 col-lg-12">
+                        <div class="row">
+
+                            <div class="form-group col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                                <label for="website" class="control-label">
+                                    <span ng-if="lang==='AR'">الموقع الرسمي</span>
+                                    <span ng-if="lang==='EN'">Website</span>
+                                </label>
+                                <input id="website"
+                                       type="text"
+                                       required="required"
+                                       disable-validation-message=""
+                                       class="form-control "
+                                       placeholder="{{lang==='AR' ? 'الموقع الرسمي' : 'Website...'}}"
+                                       ng-model="branch.website">
+                            </div>
+
+                            <div class="form-group col-xs-12 col-sm-6 col-md-6 col-lg-6">
                             <label for="commericalRegisteration" class="control-label">
                                 <span ng-if="lang==='AR'">السجل التجاري</span>
                                 <span ng-if="lang==='EN'">Commercial Registration</span>
@@ -164,25 +178,29 @@
                                    ng-model="branch.commericalRegisteration">
                         </div>
 
-                        <div class="form-group col-xs-12 col-sm-6 col-md-12 col-lg-12">
-                            <label for="region" class="control-label">
-                                <span ng-if="lang==='AR'">[رقم المنطقة] اسم المنطقة</span>
-                                <span ng-if="lang==='EN'">Region</span>
-                            </label>
-                            <select id="region"
-                                    data-placeholder="{{lang==='AR' ? 'ابحث عن المنطقة' : ''}}"
-                                    no-results-text="'{{lang==='AR' ? 'لا توجد شركات توافق بحثك' : 'No Results.'}}'"
-                                    placeholder-text-single="'{{lang==='AR' ? 'اختر المنطقة' : 'Please Select Region...'}}'"
-                                    class="form-control "
-                                    chosen=""
-                                    ng-model="branch.region"
-                                    required="required"
-                                    disable-validation-message=""
-                                    ng-options="(' [ ' + region.code + ' ] ' + region.name) for region in regions | orderBy:'code' track by region.id">
-                            </select>
                         </div>
 
-                        <div class="form-group  col-xs-12 col-sm-6 col-md-12 col-lg-12">
+                        <div class="row">
+
+                            <div class="form-group col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                                <label for="region" class="control-label">
+                                    <span ng-if="lang==='AR'">[رقم المنطقة] اسم المنطقة</span>
+                                    <span ng-if="lang==='EN'">Region</span>
+                                </label>
+                                <select id="region"
+                                        data-placeholder="{{lang==='AR' ? 'ابحث عن المنطقة' : ''}}"
+                                        no-results-text="'{{lang==='AR' ? 'لا توجد شركات توافق بحثك' : 'No Results.'}}'"
+                                        placeholder-text-single="'{{lang==='AR' ? 'اختر المنطقة' : 'Please Select Region...'}}'"
+                                        class="form-control "
+                                        chosen=""
+                                        ng-model="branch.region"
+                                        required="required"
+                                        disable-validation-message=""
+                                        ng-options="(' [ ' + region.code + ' ] ' + region.name) for region in regions | orderBy:'code' track by region.id">
+                                </select>
+                            </div>
+
+                            <div class="form-group col-xs-12 col-sm-6 col-md-6 col-lg-6">
                             <label for="person" class="control-label">
                                 <span ng-if="lang==='AR'">المدير</span>
                                 <span ng-if="lang==='EN'">Manager</span>
@@ -197,6 +215,8 @@
                                     disable-validation-message=""
                                     ng-options="person.nickname + ' / ' + person.name for person in persons | orderBy:'name' track by person.id">
                             </select>
+                        </div>
+
                         </div>
 
                     </div>
