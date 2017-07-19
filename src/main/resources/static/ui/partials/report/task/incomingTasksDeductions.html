@@ -5,7 +5,7 @@
         <a ng-class="{'pull-left' : lang==='AR', 'pull-right' : lang==='EN'}" href="" ng-click="cancel()">
             <span class="fa fa-close fa-2x"></span>
         </a>
-        <h3 class="panel-title mdl-list__item" ng-class="{'pull-right' : lang==='AR', 'pull-left' : lang==='EN'}">
+        <h3 ng-class="{'pull-right' : lang==='AR', 'pull-left' : lang==='EN'}" class="panel-title mdl-list__item">
             <span class="mdl-list__item-primary-content">
                 <i class="material-icons mdl-list__item-icon">print</i>
                 <strong ng-if="lang==='AR'">تقرير مختصر بخصومات المهام الواردة إلى الموظفين</strong>
@@ -18,14 +18,14 @@
 
         <div class="row">
 
-            <div class="form-group text-right col-xs-12 col-sm-12 col-md-12" ng-show="form.$invalid && form.$submitted">
+            <div class="form-group col-xs-12 col-sm-12 col-md-12" ng-show="form.$invalid && form.$submitted">
                 <div class="alert alert-danger" role="alert">
                     <strong ng-if="lang==='AR'">فضلاً اكمل الحقول المطلوبة.</strong>
                     <strong ng-if="lang==='EN'">Please Complete Required Fields.</strong>
                 </div>
             </div>
 
-            <div class="form-group text-right col-xs-12 col-sm-12 col-md-12">
+            <div class="form-group col-xs-12 col-sm-12 col-md-12">
                 <label for="master" class="control-label">
                     <span ng-if="lang==='AR'">الموظفون</span>
                     <span ng-if="lang==='EN'">Employees</span>
@@ -34,7 +34,7 @@
                         data-placeholder="{{lang==='AR' ? 'ابحث عن البريد الإلكتروني' : 'Search By Email...'}}"
                         no-results-text="'{{lang==='AR' ? 'لا توجد بيانات توافق بحثك' : 'No Results.'}}'"
                         placeholder-text-multiple="'{{lang==='AR' ? 'اختر الحساب الشخصي' : 'Please Select Employees...'}}'"
-                        class="form-control text-right"
+                        class="form-control"
                         chosen=""
                         multiple
                         focus-autofocus="1"
@@ -45,14 +45,13 @@
                 </select>
             </div>
 
-            <div class="form-group text-right col-xs-12 col-sm-12 col-md-12">
+            <div class="form-group col-xs-12 col-sm-12 col-md-12">
                 <label for="closeType" class="control-label">
                     <span ng-if="lang==='AR'">حالة الإغلاق</span>
                     <span ng-if="lang==='EN'">Condition</span>
                 </label>
                 <select id="closeType"
-                        placeholder="اختر درجة الأهمية للمساعدة فى التصنيف"
-                        class="form-control text-right"
+                        class="form-control"
                         ng-model="buffer.closeType">
                     <option value="" ng-if="lang==='AR'">اختر الحالة...</option>
                     <option value="" ng-if="lang==='EN'">Please Select Condition...</option>
@@ -65,7 +64,7 @@
                 </select>
             </div>
 
-            <div class="form-group text-right col-xs-12 col-sm-12 col-md-6">
+            <div class="form-group col-xs-12 col-sm-12 col-md-6">
                 <label for="startDate" class="control-label">
                     <span ng-if="lang==='AR'">تاريخ الخصم من</span>
                     <span ng-if="lang==='EN'">Deduction Date From</span>
@@ -74,7 +73,7 @@
                     <input dir="rtl"
                            id="startDate"
                            type="text"
-                           class="form-control text-right is-calendarPicker"
+                           class="form-control is-calendarPicker"
                            ng-model="buffer.startDate"
                            calendarType="ummalqura"
                            language="en"
@@ -85,7 +84,7 @@
                 </div>
             </div>
 
-            <div class="form-group text-right col-xs-12 col-sm-12 col-md-6">
+            <div class="form-group col-xs-12 col-sm-12 col-md-6">
                 <label for="endDate" class="control-label">
                     <span ng-if="lang==='AR'">تاريخ الخصم إلى</span>
                     <span ng-if="lang==='EN'">Deduction Date To</span>
@@ -94,7 +93,7 @@
                     <input dir="rtl"
                            id="endDate"
                            type="text"
-                           class="form-control text-right is-calendarPicker"
+                           class="form-control is-calendarPicker"
                            ng-model="buffer.endDate"
                            calendarType="ummalqura"
                            language="en"
@@ -105,31 +104,31 @@
                 </div>
             </div>
 
-            <div class="form-group text-right col-xs-12 col-sm-6 col-md-12 col-lg-12">
+            <div class="form-group col-xs-12 col-sm-6 col-md-12 col-lg-12">
                 <label for="email" class="control-label">
                     <span ng-if="lang==='AR'">البريد الإلكتروني</span>
                     <span ng-if="lang==='EN'">Email To Send</span>
                 </label>
                 <input id="email"
                        type="text"
-                       class="form-control text-right"
+                       class="form-control"
                        placeholder="{{lang==='AR' ? 'اذكر بريد المرسل إليه' : 'Type The Recipients\'s Email...'}}"
                        ng-model="buffer.email">
             </div>
 
-            <div class="form-group text-right col-xs-12 col-sm-6 col-md-12 col-lg-12">
+            <div class="form-group col-xs-12 col-sm-6 col-md-12 col-lg-12">
                 <label for="title" class="control-label">
                     <span ng-if="lang==='AR'">موضوع الرسالة</span>
                     <span ng-if="lang==='EN'">Email Subject</span>
                 </label>
                 <input id="title"
                        type="text"
-                       class="form-control text-right"
+                       class="form-control"
                        placeholder="{{lang==='AR' ? 'اذكر عنوان الرسالة' : 'Type Email Title...'}}"
                        ng-model="buffer.title">
             </div>
 
-            <div class="form-group text-right col-xs-12 col-sm-6 col-md-12 col-lg-12">
+            <div class="form-group col-xs-12 col-sm-6 col-md-12 col-lg-12">
                 <label for="message" class="control-label">
                     <span ng-if="lang==='AR'">محتوى الرسالة</span>
                     <span ng-if="lang==='EN'">Email Body</span>
@@ -137,7 +136,7 @@
                 <textarea id="message"
                           type="text"
                           msd-elastic="\n"
-                          class="form-control text-right"
+                          class="form-control"
                           placeholder="{{lang==='AR' ? 'تفاصيل الرسالة' : 'Type Message Details...'}}"
                           ng-model="buffer.message">
                 </textarea>

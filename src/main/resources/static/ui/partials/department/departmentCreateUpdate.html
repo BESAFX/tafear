@@ -1,11 +1,11 @@
-<form dir="rtl" name="form" ng-submit="submit()" novalidate="novalidate" focus-group="" focus-stack=""
+<form name="form" ng-submit="submit()" novalidate="novalidate" focus-group="" focus-stack=""
       focus-group-head="loop" focus-group-tail="loop">
 
     <div class="modal-header">
-        <a class="pull-left" href="" ng-click="cancel()">
+        <a ng-class="{'pull-left' : lang==='AR', 'pull-right' : lang==='EN'}" href="" ng-click="cancel()">
             <span class="fa fa-close fa-2x"></span>
         </a>
-        <h3 class="panel-title mdl-list__item pull-right">
+        <h3 ng-class="{'pull-right' : lang==='AR', 'pull-left' : lang==='EN'}" class="panel-title mdl-list__item">
             <span class="mdl-list__item-primary-content">
                 <i class="material-icons mdl-list__item-icon">{{action==='create' ? 'add' : 'edit'}}</i>
                 <strong>{{title}}</strong>
@@ -17,24 +17,31 @@
 
         <div class="row">
 
-            <div class="text-right col-xs-12 col-sm-6 col-md-12 col-lg-12" ng-show="form.$invalid && form.$submitted">
-                <div class="alert alert-danger" role="alert">
-                    <strong>فضلاً اكمل الحقول المطلوبة</strong>
-                </div>
-            </div>
-
             <div class="col-xs-12 col-sm-6 col-md-12 col-lg-12">
                 <div class="panel panel-info">
-                    <div class="panel-heading">البيانات الاساسية</div>
+                    <div class="panel-heading">
+                        <span ng-if="lang==='AR'">البيانات الاساسية</span>
+                        <span ng-if="lang==='EN'">Basic Information</span>
+                    </div>
                     <div class="panel-body">
 
-                        <div class="form-group text-right col-xs-12 col-sm-6 col-md-12 col-lg-12">
-                            <label for="branch" class="control-label">[{قم الفرع] اسم الفرع</label>
+                        <div class="form-group col-xs-12 col-sm-6 col-md-12 col-lg-12" ng-show="form.$invalid && form.$submitted">
+                            <div class="alert alert-danger" role="alert">
+                                <strong ng-if="lang==='AR'">فضلاً اكمل الحقول المطلوبة</strong>
+                                <strong ng-if="lang==='EN'">Please Complete Required Fields</strong>
+                            </div>
+                        </div>
+
+                        <div class="form-group col-xs-12 col-sm-6 col-md-12 col-lg-12">
+                            <label for="branch" class="control-label">
+                                <span ng-if="lang==='AR'">[قم الفرع] اسم الفرع</span>
+                                <span ng-if="lang==='EN'">Branch</span>
+                            </label>
                             <select id="branch"
-                                    data-placeholder="ابحث عن الفرع"
-                                    no-results-text="'لا توجد بيانات توافق بحثك'"
-                                    placeholder-text-single="'اختر الفرع'"
-                                    class="form-control text-right"
+                                    data-placeholder="{{lang==='AR' ? 'ابحث عن الفرع' : 'Search For Branch...'}}"
+                                    no-results-text="'{{lang==='AR' ? 'لا توجد بيانات توافق بحثك' : 'No Results.'}}'"
+                                    placeholder-text-single="'{{lang==='AR' ? 'اختر الفرع' : 'Please Select Branch...'}}'"
+                                    class="form-control"
                                     chosen=""
                                     ng-model="department.branch"
                                     required="required"
@@ -45,13 +52,16 @@
                             </select>
                         </div>
 
-                        <div class="form-group text-right col-xs-12 col-sm-6 col-md-12 col-lg-12">
-                            <label for="person" class="control-label"> المدير</label>
+                        <div class="form-group col-xs-12 col-sm-6 col-md-12 col-lg-12">
+                            <label for="person" class="control-label">
+                                <span ng-if="lang==='AR'">المدير</span>
+                                <span ng-if="lang==='EN'">Manager</span>
+                            </label>
                             <select id="person"
-                                    data-placeholder="ابحث عن حساب المستخدم من خلال الاسم"
-                                    no-results-text="'لا توجد بيانات'"
-                                    placeholder-text-single="'اختر حساب المستخدم'"
-                                    class="form-control text-right"
+                                    data-placeholder="{{lang==='AR'? 'ابحث عن حساب المستخدم من خلال الاسم' : 'Search For User...'}}"
+                                    no-results-text="'{{lang==='AR' ? 'لا توجد بيانات' : 'No Results.'}}'"
+                                    placeholder-text-single="'{{lang==='AR' ? 'اختر حساب المستخدم' : 'Please Select User...'}}'"
+                                    class="form-control"
                                     chosen=""
                                     ng-model="department.manager"
                                     required="required"
@@ -61,13 +71,17 @@
                             </select>
                         </div>
 
-                        <div class="form-group text-right col-xs-12 col-sm-6 col-md-12 col-lg-12">
-                            <label for="name" class="control-label">اسم القسم</label>
+                        <div class="form-group col-xs-12 col-sm-6 col-md-12 col-lg-12">
+                            <label for="name" class="control-label">
+                                <span ng-if="lang==='AR'">اسم القسم</span>
+                                <span ng-if="lang==='EN'">Name</span>
+                            </label>
                             <input id="name"
                                    type="text"
                                    required="required"
                                    disable-validation-message=""
                                    class="form-control"
+                                   placeholder="{{lang==='AR'? 'اذكر اسم القسم...' : 'Type Department Name...'}}"
                                    ng-model="department.name">
                         </div>
 
@@ -83,27 +97,27 @@
 
         <div class="row">
             <button ng-if="action=='create'"
-                    uib-tooltip="اضافة"
+                    uib-tooltip="{{lang==='AR' ? 'اضافة' : 'Save'}}"
                     tooltip-append-to-body="true"
                     type="submit"
                     class="mdl-button mdl-js-button mdl-js-ripple-effect col-xs-4 col-sm-4 col-md-4">
                 <i class="material-icons">add</i>
             </button>
             <button ng-if="action=='update'"
-                    uib-tooltip="تعديل"
+                    uib-tooltip="{{lang==='AR' ? 'تعديل' : 'Edit'}}"
                     tooltip-append-to-body="true"
                     type="submit"
                     class="mdl-button mdl-js-button mdl-js-ripple-effect col-xs-4 col-sm-4 col-md-4">
                 <i class="material-icons">edit</i>
             </button>
-            <button uib-tooltip="مسح الحقول"
+            <button uib-tooltip="{{lang==='AR' ? 'مسح الحقول' : 'Clear'}}"
                     tooltip-append-to-body="true"
                     type="reset"
                     ng-click="form.$setPristine()"
                     class="mdl-button mdl-js-button mdl-js-ripple-effect col-xs-4 col-sm-4 col-md-4">
                 <i class="material-icons">delete</i>
             </button>
-            <button uib-tooltip="خروج"
+            <button uib-tooltip="{{lang==='AR' ? 'خروج' : 'Exit'}}"
                     tooltip-append-to-body="true"
                     type="button"
                     ng-click="cancel()"

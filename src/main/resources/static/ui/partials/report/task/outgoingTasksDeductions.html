@@ -1,62 +1,78 @@
-<form dir="rtl" name="form" ng-submit="submit()" novalidate="novalidate" focus-group="" focus-stack=""
+<form name="form" ng-submit="submit()" novalidate="novalidate" focus-group="" focus-stack=""
       focus-group-head="loop"
       focus-group-tail="loop">
 
     <div class="modal-header">
-        <h3 class="modal-title text-center">تقرير مختصر بخصومات المهام الصادرة من جهات التكليف</h3>
+        <a ng-class="{'pull-left' : lang==='AR', 'pull-right' : lang==='EN'}" href="" ng-click="cancel()">
+            <span class="fa fa-close fa-2x"></span>
+        </a>
+        <h3 ng-class="{'pull-right' : lang==='AR', 'pull-left' : lang==='EN'}" class="panel-title mdl-list__item">
+            <span class="mdl-list__item-primary-content">
+                <i class="material-icons mdl-list__item-icon">print</i>
+                <strong ng-if="lang==='AR'">تقرير مختصر بخصومات المهام الصادرة من جهات التكليف</strong>
+                <strong ng-if="lang==='EN'">Outgoing Tasks Deductions Report</strong>
+            </span>
+        </h3>
     </div>
 
     <div class="modal-body">
 
         <div class="row">
 
-            <div class="form-group text-right col-xs-12 col-sm-12 col-md-12" ng-show="form.$invalid && form.$submitted">
+            <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12" ng-show="form.$invalid && form.$submitted">
                 <div class="alert alert-danger" role="alert">
-                    <strong>فضلاً اكمل الحقول المطلوبة</strong>
+                    <strong ng-if="lang==='AR'">فضلاً اكمل الحقول المطلوبة.</strong>
+                    <strong ng-if="lang==='EN'">Please Complete Required Fields.</strong>
                 </div>
             </div>
 
-            <div class="form-group text-right col-xs-12 col-sm-12 col-md-12">
+            <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12">
                 <label for="master" class="control-label">
-                    <span>جهة التكليف</span>
+                    <span ng-if="lang==='AR'">جهة التكليف</span>
+                    <span ng-if="lang==='EN'">Manager</span>
                 </label>
                 <select id="master"
-                        data-placeholder="ابحث عن البريد الإلكتروني"
-                        no-results-text="'لا توجد بيانات توافق بحثك'"
-                        placeholder-text-single="'اختر الحساب الشخصي'"
-                        class="form-control text-right"
+                        data-placeholder="{{lang==='AR' ? 'ابحث عن جهة التكليف' : 'Search For Manager'}}"
+                        no-results-text="'{{lang==='AR' ? 'لا توجد بيانات توافق بحثك' : 'No Results.'}}'"
+                        placeholder-text-single="'{{lang==='AR' ? 'اختر الحساب الشخصي' : 'Please Select Manager...'}}'"
+                        class="form-control"
                         chosen=""
                         ng-model="buffer.person"
                         required="required"
                         disable-validation-message=""
-                        focus-index="1"
                         ng-options="(person.nickname + ' / ' + person.name) for person in persons | orderBy:'name' track by person.id">
                 </select>
             </div>
 
-            <div class="form-group text-right col-xs-12 col-sm-12 col-md-12">
+            <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12">
                 <label for="closeType" class="control-label">
-                    <span>حالة الإغلاق</span>
+                    <span ng-if="lang==='AR'">حالة الإغلاق</span>
+                    <span ng-if="lang==='EN'">Condition</span>
                 </label>
                 <select id="closeType"
-                        placeholder="اختر درجة الأهمية للمساعدة فى التصنيف"
-                        class="form-control text-right"
-                        ng-model="buffer.closeType"
-                        focus-index="2">
-                    <option value="">اختر الحالة...</option>
-                    <option value="Pending">تحت التنفيذ</option>
-                    <option value="Auto">تلقائي</option>
-                    <option value="Manual">ارشيف</option>
+                        class="form-control"
+                        ng-model="buffer.closeType">
+                    <option ng-if="lang==='AR'" value="">اختر الحالة...</option>
+                    <option ng-if="lang==='EN'" value="">Select Condition...</option>
+                    <option ng-if="lang==='AR'" value="Pending">تحت التنفيذ</option>
+                    <option ng-if="lang==='EN'" value="Pending">Pending</option>
+                    <option ng-if="lang==='AR'" value="Auto">تلقائي</option>
+                    <option ng-if="lang==='EN'" value="Auto">Closed</option>
+                    <option ng-if="lang==='AR'" value="Manual">ارشيف</option>
+                    <option ng-if="lang==='EN'" value="Manual">Archive</option>
                 </select>
             </div>
 
-            <div class="form-group text-right col-xs-12 col-sm-12 col-md-6">
-                <label for="startDate" class="control-label">تاريخ الخصم من</label>
+            <div class="form-group col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                <label for="startDate" class="control-label">
+                    <span ng-if="lang==='AR'">تاريخ الخصم من</span>
+                    <span ng-if="lang==='EN'">Date From</span>
+                </label>
                 <div dir="ltr" class="input-group">
                     <input dir="rtl"
                            id="startDate"
                            type="text"
-                           class="form-control text-right is-calendarPicker"
+                           class="form-control is-calendarPicker"
                            ng-model="buffer.startDate"
                            calendarType="ummalqura"
                            language="en"
@@ -67,13 +83,16 @@
                 </div>
             </div>
 
-            <div class="form-group text-right col-xs-12 col-sm-12 col-md-6">
-                <label for="endDate" class="control-label">تاريخ الخصم إلى</label>
+            <div class="form-group col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                <label for="endDate" class="control-label">
+                    <span ng-if="lang==='AR'">تاريخ الخصم إلى</span>
+                    <span ng-if="lang==='EN'">Date To</span>
+                </label>
                 <div dir="ltr" class="input-group">
                     <input dir="rtl"
                            id="endDate"
                            type="text"
-                           class="form-control text-right is-calendarPicker"
+                           class="form-control is-calendarPicker"
                            ng-model="buffer.endDate"
                            calendarType="ummalqura"
                            language="en"
@@ -92,24 +111,21 @@
     <div class="modal-footer">
 
         <div class="row">
-            <button uib-tooltip="طباعة"
+            <button uib-tooltip="{{lang==='AR' ? 'طباعة' : 'Print'}}"
                     tooltip-append-to-body="true"
-                    focus-index="3"
                     type="submit"
                     class="mdl-button mdl-js-button mdl-js-ripple-effect col-xs-4 col-sm-4 col-md-4">
                 <i class="material-icons">print</i>
             </button>
-            <button uib-tooltip="مسح الحقول"
+            <button uib-tooltip="{{lang==='AR' ? 'مسح الحقول' : 'Clear'}}"
                     tooltip-append-to-body="true"
                     type="reset"
-                    focus-index="4"
                     ng-click="form.$setPristine();buffer={}"
                     class="mdl-button mdl-js-button mdl-js-ripple-effect col-xs-4 col-sm-4 col-md-4">
                 <i class="material-icons">delete</i>
             </button>
-            <button uib-tooltip="خروج"
+            <button uib-tooltip="{{lang==='AR' ? 'خروج' : 'Exit'}}"
                     tooltip-append-to-body="true"
-                    focus-index="5"
                     type="button"
                     ng-click="cancel()"
                     class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect col-xs-4 col-sm-4 col-md-4">

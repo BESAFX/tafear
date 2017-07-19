@@ -1,29 +1,41 @@
-<form dir="rtl" name="form" ng-submit="submit()" novalidate="novalidate" focus-group="" focus-stack=""
+<form name="form" ng-submit="submit()" novalidate="novalidate" focus-group="" focus-stack=""
       focus-group-head="loop" focus-group-tail="loop">
 
     <div class="modal-header">
-        <h3 class="modal-title text-center">تقرير مراقبة حركة العمل اليومية</h3>
+        <a ng-class="{'pull-left' : lang==='AR', 'pull-right' : lang==='EN'}" href="" ng-click="cancel()">
+            <span class="fa fa-close fa-2x"></span>
+        </a>
+        <h3 ng-class="{'pull-right' : lang==='AR', 'pull-left' : lang==='EN'}" class="panel-title mdl-list__item">
+            <span class="mdl-list__item-primary-content">
+                <i class="material-icons mdl-list__item-icon">print</i>
+                <strong ng-if="lang==='AR'">تقرير مراقبة حركة العمل اليومية</strong>
+                <strong ng-if="lang==='EN'">Daily Tasks Observation Report</strong>
+            </span>
+        </h3>
+        <h3 class="modal-title text-center"></h3>
     </div>
 
     <div class="modal-body">
 
         <div class="row">
 
-            <div class="form-group text-right col-xs-12 col-sm-12 col-md-12" ng-show="form.$invalid && form.$submitted">
+            <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12" ng-show="form.$invalid && form.$submitted">
                 <div class="alert alert-danger" role="alert">
-                    <strong>فضلاً اكمل الحقول المطلوبة</strong>
+                    <strong ng-if="lang==='AR'">فضلاً اكمل الحقول المطلوبة.</strong>
+                    <strong ng-if="lang==='EN'">Please Complete Required Fields.</strong>
                 </div>
             </div>
 
-            <div class="form-group text-right col-xs-12 col-sm-12 col-md-12">
+            <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12">
                 <label for="master" class="control-label">
-                    <span>الموظفون</span>
+                    <span ng-if="lang==='AR'">الموظفون</span>
+                    <span ng-if="lang==='EN'">Employees</span>
                 </label>
                 <select id="master"
-                        data-placeholder="ابحث عن البريد الإلكتروني"
-                        no-results-text="'لا توجد بيانات توافق بحثك'"
-                        placeholder-text-multiple="'اختر الحساب الشخصي'"
-                        class="form-control text-right"
+                        data-placeholder="{{lang==='AR' ? 'ابحث عن البريد الإلكتروني' : 'Search By Email...'}}"
+                        no-results-text="'{{lang==='AR' ? 'لا توجد بيانات توافق بحثك' : 'No Results.'}}'"
+                        placeholder-text-multiple="'{{lang==='AR' ? 'اختر الحساب الشخصي' : 'Please Select Employees...'}}'"
+                        class="form-control"
                         chosen=""
                         multiple
                         focus-autofocus="1"
@@ -34,46 +46,59 @@
                 </select>
             </div>
 
-            <div class="form-group text-right col-xs-12 col-sm-12 col-md-12">
+            <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12">
                 <label for="closeType" class="control-label">
-                    <span>حالة الإغلاق</span>
+                    <span ng-if="lang==='AR'">حالة الإغلاق</span>
+                    <span ng-if="lang==='EN'">Condition</span>
                 </label>
                 <select id="closeType"
-                        placeholder="اختر درجة الأهمية للمساعدة فى التصنيف"
-                        class="form-control text-right"
+                        class="form-control"
                         ng-model="buffer.closeType">
-                    <option value="">اختر الحالة...</option>
-                    <option value="Pending">تحت التنفيذ</option>
-                    <option value="Auto">تلقائي</option>
-                    <option value="Manual">ارشيف</option>
+                    <option value="" ng-if="lang==='AR'">اختر الحالة...</option>
+                    <option value="" ng-if="lang==='EN'">Please Select Condition...</option>
+                    <option value="Pending" ng-if="lang==='AR'">تحت التنفيذ</option>
+                    <option value="Pending" ng-if="lang==='EN'">Pending</option>
+                    <option value="Auto" ng-if="lang==='AR'">تلقائي</option>
+                    <option value="Auto" ng-if="lang==='EN'">Closed</option>
+                    <option value="Manual" ng-if="lang==='AR'">ارشيف</option>
+                    <option value="Manual" ng-if="lang==='EN'">Archived</option>
                 </select>
             </div>
 
-            <div class="form-group text-right col-xs-12 col-sm-6 col-md-12 col-lg-12">
-                <label for="email" class="control-label">البريد الإلكتروني</label>
+            <div class="form-group col-xs-12 col-sm-6 col-md-12 col-lg-12">
+                <label for="email" class="control-label">
+                    <span ng-if="lang==='AR'">البريد الإلكتروني</span>
+                    <span ng-if="lang==='EN'">Email</span>
+                </label>
                 <input id="email"
                        type="text"
-                       class="form-control text-right"
-                       placeholder="اذكر بريد المرسل إليه"
+                       class="form-control"
+                       placeholder="{{lang==='AR' ? 'اذكر بريد المرسل إليه' : 'Type Email Detination...'}}"
                        ng-model="buffer.email">
             </div>
 
-            <div class="form-group text-right col-xs-12 col-sm-6 col-md-12 col-lg-12">
-                <label for="title" class="control-label">عنوان الرسالة</label>
+            <div class="form-group col-xs-12 col-sm-6 col-md-12 col-lg-12">
+                <label for="title" class="control-label">
+                    <span ng-if="lang==='AR'">عنوان الرسالة</span>
+                    <span ng-if="lang==='EN'">Message Subject</span>
+                </label>
                 <input id="title"
                        type="text"
-                       class="form-control text-right"
-                       placeholder="اذكر عنوان الرسالة"
+                       class="form-control"
+                       placeholder="{{lang==='AR' ? 'اذكر عنوان الرسالة' : 'Type Message Subject...'}}"
                        ng-model="buffer.title">
             </div>
 
-            <div class="form-group text-right col-xs-12 col-sm-6 col-md-12 col-lg-12">
-                <label for="message" class="control-label">محتوى الرسالة</label>
+            <div class="form-group col-xs-12 col-sm-6 col-md-12 col-lg-12">
+                <label for="message" class="control-label">
+                    <span ng-if="lang==='AR'">محتوى الرسالة</span>
+                    <span ng-if="lang==='EN'">Message Body</span>
+                </label>
                 <textarea id="message"
                           type="text"
                           msd-elastic="\n"
-                          class="form-control text-right"
-                          placeholder="تفاصيل المهمة"
+                          class="form-control"
+                          placeholder="{{lang==='AR' ? 'تفاصيل المهمة' : 'Type Message Details...'}}"
                           ng-model="buffer.message">
                 </textarea>
             </div>
@@ -85,35 +110,35 @@
     <div class="modal-footer">
 
         <div class="row">
-            <button uib-tooltip="عرض"
+            <button uib-tooltip="{{lang==='AR' ? 'عرض' : 'View'}}"
                     tooltip-append-to-body="true"
                     type="submit"
                     ng-click="action='view'"
                     class="mdl-button mdl-js-button mdl-js-ripple-effect col-xs-2 col-sm-2 col-md-2">
                 <i class="material-icons">visibility</i>
             </button>
-            <button uib-tooltip="تحميل"
+            <button uib-tooltip="{{lang==='AR' ? 'تحميل' : 'Download'}}"
                     tooltip-append-to-body="true"
                     type="submit"
                     ng-click="action='download'"
                     class="mdl-button mdl-js-button mdl-js-ripple-effect col-xs-2 col-sm-2 col-md-2">
                 <i class="material-icons">file_download</i>
             </button>
-            <button uib-tooltip="ارسال"
+            <button uib-tooltip="{{lang==='AR' ? 'إرسال' : 'Send'}}"
                     tooltip-append-to-body="true"
                     type="submit"
                     ng-click="action='send'"
                     class="mdl-button mdl-js-button mdl-js-ripple-effect col-xs-2 col-sm-2 col-md-2">
                 <i class="material-icons">send</i>
             </button>
-            <button uib-tooltip="مسح الحقول"
+            <button uib-tooltip="{{lang==='AR' ? 'مسح الحقول' : 'Clear'}}"
                     tooltip-append-to-body="true"
                     type="reset"
                     ng-click="form.$setPristine();buffer={}"
                     class="mdl-button mdl-js-button mdl-js-ripple-effect col-xs-2 col-sm-2 col-md-2">
                 <i class="material-icons">delete</i>
             </button>
-            <button uib-tooltip="خروج"
+            <button uib-tooltip="{{lang==='AR' ? 'خروج' : 'Exit'}}"
                     tooltip-append-to-body="true"
                     type="button"
                     ng-click="cancel()"

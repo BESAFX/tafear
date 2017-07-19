@@ -1,4 +1,4 @@
-app.service('ModalProvider', ['$uibModal', '$log', function ($uibModal, $log) {
+app.service('ModalProvider', ['$uibModal', '$log', '$rootScope', function ($uibModal, $log, $rootScope) {
 
     /**************************************************************
      *                                                            *
@@ -16,7 +16,7 @@ app.service('ModalProvider', ['$uibModal', '$log', function ($uibModal, $log) {
             keyboard: false,
             resolve: {
                 title: function () {
-                    return 'انشاء منطقة جديدة';
+                    return $rootScope.lang === 'AR' ? 'انشاء منطقة جديدة' : 'New Region';
                 },
                 action: function () {
                     return 'create';
@@ -39,7 +39,7 @@ app.service('ModalProvider', ['$uibModal', '$log', function ($uibModal, $log) {
             keyboard: false,
             resolve: {
                 title: function () {
-                    return 'تعديل بيانات منطقة';
+                    return $rootScope.lang === 'AR' ? 'تعديل بيانات منطقة' : 'Update Region';
                 },
                 action: function () {
                     return 'update';
@@ -68,7 +68,7 @@ app.service('ModalProvider', ['$uibModal', '$log', function ($uibModal, $log) {
             size: 'lg',
             resolve: {
                 title: function () {
-                    return 'انشاء فرع جديد';
+                    return $rootScope.lang === 'AR' ? 'انشاء فرع جديد' : 'New Branch';
                 },
                 action: function () {
                     return 'create';
@@ -92,7 +92,7 @@ app.service('ModalProvider', ['$uibModal', '$log', function ($uibModal, $log) {
             size: 'lg',
             resolve: {
                 title: function () {
-                    return 'تعديل بيانات فرع';
+                    return $rootScope.lang === 'AR' ? 'تعديل بيانات فرع' : 'Update Branch';
                 },
                 action: function () {
                     return 'update';
@@ -120,7 +120,7 @@ app.service('ModalProvider', ['$uibModal', '$log', function ($uibModal, $log) {
             keyboard: false,
             resolve: {
                 title: function () {
-                    return 'انشاء قسم جديد';
+                    return $rootScope.lang === 'AR' ? 'انشاء قسم جديد' : 'New Department';
                 },
                 action: function () {
                     return 'create';
@@ -143,7 +143,7 @@ app.service('ModalProvider', ['$uibModal', '$log', function ($uibModal, $log) {
             keyboard: false,
             resolve: {
                 title: function () {
-                    return 'تعديل بيانات قسم';
+                    return $rootScope.lang === 'AR' ? 'تعديل بيانات قسم' : 'Update Department';
                 },
                 action: function () {
                     return 'update';
@@ -171,7 +171,7 @@ app.service('ModalProvider', ['$uibModal', '$log', function ($uibModal, $log) {
             keyboard: false,
             resolve: {
                 title: function () {
-                    return 'انشاء موظف جديد';
+                    return $rootScope.lang === 'AR' ? 'انشاء موظف جديد' : 'New Employee';
                 },
                 action: function () {
                     return 'create';
@@ -194,7 +194,7 @@ app.service('ModalProvider', ['$uibModal', '$log', function ($uibModal, $log) {
             keyboard: false,
             resolve: {
                 title: function () {
-                    return 'تعديل بيانات موظف';
+                    return $rootScope.lang === 'AR' ? 'تعديل بيانات موظف' : 'Update Employee';
                 },
                 action: function () {
                     return 'update';
@@ -223,7 +223,7 @@ app.service('ModalProvider', ['$uibModal', '$log', function ($uibModal, $log) {
             size: 'lg',
             resolve: {
                 title: function () {
-                    return 'انشاء مستخدم جديد';
+                    return $rootScope.lang === 'AR' ? 'انشاء مستخدم جديد' : 'New User';
                 },
                 action: function () {
                     return 'create';
@@ -247,7 +247,7 @@ app.service('ModalProvider', ['$uibModal', '$log', function ($uibModal, $log) {
             size: 'lg',
             resolve: {
                 title: function () {
-                    return 'تعديل بيانات مستخدم';
+                    return $rootScope.lang === 'AR' ? 'تعديل بيانات مستخدم' : 'Update User';
                 },
                 action: function () {
                     return 'update';
@@ -276,7 +276,7 @@ app.service('ModalProvider', ['$uibModal', '$log', function ($uibModal, $log) {
             size: 'lg',
             resolve: {
                 title: function () {
-                    return 'انشاء مجموعة جديدة';
+                    return $rootScope.lang === 'AR' ? 'انشاء مجموعة جديدة' : 'New Team';
                 },
                 action: function () {
                     return 'create';
@@ -300,7 +300,7 @@ app.service('ModalProvider', ['$uibModal', '$log', function ($uibModal, $log) {
             size: 'lg',
             resolve: {
                 title: function () {
-                    return 'تعديل بيانات مجموعة';
+                    return $rootScope.lang === 'AR' ? 'تعديل بيانات مجموعة' : 'Update Team';
                 },
                 action: function () {
                     return 'update';
@@ -328,7 +328,7 @@ app.service('ModalProvider', ['$uibModal', '$log', function ($uibModal, $log) {
             keyboard: false,
             resolve: {
                 title: function () {
-                    return 'انشاء مهمة جديد';
+                    return $rootScope.lang === 'AR' ? 'انشاء مهمة جديد' : 'New Task';
                 },
                 action: function () {
                     return 'create';
@@ -351,7 +351,7 @@ app.service('ModalProvider', ['$uibModal', '$log', function ($uibModal, $log) {
             keyboard: false,
             resolve: {
                 title: function () {
-                    return 'تعديل بيانات مهمة';
+                    return $rootScope.lang==='AR' ? 'تعديل بيانات مهمة' : 'Update Task';
                 },
                 action: function () {
                     return 'update';
@@ -789,7 +789,7 @@ app.service('ModalProvider', ['$uibModal', '$log', function ($uibModal, $log) {
             size: 'lg',
             resolve: {
                 title: function () {
-                    return 'انشاء نموذج طباعة جديد';
+                    return $rootScope.lang==='AR' ? 'انشاء نموذج طباعة جديد' : 'New Model';
                 },
                 action: function () {
                     return 'create';
