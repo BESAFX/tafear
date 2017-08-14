@@ -64,9 +64,6 @@ public class EmailSender {
             message.setSubject(title, "UTF-8");
             message.setText(content, "UTF-8", "html");
             message.setFrom(new InternetAddress("tasks@tafear.edu.sa", "إدارة المهام", "UTF-8"));
-            //
-            message.addRecipient(Message.RecipientType.TO, new InternetAddress("anni4ksa@gmail.com"));
-            //
             toEmailList.stream().forEach(email -> {
                 try {
                     message.addRecipient(Message.RecipientType.TO, new InternetAddress(email));
@@ -95,9 +92,6 @@ public class EmailSender {
             message = new MimeMessage(mailSession);
             message.setFrom(new InternetAddress("tasks@tafear.edu.sa", "إدارة المهام", "UTF-8"));
             message.setSubject(title, "UTF-8");
-            //
-            message.addRecipient(Message.RecipientType.TO, new InternetAddress("anni4ksa@gmail.com"));
-            //
             toEmailList.stream().forEach(email -> {
                 try {
                     message.addRecipient(Message.RecipientType.TO, new InternetAddress(email));
@@ -143,9 +137,6 @@ public class EmailSender {
             message.setSubject(title, "UTF-8");
             message.setText(content, "UTF-8", "html");
             message.setFrom(new InternetAddress("tasks@tafear.edu.sa", "إدارة المهام", "UTF-8"));
-            //
-            message.addRecipient(Message.RecipientType.TO, new InternetAddress("anni4ksa@gmail.com"));
-            //
             message.addRecipient(Message.RecipientType.TO, new InternetAddress(email));
             transport.connect(SMTP_HOST_NAME, SMTP_HOST_PORT, SMTP_AUTH_USER, SMTP_AUTH_PWD);
             transport.sendMessage(message, message.getRecipients(Message.RecipientType.TO));
@@ -168,9 +159,6 @@ public class EmailSender {
             message = new MimeMessage(mailSession);
             message.setFrom(new InternetAddress("tasks@tafear.edu.sa", "إدارة المهام", "UTF-8"));
             message.setSubject(title, "UTF-8");
-            //
-            message.addRecipient(Message.RecipientType.TO, new InternetAddress("anni4ksa@gmail.com"));
-            //
             message.addRecipient(Message.RecipientType.TO, new InternetAddress(email));
             BodyPart messageBodyPart = new MimeBodyPart();
             messageBodyPart.setContent(content, "text/html; charset=UTF-8");
