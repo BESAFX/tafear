@@ -226,18 +226,14 @@ public class ReportTaskController {
          */
         Map<String, Object> map = new HashMap<>();
         StringBuilder param1 = new StringBuilder();
-        param1.append("طيف العربية");
-        param1.append("\n");
-        param1.append("للتعليم والتدريب التقني");
-        param1.append("\n");
         if (startDate != null && endDate != null) {
-            param1.append("تقرير مختصر بخصومات المهام الصادرة من " + person.getNickname() + " / " + person.getName());
-            param1.append("\n");
-            param1.append("من الفترة " + " ( " + DateConverter.getHijriStringFromDateLTR(startDate) + " ) ");
+            param1.append("Outgoing Task Deductions Report");
             param1.append(" ");
-            param1.append("إلى الفترة " + " ( " + DateConverter.getHijriStringFromDateLTR(endDate) + " ) ");
+            param1.append("From Date " + " ( " + DateConverter.getHijriStringFromDateLTR(startDate) + " ) ");
+            param1.append(" ");
+            param1.append("To Date " + " ( " + DateConverter.getHijriStringFromDateLTR(endDate) + " ) ");
         } else {
-            param1.append("تقرير مختصر بخصومات المهام الصادرة من " + person.getNickname() + " / " + person.getName());
+            param1.append("Outgoing Task Deductions Report");
         }
         map.put("TITLE", param1.toString());
         Lists.newArrayList(companyService.findAll()).stream().findAny().ifPresent(company -> {
@@ -276,18 +272,14 @@ public class ReportTaskController {
          */
         Map<String, Object> map = new HashMap<>();
         StringBuilder param1 = new StringBuilder();
-        param1.append("طيف العربية");
-        param1.append("\n");
-        param1.append("للتعليم والتدريب التقني");
-        param1.append("\n");
         if (startDate != null && endDate != null) {
-            param1.append("تقرير مختصر بخصومات المهام الواردة إلى الموظفين");
+            param1.append("Incoming Tasks Deduction Report");
             param1.append(" ");
-            param1.append("من الفترة " + " ( " + DateConverter.getHijriStringFromDateLTR(startDate) + " ) ");
+            param1.append("From Date " + " ( " + DateConverter.getHijriStringFromDateLTR(startDate) + " ) ");
             param1.append(" ");
-            param1.append("إلى الفترة " + " ( " + DateConverter.getHijriStringFromDateLTR(endDate) + " ) ");
+            param1.append("To Date " + " ( " + DateConverter.getHijriStringFromDateLTR(endDate) + " ) ");
         } else {
-            param1.append("تقرير مختصر بخصومات المهام الواردة إلى الموظفين");
+            param1.append("Incoming Tasks Deduction Report");
         }
         map.put("TITLE", param1.toString());
         Lists.newArrayList(companyService.findAll()).stream().findAny().ifPresent(company -> {
