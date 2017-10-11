@@ -502,123 +502,158 @@
         <div class="row" style="margin-top: 10px">
 
             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" ng-show="toggleList===1">
-                <div class="panel panel-body">
-                    <div class="table-responsive">
-                        <table st-table="collection" st-safe-src="tasks"
-                               class="mdl-data-table mdl-js-data-table mdl-shadow--2dp">
-                            <thead>
-                            <tr>
-                                <th>
-                                    <span ng-if="lang==='AR'">م</span>
-                                    <span ng-if="lang==='EN'">#</span>
-                                </th>
-                                <th st-sort="code">
-                                    <span ng-if="lang==='AR'"> الرقم</span>
-                                    <span ng-if="lang==='EN'">Code</span>
-                                </th>
-                                <th st-sort="title">
-                                    <span ng-if="lang==='AR'">العنوان</span>
-                                    <span ng-if="lang==='EN'">Title</span>
-                                </th>
-                                <th st-sort="startDate">
-                                    <span ng-if="lang==='AR'">تاريخ الإنشاء</span>
-                                    <span ng-if="lang==='EN'">Start Date</span>
-                                </th>
-                                <th st-sort="person.name">
-                                    <span ng-if="lang==='AR'">جهة التكليف</span>
-                                    <span ng-if="lang==='EN'">Creator</span>
-                                </th>
-                                <th st-sort="importance">
-                                    <span ng-if="lang==='AR'">درجة الأهمية</span>
-                                    <span ng-if="lang==='EN'">Importance</span>
-                                </th>
-                                <th st-sort="closeType">
-                                    <span ng-if="lang==='AR'">حالة الإغلاق</span>
-                                    <span ng-if="lang==='EN'">Condition</span>
-                                </th>
-                                <th st-sort="taskTos[0].person.name">
-                                    <span ng-if="lang==='AR'">الموظفون</span>
-                                    <span ng-if="lang==='EN'">Employees</span>
-                                </th>
-                                <th st-sort="endDate">
-                                    <span ng-if="lang==='AR'">تاريخ التسليم</span>
-                                    <span ng-if="lang==='EN'">End Date</span>
-                                </th>
-                            </tr>
-                            <tr>
-                                <th colspan="10">
-                                    <input st-search=""
-                                           class="form-control"
-                                           placeholder="{{lang==='AR' ? 'بحث شامل وسريع...' : 'Search...'}}"
-                                           type="text"/>
-                                </th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr ng-repeat="task in collection"
-                                context-menu="rowMenu"
-                                ng-click="setSelected(task)"
-                                ng-dblclick="openDetailsModel(task)"
-                                ng-right-click="setSelected(task)"
-                                st-select-mode="single"
-                                ng-class="{'mdl-color--blue-grey-100':task.isSelected}">
-                                <td st-select-row-custom="task">{{$index+1}}</td>
-                                <td st-select-row-custom="task">
-                                    {{task.code}}
-                                </td>
-                                <td st-select-row-custom="task">
-                                    <strong><a href="" ng-click="openDetailsModel(task)">{{task.title}}</a></strong>
-                                    <span class="fa fa-info-circle" uib-tooltip="{{task.content}}"></span>
-                                    <a href="" ng-click="openWarnsModel(task)"><span class="label label-warning">{{task.taskWarns.length > 0 ? task.taskWarns.length + ' تحذير' : ''}}</span></a>
-                                    <a href="" ng-click="openDeductionsModel(task)"><span class="label label-danger">{{task.taskDeductions.length > 0 ? task.taskDeductions.length + ' خصم' : ''}}</span></a>
-                                    <a href=""><span class="label label-primary">{{task.taskCloseRequests.length > 0 ? task.taskCloseRequests.length + ' طلب إغلاق/تمديد' : ''}}</span></a>
-                                </td>
-                                <td st-select-row-custom="task">
-                                    <span ng-show="dateType==='H'">{{task.startDate | kdate: 'yyyy-mm-dd' : 'ar' : 'ummalqura'}}</span>
-                                    <span ng-show="dateType==='G'">{{task.startDate | date: 'yyyy-MM-dd'}}</span>
-                                    <span class="label label-success">{{task.startDate | date:'h:m a'}}</span>
-                                </td>
-                                <td st-select-row-custom="task">
-                                    <span class="label label-danger">{{task.person.nickname}} / {{task.person.name}}</span>
-                                </td>
-                                <td>
+
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <ul class="panel-controls" ng-class="{'pull-left' : lang==='AR', 'pull-right' : lang==='EN'}"
+                            style="margin-top: 2px;">
+                            <li>
+                                <a href=""
+                                   ng-click="fetchTableData()"
+                                   tooltip-append-to-body="true"
+                                   uib-tooltip="{{lang==='AR' ? 'تحديث البيانات' : 'Refresh'}}">
+                                    <span class="fa fa-refresh"></span>
+                                </a>
+                                <a href=""
+                                   ng-if="contains(me.team.authorities, ['ROLE_TASK_CREATE'])"
+                                   ng-click="newTask()"
+                                   tooltip-append-to-body="true"
+                                   uib-tooltip="{{lang==='AR' ? 'انشاء مهمة جديدة' : 'New Task...'}}">
+                                    <span class="fa fa-plus-square"></span>
+                                </a>
+                            </li>
+                        </ul>
+                        <div class="panel-title-box" ng-class="{'pull-right' : lang==='AR', 'pull-left' : lang==='EN'}">
+                            <h3 ng-if="lang==='AR'">قائمة المهام</h3>
+                            <h3 ng-if="lang==='EN'">Tasks List</h3>
+                        </div>
+                    </div>
+                    <div class="panel-body panel-body-table">
+                        <div class="table-responsive">
+                            <table st-table="collection1" st-safe-src="tasks"
+                                   class="table table-bordered table-hover">
+                                <thead>
+                                <tr>
+                                    <th>
+                                        <span ng-if="lang==='AR'">م</span>
+                                        <span ng-if="lang==='EN'">#</span>
+                                    </th>
+                                    <th st-sort="code">
+                                        <span ng-if="lang==='AR'"> الرقم</span>
+                                        <span ng-if="lang==='EN'">Code</span>
+                                    </th>
+                                    <th st-sort="title">
+                                        <span ng-if="lang==='AR'">العنوان</span>
+                                        <span ng-if="lang==='EN'">Title</span>
+                                    </th>
+                                    <th st-sort="startDate">
+                                        <span ng-if="lang==='AR'">تاريخ الإنشاء</span>
+                                        <span ng-if="lang==='EN'">Start Date</span>
+                                    </th>
+                                    <th st-sort="person.name">
+                                        <span ng-if="lang==='AR'">جهة التكليف</span>
+                                        <span ng-if="lang==='EN'">Creator</span>
+                                    </th>
+                                    <th st-sort="importance">
+                                        <span ng-if="lang==='AR'">درجة الأهمية</span>
+                                        <span ng-if="lang==='EN'">Importance</span>
+                                    </th>
+                                    <th st-sort="closeType">
+                                        <span ng-if="lang==='AR'">حالة الإغلاق</span>
+                                        <span ng-if="lang==='EN'">Condition</span>
+                                    </th>
+                                    <th st-sort="taskTos[0].person.name">
+                                        <span ng-if="lang==='AR'">الموظفون</span>
+                                        <span ng-if="lang==='EN'">Employees</span>
+                                    </th>
+                                    <th st-sort="endDate">
+                                        <span ng-if="lang==='AR'">تاريخ التسليم</span>
+                                        <span ng-if="lang==='EN'">End Date</span>
+                                    </th>
+                                </tr>
+                                <tr>
+                                    <th colspan="10">
+                                        <input st-search=""
+                                               class="form-control"
+                                               placeholder="{{lang==='AR' ? 'بحث شامل وسريع...' : 'Search...'}}"
+                                               type="text"/>
+                                    </th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr ng-repeat="task in collection1"
+                                    context-menu="rowMenu"
+                                    ng-click="setSelected(task)"
+                                    ng-dblclick="openDetailsModel(task)"
+                                    ng-right-click="setSelected(task)"
+                                    st-select-mode="single"
+                                    ng-class="{'mdl-color--blue-grey-100':task.isSelected}">
+                                    <td st-select-row-custom="task">{{$index+1}}</td>
+                                    <td st-select-row-custom="task">
+                                        {{task.code}}
+                                    </td>
+                                    <td st-select-row-custom="task">
+                                        <strong><a href="" ng-click="openDetailsModel(task)">{{task.title}}</a></strong>
+                                        <span class="fa fa-info-circle" uib-tooltip="{{task.content}}"></span>
+                                        <a href="" ng-click="openWarnsModel(task)"><span class="label label-warning">{{task.taskWarns.length > 0 ? task.taskWarns.length + ' تحذير' : ''}}</span></a>
+                                        <a href="" ng-click="openDeductionsModel(task)"><span class="label label-danger">{{task.taskDeductions.length > 0 ? task.taskDeductions.length + ' خصم' : ''}}</span></a>
+                                        <a href=""><span class="label label-primary">{{task.taskCloseRequests.length > 0 ? task.taskCloseRequests.length + ' طلب إغلاق/تمديد' : ''}}</span></a>
+                                    </td>
+                                    <td st-select-row-custom="task">
+                                        <span ng-show="dateType==='H'">{{task.startDate | kdate: 'yyyy-mm-dd' : 'ar' : 'ummalqura'}}</span>
+                                        <span ng-show="dateType==='G'">{{task.startDate | date: 'yyyy-MM-dd'}}</span>
+                                        <span class="label label-success">{{task.startDate | date:'h:m a'}}</span>
+                                    </td>
+                                    <td st-select-row-custom="task">
+                                        <span class="label label-danger">{{task.person.nickname}} / {{task.person.name}}</span>
+                                    </td>
+                                    <td>
                                     <span ng-class="{'label label-danger' : task.importance==='Critical', 'label label-warning': task.importance==='Important', 'label label-default': task.importance==='Regular'}">
                                         {{task.importance==='Critical' ? 'عاجلة' : (task.importance==='Important' ? 'متوسطة' : 'عادية')}}
                                     </span>
-                                </td>
-                                <td>
-                                    {{(task.closeType==='Pending')? 'تحت التنفيذ' : ''}}
-                                    {{(task.closeType==='Auto')? 'تلقائي' : ''}}
-                                    {{(task.closeType==='Manual')? 'ارشيف' : ''}}
-                                </td>
-                                <td st-select-row-custom="task">
+                                    </td>
+                                    <td>
+                                        {{(task.closeType==='Pending')? 'تحت التنفيذ' : ''}}
+                                        {{(task.closeType==='Auto')? 'تلقائي' : ''}}
+                                        {{(task.closeType==='Manual')? 'ارشيف' : ''}}
+                                    </td>
+                                    <td st-select-row-custom="task">
                                     <span ng-repeat="to in task.taskTos"
                                           ng-class="{'label label-success':to.closed===false, 'label label-default':to.closed===true}"
                                           style="margin: 2px">{{to.person.name}}</span>
-                                </td>
-                                <td st-select-row-custom="task">
-                                    <span ng-show="dateType==='H'">{{task.endDate | kdate: 'yyyy-mm-dd' : 'ar' : 'ummalqura'}}</span>
-                                    <span ng-show="dateType==='G'">{{task.endDate | date: 'yyyy-MM-dd'}}</span>
-                                    <span class="label label-success">{{task.endDate | date:'h:m a'}}</span>
-                                </td>
-                            </tr>
-                            <tr class="blank_row"
-                                style="height: 10px !important; background-color: #FFFFFF;"
-                                ng-show="!collection || collection.length ==0">
-                                <td colspan="10">
-                                    <span ng-if="lang==='AR'">لا توجد بيانات</span>
-                                    <span ng-if="lang==='EN'">No Data Found.</span>
-                                </td>
-                            </tr>
-                            </tbody>
-                        </table>
+                                    </td>
+                                    <td st-select-row-custom="task">
+                                        <span ng-show="dateType==='H'">{{task.endDate | kdate: 'yyyy-mm-dd' : 'ar' : 'ummalqura'}}</span>
+                                        <span ng-show="dateType==='G'">{{task.endDate | date: 'yyyy-MM-dd'}}</span>
+                                        <span class="label label-success">{{task.endDate | date:'h:m a'}}</span>
+                                    </td>
+                                </tr>
+                                <tr class="blank_row"
+                                    style="height: 10px !important; background-color: #FFFFFF;"
+                                    ng-show="!collection1 || collection1.length ==0">
+                                    <td colspan="10">
+                                        <span ng-if="lang==='AR'">لا توجد بيانات</span>
+                                        <span ng-if="lang==='EN'">No Data Found.</span>
+                                    </td>
+                                </tr>
+                                </tbody>
+                                <tfoot>
+                                <tr>
+                                    <td colspan="10">
+                                        <div st-pagination="" st-items-by-page="5" st-displayed-pages="10"></div>
+                                    </td>
+                                </tr>
+                                </tfoot>
+                            </table>
+                        </div>
                     </div>
                 </div>
+
             </div>
 
             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" ng-show="toggleList===2">
-                <div st-table="collection" st-safe-src="tasks">
-                    <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3" ng-repeat="task in collection">
+                <div st-table="collection2" st-safe-src="tasks">
+                    <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3" ng-repeat="task in collection2">
                         <!-- CONTACT ITEM -->
                         <div class="panel panel-default">
                             <div class="panel-body profile">
@@ -748,11 +783,11 @@
                                     <div class="row">
                                         <div class="col-md-12">
                                             <div class="table-responsive">
-                                                <table st-table="collection" st-safe-src="tasks"
+                                                <table st-table="collection3" st-safe-src="tasks"
                                                        class="table table-bordered">
                                                     <tbody>
                                                     <tr class="text-right"
-                                                        ng-repeat="task in collection"
+                                                        ng-repeat="task in collection3"
                                                         context-menu="rowMenu"
                                                         ng-click="setSelected(task)"
                                                         ng-dblclick="openDetailsModel(task)"
@@ -818,7 +853,7 @@
                                                     </tr>
                                                     <tr class="blank_row"
                                                         style="height: 10px !important; background-color: #FFFFFF;"
-                                                        ng-show="!collection || collection.length ==0">
+                                                        ng-show="!collection3 || collection3.length ==0">
                                                         <td colspan="1">
                                                             <span ng-if="lang==='AR'">لا توجد بيانات</span>
                                                             <span ng-if="lang==='EN'">No Data Found.</span>
@@ -872,14 +907,14 @@
                                     <div class="row">
                                         <div class="col-md-12">
                                             <div class="table-responsive">
-                                                <table st-table="collection2" st-safe-src="selected.taskOperations"
+                                                <table st-table="collection4" st-safe-src="selected.taskOperations"
                                                        class="table table-bordered">
                                                     <tbody>
                                                     <tr ng-click="setSelectedOperation(taskOperation)"
                                                         ng-right-click="setSelectedOperation(taskOperation)"
                                                         st-select-mode="single"
                                                         ng-class="{'animated flash':taskOperation.isSelected}"
-                                                        ng-repeat="taskOperation in collection2">
+                                                        ng-repeat="taskOperation in collection4">
                                                         <td st-select-row-custom="taskOperation">
                                                             <table width="100%">
                                                                 <tbody>
@@ -916,7 +951,7 @@
                                                     </tr>
                                                     <tr class="blank_row"
                                                         style="height: 10px !important; background-color: #FFFFFF;"
-                                                        ng-show="!collection2 || collection2.length ==0">
+                                                        ng-show="!collection4 || collection4.length ==0">
                                                         <td colspan="1">
                                                             <span ng-if="lang==='AR'">لا توجد بيانات</span>
                                                             <span ng-if="lang==='EN'">No Data Found.</span>
@@ -962,13 +997,13 @@
                                     <div class="row">
                                         <div class="col-md-12">
                                             <div class="table-responsive">
-                                                <table st-table="collectionCloseRequests"
+                                                <table st-table="collection5"
                                                        st-safe-src="selected.taskCloseRequests"
                                                        class="table table-bordered">
                                                     <tbody>
                                                     <tr st-select-mode="single"
                                                         ng-class="{'animated flash':taskOperation.isSelected}"
-                                                        ng-repeat="taskCloseRequest in collectionCloseRequests">
+                                                        ng-repeat="taskCloseRequest in collection5">
                                                         <td st-select-row-custom="taskCloseRequest">
                                                             <table width="100%">
                                                                 <tbody>
@@ -995,7 +1030,7 @@
                                                     </tr>
                                                     <tr class="blank_row"
                                                         style="height: 10px !important; background-color: #FFFFFF;"
-                                                        ng-show="!collectionCloseRequests || collectionCloseRequests.length ==0">
+                                                        ng-show="!collection5 || collection5.length ==0">
                                                         <td colspan="1">
                                                             <span ng-if="lang==='AR'">لا توجد بيانات</span>
                                                             <span ng-if="lang==='EN'">No Data Found.</span>

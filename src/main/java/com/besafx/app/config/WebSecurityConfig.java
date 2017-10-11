@@ -88,7 +88,7 @@ WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.rememberMe();
         http.csrf().disable();
         http.sessionManagement()
-                .maximumSessions(2)
+                .maximumSessions(1)
                 .sessionRegistry(sessionRegistry());
     }
 

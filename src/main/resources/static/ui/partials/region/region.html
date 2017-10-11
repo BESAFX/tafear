@@ -298,85 +298,121 @@
         <div class="row" style="margin-top: 10px">
 
             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" ng-show="toggleList===1">
-                <div class="panel panel-body">
-                    <div class="table-responsive">
-                        <table st-table="collection" st-safe-src="regions" class="mdl-data-table mdl-js-data-table mdl-shadow--2dp">
-                            <thead>
-                            <tr>
 
-                                <th>
-                                    <span ng-if="lang==='AR'">م</span>
-                                    <span ng-if="lang==='EN'">#</span>
-                                </th>
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <ul class="panel-controls" ng-class="{'pull-left' : lang==='AR', 'pull-right' : lang==='EN'}"
+                            style="margin-top: 2px;">
+                            <li>
+                                <a href=""
+                                   ng-click="fetchTableData()"
+                                   tooltip-append-to-body="true"
+                                   uib-tooltip="{{lang==='AR' ? 'تحديث البيانات' : 'Refresh'}}">
+                                    <span class="fa fa-refresh"></span>
+                                </a>
+                                <a href=""
+                                   ng-if="contains(me.team.authorities, ['ROLE_REGION_CREATE'])"
+                                   ng-click="newRegion()"
+                                   tooltip-append-to-body="true"
+                                   uib-tooltip="{{lang==='AR' ? 'انشاء منطقة جديدة' : 'New Region...'}}">
+                                    <span class="fa fa-plus-square"></span>
+                                </a>
+                            </li>
+                        </ul>
+                        <div class="panel-title-box" ng-class="{'pull-right' : lang==='AR', 'pull-left' : lang==='EN'}">
+                            <h3 ng-if="lang==='AR'">قائمة المناطق الإدارية</h3>
+                            <h3 ng-if="lang==='EN'">Regions List</h3>
+                        </div>
+                    </div>
+                    <div class="panel-body panel-body-table">
+                        <div class="table-responsive">
+                            <table st-table="collection1" st-safe-src="regions"
+                                   class="table table-bordered table-hover">
+                                <thead>
+                                <tr>
 
-                                <th st-sort="code">
-                                    <span ng-if="lang==='AR'"> رقم المنطقة</span>
-                                    <span ng-if="lang==='EN'">Code</span>
-                                </th>
+                                    <th>
+                                        <span ng-if="lang==='AR'">م</span>
+                                        <span ng-if="lang==='EN'">#</span>
+                                    </th>
 
-                                <th st-sort="name">
-                                    <span ng-if="lang==='AR'"> اسم المنطقة</span>
-                                    <span ng-if="lang==='EN'">Name</span>
-                                </th>
+                                    <th st-sort="code">
+                                        <span ng-if="lang==='AR'"> رقم المنطقة</span>
+                                        <span ng-if="lang==='EN'">Code</span>
+                                    </th>
 
-                                <th st-sort="company.name">
-                                    <span ng-if="lang==='AR'"> اسم الشركة</span>
-                                    <span ng-if="lang==='EN'">Company</span>
-                                </th>
+                                    <th st-sort="name">
+                                        <span ng-if="lang==='AR'"> اسم المنطقة</span>
+                                        <span ng-if="lang==='EN'">Name</span>
+                                    </th>
 
-                                <th st-sort="manager.name">
-                                    <span ng-if="lang==='AR'"> مدير المنطقة</span>
-                                    <span ng-if="lang==='EN'">Manager</span>
-                                </th>
+                                    <th st-sort="company.name">
+                                        <span ng-if="lang==='AR'"> اسم الشركة</span>
+                                        <span ng-if="lang==='EN'">Company</span>
+                                    </th>
 
-                                <th st-sort="branches.length">
-                                    <span ng-if="lang==='AR'">عدد الفروع</span>
-                                    <span ng-if="lang==='EN'">Branches Count</span>
-                                </th>
+                                    <th st-sort="manager.name">
+                                        <span ng-if="lang==='AR'"> مدير المنطقة</span>
+                                        <span ng-if="lang==='EN'">Manager</span>
+                                    </th>
 
-                            </tr>
-                            <tr>
-                                <th colspan="6">
-                                    <input st-search=""
-                                           class="form-control"
-                                           placeholder="{{lang==='AR' ? 'بحث شامل وسريع...' : 'Search...'}}"
-                                           type="text"/>
-                                </th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr ng-repeat="region in collection"
-                                st-select-mode="single"
-                                context-menu="rowMenu"
-                                ng-click="setSelected(region)"
-                                ng-right-click="setSelected(region)"
-                                ng-class="{'mdl-color--blue-grey-100':region.isSelected}">
-                                <td st-select-row-custom="region">{{$index+1}}</td>
-                                <td st-select-row-custom="region">{{region.code}}</td>
-                                <td st-select-row-custom="region">{{region.name}}</td>
-                                <td st-select-row-custom="region">{{region.company.name}}</td>
-                                <td st-select-row-custom="region">
-                                    {{region.manager.nickname}} / {{region.manager.name}}
-                                </td>
-                                <td st-select-row-custom="region">{{region.branches.length}}</td>
-                            </tr>
-                            <tr class="blank_row"
-                                style="height: 10px !important; background-color: #FFFFFF;"
-                                ng-show="!collection || collection.length ==0">
-                                <td colspan="6">
-                                    <span ng-if="lang==='AR'">لا توجد بيانات</span>
-                                    <span ng-if="lang==='EN'">No Data Found.</span>
-                                </td>
-                            </tr>
-                            </tbody>
-                        </table>
+                                    <th st-sort="branches.length">
+                                        <span ng-if="lang==='AR'">عدد الفروع</span>
+                                        <span ng-if="lang==='EN'">Branches Count</span>
+                                    </th>
+
+                                </tr>
+                                <tr>
+                                    <th colspan="6">
+                                        <input st-search=""
+                                               class="form-control"
+                                               placeholder="{{lang==='AR' ? 'بحث شامل وسريع...' : 'Search...'}}"
+                                               type="text"/>
+                                    </th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr ng-repeat="region in collection1"
+                                    st-select-mode="single"
+                                    context-menu="rowMenu"
+                                    ng-click="setSelected(region)"
+                                    ng-right-click="setSelected(region)"
+                                    ng-class="{'mdl-color--blue-grey-100':region.isSelected}">
+                                    <td st-select-row-custom="region">{{$index+1}}</td>
+                                    <td st-select-row-custom="region">{{region.code}}</td>
+                                    <td st-select-row-custom="region">{{region.name}}</td>
+                                    <td st-select-row-custom="region">{{region.company.name}}</td>
+                                    <td st-select-row-custom="region">
+                                        {{region.manager.nickname}} / {{region.manager.name}}
+                                    </td>
+                                    <td st-select-row-custom="region">{{region.branches.length}}</td>
+                                </tr>
+                                <tr class="blank_row"
+                                    style="height: 10px !important; background-color: #FFFFFF;"
+                                    ng-show="!collection1 || collection1.length ==0">
+                                    <td colspan="6">
+                                        <span ng-if="lang==='AR'">لا توجد بيانات</span>
+                                        <span ng-if="lang==='EN'">No Data Found.</span>
+                                    </td>
+                                </tr>
+                                </tbody>
+                                <tfoot>
+                                <tr>
+                                    <td colspan="6">
+                                        <div st-pagination="" st-items-by-page="5" st-displayed-pages="10"></div>
+                                    </td>
+                                </tr>
+                                </tfoot>
+                            </table>
+                        </div>
                     </div>
                 </div>
+
             </div>
 
             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" ng-show="toggleList===2">
-                <div st-table="collection" st-safe-src="regions">
-                    <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3" ng-repeat="region in collection">
+                <div st-table="collection2" st-safe-src="regions">
+                    <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3" ng-repeat="region in collection2">
                         <!-- CONTACT ITEM -->
                         <div class="panel panel-default">
                             <div class="panel-body profile">

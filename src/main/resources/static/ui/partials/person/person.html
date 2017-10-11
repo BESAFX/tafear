@@ -298,100 +298,135 @@
         <div class="row" style="margin-top: 10px">
 
             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" ng-show="toggleList===1">
-                <div class="panel panel-body">
-                    <div class="table-responsive">
-                        <table st-table="collection" st-safe-src="persons"
-                               class="mdl-data-table mdl-js-data-table mdl-shadow--2dp">
-                            <thead>
-                            <tr>
-                                <th>
-                                    <span ng-if="lang==='AR'">م</span>
-                                    <span ng-if="lang==='EN'">#</span>
-                                </th>
 
-                                <th st-sort="name">
-                                    <span ng-if="lang==='AR'">اسم المستخدم</span>
-                                    <span ng-if="lang==='EN'">Name</span>
-                                </th>
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <ul class="panel-controls" ng-class="{'pull-left' : lang==='AR', 'pull-right' : lang==='EN'}"
+                            style="margin-top: 2px;">
+                            <li>
+                                <a href=""
+                                   ng-click="fetchTableData()"
+                                   tooltip-append-to-body="true"
+                                   uib-tooltip="{{lang==='AR' ? 'تحديث البيانات' : 'Refresh'}}">
+                                    <span class="fa fa-refresh"></span>
+                                </a>
+                                <a href=""
+                                   ng-if="contains(me.team.authorities, ['ROLE_PERSON_CREATE'])"
+                                   ng-click="newPerson()"
+                                   tooltip-append-to-body="true"
+                                   uib-tooltip="{{lang==='AR' ? 'انشاء مستخدم جديد' : 'New User Account...'}}">
+                                    <span class="fa fa-plus-square"></span>
+                                </a>
+                            </li>
+                        </ul>
+                        <div class="panel-title-box" ng-class="{'pull-right' : lang==='AR', 'pull-left' : lang==='EN'}">
+                            <h3 ng-if="lang==='AR'">قائمة المستخدمين</h3>
+                            <h3 ng-if="lang==='EN'">Users List</h3>
+                        </div>
+                    </div>
+                    <div class="panel-body panel-body-table">
+                        <div class="table-responsive">
+                            <table st-table="collection1" st-safe-src="persons"
+                                   class="table table-bordered table-hover">
+                                <thead>
+                                <tr>
+                                    <th>
+                                        <span ng-if="lang==='AR'">م</span>
+                                        <span ng-if="lang==='EN'">#</span>
+                                    </th>
 
-                                <th st-sort="email">
-                                    <span ng-if="lang==='AR'">البريد الإلكتروني</span>
-                                    <span ng-if="lang==='EN'">Email</span>
-                                </th>
+                                    <th st-sort="name">
+                                        <span ng-if="lang==='AR'">اسم المستخدم</span>
+                                        <span ng-if="lang==='EN'">Name</span>
+                                    </th>
 
-                                <th st-sort="mobile">
-                                    <span ng-if="lang==='AR'">الجوال</span>
-                                    <span ng-if="lang==='EN'">Mobile</span>
-                                </th>
+                                    <th st-sort="email">
+                                        <span ng-if="lang==='AR'">البريد الإلكتروني</span>
+                                        <span ng-if="lang==='EN'">Email</span>
+                                    </th>
 
-                                <th st-sort="qualification">
-                                    <span ng-if="lang==='AR'">المؤهل</span>
-                                    <span ng-if="lang==='EN'">Qualification</span>
-                                </th>
+                                    <th st-sort="mobile">
+                                        <span ng-if="lang==='AR'">الجوال</span>
+                                        <span ng-if="lang==='EN'">Mobile</span>
+                                    </th>
 
-                                <th st-sort="lastLoginDate">
-                                    <span ng-if="lang==='AR'">تاريخ آخر دخول</span>
-                                    <span ng-if="lang==='EN'">Last Login Date</span>
-                                </th>
+                                    <th st-sort="qualification">
+                                        <span ng-if="lang==='AR'">المؤهل</span>
+                                        <span ng-if="lang==='EN'">Qualification</span>
+                                    </th>
 
-                                <th st-sort="lastLoginLocation">
-                                    <span ng-if="lang==='AR'">الموقع</span>
-                                    <span ng-if="lang==='EN'">Location</span>
-                                </th>
+                                    <th st-sort="lastLoginDate">
+                                        <span ng-if="lang==='AR'">تاريخ آخر دخول</span>
+                                        <span ng-if="lang==='EN'">Last Login Date</span>
+                                    </th>
 
-                                <th st-sort="ipAddress">
-                                    <span ng-if="lang==='AR'">أخر عنوان دخول</span>
-                                    <span ng-if="lang==='EN'">IP Address</span>
-                                </th>
+                                    <th st-sort="lastLoginLocation">
+                                        <span ng-if="lang==='AR'">الموقع</span>
+                                        <span ng-if="lang==='EN'">Location</span>
+                                    </th>
 
-                            </tr>
-                            <tr>
-                                <th colspan="8">
-                                    <input st-search=""
-                                           class="form-control"
-                                           placeholder="{{lang==='AR' ? 'بحث شامل وسريع...' : 'Search...'}}"
-                                           type="text"/>
-                                </th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr ng-repeat="person in collection"
-                                st-select-mode="single"
-                                context-menu="rowMenu"
-                                ng-click="setSelected(person)"
-                                ng-right-click="setSelected(person)"
-                                ng-class="{'mdl-color--blue-grey-100':person.isSelected}">
-                                <td st-select-row-custom="person">{{$index+1}}</td>
-                                <td st-select-row-custom="person">
-                                    {{person.nickname}} /  {{person.name}}
-                                </td>
-                                <td st-select-row-custom="person">{{person.email}}</td>
-                                <td st-select-row-custom="person">{{person.mobile}}</td>
-                                <td st-select-row-custom="person">{{person.qualification}}</td>
-                                <td st-select-row-custom="person">
-                                    <span ng-show="dateType==='H'">{{person.lastLoginDate | kdate: 'yyyy-mm-dd' : 'ar' : 'ummalqura'}}</span>
-                                    <span ng-show="dateType==='G'">{{person.lastLoginDate | date: 'yyyy-MM-dd'}}</span>
-                                    <span class="label label-success">{{person.lastLoginDate | date:'h:m a'}}</span>
-                                </td>
-                                <td st-select-row-custom="person">{{person.lastLoginLocation}}</td>
-                                <td st-select-row-custom="person">{{person.ipAddress}}</td>
-                            </tr>
-                            <tr class="blank_row" style="height: 10px !important; background-color: #FFFFFF;"
-                                ng-show="!collection || collection.length ==0">
-                                <td colspan="8">
-                                    <span ng-if="lang==='AR'">لا توجد بيانات</span>
-                                    <span ng-if="lang==='EN'">No Data Found.</span>
-                                </td>
-                            </tr>
-                            </tbody>
-                        </table>
+                                    <th st-sort="ipAddress">
+                                        <span ng-if="lang==='AR'">أخر عنوان دخول</span>
+                                        <span ng-if="lang==='EN'">IP Address</span>
+                                    </th>
+
+                                </tr>
+                                <tr>
+                                    <th colspan="8">
+                                        <input st-search=""
+                                               class="form-control"
+                                               placeholder="{{lang==='AR' ? 'بحث شامل وسريع...' : 'Search...'}}"
+                                               type="text"/>
+                                    </th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr ng-repeat="person in collection1"
+                                    st-select-mode="single"
+                                    context-menu="rowMenu"
+                                    ng-click="setSelected(person)"
+                                    ng-right-click="setSelected(person)"
+                                    ng-class="{'mdl-color--blue-grey-100':person.isSelected}">
+                                    <td st-select-row-custom="person">{{$index+1}}</td>
+                                    <td st-select-row-custom="person">
+                                        {{person.nickname}} /  {{person.name}}
+                                    </td>
+                                    <td st-select-row-custom="person">{{person.email}}</td>
+                                    <td st-select-row-custom="person">{{person.mobile}}</td>
+                                    <td st-select-row-custom="person">{{person.qualification}}</td>
+                                    <td st-select-row-custom="person">
+                                        <span ng-show="dateType==='H'">{{person.lastLoginDate | kdate: 'yyyy-mm-dd' : 'ar' : 'ummalqura'}}</span>
+                                        <span ng-show="dateType==='G'">{{person.lastLoginDate | date: 'yyyy-MM-dd'}}</span>
+                                        <span class="label label-success">{{person.lastLoginDate | date:'h:m a'}}</span>
+                                    </td>
+                                    <td st-select-row-custom="person">{{person.lastLoginLocation}}</td>
+                                    <td st-select-row-custom="person">{{person.ipAddress}}</td>
+                                </tr>
+                                <tr class="blank_row" style="height: 10px !important; background-color: #FFFFFF;"
+                                    ng-show="!collection1 || collection1.length ==0">
+                                    <td colspan="8">
+                                        <span ng-if="lang==='AR'">لا توجد بيانات</span>
+                                        <span ng-if="lang==='EN'">No Data Found.</span>
+                                    </td>
+                                </tr>
+                                </tbody>
+                                <tfoot>
+                                <tr>
+                                    <td colspan="8">
+                                        <div st-pagination="" st-items-by-page="5" st-displayed-pages="10"></div>
+                                    </td>
+                                </tr>
+                                </tfoot>
+                            </table>
+                        </div>
                     </div>
                 </div>
+
             </div>
 
             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" ng-show="toggleList===2">
-                <div st-table="collection" st-safe-src="persons">
-                    <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3" ng-repeat="person in collection">
+                <div st-table="collection2" st-safe-src="persons">
+                    <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3" ng-repeat="person in collection2">
                         <!-- CONTACT ITEM -->
                         <div class="panel panel-default">
                             <div class="panel-body profile">

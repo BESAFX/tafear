@@ -299,99 +299,134 @@
         <div class="row" style="margin-top: 10px">
 
             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" ng-show="toggleList===1">
-                <div class="panel panel-body">
-                    <div class="table-responsive">
-                        <table st-table="collection" st-safe-src="employees"
-                               class="mdl-data-table mdl-js-data-table mdl-shadow--2dp">
 
-                            <thead>
-                            <tr>
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <ul class="panel-controls" ng-class="{'pull-left' : lang==='AR', 'pull-right' : lang==='EN'}"
+                            style="margin-top: 2px;">
+                            <li>
+                                <a href=""
+                                   ng-click="fetchTableData()"
+                                   tooltip-append-to-body="true"
+                                   uib-tooltip="{{lang==='AR' ? 'تحديث البيانات' : 'Refresh'}}">
+                                    <span class="fa fa-refresh"></span>
+                                </a>
+                                <a href=""
+                                   ng-if="contains(me.team.authorities, ['ROLE_EMPLOYEE_CREATE'])"
+                                   ng-click="newEmployee()"
+                                   tooltip-append-to-body="true"
+                                   uib-tooltip="{{lang==='AR' ? 'انشاء حساب موظف' : 'New Employee...'}}">
+                                    <span class="fa fa-plus-square"></span>
+                                </a>
+                            </li>
+                        </ul>
+                        <div class="panel-title-box" ng-class="{'pull-right' : lang==='AR', 'pull-left' : lang==='EN'}">
+                            <h3 ng-if="lang==='AR'">قائمة الموظفين</h3>
+                            <h3 ng-if="lang==='EN'">Employees List</h3>
+                        </div>
+                    </div>
+                    <div class="panel-body panel-body-table">
+                        <div class="table-responsive">
+                            <table st-table="collection1" st-safe-src="employees"
+                                   class="table table-bordered table-hover">
 
-                                <th>
-                                    <span ng-if="lang==='AR'">م</span>
-                                    <span ng-if="lang==='EN'">#</span>
-                                </th>
+                                <thead>
+                                <tr>
 
-                                <th st-sort="person.name">
-                                    <span ng-if="lang==='AR'">اسم الموظف</span>
-                                    <span ng-if="lang==='EN'">Name</span>
-                                </th>
+                                    <th>
+                                        <span ng-if="lang==='AR'">م</span>
+                                        <span ng-if="lang==='EN'">#</span>
+                                    </th>
 
-                                <th st-sort="person.email">
-                                    <span ng-if="lang==='AR'">البريد الإلكتروني</span>
-                                    <span ng-if="lang==='EN'">Email</span>
-                                </th>
+                                    <th st-sort="person.name">
+                                        <span ng-if="lang==='AR'">اسم الموظف</span>
+                                        <span ng-if="lang==='EN'">Name</span>
+                                    </th>
 
-                                <th st-sort="person.mobile">
-                                    <span ng-if="lang==='AR'">الجوال</span>
-                                    <span ng-if="lang==='EN'">Mobile</span>
-                                </th>
+                                    <th st-sort="person.email">
+                                        <span ng-if="lang==='AR'">البريد الإلكتروني</span>
+                                        <span ng-if="lang==='EN'">Email</span>
+                                    </th>
 
-                                <th st-sort="person.qualification">
-                                    <span ng-if="lang==='AR'">المؤهل</span>
-                                    <span ng-if="lang==='EN'">Qualification</span>
-                                </th>
+                                    <th st-sort="person.mobile">
+                                        <span ng-if="lang==='AR'">الجوال</span>
+                                        <span ng-if="lang==='EN'">Mobile</span>
+                                    </th>
 
-                                <th st-sort="department.name">
-                                    <span ng-if="lang==='AR'">القسم</span>
-                                    <span ng-if="lang==='EN'">Department</span>
-                                </th>
+                                    <th st-sort="person.qualification">
+                                        <span ng-if="lang==='AR'">المؤهل</span>
+                                        <span ng-if="lang==='EN'">Qualification</span>
+                                    </th>
 
-                                <th st-sort="department.branch.name">
-                                    <span ng-if="lang==='AR'">الفرع</span>
-                                    <span ng-if="lang==='EN'">Branch</span>
-                                </th>
+                                    <th st-sort="department.name">
+                                        <span ng-if="lang==='AR'">القسم</span>
+                                        <span ng-if="lang==='EN'">Department</span>
+                                    </th>
 
-                                <th st-sort="department.branch.region.name">
-                                    <span ng-if="lang==='AR'">المنطقة</span>
-                                    <span ng-if="lang==='EN'">Region</span>
-                                </th>
+                                    <th st-sort="department.branch.name">
+                                        <span ng-if="lang==='AR'">الفرع</span>
+                                        <span ng-if="lang==='EN'">Branch</span>
+                                    </th>
 
-                            </tr>
-                            <tr>
-                                <th colspan="8">
-                                    <input st-search=""
-                                           class="form-control"
-                                           placeholder="{{lang==='AR' ? 'بحث شامل وسريع...' : 'Search...'}}"
-                                           type="text"/>
-                                </th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr ng-repeat="employee in collection"
-                                st-select-mode="single"
-                                context-menu="rowMenu"
-                                ng-click="setSelected(employee)"
-                                ng-right-click="setSelected(employee)"
-                                ng-class="{'mdl-color--blue-grey-100':employee.isSelected}">
-                                <td st-select-row-custom="employee">{{$index+1}}</td>
-                                <td st-select-row-custom="employee">
-                                    {{employee.person.nickname}} / {{employee.person.name}}
-                                </td>
-                                <td st-select-row-custom="employee">{{employee.person.email}}</td>
-                                <td st-select-row-custom="employee">{{employee.person.mobile}}</td>
-                                <td st-select-row-custom="employee">{{employee.person.qualification}}</td>
-                                <td st-select-row-custom="employee">{{employee.department.name}}</td>
-                                <td st-select-row-custom="employee">{{employee.department.branch.name}}</td>
-                                <td st-select-row-custom="employee">{{employee.department.branch.region.name}}</td>
-                            </tr>
-                            <tr class="blank_row"
-                                style="height: 10px !important; background-color: #FFFFFF;"
-                                ng-show="!collection || collection.length ==0">
-                                <td colspan="8">
-                                    <span ng-if="lang==='AR'">لا توجد بيانات</span>
-                                    <span ng-if="lang==='EN'">No Data Found.</span>
-                                </td>
-                            </tr>
-                            </tbody>
-                        </table>
+                                    <th st-sort="department.branch.region.name">
+                                        <span ng-if="lang==='AR'">المنطقة</span>
+                                        <span ng-if="lang==='EN'">Region</span>
+                                    </th>
+
+                                </tr>
+                                <tr>
+                                    <th colspan="8">
+                                        <input st-search=""
+                                               class="form-control"
+                                               placeholder="{{lang==='AR' ? 'بحث شامل وسريع...' : 'Search...'}}"
+                                               type="text"/>
+                                    </th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr ng-repeat="employee in collection1"
+                                    st-select-mode="single"
+                                    context-menu="rowMenu"
+                                    ng-click="setSelected(employee)"
+                                    ng-right-click="setSelected(employee)"
+                                    ng-class="{'mdl-color--blue-grey-100':employee.isSelected}">
+                                    <td st-select-row-custom="employee">{{$index+1}}</td>
+                                    <td st-select-row-custom="employee">
+                                        {{employee.person.nickname}} / {{employee.person.name}}
+                                    </td>
+                                    <td st-select-row-custom="employee">{{employee.person.email}}</td>
+                                    <td st-select-row-custom="employee">{{employee.person.mobile}}</td>
+                                    <td st-select-row-custom="employee">{{employee.person.qualification}}</td>
+                                    <td st-select-row-custom="employee">{{employee.department.name}}</td>
+                                    <td st-select-row-custom="employee">{{employee.department.branch.name}}</td>
+                                    <td st-select-row-custom="employee">{{employee.department.branch.region.name}}</td>
+                                </tr>
+                                <tr class="blank_row"
+                                    style="height: 10px !important; background-color: #FFFFFF;"
+                                    ng-show="!collection1 || collection1.length ==0">
+                                    <td colspan="8">
+                                        <span ng-if="lang==='AR'">لا توجد بيانات</span>
+                                        <span ng-if="lang==='EN'">No Data Found.</span>
+                                    </td>
+                                </tr>
+                                </tbody>
+                                <tfoot>
+                                <tr>
+                                    <td colspan="8">
+                                        <div st-pagination="" st-items-by-page="5" st-displayed-pages="10"></div>
+                                    </td>
+                                </tr>
+                                </tfoot>
+                            </table>
+                        </div>
                     </div>
                 </div>
+
             </div>
 
             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" ng-show="toggleList===2">
-                <div st-table="collection" st-safe-src="employees">
-                    <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3" ng-repeat="employee in collection">
+                <div st-table="collection2" st-safe-src="employees">
+                    <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3" ng-repeat="employee in collection2">
                         <!-- CONTACT ITEM -->
                         <div class="panel panel-default">
                             <div class="panel-body profile">
