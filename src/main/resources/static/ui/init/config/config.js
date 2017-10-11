@@ -52,7 +52,7 @@ app.factory('errorInterceptor', ['$q', '$rootScope', '$location', '$log',
 app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$cssProvider', '$httpProvider',
     function ($stateProvider, $urlRouterProvider, $locationProvider, $cssProvider, $httpProvider) {
 
-        $urlRouterProvider.otherwise("/menu");
+        $urlRouterProvider.otherwise("/home");
 
         $locationProvider.html5Mode(true);
 
