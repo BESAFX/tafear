@@ -1,7 +1,8 @@
-app.run(['$http', '$location', '$state', '$timeout', '$window', 'PersonService', 'TaskService', '$rootScope', '$log', '$css', '$stomp', 'defaultErrorMessageResolver', 'ModalProvider',
-    function ($http, $location, $state, $timeout, $window, PersonService, TaskService, $rootScope, $log, $css, $stomp, defaultErrorMessageResolver, ModalProvider) {
+app.run(['$http', '$location', '$state', '$timeout', '$window', 'PersonService', 'TaskService', '$rootScope', '$log', '$css', '$stomp', 'defaultErrorMessageResolver', 'ModalProvider', 'Fullscreen',
+    function ($http, $location, $state, $timeout, $window, PersonService, TaskService, $rootScope, $log, $css, $stomp, defaultErrorMessageResolver, ModalProvider, Fullscreen) {
 
         $rootScope.state = $state;
+        $rootScope.stateParams = $stateParams;
 
         defaultErrorMessageResolver.getErrorMessages().then(function (errorMessages) {
             errorMessages['fieldRequired'] = 'هذا الحقل مطلوب';
@@ -189,19 +190,19 @@ app.run(['$http', '$location', '$state', '$timeout', '$window', 'PersonService',
         $rootScope.switchLang = function () {
             switch ($rootScope.lang) {
                 case 'AR':
-                    $rootScope.lang = 'EN'
+                    $rootScope.lang = 'EN';
                     $css.remove('/ui/css/style.css');
                     $css.add('/ui/css/style-en.css');
                     break;
                 case 'EN':
-                    $rootScope.lang = 'AR'
+                    $rootScope.lang = 'AR';
                     $css.remove('/ui/css/style-en.css');
                     $css.add('/ui/css/style.css');
                     break;
             }
             $rootScope.applyTitleLang();
             window.componentHandler.upgradeAllRegistered();
-            $rootScope.state.reload();
+            // $rootScope.state.reload();
             PersonService.setGUILang($rootScope.lang);
         };
 
@@ -321,6 +322,16 @@ app.run(['$http', '$location', '$state', '$timeout', '$window', 'PersonService',
                     $css.add('/ui/css/style-en.css');
                     break;
             }
+            $timeout(function () {
+                window.componentHandler.upgradeAllRegistered();
+            }, 1500);
+        };
+
+        $rootScope.goFullscreen = function () {
+            if (Fullscreen.isEnabled())
+                Fullscreen.cancel();
+            else
+                Fullscreen.all();
         };
 
         $rootScope.ModalProvider = ModalProvider;
@@ -376,7 +387,7 @@ app.run(['$http', '$location', '$state', '$timeout', '$window', 'PersonService',
                     open: 'animated fadeIn',
                     close: 'animated fadeOut',
                     easing: 'swing',
-                    speed: 500 // opening & closing animation speed
+                    speed: 100 // opening & closing animation speed
                 },
                 closeWith: ['hover'], // ['click', 'button', 'hover', 'backdrop'] // backdrop click will close all notifications
                 modal: false, // [boolean] if true adds an overlay
@@ -410,10 +421,10 @@ app.run(['$http', '$location', '$state', '$timeout', '$window', 'PersonService',
                 timeout: false, // [integer|boolean] delay for closing event in milliseconds. Set false for sticky notifications
                 progressBar: true, // [boolean] - displays a progress bar
                 animation: {
-                    open: 'animated zoomIn',
-                    close: 'animated zoomOut',
+                    open: 'animated fadeIn',
+                    close: 'animated fadeOut',
                     easing: 'swing',
-                    speed: 500 // opening & closing animation speed
+                    speed: 100 // opening & closing animation speed
                 },
                 closeWith: ['button'], // ['click', 'button', 'hover', 'backdrop'] // backdrop click will close all notifications
                 modal: true, // [boolean] if true adds an overlay
@@ -459,10 +470,10 @@ app.run(['$http', '$location', '$state', '$timeout', '$window', 'PersonService',
                 timeout: false, // [integer|boolean] delay for closing event in milliseconds. Set false for sticky notifications
                 progressBar: true, // [boolean] - displays a progress bar
                 animation: {
-                    open: 'animated tada',
-                    close: 'animated bounceOutUp',
+                    open: 'animated fadeIn',
+                    close: 'animated fadeOut',
                     easing: 'swing',
-                    speed: 500 // opening & closing animation speed
+                    speed: 100 // opening & closing animation speed
                 },
                 closeWith: ['button'], // ['click', 'button', 'hover', 'backdrop'] // backdrop click will close all notifications
                 modal: true, // [boolean] if true adds an overlay

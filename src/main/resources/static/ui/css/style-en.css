@@ -64,6 +64,10 @@ input, .btn {
     height: 40px !important;
 }
 
+input{
+    direction: ltr !important;
+}
+
 .form-control[disabled], .form-control[readonly], fieldset[disabled] .form-control {
     background-color: white !important;
 }
@@ -142,6 +146,7 @@ input, .btn {
 }
 
 .panel {
+    direction: ltr;
     box-shadow: 0 4px 5px 0 rgba(0, 0, 0, .14), 0 1px 10px 0 rgba(0, 0, 0, .12), 0 2px 4px -1px rgba(0, 0, 0, .2) !important;
 }
 
@@ -177,6 +182,7 @@ input[type=checkbox] {
 
 .mdl-layout__header-row .mdl-navigation {
     height: 50px !important;
+    margin-left: 10px !important;
 }
 
 .mdl-layout__header > .mdl-layout-icon {
@@ -230,7 +236,7 @@ input[type=checkbox] {
 }
 
 .mdl-data-table th {
-    font-size: 15px;
+    font-size: 12px;
 }
 
 .mdl-data-table tbody tr td {
@@ -342,17 +348,22 @@ select {
 }
 
 .drop-menu {
-    cursor: pointer;
     padding: 10px;
     text-align: right;
+    cursor: pointer;
 }
 
-.drop-menu .fa{
+.drop-menu .fa {
     margin-left: 10px;
 }
 
-.drop-menu:hover{
+.drop-menu:hover {
     background-color: lightgrey;
+}
+
+.disabled > .drop-menu {
+    opacity: 0.5 !important;
+    cursor: not-allowed !important;
 }
 
 .mdl-icon-margin{
@@ -365,10 +376,124 @@ select {
 
 .form-group, .form-control{
     text-align: left !important;
+    direction: ltr !important;
+}
+
+.arabic-control{
+    text-align: right !important;
+    direction: rtl !important;
+}
+
+.english-control{
+    text-align: left !important;
+    direction: ltr !important;
+}
+
+.lang-dir{
+    direction: ltr !important;
 }
 
 .mdl-data-table thead th,
 .mdl-data-table tbody tr,
 .mdl-data-table tbody tr td{
     text-align: left !important;
+}
+
+.help-block, .modal-header {
+    direction: ltr !important;
+}
+
+.panel-controls li a{
+    float: right !important;
+}
+
+/*This is our main wrapping element, it's made 100vh high to ensure it is always the correct size and then moved into place and padded with negative margin and padding*/
+.Container {
+    display: flex;
+    overflow: hidden;
+    height: 100vh;
+    padding-bottom: 200px;
+    margin-top: 3px;
+    position: relative;
+    width: 100%;
+    backface-visibility: hidden;
+    will-change: overflow;
+}
+
+/*All the scrollable sections should overflow and be whatever height they need to be. As they are flex-items (due to being inside a flex container) they could be made to stretch full height at all times if needed.
+WebKit inertia scrolling is being added here for any present/future devices that are able to make use of it.
+*/
+.Middle {
+    overflow: auto;
+    height: auto;
+    padding: .5rem;
+    -webkit-overflow-scrolling: touch;
+    -ms-overflow-style: auto;
+}
+
+/*Entirely optional – just wanted to remove the scrollbar on WebKit browsers as I find them ugly*/
+.Middle::-webkit-scrollbar {
+    /*display: none;*/
+}
+
+.Middle {
+    flex: 1;
+}
+
+.breadcrumb {
+    direction: ltr;
+    float: left;
+}
+
+.pagination{
+    width: auto !important;
+    margin: 0px !important;
+    padding: 0px !important;
+    float: left !important;
+}
+
+.pagination>li{
+    float: left !important;
+}
+
+.pagination>li:first-child>a, .pagination>li:first-child>span{
+    margin-left: 3px !important;
+    border-top-left-radius: 3px !important;
+    border-bottom-left-radius: 3px !important;
+}
+
+.mdl-layout-icon{
+    display: inherit !important;
+}
+
+.mdl-layout__drawer{
+    z-index: 2 !important;
+}
+
+.mdl-layout__drawer-button{
+    display: none !important;
+}
+
+.mdl-layout__drawer{
+    padding-top: 122px;
+}
+
+.mdl-layout__header{
+    margin-left: 0px !important;
+    width: 100% !important;
+}
+
+.mdl-navigation{
+  padding-bottom: 16px;
+}
+
+.mdl-navigation__link:hover{
+    background-color: white !important;
+    font-weight: bolder !important;
+}
+
+.mdl-navigation__link-active{
+    background-color: #e0e0e0 !important;
+    color: #000 !important;
+    font-weight: bolder !important;
 }
