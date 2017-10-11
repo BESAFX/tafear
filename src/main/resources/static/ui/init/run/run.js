@@ -1,5 +1,5 @@
-app.run(['$http', '$location', '$state', '$timeout', '$window', 'PersonService', 'TaskService', '$rootScope', '$log', '$css', '$stomp', 'defaultErrorMessageResolver', 'ModalProvider', 'Fullscreen',
-    function ($http, $location, $state, $timeout, $window, PersonService, TaskService, $rootScope, $log, $css, $stomp, defaultErrorMessageResolver, ModalProvider, Fullscreen) {
+app.run(['$http', '$location', '$state', '$stateParams', '$timeout', '$window', 'PersonService', 'TaskService', '$rootScope', '$log', '$css', '$stomp', 'defaultErrorMessageResolver', 'ModalProvider', 'Fullscreen',
+    function ($http, $location, $state, $stateParams, $timeout, $window, PersonService, TaskService, $rootScope, $log, $css, $stomp, defaultErrorMessageResolver, ModalProvider, Fullscreen) {
 
         $rootScope.state = $state;
         $rootScope.stateParams = $stateParams;
@@ -202,7 +202,7 @@ app.run(['$http', '$location', '$state', '$timeout', '$window', 'PersonService',
             }
             $rootScope.applyTitleLang();
             window.componentHandler.upgradeAllRegistered();
-            // $rootScope.state.reload();
+            $rootScope.state.reload();
             PersonService.setGUILang($rootScope.lang);
         };
 
