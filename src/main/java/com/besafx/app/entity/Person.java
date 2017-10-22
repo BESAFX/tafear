@@ -97,7 +97,7 @@ public class Person implements Serializable {
     private String ipAddress;
 
     @ManyToOne
-    @JoinColumn(name = "Team")
+    @JoinColumn(name = "team")
     @JsonIgnoreProperties(value = {"persons"}, allowSetters = true)
     @JsonView(Views.Summery.class)
     private Team team;
@@ -121,6 +121,26 @@ public class Person implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     @JsonView(Views.Summery.class)
     private Date lastUpdate;
+
+    public Person findManager(){
+        try{
+            if (!this.employees.isEmpty()) {
+                return this.employees.get(0).getDepartment().getBranch().getRegion().getCompany().getManager();
+            } else if (!this.departments.isEmpty()) {
+                return this.departments.get(0).getBranch().getRegion().getCompany().getManager();
+            } else if (!this.branches.isEmpty()) {
+                return this.branches.get(0).getRegion().getCompany().getManager();
+            } else if (!this.regions.isEmpty()) {
+                return this.regions.get(0).getCompany().getManager();
+            } else if (this.companies.isEmpty()) {
+                return this.companies.get(0).getManager();
+            } else {
+                return this;
+            }
+        }catch (Exception ex){
+            return null;
+        }
+    }
 
     @JsonCreator
     public static Person Create(String jsonString) throws IOException {

@@ -6,7 +6,7 @@ app.service('ModalProvider', ['$uibModal', '$log', '$rootScope', function ($uibM
      *                                                            *
      *************************************************************/
     this.openRegionCreateModel = function () {
-        $uibModal.open({
+        return $uibModal.open({
             animation: true,
             ariaLabelledBy: 'modal-title',
             ariaDescribedBy: 'modal-body',
@@ -29,7 +29,7 @@ app.service('ModalProvider', ['$uibModal', '$log', '$rootScope', function ($uibM
     };
 
     this.openRegionUpdateModel = function (region) {
-        $uibModal.open({
+        return $uibModal.open({
             animation: true,
             ariaLabelledBy: 'modal-title',
             ariaDescribedBy: 'modal-body',
@@ -57,7 +57,7 @@ app.service('ModalProvider', ['$uibModal', '$log', '$rootScope', function ($uibM
      *                                                            *
      *************************************************************/
     this.openBranchCreateModel = function () {
-        $uibModal.open({
+        return $uibModal.open({
             animation: true,
             ariaLabelledBy: 'modal-title',
             ariaDescribedBy: 'modal-body',
@@ -81,7 +81,7 @@ app.service('ModalProvider', ['$uibModal', '$log', '$rootScope', function ($uibM
     };
 
     this.openBranchUpdateModel = function (branch) {
-        $uibModal.open({
+        return $uibModal.open({
             animation: true,
             ariaLabelledBy: 'modal-title',
             ariaDescribedBy: 'modal-body',
@@ -110,7 +110,7 @@ app.service('ModalProvider', ['$uibModal', '$log', '$rootScope', function ($uibM
      *                                                            *
      *************************************************************/
     this.openDepartmentCreateModel = function () {
-        $uibModal.open({
+        return $uibModal.open({
             animation: true,
             ariaLabelledBy: 'modal-title',
             ariaDescribedBy: 'modal-body',
@@ -133,7 +133,7 @@ app.service('ModalProvider', ['$uibModal', '$log', '$rootScope', function ($uibM
     };
 
     this.openDepartmentUpdateModel = function (department) {
-        $uibModal.open({
+        return $uibModal.open({
             animation: true,
             ariaLabelledBy: 'modal-title',
             ariaDescribedBy: 'modal-body',
@@ -161,7 +161,7 @@ app.service('ModalProvider', ['$uibModal', '$log', '$rootScope', function ($uibM
      *                                                            *
      *************************************************************/
     this.openEmployeeCreateModel = function () {
-        $uibModal.open({
+        return $uibModal.open({
             animation: true,
             ariaLabelledBy: 'modal-title',
             ariaDescribedBy: 'modal-body',
@@ -184,7 +184,7 @@ app.service('ModalProvider', ['$uibModal', '$log', '$rootScope', function ($uibM
     };
 
     this.openEmployeeUpdateModel = function (employee) {
-        $uibModal.open({
+        return $uibModal.open({
             animation: true,
             ariaLabelledBy: 'modal-title',
             ariaDescribedBy: 'modal-body',
@@ -212,7 +212,7 @@ app.service('ModalProvider', ['$uibModal', '$log', '$rootScope', function ($uibM
      *                                                            *
      *************************************************************/
     this.openPersonCreateModel = function () {
-        $uibModal.open({
+        return $uibModal.open({
             animation: true,
             ariaLabelledBy: 'modal-title',
             ariaDescribedBy: 'modal-body',
@@ -236,7 +236,7 @@ app.service('ModalProvider', ['$uibModal', '$log', '$rootScope', function ($uibM
     };
 
     this.openPersonUpdateModel = function (person) {
-        $uibModal.open({
+        return $uibModal.open({
             animation: true,
             ariaLabelledBy: 'modal-title',
             ariaDescribedBy: 'modal-body',
@@ -265,7 +265,7 @@ app.service('ModalProvider', ['$uibModal', '$log', '$rootScope', function ($uibM
      *                                                            *
      *************************************************************/
     this.openTeamCreateModel = function () {
-        $uibModal.open({
+        return $uibModal.open({
             animation: true,
             ariaLabelledBy: 'modal-title',
             ariaDescribedBy: 'modal-body',
@@ -289,7 +289,7 @@ app.service('ModalProvider', ['$uibModal', '$log', '$rootScope', function ($uibM
     };
 
     this.openTeamUpdateModel = function (team) {
-        $uibModal.open({
+        return $uibModal.open({
             animation: true,
             ariaLabelledBy: 'modal-title',
             ariaDescribedBy: 'modal-body',
@@ -318,7 +318,7 @@ app.service('ModalProvider', ['$uibModal', '$log', '$rootScope', function ($uibM
      *                                                            *
      *************************************************************/
     this.openTaskCreateModel = function () {
-        $uibModal.open({
+        return $uibModal.open({
             animation: true,
             ariaLabelledBy: 'modal-title',
             ariaDescribedBy: 'modal-body',
@@ -341,7 +341,7 @@ app.service('ModalProvider', ['$uibModal', '$log', '$rootScope', function ($uibM
     };
 
     this.openTaskUpdateModel = function (task) {
-        $uibModal.open({
+        return $uibModal.open({
             animation: true,
             ariaLabelledBy: 'modal-title',
             ariaDescribedBy: 'modal-body',
@@ -364,7 +364,7 @@ app.service('ModalProvider', ['$uibModal', '$log', '$rootScope', function ($uibM
     };
 
     this.openTaskDetailsModel = function (task) {
-        $uibModal.open({
+        return $uibModal.open({
             animation: true,
             ariaLabelledBy: 'modal-title',
             ariaDescribedBy: 'modal-body',
@@ -382,7 +382,7 @@ app.service('ModalProvider', ['$uibModal', '$log', '$rootScope', function ($uibM
     };
 
     this.openTaskWarnsModel = function (task) {
-        $uibModal.open({
+        return $uibModal.open({
             animation: true,
             ariaLabelledBy: 'modal-title',
             ariaDescribedBy: 'modal-body',
@@ -400,7 +400,7 @@ app.service('ModalProvider', ['$uibModal', '$log', '$rootScope', function ($uibM
     };
 
     this.openTaskDeductionsModel = function (task) {
-        $uibModal.open({
+        return $uibModal.open({
             animation: true,
             ariaLabelledBy: 'modal-title',
             ariaDescribedBy: 'modal-body',
@@ -418,7 +418,7 @@ app.service('ModalProvider', ['$uibModal', '$log', '$rootScope', function ($uibM
     };
 
     this.openTaskOperationsReportModel = function (tasks) {
-        $uibModal.open({
+        return $uibModal.open({
             animation: true,
             ariaLabelledBy: 'modal-title',
             ariaDescribedBy: 'modal-body',
@@ -435,7 +435,7 @@ app.service('ModalProvider', ['$uibModal', '$log', '$rootScope', function ($uibM
     };
 
     this.openTaskTosReportModel = function (tasks) {
-        $uibModal.open({
+        return $uibModal.open({
             animation: true,
             ariaLabelledBy: 'modal-title',
             ariaDescribedBy: 'modal-body',
@@ -452,7 +452,7 @@ app.service('ModalProvider', ['$uibModal', '$log', '$rootScope', function ($uibM
     };
 
     this.openTasksReportModel = function (tasks) {
-        $uibModal.open({
+        return $uibModal.open({
             animation: true,
             ariaLabelledBy: 'modal-title',
             ariaDescribedBy: 'modal-body',
@@ -469,7 +469,7 @@ app.service('ModalProvider', ['$uibModal', '$log', '$rootScope', function ($uibM
     };
 
     this.openPersonsReportModel = function (persons) {
-        $uibModal.open({
+        return $uibModal.open({
             animation: true,
             ariaLabelledBy: 'modal-title',
             ariaDescribedBy: 'modal-body',
@@ -486,7 +486,7 @@ app.service('ModalProvider', ['$uibModal', '$log', '$rootScope', function ($uibM
     };
 
     this.openIncomingTasksDeductionsModel = function () {
-        $uibModal.open({
+        return $uibModal.open({
             animation: true,
             ariaLabelledBy: 'modal-title',
             ariaDescribedBy: 'modal-body',
@@ -498,7 +498,7 @@ app.service('ModalProvider', ['$uibModal', '$log', '$rootScope', function ($uibM
     };
 
     this.openOutgoingTasksDeductionsModel = function () {
-        $uibModal.open({
+        return $uibModal.open({
             animation: true,
             ariaLabelledBy: 'modal-title',
             ariaDescribedBy: 'modal-body',
@@ -510,7 +510,7 @@ app.service('ModalProvider', ['$uibModal', '$log', '$rootScope', function ($uibM
     };
 
     this.openTasksClosedSoonModel = function () {
-        $uibModal.open({
+        return $uibModal.open({
             animation: true,
             ariaLabelledBy: 'modal-title',
             ariaDescribedBy: 'modal-body',
@@ -522,7 +522,7 @@ app.service('ModalProvider', ['$uibModal', '$log', '$rootScope', function ($uibM
     };
 
     this.openOutgoingTasksOperationsTodayModel = function () {
-        $uibModal.open({
+        return $uibModal.open({
             animation: true,
             ariaLabelledBy: 'modal-title',
             ariaDescribedBy: 'modal-body',
@@ -534,7 +534,7 @@ app.service('ModalProvider', ['$uibModal', '$log', '$rootScope', function ($uibM
     };
 
     this.openWatchTasksOperationsModel = function () {
-        $uibModal.open({
+        return $uibModal.open({
             animation: true,
             ariaLabelledBy: 'modal-title',
             ariaDescribedBy: 'modal-body',
@@ -551,7 +551,7 @@ app.service('ModalProvider', ['$uibModal', '$log', '$rootScope', function ($uibM
      *                                                            *
      *************************************************************/
     this.openTaskOperationModel = function (task) {
-        $uibModal.open({
+        return $uibModal.open({
             animation: true,
             ariaLabelledBy: 'modal-title',
             ariaDescribedBy: 'modal-body',
@@ -569,7 +569,7 @@ app.service('ModalProvider', ['$uibModal', '$log', '$rootScope', function ($uibM
     };
 
     this.openTaskOperationCreateModel = function (task) {
-        $uibModal.open({
+        return $uibModal.open({
             animation: true,
             ariaLabelledBy: 'modal-title',
             ariaDescribedBy: 'modal-body',
@@ -587,7 +587,7 @@ app.service('ModalProvider', ['$uibModal', '$log', '$rootScope', function ($uibM
     };
 
     this.openTaskRequestCloseModel = function (task, type) {
-        $uibModal.open({
+        return $uibModal.open({
             animation: true,
             ariaLabelledBy: 'modal-title',
             ariaDescribedBy: 'modal-body',
@@ -611,7 +611,7 @@ app.service('ModalProvider', ['$uibModal', '$log', '$rootScope', function ($uibM
     };
 
     this.openTaskProgressModel = function (task) {
-        $uibModal.open({
+        return $uibModal.open({
             animation: true,
             ariaLabelledBy: 'modal-title',
             ariaDescribedBy: 'modal-body',
@@ -665,7 +665,7 @@ app.service('ModalProvider', ['$uibModal', '$log', '$rootScope', function ($uibM
     };
 
     this.openTaskWarnCreateModel = function (task) {
-        $uibModal.open({
+        return $uibModal.open({
             animation: true,
             ariaLabelledBy: 'modal-title',
             ariaDescribedBy: 'modal-body',
@@ -683,7 +683,7 @@ app.service('ModalProvider', ['$uibModal', '$log', '$rootScope', function ($uibM
     };
 
     this.openTaskDeductionCreateModel = function (task) {
-        $uibModal.open({
+        return $uibModal.open({
             animation: true,
             ariaLabelledBy: 'modal-title',
             ariaDescribedBy: 'modal-body',
@@ -701,7 +701,7 @@ app.service('ModalProvider', ['$uibModal', '$log', '$rootScope', function ($uibM
     };
 
     this.openTaskToCreateModel = function (task) {
-        $uibModal.open({
+        return $uibModal.open({
             animation: true,
             ariaLabelledBy: 'modal-title',
             ariaDescribedBy: 'modal-body',
@@ -719,7 +719,7 @@ app.service('ModalProvider', ['$uibModal', '$log', '$rootScope', function ($uibM
     };
 
     this.openTaskToRemoveModel = function (task) {
-        $uibModal.open({
+        return $uibModal.open({
             animation: true,
             ariaLabelledBy: 'modal-title',
             ariaDescribedBy: 'modal-body',
@@ -737,7 +737,7 @@ app.service('ModalProvider', ['$uibModal', '$log', '$rootScope', function ($uibM
     };
 
     this.openTaskToOpenModel = function (task) {
-        $uibModal.open({
+        return $uibModal.open({
             animation: true,
             ariaLabelledBy: 'modal-title',
             ariaDescribedBy: 'modal-body',
@@ -755,7 +755,7 @@ app.service('ModalProvider', ['$uibModal', '$log', '$rootScope', function ($uibM
     };
 
     this.openClearCountersModel = function (task) {
-        $uibModal.open({
+        return $uibModal.open({
             animation: true,
             ariaLabelledBy: 'modal-title',
             ariaDescribedBy: 'modal-body',
@@ -778,7 +778,7 @@ app.service('ModalProvider', ['$uibModal', '$log', '$rootScope', function ($uibM
      *                                                            *
      *************************************************************/
     this.openReportModelCreateModel = function () {
-        $uibModal.open({
+        return $uibModal.open({
             animation: true,
             ariaLabelledBy: 'modal-title',
             ariaDescribedBy: 'modal-body',
@@ -802,7 +802,7 @@ app.service('ModalProvider', ['$uibModal', '$log', '$rootScope', function ($uibM
     };
 
     this.openReportModelUpdateModel = function (reportModel) {
-        $uibModal.open({
+        return $uibModal.open({
             animation: true,
             ariaLabelledBy: 'modal-title',
             ariaDescribedBy: 'modal-body',

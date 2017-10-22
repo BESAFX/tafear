@@ -2,6 +2,7 @@ app.controller("branchCtrl", ['BranchService', 'PersonService', 'ModalProvider',
     function (BranchService, PersonService, ModalProvider,  $scope, $rootScope, $state, $timeout) {
 
         $scope.selected = {};
+        $scope.branches = [];
 
         $scope.fetchTableData = function () {
             BranchService.fetchTableData().then(function (data) {
@@ -23,26 +24,21 @@ app.controller("branchCtrl", ['BranchService', 'PersonService', 'ModalProvider',
             }
         };
 
-        $scope.removeRow = function (id) {
-            var index = -1;
-            var branchesArr = eval($scope.branches);
-            for (var i = 0; i < branchesArr.length; i++) {
-                if (branchesArr[i].id === id) {
-                    index = i;
-                    break;
-                }
-            }
-            if (index === -1) {
-                alert("Something gone wrong");
-            }
-            $scope.branches.splice(index, 1);
+        $scope.newBranch = function () {
+            ModalProvider.openBranchCreateModel().result.then(function (branch) {
+                $scope.branches.splice(0,0,branch);
+            }, function () {
+                $log.info('BranchCreateModel Closed.');
+            });
         };
 
         $scope.delete = function (branch) {
             if (branch) {
                 $rootScope.showConfirmNotify("حذف البيانات", "هل تود حذف الفرع فعلاً؟", "error", "fa-trash", function () {
                     BranchService.remove(branch.id).then(function () {
-                        $scope.removeRow(branch.id);
+                        var index = $scope.branches.indexOf(branch);
+                        $scope.branches.splice(index, 1);
+                        $scope.setSelected($scope.branches[0]);
                     });
                 });
                 return;
@@ -50,7 +46,9 @@ app.controller("branchCtrl", ['BranchService', 'PersonService', 'ModalProvider',
 
             $rootScope.showConfirmNotify("حذف البيانات", "هل تود حذف الفرع فعلاً؟", "error", "fa-trash", function () {
                 BranchService.remove($scope.selected.id).then(function () {
-                    $scope.removeRow(branch.id);
+                    var index = $scope.branches.indexOf(selected);
+                    $scope.branches.splice(index, 1);
+                    $scope.setSelected($scope.branches[0]);
                 });
             });
         };
@@ -59,16 +57,16 @@ app.controller("branchCtrl", ['BranchService', 'PersonService', 'ModalProvider',
             {
                 html: '<div class="drop-menu">انشاء فرع جديد<span class="fa fa-pencil fa-lg"></span></div>',
                 enabled: function () {
-                    return true
+                    return $rootScope.contains($rootScope.me.team.authorities, ['ROLE_BRANCH_CREATE']);
                 },
                 click: function ($itemScope, $event, value) {
-                    ModalProvider.openBranchCreateModel();
+                    $scope.newBranch();
                 }
             },
             {
                 html: '<div class="drop-menu">تعديل بيانات الفرع<span class="fa fa-edit fa-lg"></span></div>',
                 enabled: function () {
-                    return true
+                    return $rootScope.contains($rootScope.me.team.authorities, ['ROLE_BRANCH_UPDATE']);
                 },
                 click: function ($itemScope, $event, value) {
                     ModalProvider.openBranchUpdateModel($itemScope.branch);
@@ -77,7 +75,7 @@ app.controller("branchCtrl", ['BranchService', 'PersonService', 'ModalProvider',
             {
                 html: '<div class="drop-menu">حذف الفرع<span class="fa fa-trash fa-lg"></span></div>',
                 enabled: function () {
-                    return true
+                    return $rootScope.contains($rootScope.me.team.authorities, ['ROLE_BRANCH_UPDATE']);
                 },
                 click: function ($itemScope, $event, value) {
                     $scope.delete($itemScope.branch);

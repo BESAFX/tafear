@@ -1,4 +1,5 @@
 package com.besafx.app.rest;
+
 import com.besafx.app.config.CustomException;
 import com.besafx.app.config.EmailSender;
 import com.besafx.app.entity.Person;
@@ -27,7 +28,6 @@ import javax.persistence.PersistenceContext;
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.security.Principal;
-import java.util.Date;
 import java.util.List;
 import java.util.ListIterator;
 
@@ -69,9 +69,6 @@ public class TaskRest {
 
     @Autowired
     private TaskSearch taskSearch;
-
-    @Autowired
-    private PersonRest personRest;
 
     @PersistenceContext
     private EntityManager entityManager;
@@ -198,7 +195,7 @@ public class TaskRest {
         if (object == null) {
             throw new CustomException("عفواً ، لا توجد هذة المهمة");
         } else {
-            if (!personRest.getPersonManager(object.getPerson()).getEmail().equals(principal.getName())) {
+            if (!object.getPerson().findManager().getEmail().equals(principal.getName())) {
                 if (!object.getPerson().getEmail().equals(principal.getName())) {
                     throw new CustomException("غير مصرح لك القيام بهذة العملية، فقط جهة التكليف مصرح له بذلك.");
                 }

@@ -52,10 +52,10 @@ app.controller("companyCtrl", ['CompanyService', 'PersonService', 'ModalProvider
         //////////////////////////File Manager///////////////////////////////////
 
         $timeout(function () {
-            CompanyService.fetchTableDataSummery().then(function (data) {
-                $scope.selected = data[0];
-                $scope.options = JSON.parse(data[0].options);
-                PersonService.findAllSummery().then(function (data) {
+            CompanyService.get().then(function (data) {
+                $scope.selected = data;
+                $scope.options = JSON.parse(data.options);
+                PersonService.findAllCombo().then(function (data) {
                     $scope.persons = data;
                     angular.forEach($scope.options.emailDeductionPersonsList, function (o) {
                         angular.forEach($scope.persons, function (p) {

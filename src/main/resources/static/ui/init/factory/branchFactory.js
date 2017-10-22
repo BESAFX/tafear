@@ -24,23 +24,18 @@ app.factory("BranchService",
                     return response.data;
                 });
             },
-            count: function () {
-                return $http.get("/api/branch/count").then(function (response) {
-                    return response.data;
-                });
-            },
-            findByName: function (name) {
-                return $http.get("/api/branch/findByName/" + name).then(function (response) {
-                    return response.data;
-                });
-            },
             fetchTableData: function () {
                 return $http.get("/api/branch/fetchTableData").then(function (response) {
                     return response.data;
                 });
             },
-            fetchTableDataSummery: function () {
-                return $http.get("/api/branch/fetchTableDataSummery").then(function (response) {
+            fetchBranchCombo: function () {
+                return $http.get("/api/branch/fetchBranchCombo").then(function (response) {
+                    return response.data;
+                });
+            },
+            fetchBranchRegionCompanyCombo: function () {
+                return $http.get("/api/branch/fetchBranchRegionCompanyCombo").then(function (response) {
                     return response.data;
                 });
             }

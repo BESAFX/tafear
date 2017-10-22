@@ -2,19 +2,15 @@ app.controller('branchCreateUpdateCtrl', ['BranchService', 'PersonService', 'Reg
     function (BranchService, PersonService, RegionService, FileUploader,  $scope, $rootScope, $timeout, $log, $uibModalInstance, title, action, branch) {
 
         $timeout(function () {
-            PersonService.findAllSummery().then(function (data) {
+            PersonService.findAllCombo().then(function (data) {
                 $scope.persons = data;
             });
-            RegionService.fetchTableDataSummery().then(function (data) {
+            RegionService.fetchRegionCombo().then(function (data) {
                 $scope.regions = data;
             });
         }, 1500);
 
-        if (branch) {
-            $scope.branch = branch;
-        } else {
-            $scope.branch = {};
-        }
+        $scope.branch = branch;
 
         $scope.title = title;
 
@@ -24,8 +20,7 @@ app.controller('branchCreateUpdateCtrl', ['BranchService', 'PersonService', 'Reg
             switch ($scope.action) {
                 case 'create' :
                     BranchService.create($scope.branch).then(function (data) {
-                        $scope.branch = {};
-                        $scope.form.$setPristine();
+                        $uibModalInstance.close(data);
                     });
                     break;
                 case 'update' :

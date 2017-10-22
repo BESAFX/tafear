@@ -24,23 +24,13 @@ app.factory("RegionService",
                     return response.data;
                 });
             },
-            count: function () {
-                return $http.get("/api/region/count").then(function (response) {
-                    return response.data;
-                });
-            },
-            findByName: function (name) {
-                return $http.get("/api/region/findByName/" + name).then(function (response) {
-                    return response.data;
-                });
-            },
             fetchTableData: function () {
                 return $http.get("/api/region/fetchTableData").then(function (response) {
                     return response.data;
                 });
             },
-            fetchTableDataSummery: function () {
-                return $http.get("/api/region/fetchTableDataSummery").then(function (response) {
+            fetchRegionCombo: function () {
+                return $http.get("/api/region/fetchRegionCombo").then(function (response) {
                     return response.data;
                 });
             }

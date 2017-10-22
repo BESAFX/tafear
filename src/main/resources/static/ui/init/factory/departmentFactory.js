@@ -24,18 +24,13 @@ app.factory("DepartmentService",
                     return response.data;
                 });
             },
-            count: function () {
-                return $http.get("/api/department/count").then(function (response) {
-                    return response.data;
-                });
-            },
             fetchTableData: function () {
                 return $http.get("/api/department/fetchTableData").then(function (response) {
                     return response.data;
                 });
             },
-            fetchTableDataSummery: function () {
-                return $http.get("/api/department/fetchTableDataSummery").then(function (response) {
+            fetchDepartmentCombo: function () {
+                return $http.get("/api/department/fetchDepartmentCombo").then(function (response) {
                     return response.data;
                 });
             }

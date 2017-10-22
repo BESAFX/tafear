@@ -2,10 +2,10 @@ app.controller('departmentCreateUpdateCtrl', ['DepartmentService', 'BranchServic
     function (DepartmentService, BranchService, PersonService, $scope, $rootScope, $timeout, $log, $uibModalInstance, title, action, department) {
 
         $timeout(function () {
-            BranchService.fetchTableDataSummery().then(function (data) {
+            BranchService.fetchTableData().then(function (data) {
                 $scope.branches = data;
             });
-            PersonService.findAllSummery().then(function (data) {
+            PersonService.findAllCombo().then(function (data) {
                 $scope.persons = data;
             });
         }, 1500);

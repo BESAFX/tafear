@@ -133,7 +133,7 @@
                                 <span ng-if="lang==='EN'">View</span>
                             </span>
                         </li>
-                        <li class="mdl-menu__item mdl-list__item" ng-click="ModalProvider.openBranchCreateModel();"
+                        <li class="mdl-menu__item mdl-list__item" ng-click="newBranch();"
                             ng-if="contains(me.team.authorities, ['ROLE_BRANCH_CREATE'])">
                             <span class="mdl-list__item-primary-content">
                                 <i class="material-icons mdl-list__item-icon">add</i>
@@ -162,7 +162,7 @@
                     </ul>
                 </div>
 
-                <div ng-class="{'pull-left' : lang==='AR', 'pull-right' : lang==='EN'}" ng-init="toggleList=1">
+                <div ng-class="{'pull-left' : lang==='AR', 'pull-right' : lang==='EN'}" ng-init="toggleList=2">
                     <div class="btn-toolbar">
                         <div class="btn-group" data-toggle="buttons">
                             <button class="btn btn-default mdl-button mdl-js-button mdl-js-ripple-effect"
@@ -458,7 +458,7 @@
                                             tooltip-append-to-body="true"
                                             type="button"
                                             ng-if="contains(me.team.authorities, ['ROLE_BRANCH_CREATE'])"
-                                            ng-click="ModalProvider.openBranchCreateModel();"
+                                            ng-click="newBranch();"
                                             class="mdl-button mdl-js-button mdl-js-ripple-effect col-xs-4 col-sm-4 col-md-4 col-lg-4">
                                         <i class="material-icons">add</i>
                                     </button>

@@ -2,9 +2,10 @@ app.controller("personCtrl", ['PersonService', 'ModalProvider', '$scope', '$root
     function (PersonService, ModalProvider, $scope, $rootScope, $state, $timeout) {
 
         $scope.selected = {};
+        $scope.persons = [];
 
         $scope.fetchTableData = function () {
-            PersonService.findAllSummery().then(function (data) {
+            PersonService.findAll().then(function (data) {
                 $scope.persons = data;
                 $scope.setSelected(data[0]);
             });
@@ -23,26 +24,21 @@ app.controller("personCtrl", ['PersonService', 'ModalProvider', '$scope', '$root
             }
         };
 
-        $scope.removeRow = function (id) {
-            var index = -1;
-            var personsArr = eval($scope.persons);
-            for (var i = 0; i < personsArr.length; i++) {
-                if (personsArr[i].id === id) {
-                    index = i;
-                    break;
-                }
-            }
-            if (index === -1) {
-                alert("Something gone wrong");
-            }
-            $scope.persons.splice(index, 1);
+        $scope.newPerson = function () {
+            ModalProvider.openPersonCreateModel().result.then(function (branch) {
+                $scope.persons.splice(0,0,branch);
+            }, function () {
+                $log.info('PersonCreateModel Closed.');
+            });
         };
 
         $scope.delete = function (person) {
             if (person) {
                 $rootScope.showConfirmNotify("حذف البيانات", "هل تود حذف المستخدم فعلاً؟", "error", "fa-trash", function () {
                     PersonService.remove(person.id).then(function () {
-                        $scope.removeRow(person.id);
+                        var index = $scope.persons.indexOf(person);
+                        $scope.persons.splice(index, 1);
+                        $scope.setSelected($scope.persons[0]);
                     });
                 });
                 return;
@@ -50,7 +46,9 @@ app.controller("personCtrl", ['PersonService', 'ModalProvider', '$scope', '$root
 
             $rootScope.showConfirmNotify("حذف البيانات", "هل تود حذف المستخدم فعلاً؟", "error", "fa-trash", function () {
                 PersonService.remove($scope.selected.id).then(function () {
-                    $scope.removeRow(person.id);
+                    var index = $scope.persons.indexOf(selected);
+                    $scope.persons.splice(index, 1);
+                    $scope.setSelected($scope.persons[0]);
                 });
             });
         };

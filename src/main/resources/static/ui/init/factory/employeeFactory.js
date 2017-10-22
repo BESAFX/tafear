@@ -24,18 +24,13 @@ app.factory("EmployeeService",
                     return response.data;
                 });
             },
-            count: function () {
-                return $http.get("/api/employee/count").then(function (response) {
-                    return response.data;
-                });
-            },
             fetchTableData: function () {
                 return $http.get("/api/employee/fetchTableData").then(function (response) {
                     return response.data;
                 });
             },
-            fetchTableDataSummery: function () {
-                return $http.get("/api/employee/fetchTableDataSummery").then(function (response) {
+            fetchEmployeeCombo: function () {
+                return $http.get("/api/employee/fetchEmployeeCombo").then(function (response) {
                     return response.data;
                 });
             }

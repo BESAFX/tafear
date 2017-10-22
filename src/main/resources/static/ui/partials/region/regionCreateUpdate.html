@@ -62,24 +62,6 @@
                         </div>
 
                         <div class="form-group col-xs-12 col-sm-6 col-md-12 col-lg-12">
-                            <label for="company" class="control-label">
-                                <span ng-if="lang==='AR'">[رقم الشركة] اسم الشركة</span>
-                                <span ng-if="lang==='EN'">Company</span>
-                            </label>
-                            <select id="company"
-                                    data-placeholder="{{lang==='AR' ? 'ابحث عن الشركة' : 'Search For Company...'}}"
-                                    no-results-text="'{{lang==='AR' ? 'لا توجد شركات توافق بحثك' : 'No Results.'}}'"
-                                    placeholder-text-single="'{{lang==='AR' ? 'اختر الشركة' : 'Please Select Company...'}}'"
-                                    class="form-control"
-                                    chosen=""
-                                    ng-model="region.company"
-                                    required="required"
-                                    disable-validation-message=""
-                                    ng-options="(' [ ' + company.code + ' ] ' + company.name) for company in companies | orderBy:'code' track by company.id">
-                            </select>
-                        </div>
-
-                        <div class="form-group col-xs-12 col-sm-6 col-md-12 col-lg-12">
                             <label for="person" class="control-label">
                                 <span ng-if="lang==='AR'">المدير</span>
                                 <span ng-if="lang==='EN'">Manager</span>

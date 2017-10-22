@@ -1,14 +1,18 @@
 package com.besafx.app.rest;
+
 import com.besafx.app.config.CustomException;
 import com.besafx.app.entity.Branch;
 import com.besafx.app.entity.Person;
-import com.besafx.app.entity.Views;
 import com.besafx.app.service.BranchService;
 import com.besafx.app.service.PersonService;
 import com.besafx.app.ws.Notification;
 import com.besafx.app.ws.NotificationService;
-import com.fasterxml.jackson.annotation.JsonView;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.github.bohnman.squiggly.Squiggly;
+import com.github.bohnman.squiggly.util.SquigglyUtils;
 import com.google.common.collect.Lists;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -25,6 +29,12 @@ import java.util.stream.Collectors;
 @RequestMapping(value = "/api/branch/")
 public class BranchRest {
 
+    private final Logger log = LoggerFactory.getLogger(BranchRest.class);
+
+    private final String FILTER_TABLE = "**,manager[id,nickname,name],region[id,code,name,company[id,code,name]],departments[id,code,name]";
+    private final String FILTER_BRANCH_COMBO = "id,code,name";
+    private final String FILTER_BRANCH_REGION_COMPANY_COMBO = "id,code,name,region[id,code,name,company[id,code,name]]";
+
     @Autowired
     private PersonService personService;
 
@@ -37,12 +47,13 @@ public class BranchRest {
     @RequestMapping(value = "create", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     @PreAuthorize("hasRole('ROLE_BRANCH_CREATE')")
-    public Branch create(@RequestBody Branch branch, Principal principal) {
-        Integer maxCode = branchService.findMaxCode();
-        if (maxCode == null) {
+    @Transactional
+    public String create(@RequestBody Branch branch, Principal principal) {
+        Branch topBranch = branchService.findTopByOrderByCodeDesc();
+        if (topBranch == null) {
             branch.setCode(1);
         } else {
-            branch.setCode(maxCode + 1);
+            branch.setCode(topBranch.getCode() + 1);
         }
         branch = branchService.save(branch);
         notificationService.notifyOne(Notification
@@ -52,14 +63,14 @@ public class BranchRest {
                 .type("success")
                 .icon("fa-plus-circle")
                 .build(), principal.getName());
-        return branch;
+        return SquigglyUtils.stringify(Squiggly.init(new ObjectMapper(), FILTER_TABLE), branch);
     }
 
     @RequestMapping(value = "update", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     @PreAuthorize("hasRole('ROLE_BRANCH_UPDATE')")
-    @JsonView(Views.Summery.class)
-    public Branch update(@RequestBody Branch branch, Principal principal) {
+    @Transactional
+    public String update(@RequestBody Branch branch, Principal principal) {
         Branch object = branchService.findOne(branch.getId());
         if (object != null) {
             branch = branchService.save(branch);
@@ -70,7 +81,7 @@ public class BranchRest {
                     .type("success")
                     .icon("fa-edit")
                     .build(), principal.getName());
-            return branch;
+            return SquigglyUtils.stringify(Squiggly.init(new ObjectMapper(), FILTER_TABLE), branch);
         } else {
             return null;
         }
@@ -92,37 +103,35 @@ public class BranchRest {
 
     @RequestMapping(value = "findAll", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public List<Branch> findAll() {
-        return Lists.newArrayList(branchService.findAll());
+    public String findAll() {
+        return SquigglyUtils.stringify(Squiggly.init(new ObjectMapper(), FILTER_TABLE), Lists.newArrayList(branchService.findAll()));
     }
 
     @RequestMapping(value = "findOne/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public Branch findOne(@PathVariable Long id) {
-        return branchService.findOne(id);
-    }
-
-    @RequestMapping(value = "count", produces = MediaType.APPLICATION_JSON_VALUE)
-    @ResponseBody
-    public Long count() {
-        return branchService.count();
-    }
-
-    @RequestMapping(value = "findByName/{name}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    @ResponseBody
-    public Branch findByName(@PathVariable(value = "name") String name) {
-        return branchService.findByName(name);
-    }
-
-    @RequestMapping(value = "findByCode/{code}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    @ResponseBody
-    public Branch findByCode(@PathVariable(value = "code") Integer code) {
-        return branchService.findByCode(code);
+    public String findOne(@PathVariable Long id) {
+        return SquigglyUtils.stringify(Squiggly.init(new ObjectMapper(), FILTER_TABLE), branchService.findOne(id));
     }
 
     @RequestMapping(value = "fetchTableData", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public List<Branch> fetchTableData(Principal principal) {
+    public String fetchTableData(Principal principal) {
+        return SquigglyUtils.stringify(Squiggly.init(new ObjectMapper(), FILTER_TABLE),fetchData(principal));
+    }
+
+    @RequestMapping(value = "fetchBranchCombo", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public String fetchBranchCombo(Principal principal) {
+        return SquigglyUtils.stringify(Squiggly.init(new ObjectMapper(), FILTER_BRANCH_COMBO), fetchData(principal));
+    }
+
+    @RequestMapping(value = "fetchBranchRegionCompanyCombo", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public String fetchBranchRegionCompanyCombo(Principal principal) {
+        return SquigglyUtils.stringify(Squiggly.init(new ObjectMapper(), FILTER_BRANCH_REGION_COMPANY_COMBO), fetchData(principal));
+    }
+
+    private List<Branch> fetchData(Principal principal) {
         List<Branch> list = new ArrayList<>();
         Person person = personService.findByEmail(principal.getName());
         person.getCompanies().stream().forEach(company -> company.getRegions().stream().forEach(region -> list.addAll(region.getBranches())));
@@ -132,13 +141,6 @@ public class BranchRest {
         list.addAll(person.getBranches());
         list.sort(Comparator.comparing(Branch::getCode));
         return list.stream().distinct().collect(Collectors.toList());
-    }
-
-    @RequestMapping(value = "fetchTableDataSummery", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    @ResponseBody
-    @JsonView(Views.Summery.class)
-    public List<Branch> fetchTableDataSummery(Principal principal) {
-        return fetchTableData(principal);
     }
 
 }

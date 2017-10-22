@@ -1,17 +1,22 @@
 package com.besafx.app.rest;
+
 import com.besafx.app.config.CustomException;
 import com.besafx.app.entity.Employee;
 import com.besafx.app.entity.Person;
-import com.besafx.app.entity.Views;
 import com.besafx.app.service.EmployeeService;
 import com.besafx.app.service.PersonService;
 import com.besafx.app.ws.Notification;
 import com.besafx.app.ws.NotificationService;
-import com.fasterxml.jackson.annotation.JsonView;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.github.bohnman.squiggly.Squiggly;
+import com.github.bohnman.squiggly.util.SquigglyUtils;
 import com.google.common.collect.Lists;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
@@ -25,6 +30,11 @@ import java.util.stream.Collectors;
 @RequestMapping(value = "/api/employee/")
 public class EmployeeRest {
 
+    private final Logger log = LoggerFactory.getLogger(EmployeeRest.class);
+
+    private final String FILTER_TABLE = "**,person[id,nickname,name],department[id,code,name]";
+    private final String FILTER_EMPLOYEE_COMBO = "id,code,person[id,nickname,name]";
+
     @Autowired
     private PersonService personService;
 
@@ -37,15 +47,16 @@ public class EmployeeRest {
     @RequestMapping(value = "create", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     @PreAuthorize("hasRole('ROLE_EMPLOYEE_CREATE')")
-    public Employee create(@RequestBody Employee employee, Principal principal) {
+    @Transactional
+    public String create(@RequestBody Employee employee, Principal principal) {
         if (employeeService.findByPersonAndDepartment(employee.getPerson(), employee.getDepartment()) != null) {
             throw new CustomException("هذا الموظف موجود بالفعل");
         }
-        Integer maxCode = employeeService.findMaxCode();
-        if (maxCode == null) {
+        Employee topEmployee = employeeService.findTopByOrderByCodeDesc();
+        if (topEmployee == null) {
             employee.setCode(1);
         } else {
-            employee.setCode(maxCode + 1);
+            employee.setCode(topEmployee.getCode() + 1);
         }
         employee = employeeService.save(employee);
         notificationService.notifyOne(Notification
@@ -55,14 +66,14 @@ public class EmployeeRest {
                 .type("success")
                 .icon("fa-plus-circle")
                 .build(), principal.getName());
-        return employee;
+        return SquigglyUtils.stringify(Squiggly.init(new ObjectMapper(), FILTER_TABLE), employee);
     }
 
     @RequestMapping(value = "update", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     @PreAuthorize("hasRole('ROLE_EMPLOYEE_UPDATE')")
-    @JsonView(Views.Summery.class)
-    public Employee update(@RequestBody Employee employee, Principal principal) {
+    @Transactional
+    public String update(@RequestBody Employee employee, Principal principal) {
         Employee object = employeeService.findOne(employee.getId());
         if (object != null) {
             Optional.ofNullable(employeeService.findByPersonAndDepartment(employee.getPerson(), employee.getDepartment())).ifPresent(value -> {
@@ -78,7 +89,7 @@ public class EmployeeRest {
                     .type("success")
                     .icon("fa-edit")
                     .build(), principal.getName());
-            return employee;
+            return SquigglyUtils.stringify(Squiggly.init(new ObjectMapper(), FILTER_TABLE), employee);
         } else {
             return null;
         }
@@ -87,6 +98,7 @@ public class EmployeeRest {
     @RequestMapping(value = "delete/{id}", method = RequestMethod.DELETE)
     @ResponseBody
     @PreAuthorize("hasRole('ROLE_EMPLOYEE_DELETE')")
+    @Transactional
     public void delete(@PathVariable Long id, Principal principal) {
         Employee object = employeeService.findOne(id);
         if (object != null) {
@@ -103,25 +115,29 @@ public class EmployeeRest {
 
     @RequestMapping(value = "findAll", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public List<Employee> findAll() {
-        return Lists.newArrayList(employeeService.findAll());
+    public String findAll() {
+        return SquigglyUtils.stringify(Squiggly.init(new ObjectMapper(), FILTER_TABLE), Lists.newArrayList(employeeService.findAll()));
     }
 
     @RequestMapping(value = "findOne/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public Employee findOne(@PathVariable Long id) {
-        return employeeService.findOne(id);
-    }
-
-    @RequestMapping(value = "count", produces = MediaType.APPLICATION_JSON_VALUE)
-    @ResponseBody
-    public Long count() {
-        return employeeService.count();
+    public String findOne(@PathVariable Long id) {
+        return SquigglyUtils.stringify(Squiggly.init(new ObjectMapper(), FILTER_TABLE), employeeService.findOne(id));
     }
 
     @RequestMapping(value = "fetchTableData", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public List<Employee> fetchTableData(Principal principal) {
+    public String fetchTableData(Principal principal) {
+        return SquigglyUtils.stringify(Squiggly.init(new ObjectMapper(), FILTER_TABLE), fetchData(principal));
+    }
+
+    @RequestMapping(value = "fetchEmployeeCombo", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public String fetchEmployeeCombo(Principal principal) {
+        return SquigglyUtils.stringify(Squiggly.init(new ObjectMapper(), FILTER_TABLE), fetchData(principal));
+    }
+
+    private List<Employee> fetchData(Principal principal) {
         List<Employee> list = new ArrayList<>();
         Person person = personService.findByEmail(principal.getName());
         person.getCompanies().stream().forEach(company -> company.getRegions().stream().forEach(region -> region.getBranches().stream().forEach(branch -> branch.getDepartments().stream().forEach(department -> list.addAll(department.getEmployees())))));
@@ -131,13 +147,6 @@ public class EmployeeRest {
         list.addAll(person.getEmployees());
         list.sort(Comparator.comparing(employee -> employee.getPerson().getName()));
         return list.stream().distinct().collect(Collectors.toList());
-    }
-
-    @RequestMapping(value = "fetchTableDataSummery", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    @ResponseBody
-    @JsonView(Views.Summery.class)
-    public List<Employee> fetchTableDataSummery(Principal principal) {
-        return fetchTableData(principal);
     }
 
 }

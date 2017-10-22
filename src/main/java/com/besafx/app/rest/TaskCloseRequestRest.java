@@ -37,9 +37,6 @@ public class TaskCloseRequestRest {
     private PersonService personService;
 
     @Autowired
-    private PersonRest personRest;
-
-    @Autowired
     private TaskService taskService;
 
     @Autowired
@@ -138,7 +135,7 @@ public class TaskCloseRequestRest {
     @Transactional
     public void deleteByTaskAndType(@PathVariable(value = "taskId") Long taskId, @PathVariable(value = "type") Boolean type, Principal principal) throws IOException {
         Task task = taskService.findOne(taskId);
-        if (!personRest.getPersonManager(task.getPerson()).getEmail().equals(principal.getName())) {
+        if (!task.getPerson().findManager().getEmail().equals(principal.getName())) {
             if (!task.getPerson().getEmail().equals(principal.getName())) {
                 throw new CustomException("غير مصرح لك القيام بهذة العملية، فقط جهة التكليف بإمكانه ذلك.");
             }

@@ -202,8 +202,8 @@ app.run(['$http', '$location', '$state', '$stateParams', '$timeout', '$window', 
             }
             $rootScope.applyTitleLang();
             window.componentHandler.upgradeAllRegistered();
-            $rootScope.state.reload();
             PersonService.setGUILang($rootScope.lang);
+            $rootScope.state.reload();
         };
 
         $rootScope.applyTitleLang = function () {

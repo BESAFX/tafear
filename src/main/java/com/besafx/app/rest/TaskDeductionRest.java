@@ -47,14 +47,11 @@ public class TaskDeductionRest {
     @Autowired
     private EmailSender emailSender;
 
-    @Autowired
-    private PersonRest personRest;
-
     @RequestMapping(value = "clearCounters/{taskId}/{personId}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public boolean clearCounters(@PathVariable(value = "taskId") Long taskId, @PathVariable(value = "personId") Long personId, Principal principal) {
         Task task = taskService.findOne(taskId);
-        if (!personRest.getPersonManager(task.getPerson()).getEmail().equals(principal.getName())) {
+        if (!task.getPerson().findManager().getEmail().equals(principal.getName())) {
             if (!task.getPerson().getEmail().equals(principal.getName())) {
                 throw new CustomException("غير مصرح لك القيام بهذة العملية، فقط جهة التكليف بإمكانه حذف الخصومات");
             }
@@ -74,7 +71,7 @@ public class TaskDeductionRest {
     @ResponseBody
     public boolean clearAllCounters(@PathVariable(value = "taskId") Long taskId, Principal principal) {
         Task task = taskService.findOne(taskId);
-        if (!personRest.getPersonManager(task.getPerson()).getEmail().equals(principal.getName())) {
+        if (!task.getPerson().findManager().getEmail().equals(principal.getName())) {
             if (!task.getPerson().getEmail().equals(principal.getName())) {
                 throw new CustomException("غير مصرح لك القيام بهذة العملية، فقط جهة التكليف بإمكانه حذف الخصومات");
             }

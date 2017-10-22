@@ -1,4 +1,5 @@
 package com.besafx.app.service;
+
 import com.besafx.app.entity.Person;
 import com.besafx.app.entity.Task;
 import com.besafx.app.entity.TaskOperation;
@@ -20,13 +21,21 @@ public interface TaskOperationService extends PagingAndSortingRepository<TaskOpe
 
     @Query("select max(code) from TaskOperation c where (c.task.id) = (:id)")
     Integer findLastCodeByTask(@Param("id") Long id);
+
     @Query("select max(id) from TaskOperation c")
     Long findLastId();
+
     TaskOperation findTopByTaskOrderByCodeDesc(Task task);
+
     TaskOperation findTopByTaskAndSenderOrderByDateDesc(Task task, Person person);
+
     TaskOperation findTopByTaskIdOrderByCodeDesc(Long taskId);
+
     List<TaskOperation> findByTask(Task task);
+
     List<TaskOperation> findByTaskAndDateBetween(Task task, @Temporal(TemporalType.TIMESTAMP) Date startDate, @Temporal(TemporalType.TIMESTAMP) Date endDate);
+
     long countByTaskAndSenderAndDateBetween(Task task, Person person, @Temporal(TemporalType.TIMESTAMP) Date startDate, @Temporal(TemporalType.TIMESTAMP) Date endDate);
+
     long countByTaskAndSender(Task task, Person person);
 }

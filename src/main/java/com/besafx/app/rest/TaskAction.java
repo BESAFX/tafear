@@ -55,9 +55,6 @@ public class TaskAction {
     private NotificationService notificationService;
 
     @Autowired
-    private PersonRest personRest;
-
-    @Autowired
     private EmailSender emailSender;
 
     @RequestMapping(value = "increaseEndDate", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -70,7 +67,7 @@ public class TaskAction {
         if (task == null) {
             throw new CustomException("عفواً ، لا توجد هذة المهمة");
         } else {
-            if (!personRest.getPersonManager(task.getPerson()).getEmail().equals(principal.getName())) {
+            if (!task.getPerson().findManager().getEmail().equals(principal.getName())) {
                 if (!task.getPerson().getEmail().equals(principal.getName())) {
                     throw new CustomException("غير مصرح لك القيام بهذة العملية، فقط جهة التكليف مصرح له بذلك.");
                 }
@@ -171,7 +168,7 @@ public class TaskAction {
             if (task.getCloseType().equals(Task.CloseType.Manual)) {
                 throw new CustomException("لا يمكن القيام بأي عمليات على مهام الارشيف.");
             }
-            if (!personRest.getPersonManager(task.getPerson()).getEmail().equals(principal.getName())) {
+            if (!task.getPerson().findManager().getEmail().equals(principal.getName())) {
                 if (!task.getPerson().getEmail().equals(principal.getName())) {
                     throw new CustomException("غير مصرح لك القيام بهذة العملية، فقط جهة التكليف مصرح له بذلك.");
                 }
@@ -227,7 +224,7 @@ public class TaskAction {
             if (taskCloseRequest.getTask().getCloseType().equals(Task.CloseType.Manual)) {
                 throw new CustomException("لا يمكن القيام بأي عمليات على مهام الارشيف.");
             }
-            if (!personRest.getPersonManager(taskCloseRequest.getTask().getPerson()).getEmail().equals(principal.getName())) {
+            if (!taskCloseRequest.getTask().getPerson().findManager().getEmail().equals(principal.getName())) {
                 if (!taskCloseRequest.getTask().getPerson().getEmail().equals(principal.getName())) {
                     throw new CustomException("غير مصرح لك القيام بهذة العملية، فقط جهة التكليف مصرح له بذلك.");
                 }
@@ -285,7 +282,7 @@ public class TaskAction {
 //            if (taskCloseRequest.getTask().getCloseType().equals(Task.CloseType.Manual)) {
 //                throw new CustomException("لا يمكن القيام بأي عمليات على مهام الارشيف.");
 //            }
-            if (!personRest.getPersonManager(taskCloseRequest.getTask().getPerson()).getEmail().equals(principal.getName())) {
+            if (!taskCloseRequest.getTask().getPerson().findManager().getEmail().equals(principal.getName())) {
                 if (!taskCloseRequest.getTask().getPerson().getEmail().equals(principal.getName())) {
                     throw new CustomException("غير مصرح لك القيام بهذة العملية، فقط جهة التكليف مصرح له بذلك.");
                 }
@@ -343,7 +340,7 @@ public class TaskAction {
             if (task.getCloseType().equals(Task.CloseType.Manual)) {
                 throw new CustomException("لا يمكن القيام بأي عمليات على مهام الارشيف.");
             }
-            if (!personRest.getPersonManager(task.getPerson()).getEmail().equals(principal.getName())) {
+            if (!task.getPerson().findManager().getEmail().equals(principal.getName())) {
                 if (!task.getPerson().getEmail().equals(principal.getName())) {
                     throw new CustomException("غير مصرح لك القيام بهذة العملية، فقط جهة التكليف مصرح له بذلك.");
                 }
@@ -433,7 +430,7 @@ public class TaskAction {
             if (task.getCloseType().equals(Task.CloseType.Manual)) {
                 throw new CustomException("لا يمكن القيام بأي عمليات على مهام الارشيف.");
             }
-            if (!personRest.getPersonManager(task.getPerson()).getEmail().equals(principal.getName())) {
+            if (!task.getPerson().findManager().getEmail().equals(principal.getName())) {
                 if (!task.getPerson().getEmail().equals(principal.getName())) {
                     throw new CustomException("غير مصرح لك القيام بهذة العملية، فقط جهة التكليف مصرح له بذلك.");
                 }
@@ -503,7 +500,7 @@ public class TaskAction {
             throw new CustomException("لا يمكن القيام بأي عمليات على مهام الارشيف.");
         }
         Person person = personService.findOne(personId);
-        if (!personRest.getPersonManager(task.getPerson()).getEmail().equals(principal.getName())) {
+        if (!task.getPerson().findManager().getEmail().equals(principal.getName())) {
             if (!task.getPerson().getEmail().equals(principal.getName())) {
                 throw new CustomException("غير مصرح لك القيام بهذة العملية، فقط جهة التكليف مصرح له بذلك.");
             }
@@ -567,7 +564,7 @@ public class TaskAction {
             throw new CustomException("لا يمكن القيام بأي عمليات على مهام الارشيف.");
         }
         Person person = personService.findOne(personId);
-        if (!personRest.getPersonManager(task.getPerson()).getEmail().equals(principal.getName())) {
+        if (!task.getPerson().findManager().getEmail().equals(principal.getName())) {
             if (!task.getPerson().getEmail().equals(principal.getName())) {
                 throw new CustomException("غير مصرح لك القيام بهذة العملية، فقط جهة التكليف مصرح له بذلك.");
             }
@@ -617,7 +614,7 @@ public class TaskAction {
             throw new CustomException("لا يمكن القيام بأي عمليات على مهام الارشيف.");
         }
         Person person = personService.findOne(personId);
-        if (!personRest.getPersonManager(task.getPerson()).getEmail().equals(principal.getName())) {
+        if (!task.getPerson().findManager().getEmail().equals(principal.getName())) {
             if (!task.getPerson().getEmail().equals(principal.getName())) {
                 throw new CustomException("غير مصرح لك القيام بهذة العملية، فقط جهة التكليف مصرح له بذلك.");
             }
@@ -665,7 +662,7 @@ public class TaskAction {
             throw new CustomException("لا يمكن القيام بأي عمليات على مهام الارشيف.");
         }
         Person person = personService.findOne(personId);
-        if (!personRest.getPersonManager(task.getPerson()).getEmail().equals(principal.getName())) {
+        if (!task.getPerson().findManager().getEmail().equals(principal.getName())) {
             if (!task.getPerson().getEmail().equals(principal.getName())) {
                 throw new CustomException("غير مصرح لك القيام بهذة العملية، فقط جهة التكليف مصرح له بذلك.");
             }
@@ -715,7 +712,7 @@ public class TaskAction {
             throw new CustomException("لا يمكن القيام بأي عمليات على مهام الارشيف.");
         }
         Person person = personService.findOne(personId);
-        if (!personRest.getPersonManager(task.getPerson()).getEmail().equals(principal.getName())) {
+        if (!task.getPerson().findManager().getEmail().equals(principal.getName())) {
             if (!task.getPerson().getEmail().equals(principal.getName())) {
                 throw new CustomException("غير مصرح لك القيام بهذة العملية، فقط جهة التكليف مصرح له بذلك.");
             }
