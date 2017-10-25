@@ -157,6 +157,7 @@ app.controller("taskCtrl", ['TaskService', 'TaskToService', 'TaskWarnService', '
                 angular.forEach($scope.tasks, function (task) {
                     if (object.id == task.id) {
                         $scope.selected = task;
+                        window.componentHandler.upgradeAllRegistered();
                         return task.isSelected = true;
                     } else {
                         return task.isSelected = false;

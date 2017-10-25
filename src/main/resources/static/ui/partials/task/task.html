@@ -599,9 +599,7 @@
                                         <span ng-show="dateType==='H'">{{task.startDate | kdate: 'yyyy-mm-dd' : 'ar' : 'ummalqura'}}</span>
                                         <span ng-show="dateType==='G'">{{task.startDate | date: 'yyyy-MM-dd'}}</span>
                                     </td>
-                                    <td st-select-row-custom="task">
-                                        <span class="label label-danger">{{task.person.nickname}} / {{task.person.name}}</span>
-                                    </td>
+                                    <td st-select-row-custom="task">{{task.person.nickname}} / {{task.person.name}}</td>
                                     <td>
                                         <span ng-if="lang==='AR'">{{task.importanceInArabic}}</span>
                                         <span ng-if="lang==='EN'">{{task.importance}}</span>
@@ -702,7 +700,168 @@
                                             </button>
                                         </div>
                                         <div class="form-group row">
-                                            <span>{{task.content}}</span>
+                                            <div class="mdl-tabs mdl-js-tabs mdl-js-ripple-effect">
+                                                <div class="mdl-tabs__tab-bar">
+                                                    <a href="#starks-panel" class="mdl-tabs__tab is-active">
+                                                        <span ng-if="lang==='AR'">التفاصيل</span>
+                                                        <span ng-if="lang==='EN'">Details</span>
+                                                    </a>
+                                                    <a href="#lannisters-panel" class="mdl-tabs__tab">
+                                                        <span ng-if="lang==='AR'">التعليقات</span>
+                                                        <span ng-if="lang==='EN'">Comments</span>
+                                                    </a>
+                                                    <a href="#targaryens-panel" class="mdl-tabs__tab">
+                                                        <span ng-if="lang==='AR'">التحذيرات</span>
+                                                        <span ng-if="lang==='EN'">Warns</span>
+                                                    </a>
+                                                </div>
+
+                                                <div class="mdl-tabs__panel is-active" id="starks-panel">
+                                                    <div class="form-group row">
+                                                        <div class="table-responsive">
+                                                            <table class="table table-bordered">
+                                                                <tbody>
+                                                                <tr>
+                                                                    <td>
+                                                                        <strong ng-if="lang==='AR'">تفاصيل المهمة</strong>
+                                                                        <strong ng-if="lang==='EN'">Details</strong>
+                                                                    </td>
+                                                                    <td>{{task.content}}</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>
+                                                                        <strong ng-if="lang==='AR'">فترة السماح للتعليق</strong>
+                                                                        <strong ng-if="lang==='EN'">Commenting Method</strong>
+                                                                    </td>
+                                                                    <td>
+                                                                        <span ng-if="lang==='AR'">{{task.commentTypeInArabic}}</span>
+                                                                        <span ng-if="lang==='EN'">{{task.commentType}}</span>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>
+                                                                        <strong ng-if="lang==='AR'">الحد الأقصى لعدد الأيام دون تعليق</strong>
+                                                                        <strong ng-if="lang==='EN'">Days Limit Without Comment</strong>
+                                                                    </td>
+                                                                    <td>{{task.commentTypeCount}}</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>
+                                                                        <strong ng-if="lang==='AR'">الحد الأقصى للتحذيرات</strong>
+                                                                        <strong ng-if="lang==='EN'">Warns Limit</strong>
+                                                                    </td>
+                                                                    <td>{{task.warn}}</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td class="fit">
+                                                                        <strong ng-if="lang==='AR'">مقدار الحسم عند الوصول للحد الاقصي للتحذيرات</strong>
+                                                                        <strong ng-if="lang==='EN'">Discount On Reaching Warns Limit</strong>
+                                                                    </td>
+                                                                    <td>{{task.deduction}} SAR</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>
+                                                                        <strong ng-if="lang==='AR'">مقدار الحسم عند إغلاق المهمة تلقائيا</strong>
+                                                                        <strong ng-if="lang==='EN'">Discount On Auto Close Task</strong>
+                                                                    </td>
+                                                                    <td>{{task.deductionOnAutoClose}} SAR</td>
+                                                                </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="mdl-tabs__panel" id="lannisters-panel">
+                                                    <div class="form-group row">
+                                                        <div class="table-responsive">
+                                                            <table st-safe-src="task.taskOperations"
+                                                                   class="table table-bordered">
+                                                                <thead>
+                                                                <tr>
+                                                                    <th st-sort="code" class="fit">
+                                                                        <span ng-if="lang==='AR'">رقم الحركة</span>
+                                                                        <span ng-if="lang==='EN'">Code</span>
+                                                                    </th>
+                                                                    <th st-sort="sender.name" class="text-center">
+                                                                        <span ng-if="lang==='AR'">المرسل</span>
+                                                                        <span ng-if="lang==='EN'">Sender</span>
+                                                                    </th>
+                                                                    <th st-sort="date" st-sort-default="reverse" class="fit">
+                                                                        <span ng-if="lang==='AR'">التاريخ</span>
+                                                                        <span ng-if="lang==='EN'">Date</span>
+                                                                    </th>
+                                                                    <th st-sort="content">
+                                                                        <span ng-if="lang==='AR'">التعليق</span>
+                                                                        <span ng-if="lang==='EN'">Comment</span>
+                                                                    </th>
+                                                                    <th st-sort="date" class="fit">
+                                                                        <span ng-if="lang==='AR'">الوقت المنقضي</span>
+                                                                        <span ng-if="lang==='EN'">Left Time</span>
+                                                                    </th>
+                                                                </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                <tr ng-repeat="taskOperation in task.taskOperations"
+                                                                    ng-class="{'info':(taskOperation.sender.id===me.manager.id)}">
+                                                                    <td>{{taskOperation.code}}</td>
+                                                                    <td class="fit">
+                                                                        {{taskOperation.sender.nickname}} / {{taskOperation.sender.name}}
+                                                                    </td>
+                                                                    <td>
+                                                                        <span ng-show="dateType==='H'">{{taskOperation.date | kdate: 'yyyy-mm-dd' : 'ar' : 'ummalqura'}}</span>
+                                                                        <span ng-show="dateType==='G'">{{taskOperation.date | date: 'yyyy-MM-dd'}}</span>
+                                                                        <span class="label label-success">{{taskOperation.date | date:'h:m a'}}</span>
+                                                                    </td>
+                                                                    <td>
+                                        <span class="label label-default">
+                                            {{taskOperation.type==='Comment' ? 'تعليق' : ''}}
+                                            {{taskOperation.type==='IncreaseEndDate' ? 'تمديد تاريخ إستلام' : ''}}
+                                            {{taskOperation.type==='DecreaseEndDate' ? 'تعجيل تاريخ إستلام' : ''}}
+                                            {{taskOperation.type==='CloseTaskOnPerson' ? 'إغلاق المهمة لموظف' : ''}}
+                                            {{taskOperation.type==='CloseTaskCompletely' ? 'أرشفة المهمة' : ''}}
+                                            {{taskOperation.type==='CloseTaskAuto' ? 'إغلاق تلقائي' : ''}}
+                                            {{taskOperation.type==='AddPerson' ? 'تحويل' : ''}}
+                                            {{taskOperation.type==='RemovePerson' ? 'حذف موظف' : ''}}
+                                            {{taskOperation.type==='AcceptCloseRequest' ? 'قبول طلب إغلاق' : ''}}
+                                            {{taskOperation.type==='AcceptIncreaseEndDateRequest' ? 'قبول طلب تمديد' : ''}}
+                                            {{taskOperation.type==='AcceptDecreaseEndDateRequest' ? 'قبول طلب تعجيل' : ''}}
+                                            {{taskOperation.type==='DeclineCloseRequest' ? 'رفض طلب إغلاق' : ''}}
+                                            {{taskOperation.type==='DeclineIncreaseEndDateRequest' ? 'رفض طلب تمديد' : ''}}
+                                            {{taskOperation.type==='DeclineDecreaseEndDateRequest' ? 'رفض طلب تعجيل' : ''}}
+                                            {{taskOperation.type==='OpenTaskOnPersonAuto' ? 'فتح المهمة على موظف تلقائي' : ''}}
+                                            {{taskOperation.type==='OpenTaskOnPerson' ? 'فتح المهمة على موظف' : ''}}
+                                        </span>
+                                                                        {{taskOperation.content}}
+                                                                        <span ng-repeat="taskOperationAttach in taskOperation.taskOperationAttaches"><a
+                                                                                uib-tooltip="{{taskOperationAttach.name}}" tooltip-append-to-body="true"
+                                                                                href="" ng-href="{{taskOperationAttach.link}}" target="_blank"><i
+                                                                                class="fa fa-link fa-lg"></i></a></span>
+                                                                    </td>
+                                                                    <td class="fit">
+                                                                        <timer interval="60000" start-time="taskOperation.date"><span> {{(minutes < 1 && hours < 1 && days < 1 )? 'الآن' : 'منذ'}} </span>
+                                                                            {{days > 0 ? days : ''}} {{days > 0 ? 'يوم' : ''}} {{hours > 0 ? hours :
+                                                                            ''}} {{hours > 0 ? 'ساعة' : ''}} {{minutes > 0 ? minutes : ''}} {{minutes >
+                                                                            0 ? 'دقيقة' : ''}}
+                                                                        </timer>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr class="blank_row"
+                                                                    style="height: 10px !important; background-color: #FFFFFF;"
+                                                                    ng-show="!task.taskOperations || task.taskOperations.length ==0">
+                                                                    <td colspan="5">لا توجد حركات</td>
+                                                                </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="mdl-tabs__panel" id="targaryens-panel">
+                                                    <ul>
+                                                        <li>Viserys</li>
+                                                        <li>Daenerys</li>
+                                                    </ul>
+                                                </div>
+                                            </div>
                                         </div>
                                     </td>
                                 </tr>

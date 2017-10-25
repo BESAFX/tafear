@@ -1,7 +1,7 @@
 package com.besafx.app.entity.enums;
 
 public enum CommentType {
-    Day("يوميي"),
+    Day("يومي"),
     Week("اسبوعي"),
     Month("شهري");
     private String name;
