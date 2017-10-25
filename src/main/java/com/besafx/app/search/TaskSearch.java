@@ -1,6 +1,8 @@
 package com.besafx.app.search;
 import com.besafx.app.entity.Task;
 import com.besafx.app.entity.TaskTo;
+import com.besafx.app.entity.enums.CloseType;
+import com.besafx.app.entity.enums.Importance;
 import com.besafx.app.service.TaskService;
 import com.besafx.app.service.TaskToService;
 import com.besafx.app.util.DateConverter;
@@ -10,10 +12,7 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.domain.Specifications;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Component
@@ -27,8 +26,8 @@ public class TaskSearch {
 
     public List<Task> search(
             final String title,
-            final Task.Importance importance,
-            final Task.CloseType closeType,
+            final Importance importance,
+            final CloseType closeType,
             final Long codeFrom,
             final Long codeTo,
             final Long startDateFrom,
@@ -93,7 +92,9 @@ public class TaskSearch {
                 for (int i = 1; i < predicates.size(); i++) {
                     result = Specifications.where(result).and(predicates.get(i));
                 }
-                return taskService.findAll(result);
+                List<Task> tasks = taskService.findAll(result);
+                tasks.sort(Comparator.comparing(Task::getCode));
+                return tasks;
             } else {
                 return null;
             }
@@ -151,7 +152,9 @@ public class TaskSearch {
                 for (int i = 1; i < predicates.size(); i++) {
                     result = Specifications.where(result).and(predicates.get(i));
                 }
-                return (List<Task>) taskToService.findAll(result).stream().map(taskTo -> ((TaskTo) taskTo).getTask()).collect(Collectors.toList());
+                List<Task> tasks = (List<Task>) taskToService.findAll(result).stream().map(taskTo -> ((TaskTo) taskTo).getTask()).collect(Collectors.toList());
+                tasks.sort(Comparator.comparing(Task::getCode));
+                return tasks;
             } else {
                 return null;
             }
@@ -160,18 +163,18 @@ public class TaskSearch {
     }
 
     public List<Task> getIncomingOpenedTasks(String timeType, Long personId) {
-        return search(null, null, Task.CloseType.Pending, null, null, null, null, null, null, true, true, timeType, personId);
+        return search(null, null, CloseType.Pending, null, null, null, null, null, null, true, true, timeType, personId);
     }
 
     public List<Task> getOutgoingOpenedTasks(String timeType, Long personId) {
-        return search(null, null, Task.CloseType.Pending, null, null, null, null, null, null, false, true, timeType, personId);
+        return search(null, null, CloseType.Pending, null, null, null, null, null, null, false, true, timeType, personId);
     }
 
     public List<Task> getIncomingClosedTasks(String timeType, Long personId) {
-        return search(null, null, Task.CloseType.Auto, null, null, null, null, null, null, true, false, timeType, personId);
+        return search(null, null, CloseType.Auto, null, null, null, null, null, null, true, false, timeType, personId);
     }
 
     public List<Task> getOutgoingClosedTasks(String timeType, Long personId) {
-        return search(null, null, Task.CloseType.Auto, null, null, null, null, null, null, false, false, timeType, personId);
+        return search(null, null, CloseType.Auto, null, null, null, null, null, null, false, false, timeType, personId);
     }
 }

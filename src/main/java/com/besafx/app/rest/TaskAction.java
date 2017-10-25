@@ -2,6 +2,7 @@ package com.besafx.app.rest;
 import com.besafx.app.config.CustomException;
 import com.besafx.app.config.EmailSender;
 import com.besafx.app.entity.*;
+import com.besafx.app.entity.enums.CloseType;
 import com.besafx.app.service.*;
 import com.besafx.app.util.DateConverter;
 import com.besafx.app.ws.Notification;
@@ -75,7 +76,7 @@ public class TaskAction {
             try {
                 log.info("تعديل بيانات المهمة وتغيير تاريخ الاستلام واضافة الايام اليها.");
                 task.setEndDate(new DateTime().plusDays(days).toDate());
-                task.setCloseType(Task.CloseType.Pending);
+                task.setCloseType(CloseType.Pending);
                 task = taskService.save(task);
                 log.info("حفظ المهمة بنجاح.");
                 log.info("فحص كل طلبات التمديد المعلقة وقبولها...");
@@ -165,7 +166,7 @@ public class TaskAction {
         if (task == null) {
             throw new CustomException("عفواً ، لا توجد هذة المهمة");
         } else {
-            if (task.getCloseType().equals(Task.CloseType.Manual)) {
+            if (task.getCloseType().equals(CloseType.Manual)) {
                 throw new CustomException("لا يمكن القيام بأي عمليات على مهام الارشيف.");
             }
             if (!task.getPerson().findManager().getEmail().equals(principal.getName())) {
@@ -221,7 +222,7 @@ public class TaskAction {
         if (taskCloseRequest == null) {
             throw new CustomException("عفواً ، لا يوجد هذا الطلب");
         } else {
-            if (taskCloseRequest.getTask().getCloseType().equals(Task.CloseType.Manual)) {
+            if (taskCloseRequest.getTask().getCloseType().equals(CloseType.Manual)) {
                 throw new CustomException("لا يمكن القيام بأي عمليات على مهام الارشيف.");
             }
             if (!taskCloseRequest.getTask().getPerson().findManager().getEmail().equals(principal.getName())) {
@@ -337,7 +338,7 @@ public class TaskAction {
         if (task == null) {
             throw new CustomException("عفواً ، لا توجد هذة المهمة");
         } else {
-            if (task.getCloseType().equals(Task.CloseType.Manual)) {
+            if (task.getCloseType().equals(CloseType.Manual)) {
                 throw new CustomException("لا يمكن القيام بأي عمليات على مهام الارشيف.");
             }
             if (!task.getPerson().findManager().getEmail().equals(principal.getName())) {
@@ -380,7 +381,7 @@ public class TaskAction {
                 log.info("فى حال كان الموظفون المكلفين تم إغلاق مهامهم");
                 if (task.getTaskTos().stream().filter(to -> !to.getClosed()).collect(Collectors.toList()).isEmpty()) {
                     task.setEndDate(new Date());
-                    task.setCloseType(Task.CloseType.Manual);
+                    task.setCloseType(CloseType.Manual);
                     taskService.save(task);
                     log.info("اضافة حركة جديدة لإغلاق المهمة ونقلها إلى الارشيف");
                     TaskOperation taskOperation = new TaskOperation();
@@ -427,7 +428,7 @@ public class TaskAction {
         if (task == null) {
             throw new CustomException("عفواً ، لا توجد هذة المهمة");
         } else {
-            if (task.getCloseType().equals(Task.CloseType.Manual)) {
+            if (task.getCloseType().equals(CloseType.Manual)) {
                 throw new CustomException("لا يمكن القيام بأي عمليات على مهام الارشيف.");
             }
             if (!task.getPerson().findManager().getEmail().equals(principal.getName())) {
@@ -453,7 +454,7 @@ public class TaskAction {
                 log.info("إنهاء العمل على الحركة");
                 log.info("تحديث تاريخ استلام المهمة الى تاريخ اليوم وهو وقت الاغلاق");
                 task.setEndDate(new Date());
-                task.setCloseType(Task.CloseType.Manual);
+                task.setCloseType(CloseType.Manual);
                 taskService.save(task);
                 log.info("الموافقة على كل طلبات الاغلاق الخاصة بهذة المهمة");
                 taskCloseRequestService.findByTaskIdAndTypeAndApprovedIsNull(taskId, true).forEach(request -> {
@@ -496,7 +497,7 @@ public class TaskAction {
     @Transactional
     public Task addPerson(@RequestParam(value = "taskId") Long taskId, @RequestParam(value = "personId") Long personId, @RequestParam(value = "message") String message, Principal principal) throws IOException {
         Task task = taskService.findOne(taskId);
-        if (task.getCloseType().equals(Task.CloseType.Manual)) {
+        if (task.getCloseType().equals(CloseType.Manual)) {
             throw new CustomException("لا يمكن القيام بأي عمليات على مهام الارشيف.");
         }
         Person person = personService.findOne(personId);
@@ -560,7 +561,7 @@ public class TaskAction {
     @Transactional
     public Boolean removePerson(@RequestParam(value = "taskId") Long taskId, @RequestParam(value = "personId") Long personId, @RequestParam(value = "message") String message, Principal principal) throws IOException {
         Task task = taskService.findOne(taskId);
-        if (task.getCloseType().equals(Task.CloseType.Manual)) {
+        if (task.getCloseType().equals(CloseType.Manual)) {
             throw new CustomException("لا يمكن القيام بأي عمليات على مهام الارشيف.");
         }
         Person person = personService.findOne(personId);
@@ -610,7 +611,7 @@ public class TaskAction {
     @Transactional
     public TaskWarn addWarn(@RequestParam(value = "taskId") Long taskId, @RequestParam(value = "personId") Long personId, @RequestParam(value = "message") String message, Principal principal) throws IOException {
         Task task = taskService.findOne(taskId);
-        if (task.getCloseType().equals(Task.CloseType.Manual)) {
+        if (task.getCloseType().equals(CloseType.Manual)) {
             throw new CustomException("لا يمكن القيام بأي عمليات على مهام الارشيف.");
         }
         Person person = personService.findOne(personId);
@@ -658,7 +659,7 @@ public class TaskAction {
     @Transactional
     public TaskDeduction addDeduction(@RequestParam(value = "taskId") Long taskId, @RequestParam(value = "personId") Long personId, @RequestParam(value = "message") String message, @RequestParam(value = "deduction") Double deduction, Principal principal) throws IOException {
         Task task = taskService.findOne(taskId);
-        if (task.getCloseType().equals(Task.CloseType.Manual)) {
+        if (task.getCloseType().equals(CloseType.Manual)) {
             throw new CustomException("لا يمكن القيام بأي عمليات على مهام الارشيف.");
         }
         Person person = personService.findOne(personId);
@@ -708,7 +709,7 @@ public class TaskAction {
     public TaskTo openTaskOnPerson(@RequestParam(value = "taskId") Long taskId, @RequestParam(value = "personId") Long personId, @RequestParam(value = "message") String message, Principal principal) throws IOException {
         Person caller = personService.findByEmail(principal.getName());
         Task task = taskService.findOne(taskId);
-        if (task.getCloseType().equals(Task.CloseType.Manual)) {
+        if (task.getCloseType().equals(CloseType.Manual)) {
             throw new CustomException("لا يمكن القيام بأي عمليات على مهام الارشيف.");
         }
         Person person = personService.findOne(personId);
@@ -718,7 +719,7 @@ public class TaskAction {
             }
         }
         log.info("فحص إذا كانت المهمة تحت التنفيذ...");
-        if (!task.getCloseType().equals(Task.CloseType.Pending)) {
+        if (!task.getCloseType().equals(CloseType.Pending)) {
             throw new CustomException("لا يمكن فتح مهمة مغلقة على الموظف، حاول تمديد المهمة أولاً.");
         }
         TaskTo taskTo = taskToService.findByTaskAndPerson(task, person);

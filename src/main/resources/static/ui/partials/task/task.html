@@ -198,7 +198,7 @@
                                     <span ng-if="lang==='EN'">Reload Data</span>
                                 </span>
                             </li>
-                            <li class="mdl-menu__item mdl-list__item" ng-click="openCreateModel()"
+                            <li class="mdl-menu__item mdl-list__item" ng-click="newTask()"
                                 ng-if="contains(me.team.authorities, ['ROLE_TASK_CREATE'])">
                                 <span class="mdl-list__item-primary-content">
                                     <i class="material-icons mdl-list__item-icon">assignment_ind</i>
@@ -359,7 +359,7 @@
                             </li>
                         </ul>
                     </div>
-                    <div ng-class="{'pull-left' : lang==='AR', 'pull-right' : lang==='EN'}" ng-init="toggleList=2">
+                    <div ng-class="{'pull-left' : lang==='AR', 'pull-right' : lang==='EN'}" ng-init="toggleList=1">
                         <div class="btn-toolbar">
                             <div class="btn-group" data-toggle="buttons">
                                 <button class="btn btn-default mdl-button mdl-js-button mdl-js-ripple-effect"
@@ -391,7 +391,7 @@
     <div class="mdl-layout__drawer" style="padding-top: 175px !important;">
         <nav class="mdl-navigation">
             <a class="mdl-navigation__link mdl-menu__item mdl-list__item"
-               href="" ui-sref="home" ui-sref-active="mdl-navigation__link-active">
+               href="" ui-sref="home" ui-sref-active="mdl-navigation__link-active mdl-color--primary">
                 <span class="mdl-list__item-primary-content">
                     <i class="material-icons mdl-list__item-icon">dashboard</i>
                     <span ng-if="lang==='AR'">الرئيسية</span>
@@ -399,7 +399,7 @@
                 </span>
             </a>
             <a class="mdl-navigation__link mdl-menu__item mdl-list__item"
-               href="" ui-sref="company" ui-sref-active="mdl-navigation__link-active"
+               href="" ui-sref="company" ui-sref-active="mdl-navigation__link-active mdl-color--primary"
                ng-if="contains(me.team.authorities, ['ROLE_COMPANY_UPDATE'])">
                 <span class="mdl-list__item-primary-content">
                     <i class="material-icons mdl-list__item-icon">business</i>
@@ -408,7 +408,7 @@
                 </span>
             </a>
             <a class="mdl-navigation__link mdl-menu__item mdl-list__item"
-               href="" ui-sref="region" ui-sref-active="mdl-navigation__link-active"
+               href="" ui-sref="region" ui-sref-active="mdl-navigation__link-active mdl-color--primary"
                ng-if="contains(me.team.authorities, ['ROLE_REGION_CREATE', 'ROLE_REGION_UPDATE', 'ROLE_REGION_DELETE', 'ROLE_REGION_REPORT'])">
                 <span class="mdl-list__item-primary-content">
                     <i class="material-icons mdl-list__item-icon">place</i>
@@ -417,7 +417,7 @@
                 </span>
             </a>
             <a class="mdl-navigation__link mdl-menu__item mdl-list__item"
-               href="" ui-sref="branch" ui-sref-active="mdl-navigation__link-active"
+               href="" ui-sref="branch" ui-sref-active="mdl-navigation__link-active mdl-color--primary"
                ng-if="contains(me.team.authorities, ['ROLE_BRANCH_CREATE', 'ROLE_BRANCH_UPDATE', 'ROLE_BRANCH_DELETE', 'ROLE_BRANCH_REPORT'])">
                 <span class="mdl-list__item-primary-content">
                     <i class="material-icons mdl-list__item-icon">layers</i>
@@ -426,7 +426,7 @@
                 </span>
             </a>
             <a class="mdl-navigation__link mdl-menu__item mdl-list__item"
-               href="" ui-sref="department" ui-sref-active="mdl-navigation__link-active"
+               href="" ui-sref="department" ui-sref-active="mdl-navigation__link-active mdl-color--primary"
                ng-if="contains(me.team.authorities, ['ROLE_DEPARTMENT_CREATE', 'ROLE_DEPARTMENT_UPDATE', 'ROLE_DEPARTMENT_DELETE', 'ROLE_DEPARTMENT_REPORT'])">
                 <span class="mdl-list__item-primary-content">
                     <i class="material-icons mdl-list__item-icon">store</i>
@@ -435,7 +435,7 @@
                 </span>
             </a>
             <a class="mdl-navigation__link mdl-menu__item mdl-list__item"
-               href="" ui-sref="employee" ui-sref-active="mdl-navigation__link-active"
+               href="" ui-sref="employee" ui-sref-active="mdl-navigation__link-active mdl-color--primary"
                ng-if="contains(me.team.authorities, ['ROLE_EMPLOYEE_CREATE', 'ROLE_EMPLOYEE_UPDATE', 'ROLE_EMPLOYEE_DELETE', 'ROLE_EMPLOYEE_REPORT'])">
                 <span class="mdl-list__item-primary-content">
                     <i class="material-icons mdl-list__item-icon">person_pin</i>
@@ -444,7 +444,7 @@
                 </span>
             </a>
             <a class="mdl-navigation__link mdl-menu__item mdl-list__item"
-               href="" ui-sref="team" ui-sref-active="mdl-navigation__link-active"
+               href="" ui-sref="team" ui-sref-active="mdl-navigation__link-active mdl-color--primary"
                ng-if="contains(me.team.authorities, ['ROLE_TEAM_CREATE', 'ROLE_TEAM_UPDATE', 'ROLE_TEAM_DELETE'])">
                 <span class="mdl-list__item-primary-content">
                     <i class="material-icons mdl-list__item-icon">security</i>
@@ -453,7 +453,7 @@
                 </span>
             </a>
             <a class="mdl-navigation__link mdl-menu__item mdl-list__item"
-               href="" ui-sref="person" ui-sref-active="mdl-navigation__link-active"
+               href="" ui-sref="person" ui-sref-active="mdl-navigation__link-active mdl-color--primary"
                ng-if="contains(me.team.authorities, ['ROLE_PERSON_CREATE', 'ROLE_PERSON_UPDATE', 'ROLE_PERSON_DELETE', 'ROLE_PERSON_REPORT'])">
                 <span class="mdl-list__item-primary-content">
                     <i class="material-icons mdl-list__item-icon">lock</i>
@@ -462,7 +462,7 @@
                 </span>
             </a>
             <a class="mdl-navigation__link mdl-menu__item mdl-list__item"
-               href="" ui-sref="task" ui-sref-active="mdl-navigation__link-active"
+               href="" ui-sref="task" ui-sref-active="mdl-navigation__link-active mdl-color--primary"
                ng-if="contains(me.team.authorities, ['ROLE_TASK_CREATE', 'ROLE_TASK_UPDATE', 'ROLE_TASK_DELETE', 'ROLE_TASK_REPORT'])">
                 <span class="mdl-list__item-primary-content">
                     <i class="material-icons mdl-list__item-icon">assignment</i>
@@ -479,7 +479,7 @@
                 </span>
             </a>
             <a class="mdl-navigation__link mdl-menu__item mdl-list__item"
-               href="" ui-sref="about" ui-sref-active="mdl-navigation__link-active">
+               href="" ui-sref="about" ui-sref-active="mdl-navigation__link-active mdl-color--primary">
                 <span class="mdl-list__item-primary-content">
                     <i class="material-icons mdl-list__item-icon">info</i>
                     <span ng-if="lang==='AR'">عن البرنامج</span>
@@ -487,7 +487,7 @@
                 </span>
             </a>
             <a class="mdl-navigation__link mdl-menu__item mdl-list__item"
-               href="" ui-sref="profile" ui-sref-active="mdl-navigation__link-active">
+               href="" ui-sref="profile" ui-sref-active="mdl-navigation__link-active mdl-color--primary">
                 <span class="mdl-list__item-primary-content">
                     <i class="material-icons mdl-list__item-icon">account_circle</i>
                     <span ng-if="lang==='AR'">الحساب الشخصي</span>
@@ -509,7 +509,7 @@
                             style="margin-top: 2px;">
                             <li>
                                 <a href=""
-                                   ng-click="fetchTableData()"
+                                   ng-click="filter()"
                                    tooltip-append-to-body="true"
                                    uib-tooltip="{{lang==='AR' ? 'تحديث البيانات' : 'Refresh'}}">
                                     <span class="fa fa-refresh"></span>
@@ -534,6 +534,7 @@
                                    class="table table-bordered table-hover">
                                 <thead>
                                 <tr>
+                                    <th></th>
                                     <th>
                                         <span ng-if="lang==='AR'">م</span>
                                         <span ng-if="lang==='EN'">#</span>
@@ -572,7 +573,7 @@
                                     </th>
                                 </tr>
                                 <tr>
-                                    <th colspan="10">
+                                    <th colspan="11">
                                         <input st-search=""
                                                class="form-control"
                                                placeholder="{{lang==='AR' ? 'بحث شامل وسريع...' : 'Search...'}}"
@@ -581,51 +582,128 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr ng-repeat="task in collection1"
+                                <tr ng-repeat-start="task in collection1"
                                     context-menu="rowMenu"
                                     ng-click="setSelected(task)"
-                                    ng-dblclick="openDetailsModel(task)"
                                     ng-right-click="setSelected(task)"
-                                    st-select-mode="single"
-                                    ng-class="{'mdl-color--blue-grey-100':task.isSelected}">
+                                    st-select-mode="single">
+                                    <td st-select-row-custom="task" class="fit">
+                                        <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" ng-for="checkbox{{$index+1}}">
+                                            <input type="checkbox" ng-id="checkbox{{$index+1}}" class="mdl-checkbox__input" ng-model="task.checked">
+                                        </label>
+                                    </td>
                                     <td st-select-row-custom="task">{{$index+1}}</td>
-                                    <td st-select-row-custom="task">
-                                        {{task.code}}
-                                    </td>
-                                    <td st-select-row-custom="task">
-                                        <strong><a href="" ng-click="openDetailsModel(task)">{{task.title}}</a></strong>
-                                        <span class="fa fa-info-circle" uib-tooltip="{{task.content}}"></span>
-                                        <a href="" ng-click="openWarnsModel(task)"><span class="label label-warning">{{task.taskWarns.length > 0 ? task.taskWarns.length + ' تحذير' : ''}}</span></a>
-                                        <a href="" ng-click="openDeductionsModel(task)"><span class="label label-danger">{{task.taskDeductions.length > 0 ? task.taskDeductions.length + ' خصم' : ''}}</span></a>
-                                        <a href=""><span class="label label-primary">{{task.taskCloseRequests.length > 0 ? task.taskCloseRequests.length + ' طلب إغلاق/تمديد' : ''}}</span></a>
-                                    </td>
+                                    <td st-select-row-custom="task">{{task.code}}</td>
+                                    <td st-select-row-custom="task"><strong>{{task.title}}</strong></td>
                                     <td st-select-row-custom="task">
                                         <span ng-show="dateType==='H'">{{task.startDate | kdate: 'yyyy-mm-dd' : 'ar' : 'ummalqura'}}</span>
                                         <span ng-show="dateType==='G'">{{task.startDate | date: 'yyyy-MM-dd'}}</span>
-                                        <span class="label label-success">{{task.startDate | date:'h:m a'}}</span>
                                     </td>
                                     <td st-select-row-custom="task">
                                         <span class="label label-danger">{{task.person.nickname}} / {{task.person.name}}</span>
                                     </td>
                                     <td>
-                                    <span ng-class="{'label label-danger' : task.importance==='Critical', 'label label-warning': task.importance==='Important', 'label label-default': task.importance==='Regular'}">
-                                        {{task.importance==='Critical' ? 'عاجلة' : (task.importance==='Important' ? 'متوسطة' : 'عادية')}}
-                                    </span>
+                                        <span ng-if="lang==='AR'">{{task.importanceInArabic}}</span>
+                                        <span ng-if="lang==='EN'">{{task.importance}}</span>
                                     </td>
                                     <td>
-                                        {{(task.closeType==='Pending')? 'تحت التنفيذ' : ''}}
-                                        {{(task.closeType==='Auto')? 'تلقائي' : ''}}
-                                        {{(task.closeType==='Manual')? 'ارشيف' : ''}}
+                                        <span ng-if="lang==='AR'">{{task.closeTypeInArabic}}</span>
+                                        <span ng-if="lang==='EN'">{{task.closeType}}</span>
                                     </td>
                                     <td st-select-row-custom="task">
                                     <span ng-repeat="to in task.taskTos"
                                           ng-class="{'label label-success':to.closed===false, 'label label-default':to.closed===true}"
                                           style="margin: 2px">{{to.person.name}}</span>
                                     </td>
-                                    <td st-select-row-custom="task">
+                                    <td st-select-row-custom="task" class="fit">
                                         <span ng-show="dateType==='H'">{{task.endDate | kdate: 'yyyy-mm-dd' : 'ar' : 'ummalqura'}}</span>
                                         <span ng-show="dateType==='G'">{{task.endDate | date: 'yyyy-MM-dd'}}</span>
-                                        <span class="label label-success">{{task.endDate | date:'h:m a'}}</span>
+                                    </td>
+                                </tr>
+                                <tr ng-repeat-end="" ng-if="task.checked">
+                                    <td colspan="10">
+                                        <div class="form-group row">
+                                            <button uib-tooltip="نسخ المهمة"
+                                                    tooltip-append-to-body="true"
+                                                    type="button"
+                                                    ng-if="contains(me.team.authorities, ['ROLE_TASK_CREATE'])"
+                                                    ng-click="ModalProvider.openTaskCopyModel(task);"
+                                                    class="mdl-button mdl-js-button mdl-js-ripple-effect col-xs-1 col-sm-1 col-md-1 col-lg-1">
+                                                <i class="material-icons">content_copy</i>
+                                            </button>
+                                            <button uib-tooltip="تعديل بيانات المهمة"
+                                                    tooltip-append-to-body="true"
+                                                    type="button"
+                                                    ng-click="openUpdateModel(task)"
+                                                    ng-if="contains(me.team.authorities, ['ROLE_TASK_UPDATE']) && toggleList===1"
+                                                    class="mdl-button mdl-js-button mdl-js-ripple-effect col-xs-1 col-sm-1 col-md-1 col-lg-1">
+                                                <i class="material-icons">edit</i>
+                                            </button>
+                                            <button uib-tooltip="حذف المهمة"
+                                                    tooltip-append-to-body="true"
+                                                    type="button"
+                                                    ng-click="delete(task)"
+                                                    ng-if="contains(me.team.authorities, ['ROLE_TASK_DELETE']) && toggleList===1"
+                                                    class="mdl-button mdl-js-button mdl-js-ripple-effect col-xs-1 col-sm-1 col-md-1 col-lg-1">
+                                                <i class="material-icons">delete</i>
+                                            </button>
+                                            <button uib-tooltip="ارشفة المهمة"
+                                                    tooltip-append-to-body="true"
+                                                    type="button"
+                                                    ng-click="closeTaskCompletely(task)"
+                                                    ng-if="contains(me.team.authorities, ['ROLE_TASK_DELETE']) && toggleList===1"
+                                                    class="mdl-button mdl-js-button mdl-js-ripple-effect col-xs-1 col-sm-1 col-md-1 col-lg-1">
+                                                <i class="material-icons">archive</i>
+                                            </button>
+                                            <button uib-tooltip="حذف التحذيرات"
+                                                    tooltip-append-to-body="true"
+                                                    type="button"
+                                                    ng-click="clearTaskWarns(task)"
+                                                    ng-if="task.person.id===me.id || me.id===me.manager.id"
+                                                    class="mdl-button mdl-js-button mdl-js-ripple-effect col-xs-1 col-sm-1 col-md-1 col-lg-1">
+                                                <i class="material-icons">delete</i>
+                                            </button>
+                                            <button uib-tooltip="حذف الخصومات"
+                                                    tooltip-append-to-body="true"
+                                                    type="button"
+                                                    ng-click="clearTaskDeductions(task)"
+                                                    ng-if="task.person.id===me.id || me.id===me.manager.id"
+                                                    class="mdl-button mdl-js-button mdl-js-ripple-effect col-xs-1 col-sm-1 col-md-1 col-lg-1">
+                                                <i class="material-icons">delete</i>
+                                            </button>
+                                            <button uib-tooltip="اضافة حركة"
+                                                    tooltip-append-to-body="true"
+                                                    type="button"
+                                                    ng-click="openCreateOperationModel(task)"
+                                                    ng-if="contains(me.team.authorities, ['ROLE_TASK_OPERATION_CREATE']) && toggleList===1"
+                                                    class="mdl-button mdl-js-button mdl-js-ripple-effect col-xs-1 col-sm-1 col-md-1 col-lg-1">
+                                                <i class="material-icons">timer</i>
+                                            </button>
+                                            <button uib-tooltip="طلب إغلاق"
+                                                    tooltip-append-to-body="true"
+                                                    type="button"
+                                                    ng-click="openRequestCloseModel(task)"
+                                                    class="mdl-button mdl-js-button mdl-js-ripple-effect col-xs-1 col-sm-1 col-md-1 col-lg-1">
+                                                <i class="material-icons">close</i>
+                                            </button>
+                                            <button uib-tooltip="طلب تمديد"
+                                                    tooltip-append-to-body="true"
+                                                    type="button"
+                                                    ng-click="openRequestExtensionModel(task)"
+                                                    class="mdl-button mdl-js-button mdl-js-ripple-effect col-xs-1 col-sm-1 col-md-1 col-lg-1">
+                                                <i class="material-icons">battery_full</i>
+                                            </button>
+                                            <button uib-tooltip="التفاصيل"
+                                                    tooltip-append-to-body="true"
+                                                    type="button"
+                                                    ng-click="openDetailsModel(task)"
+                                                    class="mdl-button mdl-js-button mdl-js-ripple-effect col-xs-1 col-sm-1 col-md-1 col-lg-1">
+                                                <i class="material-icons">info</i>
+                                            </button>
+                                        </div>
+                                        <div class="form-group row">
+                                            <span>{{task.content}}</span>
+                                        </div>
                                     </td>
                                 </tr>
                                 <tr class="blank_row"
@@ -637,13 +715,6 @@
                                     </td>
                                 </tr>
                                 </tbody>
-                                <tfoot>
-                                <tr>
-                                    <td colspan="10">
-                                        <div st-pagination="" st-items-by-page="5" st-displayed-pages="10"></div>
-                                    </td>
-                                </tr>
-                                </tfoot>
                             </table>
                         </div>
                     </div>
@@ -652,91 +723,139 @@
             </div>
 
             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" ng-show="toggleList===2">
-                <div st-table="collection2" st-safe-src="tasks">
-                    <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3" ng-repeat="task in collection2">
-                        <!-- CONTACT ITEM -->
-                        <div class="panel panel-default">
-                            <div class="panel-body profile">
-                                <div class="profile-image">
-                                    <img width="100" height="100" src="/ui/img/no-image.jpg"
-                                         alt="{{task.name}}"/>
-                                </div>
-                                <div class="profile-data">
-                                    <div class="profile-data-name">{{task.title}}</div>
-                                </div>
-                                <div class="profile-controls">
-                                    <!--<a href="" class="profile-control-left"><span class="fa fa-info-circle"></span></a>-->
-                                    <!--<a href="" class="profile-control-right"><span class="fa fa-phone"></span></a>-->
-                                </div>
-                            </div>
-                            <div class="panel-body">
-                                <div class="contact-info">
-                                    <p>
-                                        <small ng-if="lang==='AR'">جهة التكليف</small>
-                                        <small ng-if="lang==='EN'">Creator</small>
-                                        <br/>{{task.person.nickname}} / {{task.person.name}}
-                                    </p>
-                                    <p>
-                                        <small ng-if="lang==='AR'">تاريخ التسليم</small>
-                                        <small ng-if="lang==='EN'">End Date</small>
-                                        <br/>
-                                        <span ng-show="dateType==='H'">{{task.endDate | kdate: 'yyyy-mm-dd' : 'ar' : 'ummalqura'}}</span>
-                                        <span ng-show="dateType==='G'">{{task.endDate | date: 'yyyy-MM-dd'}}</span>
-                                    </p>
-                                    <p>
-                                        <a href="" ng-click="openDetailsModel(task)">
-                                            <span ng-if="lang==='AR'">المزيد...</span>
-                                            <span ng-if="lang==='EN'">More Info...</span>
-                                        </a>
-                                    </p>
-                                </div>
-                            </div>
-                            <div class="panel-footer">
-                                <div class="btn-group btn-group-justified">
-                                    <a ng-if="contains(me.team.authorities, ['ROLE_TASK_UPDATE'])"
-                                       uib-tooltip="{{lang==='AR' ? 'تعديل' : 'Edit...'}}"
-                                       tooltip-append-to-body="true"
-                                       type="button"
-                                       ng-click="openUpdateModel(task)"
-                                       class="btn btn-primary">
-                                        <i class="fa fa-edit fa-lg"></i>
-                                    </a>
-                                    <a ng-if="contains(me.team.authorities, ['ROLE_TASK_DELETE'])"
-                                       uib-tooltip="{{lang==='AR' ? 'حذف' : 'Delete'}}"
-                                       tooltip-append-to-body="true"
-                                       type="button"
-                                       ng-click="delete(task)"
-                                       class="btn btn-primary">
-                                        <i class="fa fa-trash fa-lg"></i>
-                                    </a>
-                                    <a ng-if="contains(me.team.authorities, ['ROLE_TASK_OPERATION_CREATE'])"
-                                       uib-tooltip="{{lang==='AR' ? 'تعليق' : 'Comment...'}}"
-                                       tooltip-append-to-body="true"
-                                       type="button"
-                                       ng-click="openCreateOperationModel(task)"
-                                       class="btn btn-primary">
-                                        <i class="fa fa-clock-o fa-lg"></i>
-                                    </a>
-                                    <a uib-tooltip="{{lang==='AR' ? 'طلب إغلاق' : 'Close Request...'}}"
-                                       tooltip-append-to-body="true"
-                                       type="button"
-                                       ng-click="openRequestCloseModel(task)"
-                                       class="btn btn-primary">
-                                        <i class="fa fa-power-off fa-lg"></i>
-                                    </a>
-                                    <a uib-tooltip="{{lang==='AR' ? 'طلب تمديد' : 'Extend Request...'}}"
-                                       tooltip-append-to-body="true"
-                                       type="button"
-                                       ng-click="openRequestExtensionModel(task)"
-                                       class="btn btn-primary">
-                                        <i class="fa fa-battery-full fa-lg"></i>
-                                    </a>
-                                </div>
-                            </div>
+
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <ul class="panel-controls" ng-class="{'pull-left' : lang==='AR', 'pull-right' : lang==='EN'}"
+                            style="margin-top: 2px;">
+                            <li>
+                                <a href=""
+                                   ng-click="filter()"
+                                   tooltip-append-to-body="true"
+                                   uib-tooltip="{{lang==='AR' ? 'تحديث البيانات' : 'Refresh'}}">
+                                    <span class="fa fa-refresh"></span>
+                                </a>
+                                <a href=""
+                                   ng-if="contains(me.team.authorities, ['ROLE_TASK_CREATE'])"
+                                   ng-click="newTask()"
+                                   tooltip-append-to-body="true"
+                                   uib-tooltip="{{lang==='AR' ? 'انشاء مهمة جديدة' : 'New Task...'}}">
+                                    <span class="fa fa-plus-square"></span>
+                                </a>
+                            </li>
+                        </ul>
+                        <div class="panel-title-box" ng-class="{'pull-right' : lang==='AR', 'pull-left' : lang==='EN'}">
+                            <h3 ng-if="lang==='AR'">قائمة المهام</h3>
+                            <h3 ng-if="lang==='EN'">Tasks List</h3>
                         </div>
-                        <!-- END CONTACT ITEM -->
+                    </div>
+                    <div class="panel-body">
+                        <div st-table="collection2" st-safe-src="tasks">
+                            <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                <tr>
+                                    <th>
+                                        <input st-search=""
+                                               class="form-control"
+                                               placeholder="{{lang==='AR' ? 'بحث شامل وسريع...' : 'Search...'}}"
+                                               type="text"/>
+                                    </th>
+                                </tr>
+                            </div>
+                            <div class="form-group col-xs-12 col-sm-6 col-md-4 col-lg-3" ng-repeat="task in collection2">
+                                <!-- CONTACT ITEM -->
+                                <div class="panel panel-default">
+                                    <div class="panel-body profile">
+                                        <div class="profile-image">
+                                            <img width="100" height="100" src="/ui/img/no-image.jpg"
+                                                 alt="{{task.name}}"/>
+                                        </div>
+                                        <div class="profile-data">
+                                            <div class="profile-data-name">{{task.title}}</div>
+                                        </div>
+                                        <div class="profile-controls">
+                                            <!--<a href="" class="profile-control-left"><span class="fa fa-info-circle"></span></a>-->
+                                            <!--<a href="" class="profile-control-right"><span class="fa fa-phone"></span></a>-->
+                                        </div>
+                                    </div>
+                                    <div class="panel-body">
+                                        <div class="contact-info">
+                                            <p>
+                                                <small ng-if="lang==='AR'">جهة التكليف</small>
+                                                <small ng-if="lang==='EN'">Creator</small>
+                                                <br/>{{task.person.nickname}} / {{task.person.name}}
+                                            </p>
+                                            <p>
+                                                <small ng-if="lang==='AR'">تاريخ التسليم</small>
+                                                <small ng-if="lang==='EN'">End Date</small>
+                                                <br/>
+                                                <span ng-show="dateType==='H'">{{task.endDate | kdate: 'yyyy-mm-dd' : 'ar' : 'ummalqura'}}</span>
+                                                <span ng-show="dateType==='G'">{{task.endDate | date: 'yyyy-MM-dd'}}</span>
+                                            </p>
+                                            <p>
+                                                <a href="" ng-click="openDetailsModel(task)">
+                                                    <span ng-if="lang==='AR'">المزيد...</span>
+                                                    <span ng-if="lang==='EN'">More Info...</span>
+                                                </a>
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="panel-footer">
+                                        <div class="btn-group btn-group-justified">
+                                            <a ng-if="contains(me.team.authorities, ['ROLE_TASK_UPDATE'])"
+                                               uib-tooltip="{{lang==='AR' ? 'تعديل' : 'Edit...'}}"
+                                               tooltip-append-to-body="true"
+                                               type="button"
+                                               ng-click="openUpdateModel(task)"
+                                               class="btn btn-primary">
+                                                <i class="fa fa-edit fa-lg"></i>
+                                            </a>
+                                            <a ng-if="contains(me.team.authorities, ['ROLE_TASK_DELETE'])"
+                                               uib-tooltip="{{lang==='AR' ? 'حذف' : 'Delete'}}"
+                                               tooltip-append-to-body="true"
+                                               type="button"
+                                               ng-click="delete(task)"
+                                               class="btn btn-primary">
+                                                <i class="fa fa-trash fa-lg"></i>
+                                            </a>
+                                            <a ng-if="contains(me.team.authorities, ['ROLE_TASK_OPERATION_CREATE'])"
+                                               uib-tooltip="{{lang==='AR' ? 'تعليق' : 'Comment...'}}"
+                                               tooltip-append-to-body="true"
+                                               type="button"
+                                               ng-click="openCreateOperationModel(task)"
+                                               class="btn btn-primary">
+                                                <i class="fa fa-clock-o fa-lg"></i>
+                                            </a>
+                                            <a uib-tooltip="{{lang==='AR' ? 'طلب إغلاق' : 'Close Request...'}}"
+                                               tooltip-append-to-body="true"
+                                               type="button"
+                                               ng-click="openRequestCloseModel(task)"
+                                               class="btn btn-primary">
+                                                <i class="fa fa-power-off fa-lg"></i>
+                                            </a>
+                                            <a uib-tooltip="{{lang==='AR' ? 'طلب تمديد' : 'Extend Request...'}}"
+                                               tooltip-append-to-body="true"
+                                               type="button"
+                                               ng-click="openRequestExtensionModel(task)"
+                                               class="btn btn-primary">
+                                                <i class="fa fa-battery-full fa-lg"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- END CONTACT ITEM -->
+                            </div>
+                            <div class="form-group row"></div>
+                            <tfoot>
+                                <tr>
+                                    <td>
+                                        <div st-pagination="" st-items-by-page="4" st-displayed-pages="10"></div>
+                                    </td>
+                                </tr>
+                            </tfoot>
+                        </div>
                     </div>
                 </div>
+
             </div>
 
             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" ng-show="toggleList===3">

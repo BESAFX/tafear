@@ -187,7 +187,7 @@
     <div class="mdl-layout__drawer">
         <nav class="mdl-navigation">
             <a class="mdl-navigation__link mdl-menu__item mdl-list__item"
-               href="" ui-sref="home" ui-sref-active="mdl-navigation__link-active">
+               href="" ui-sref="home" ui-sref-active="mdl-navigation__link-active mdl-color--primary">
                 <span class="mdl-list__item-primary-content">
                     <i class="material-icons mdl-list__item-icon">dashboard</i>
                     <span ng-if="lang==='AR'">الرئيسية</span>
@@ -195,7 +195,7 @@
                 </span>
             </a>
             <a class="mdl-navigation__link mdl-menu__item mdl-list__item"
-               href="" ui-sref="company" ui-sref-active="mdl-navigation__link-active"
+               href="" ui-sref="company" ui-sref-active="mdl-navigation__link-active mdl-color--primary"
                ng-if="contains(me.team.authorities, ['ROLE_COMPANY_UPDATE'])">
                 <span class="mdl-list__item-primary-content">
                     <i class="material-icons mdl-list__item-icon">business</i>
@@ -204,7 +204,7 @@
                 </span>
             </a>
             <a class="mdl-navigation__link mdl-menu__item mdl-list__item"
-               href="" ui-sref="region" ui-sref-active="mdl-navigation__link-active"
+               href="" ui-sref="region" ui-sref-active="mdl-navigation__link-active mdl-color--primary"
                ng-if="contains(me.team.authorities, ['ROLE_REGION_CREATE', 'ROLE_REGION_UPDATE', 'ROLE_REGION_DELETE', 'ROLE_REGION_REPORT'])">
                 <span class="mdl-list__item-primary-content">
                     <i class="material-icons mdl-list__item-icon">place</i>
@@ -213,7 +213,7 @@
                 </span>
             </a>
             <a class="mdl-navigation__link mdl-menu__item mdl-list__item"
-               href="" ui-sref="branch" ui-sref-active="mdl-navigation__link-active"
+               href="" ui-sref="branch" ui-sref-active="mdl-navigation__link-active mdl-color--primary"
                ng-if="contains(me.team.authorities, ['ROLE_BRANCH_CREATE', 'ROLE_BRANCH_UPDATE', 'ROLE_BRANCH_DELETE', 'ROLE_BRANCH_REPORT'])">
                 <span class="mdl-list__item-primary-content">
                     <i class="material-icons mdl-list__item-icon">layers</i>
@@ -222,7 +222,7 @@
                 </span>
             </a>
             <a class="mdl-navigation__link mdl-menu__item mdl-list__item"
-               href="" ui-sref="department" ui-sref-active="mdl-navigation__link-active"
+               href="" ui-sref="department" ui-sref-active="mdl-navigation__link-active mdl-color--primary"
                ng-if="contains(me.team.authorities, ['ROLE_DEPARTMENT_CREATE', 'ROLE_DEPARTMENT_UPDATE', 'ROLE_DEPARTMENT_DELETE', 'ROLE_DEPARTMENT_REPORT'])">
                 <span class="mdl-list__item-primary-content">
                     <i class="material-icons mdl-list__item-icon">store</i>
@@ -231,7 +231,7 @@
                 </span>
             </a>
             <a class="mdl-navigation__link mdl-menu__item mdl-list__item"
-               href="" ui-sref="employee" ui-sref-active="mdl-navigation__link-active"
+               href="" ui-sref="employee" ui-sref-active="mdl-navigation__link-active mdl-color--primary"
                ng-if="contains(me.team.authorities, ['ROLE_EMPLOYEE_CREATE', 'ROLE_EMPLOYEE_UPDATE', 'ROLE_EMPLOYEE_DELETE', 'ROLE_EMPLOYEE_REPORT'])">
                 <span class="mdl-list__item-primary-content">
                     <i class="material-icons mdl-list__item-icon">person_pin</i>
@@ -240,7 +240,7 @@
                 </span>
             </a>
             <a class="mdl-navigation__link mdl-menu__item mdl-list__item"
-               href="" ui-sref="team" ui-sref-active="mdl-navigation__link-active"
+               href="" ui-sref="team" ui-sref-active="mdl-navigation__link-active mdl-color--primary"
                ng-if="contains(me.team.authorities, ['ROLE_TEAM_CREATE', 'ROLE_TEAM_UPDATE', 'ROLE_TEAM_DELETE'])">
                 <span class="mdl-list__item-primary-content">
                     <i class="material-icons mdl-list__item-icon">security</i>
@@ -249,7 +249,7 @@
                 </span>
             </a>
             <a class="mdl-navigation__link mdl-menu__item mdl-list__item"
-               href="" ui-sref="person" ui-sref-active="mdl-navigation__link-active"
+               href="" ui-sref="person" ui-sref-active="mdl-navigation__link-active mdl-color--primary"
                ng-if="contains(me.team.authorities, ['ROLE_PERSON_CREATE', 'ROLE_PERSON_UPDATE', 'ROLE_PERSON_DELETE', 'ROLE_PERSON_REPORT'])">
                 <span class="mdl-list__item-primary-content">
                     <i class="material-icons mdl-list__item-icon">lock</i>
@@ -258,7 +258,7 @@
                 </span>
             </a>
             <a class="mdl-navigation__link mdl-menu__item mdl-list__item"
-               href="" ui-sref="task" ui-sref-active="mdl-navigation__link-active"
+               href="" ui-sref="task" ui-sref-active="mdl-navigation__link-active mdl-color--primary"
                ng-if="contains(me.team.authorities, ['ROLE_TASK_CREATE', 'ROLE_TASK_UPDATE', 'ROLE_TASK_DELETE', 'ROLE_TASK_REPORT'])">
                 <span class="mdl-list__item-primary-content">
                     <i class="material-icons mdl-list__item-icon">assignment</i>
@@ -275,7 +275,7 @@
                 </span>
             </a>
             <a class="mdl-navigation__link mdl-menu__item mdl-list__item"
-               href="" ui-sref="about" ui-sref-active="mdl-navigation__link-active">
+               href="" ui-sref="about" ui-sref-active="mdl-navigation__link-active mdl-color--primary">
                 <span class="mdl-list__item-primary-content">
                     <i class="material-icons mdl-list__item-icon">info</i>
                     <span ng-if="lang==='AR'">عن البرنامج</span>
@@ -283,7 +283,7 @@
                 </span>
             </a>
             <a class="mdl-navigation__link mdl-menu__item mdl-list__item"
-               href="" ui-sref="profile" ui-sref-active="mdl-navigation__link-active">
+               href="" ui-sref="profile" ui-sref-active="mdl-navigation__link-active mdl-color--primary">
                 <span class="mdl-list__item-primary-content">
                     <i class="material-icons mdl-list__item-icon">account_circle</i>
                     <span ng-if="lang==='AR'">الحساب الشخصي</span>

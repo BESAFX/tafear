@@ -3,6 +3,8 @@ import com.besafx.app.config.CustomException;
 import com.besafx.app.entity.Person;
 import com.besafx.app.entity.Task;
 import com.besafx.app.entity.TaskOperation;
+import com.besafx.app.entity.enums.CloseType;
+import com.besafx.app.entity.enums.Importance;
 import com.besafx.app.search.TaskSearch;
 import com.besafx.app.service.TaskService;
 import net.sf.jasperreports.engine.*;
@@ -527,8 +529,8 @@ public class ReportDynamicController {
     public void ReportFilteredTasks(
             @RequestBody ReportProp reportProp,
             @RequestParam(value = "title", required = false) final String title,
-            @RequestParam(value = "importance", required = false) final Task.Importance importance,
-            @RequestParam(value = "closeType", required = false) final Task.CloseType closeType,
+            @RequestParam(value = "importance", required = false) final Importance importance,
+            @RequestParam(value = "closeType", required = false) final CloseType closeType,
             @RequestParam(value = "codeFrom", required = false) final Long codeFrom,
             @RequestParam(value = "codeTo", required = false) final Long codeTo,
             @RequestParam(value = "startDateFrom", required = false) final Long startDateFrom,

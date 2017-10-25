@@ -1,5 +1,5 @@
 package com.besafx.app.util;
-import com.besafx.app.entity.Task.CloseType;
+import com.besafx.app.entity.enums.CloseType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

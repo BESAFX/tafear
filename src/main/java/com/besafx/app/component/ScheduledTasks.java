@@ -2,6 +2,7 @@ package com.besafx.app.component;
 import com.besafx.app.config.EmailSender;
 import com.besafx.app.controller.ReportTaskController;
 import com.besafx.app.entity.*;
+import com.besafx.app.entity.enums.CloseType;
 import com.besafx.app.search.TaskSearch;
 import com.besafx.app.service.*;
 import com.besafx.app.util.AppOptions;
@@ -92,7 +93,7 @@ public class ScheduledTasks {
         personService.findAll().forEach(person -> {
             log.info("////////////////////////////////" + person.getName() + "////////////////////////////////////////");
             log.info("فحص المهام الواردة السارية للموظف / " + person.getName());
-            List<Task> tasks = taskSearch.search(null, null, Task.CloseType.Pending, null, null, null, null, null, null, true, true, "All", person.getId());
+            List<Task> tasks = taskSearch.search(null, null, CloseType.Pending, null, null, null, null, null, null, true, true, "All", person.getId());
             log.info("عدد المهام المكلف بها = " + tasks.size());
             log.info("فحص كل مهمة على حدا");
             List<Task> warningTasks = new ArrayList<>();
@@ -270,7 +271,7 @@ public class ScheduledTasks {
         log.info("جاري البحث عن المهام التى تم إغلاقها خلال 24 السابقة");
         log.info("سيتم إغلاق المهمة على الافراد المكلفين");
         log.info("سيتم إرسال خصومات إلى الافراد الذين لم يرسلوا طلب إغلاق على الأقل طوال حياة المهمة");
-        List<Task> tasks = taskService.findByCloseTypeAndEndDateBetween(Task.CloseType.Pending, yesterday.toDate(), today.toDate());
+        List<Task> tasks = taskService.findByCloseTypeAndEndDateBetween(CloseType.Pending, yesterday.toDate(), today.toDate());
         log.info("عدد المهام التى أغلقت خلال 24 ساعة الماضية: " + tasks.size());
         ListIterator<Task> listIterator = tasks.listIterator();
         while (listIterator.hasNext()) {
@@ -346,7 +347,7 @@ public class ScheduledTasks {
                 taskOperation.setContent("إغلاق المهمة تلقائي من خلال الفحص اليومي على الموظف / " + taskTo.getPerson().getName());
                 taskOperationService.save(taskOperation);
                 log.info("تحديث بيانات المهمة");
-                task.setCloseType(Task.CloseType.Auto);
+                task.setCloseType(CloseType.Auto);
                 taskService.save(task);
                 log.info("تم الإنتهاء من فحص المهمة رقم: " + task.getCode() + " بنجاح.");
 

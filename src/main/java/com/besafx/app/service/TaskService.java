@@ -2,6 +2,7 @@ package com.besafx.app.service;
 
 import com.besafx.app.entity.Person;
 import com.besafx.app.entity.Task;
+import com.besafx.app.entity.enums.CloseType;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Temporal;
 import org.springframework.data.repository.PagingAndSortingRepository;
@@ -22,5 +23,5 @@ public interface TaskService extends PagingAndSortingRepository<Task, Long>, Jpa
 
     List<Task> findByEndDateBetween(@Temporal(TemporalType.TIMESTAMP) Date startDate, @Temporal(TemporalType.TIMESTAMP) Date endDate);
 
-    List<Task> findByCloseTypeAndEndDateBetween(Task.CloseType closeType, @Temporal(TemporalType.TIMESTAMP) Date startDate, @Temporal(TemporalType.TIMESTAMP) Date endDate);
+    List<Task> findByCloseTypeAndEndDateBetween(CloseType closeType, @Temporal(TemporalType.TIMESTAMP) Date startDate, @Temporal(TemporalType.TIMESTAMP) Date endDate);
 }

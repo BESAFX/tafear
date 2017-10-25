@@ -4,6 +4,7 @@ import com.besafx.app.config.EmailSender;
 import com.besafx.app.entity.Person;
 import com.besafx.app.entity.Task;
 import com.besafx.app.entity.TaskCloseRequest;
+import com.besafx.app.entity.enums.CloseType;
 import com.besafx.app.search.TaskCloseRequestSearch;
 import com.besafx.app.service.PersonService;
 import com.besafx.app.service.TaskCloseRequestService;
@@ -54,7 +55,7 @@ public class TaskCloseRequestRest {
     @RequestMapping(value = "create", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public TaskCloseRequest create(@RequestBody TaskCloseRequest taskCloseRequest, Principal principal) {
-        if (taskCloseRequest.getTask().getCloseType().equals(Task.CloseType.Manual)) {
+        if (taskCloseRequest.getTask().getCloseType().equals(CloseType.Manual)) {
             throw new CustomException("لا يمكن القيام بأي عمليات على مهام الارشيف.");
         }
         if (!taskCloseRequest.getTask().getTaskTos().stream().map(to -> to.getPerson().getEmail()).collect(Collectors.toList()).contains(principal.getName())) {

@@ -2,6 +2,7 @@ package com.besafx.app.controller;
 import com.besafx.app.config.CustomException;
 import com.besafx.app.config.EmailSender;
 import com.besafx.app.entity.*;
+import com.besafx.app.entity.enums.CloseType;
 import com.besafx.app.rest.TaskOperationRest;
 import com.besafx.app.search.TaskSearch;
 import com.besafx.app.service.*;
@@ -212,7 +213,7 @@ public class ReportTaskController {
     @ResponseBody
     public void ReportOutgoingTasksDeductions(
             @RequestParam(value = "personId") Long personId,
-            @RequestParam(value = "closeType", required = false) Task.CloseType closeType,
+            @RequestParam(value = "closeType", required = false) CloseType closeType,
             @RequestParam(value = "startDate", required = false) Long startDate,
             @RequestParam(value = "endDate", required = false) Long endDate,
             HttpServletResponse response)
@@ -256,7 +257,7 @@ public class ReportTaskController {
     @ResponseBody
     public void ReportIncomingTasksDeductions(
             @RequestParam(value = "personList") List<Long> personList,
-            @RequestParam(value = "closeType", required = false) Task.CloseType closeType,
+            @RequestParam(value = "closeType", required = false) CloseType closeType,
             @RequestParam(value = "startDate", required = false) Long startDate,
             @RequestParam(value = "endDate", required = false) Long endDate,
             HttpServletResponse response)
@@ -302,7 +303,7 @@ public class ReportTaskController {
     @ResponseBody
     public void ReportWatchTasksOperations(
             @RequestParam(value = "personList") List<Long> personList,
-            @RequestParam(value = "closeType", required = false) Task.CloseType closeType,
+            @RequestParam(value = "closeType", required = false) CloseType closeType,
             HttpServletResponse response)
             throws JRException, IOException {
         log.info("قراءة كل المهام الواردة لهؤلاء الموظفين");
@@ -344,7 +345,7 @@ public class ReportTaskController {
     @ResponseBody
     public void EmailIncomingTasksDeductions(
             @RequestParam(value = "personList") List<Long> personList,
-            @RequestParam(value = "closeType", required = false) Task.CloseType closeType,
+            @RequestParam(value = "closeType", required = false) CloseType closeType,
             @RequestParam(value = "startDate", required = false) Long startDate,
             @RequestParam(value = "endDate", required = false) Long endDate,
             @RequestParam(value = "email", required = false) String email,
@@ -615,7 +616,7 @@ public class ReportTaskController {
     }
 
     @Async("threadPoolReportGenerator")
-    public Future<byte[]> ReportIncomingTasksDeductions(List<Long> personList, Task.CloseType closeType, Long startDate, Long endDate) {
+    public Future<byte[]> ReportIncomingTasksDeductions(List<Long> personList, CloseType closeType, Long startDate, Long endDate) {
         if (personList.isEmpty()) {
             throw new CustomException("فضلاً اختر موظف واحد على الاقل.");
         }
@@ -682,7 +683,7 @@ public class ReportTaskController {
             map.put("COMPANY_FAX", "الفاكس: " + company.getFax());
             map.put("COMPANY_COMMERCIAL_REGISTER", "السجل التجاري: " + company.getCommericalRegisteration());
         });
-        List<WrapperUtil> list = initWatchTasksOperationsList(personsList, Task.CloseType.Pending);
+        List<WrapperUtil> list = initWatchTasksOperationsList(personsList, CloseType.Pending);
         map.put("LIST", list);
         if (list.isEmpty()) {
             return null;
@@ -725,7 +726,7 @@ public class ReportTaskController {
     private List<WrapperUtil> initTasksClosedSoonNotifyList(Long personId) {
         log.info("قراءة كل المهام الواردة لهذا المستخدم...");
 //        List<Task> tasks = taskSearch.search(null, null, Task.CloseType.Pending, null, null, null, null, null, null, true, true, "All", personId);
-        List<Task> tasks = taskToService.findByPersonIdAndClosedIsNullAndTaskCloseType(personId, Task.CloseType.Pending).stream().map(TaskTo::getTask).collect(Collectors.toList());
+        List<Task> tasks = taskToService.findByPersonIdAndClosedIsNullAndTaskCloseType(personId, CloseType.Pending).stream().map(TaskTo::getTask).collect(Collectors.toList());
         log.info("عدد المهام المكلف بها = " + tasks.size());
         log.info("فحص كل مهمة على حدا");
         List<WrapperUtil> list = new ArrayList<>();
@@ -754,7 +755,7 @@ public class ReportTaskController {
     private List<WrapperUtil> initTasksClosedSoonNotifyList(Long personId, Long taskPersonId) {
         log.info("قراءة كل المهام الواردة لهذا المستخدم...");
 //        List<Task> tasks = taskSearch.search(null, null, Task.CloseType.Pending, null, null, null, null, null, null, true, true, "All", personId);
-        List<Task> tasks = taskToService.findByPersonIdAndClosedIsNullAndTaskCloseTypeAndTaskPersonId(personId, Task.CloseType.Pending, taskPersonId).stream().map(TaskTo::getTask).collect(Collectors.toList());
+        List<Task> tasks = taskToService.findByPersonIdAndClosedIsNullAndTaskCloseTypeAndTaskPersonId(personId, CloseType.Pending, taskPersonId).stream().map(TaskTo::getTask).collect(Collectors.toList());
         log.info("عدد المهام المكلف بها = " + tasks.size());
         log.info("فحص كل مهمة على حدا");
         List<WrapperUtil> list = new ArrayList<>();
@@ -782,7 +783,7 @@ public class ReportTaskController {
 
     private List<WrapperUtil> initTasksOperationsTodayList(Long personId) {
         log.info("قراءة كل المهام الصادرة من هذا المستخدم...");
-        List<Task> tasks = taskSearch.search(null, null, Task.CloseType.Pending, null, null, null, null, null, null, false, true, "All", personId);
+        List<Task> tasks = taskSearch.search(null, null, CloseType.Pending, null, null, null, null, null, null, false, true, "All", personId);
         log.info("عدد المهام الصادرة منه = " + tasks.size());
         List<WrapperUtil> list = new ArrayList<>();
         log.info("تجميع حركات المهام فى قائمة واحدة للعرض...");
@@ -801,7 +802,7 @@ public class ReportTaskController {
         return list;
     }
 
-    private List<WrapperUtil> initOutgoingTasksDeductionsList(Long personId, Task.CloseType closeType, Long startDate, Long endDate) {
+    private List<WrapperUtil> initOutgoingTasksDeductionsList(Long personId, CloseType closeType, Long startDate, Long endDate) {
         Person person = personService.findOne(personId);
         log.info("قراءة كل المهام الصادرة من " + person.getNickname() + " / " + person.getName());
         List<Task> tasks = taskSearch.search(null, null, closeType, null, null, null, null, null, null, false, true, "All", personId);
@@ -873,7 +874,7 @@ public class ReportTaskController {
         return list;
     }
 
-    private List<WrapperUtil> initIncomingTasksDeductionsList(List<Long> persons, Task.CloseType closeType, Long startDate, Long endDate) {
+    private List<WrapperUtil> initIncomingTasksDeductionsList(List<Long> persons, CloseType closeType, Long startDate, Long endDate) {
         List<WrapperUtil> list = new ArrayList<>();
         persons.stream().forEach(personId -> {
             Person person = personService.findOne(personId);
@@ -948,7 +949,7 @@ public class ReportTaskController {
         return list;
     }
 
-    private List<WrapperUtil> initWatchTasksOperationsList(List<Long> persons, Task.CloseType closeType) {
+    private List<WrapperUtil> initWatchTasksOperationsList(List<Long> persons, CloseType closeType) {
         List<WrapperUtil> list = new ArrayList<>();
         LocalDate today = new DateTime().withTimeAtStartOfDay().toLocalDate();
         LocalDate tomorrow = new DateTime().plusDays(1).withTimeAtStartOfDay().toLocalDate();

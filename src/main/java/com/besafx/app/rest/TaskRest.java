@@ -6,12 +6,17 @@ import com.besafx.app.entity.Person;
 import com.besafx.app.entity.Task;
 import com.besafx.app.entity.TaskTo;
 import com.besafx.app.entity.Views;
+import com.besafx.app.entity.enums.CloseType;
+import com.besafx.app.entity.enums.Importance;
 import com.besafx.app.search.TaskSearch;
 import com.besafx.app.service.*;
 import com.besafx.app.util.DateConverter;
 import com.besafx.app.ws.Notification;
 import com.besafx.app.ws.NotificationService;
 import com.fasterxml.jackson.annotation.JsonView;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.github.bohnman.squiggly.Squiggly;
+import com.github.bohnman.squiggly.util.SquigglyUtils;
 import com.google.common.collect.Lists;
 import org.apache.commons.io.IOUtils;
 import org.joda.time.DateTime;
@@ -36,6 +41,8 @@ import java.util.ListIterator;
 public class TaskRest {
 
     private final static Logger log = LoggerFactory.getLogger(TaskRest.class);
+
+    public static final String FILTER_TABLE = "**,person[id,nickname,name],taskTos[**,person[id,nickname,name]],taskCloseRequests[**,person[id,nickname,name]],taskOperations[**,sender[id,nickname,name]],taskWarns[**,toPerson[id,nickname,name]],taskDeductions[**,toPerson[id,nickname,name]]";
 
     @Autowired
     private PersonService personService;
@@ -76,7 +83,7 @@ public class TaskRest {
     @RequestMapping(value = "create", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     @PreAuthorize("hasRole('ROLE_TASK_CREATE')")
-    public synchronized void create(
+    public void create(
             @RequestBody Task task,
             @RequestParam(value = "personsList") List<Long> personsList,
             @RequestParam(value = "single") Boolean single,
@@ -98,7 +105,7 @@ public class TaskRest {
             task.setCode(topTask.getCode() + 1);
         }
         task.setEndDate(new DateTime(task.getEndDate()).withHourOfDay(23).withMinuteOfHour(59).withSecondOfMinute(59).withMillisOfSecond(59).toDate());
-        task.setCloseType(Task.CloseType.Pending);
+        task.setCloseType(CloseType.Pending);
         task.setPerson(person);
         task = taskService.save(task);
         notificationService.notifyOne(Notification
@@ -149,7 +156,7 @@ public class TaskRest {
             entityManager.detach(task);
             task.setId(null);
             task.setEndDate(new DateTime(task.getEndDate()).withHourOfDay(23).withMinuteOfHour(59).withSecondOfMinute(59).withMillisOfSecond(59).toDate());
-            task.setCloseType(Task.CloseType.Pending);
+            task.setCloseType(CloseType.Pending);
             task.setPerson(person);
             task = taskService.save(task);
             notificationService.notifyOne(Notification
@@ -187,9 +194,9 @@ public class TaskRest {
     @RequestMapping(value = "update", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     @PreAuthorize("hasRole('ROLE_TASK_UPDATE')")
-    public Task update(@RequestBody Task task, Principal principal) {
+    public String update(@RequestBody Task task, Principal principal) {
         Task object = taskService.findOne(task.getId());
-        if (task.getCloseType().equals(Task.CloseType.Manual)) {
+        if (task.getCloseType().equals(CloseType.Manual)) {
             throw new CustomException("لا يمكن القيام بأي عمليات على مهام الارشيف.");
         }
         if (object == null) {
@@ -208,7 +215,7 @@ public class TaskRest {
                     .type("success")
                     .icon("fa-edit")
                     .build(), principal.getName());
-            return task;
+            return SquigglyUtils.stringify(Squiggly.init(new ObjectMapper(), FILTER_TABLE), task);
         }
     }
 
@@ -242,29 +249,23 @@ public class TaskRest {
 
     @RequestMapping(value = "findAll", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public List<Task> findAll() {
-        return Lists.newArrayList(taskService.findAll());
+    public String findAll() {
+        return SquigglyUtils.stringify(Squiggly.init(new ObjectMapper(), FILTER_TABLE), Lists.newArrayList(taskService.findAll()));
     }
 
     @RequestMapping(value = "findOne/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public Task findOne(@PathVariable Long id) {
-        return taskService.findOne(id);
-    }
-
-    @RequestMapping(value = "count", produces = MediaType.APPLICATION_JSON_VALUE)
-    @ResponseBody
-    public Long count() {
-        return taskService.count();
+    public String findOne(@PathVariable Long id) {
+        return SquigglyUtils.stringify(Squiggly.init(new ObjectMapper(), FILTER_TABLE), taskService.findOne(id));
     }
 
     @RequestMapping(value = "filter", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     @JsonView(Views.Summery.class)
-    public List<Task> filter(
+    public String filter(
             @RequestParam(value = "title", required = false) final String title,
-            @RequestParam(value = "importance", required = false) final Task.Importance importance,
-            @RequestParam(value = "closeType", required = false) final Task.CloseType closeType,
+            @RequestParam(value = "importance", required = false) final Importance importance,
+            @RequestParam(value = "closeType", required = false) final CloseType closeType,
             @RequestParam(value = "codeFrom", required = false) final Long codeFrom,
             @RequestParam(value = "codeTo", required = false) final Long codeTo,
             @RequestParam(value = "startDateFrom", required = false) final Long startDateFrom,
@@ -275,7 +276,8 @@ public class TaskRest {
             @RequestParam(value = "isTaskOpen", required = false) final Boolean isTaskOpen,
             @RequestParam(value = "timeType") final String timeType,
             @RequestParam(value = "person") final Long person) {
-        return taskSearch.search(title, importance, closeType, codeFrom, codeTo, startDateFrom, startDateTo, endDateFrom, endDateTo, taskType, isTaskOpen, timeType, person);
+        return SquigglyUtils.stringify(Squiggly.init(new ObjectMapper(), FILTER_TABLE),
+                taskSearch.search(title, importance, closeType, codeFrom, codeTo, startDateFrom, startDateTo, endDateFrom, endDateTo, taskType, isTaskOpen, timeType, person));
     }
 
 }

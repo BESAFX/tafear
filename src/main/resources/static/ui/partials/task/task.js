@@ -3,125 +3,21 @@ app.controller("taskCtrl", ['TaskService', 'TaskToService', 'TaskWarnService', '
 
         $scope.items = [];
         $scope.items.push(
-            {'id': 1, 'type': 'link', 'name': 'البرامج', 'link': 'menu'},
-            {'id': 2, 'type': 'title', 'name': 'المهام'}
+            {'id': 1, 'type': 'link', 'name': $rootScope.lang==='AR' ? 'البرامج' : 'Applications', 'link': 'menu'},
+            {'id': 2, 'type': 'title', 'name': $rootScope.lang==='AR' ? 'المهام' : 'Tasks'}
         );
 
-        $timeout(function () {
+        $scope.tasks = [];
 
-            $scope.sideOpacity = 1;
+        $scope.buffer = {};
 
-            $scope.buffer = {};
+        $scope.buffer.taskType = true;
 
-            $scope.buffer.taskType = true;
+        $scope.buffer.isTaskOpen = true;
 
-            $scope.buffer.isTaskOpen = true;
+        $scope.selected = {};
 
-            $scope.reportModel = {};
-
-            $scope.reportProp = {};
-
-            $scope.reportProp.exportType = 'pdf';
-
-            $scope.reportProp.orientation = 'Portrait';
-
-            $scope.reportProp.title = 'تقرير مهام إدارية';
-
-            $scope.reportProp.columns = [
-                {
-                    "name": "رقم المهمة",
-                    "view": false,
-                    "groupBy": false,
-                    "sortBy": false,
-                    "dataTextAlign": "Center",
-                    "viewProp": false
-                },
-                {
-                    "name": "عنوان المهمة",
-                    "view": false,
-                    "groupBy": false,
-                    "sortBy": false,
-                    "dataTextAlign": "Center",
-                    "viewProp": false
-                },
-                {
-                    "name": "تفاصيل المهمة",
-                    "view": false,
-                    "groupBy": false,
-                    "sortBy": false,
-                    "dataTextAlign": "Center",
-                    "viewProp": false
-                },
-                {
-                    "name": "تاريخ إنشاء المهمة",
-                    "view": false,
-                    "groupBy": false,
-                    "sortBy": false,
-                    "dataTextAlign": "Center", "viewProp": false
-                },
-                {
-                    "name": "تاريخ تسليم المهمة",
-                    "view": false,
-                    "groupBy": false,
-                    "sortBy": false,
-                    "dataTextAlign": "Center", "viewProp": false
-                },
-                {
-                    "name": "جهة التكليف",
-                    "view": false,
-                    "groupBy": false,
-                    "sortBy": false,
-                    "dataTextAlign": "Center",
-                    "viewProp": false
-                },
-                {
-                    "name": "رقم الحركة",
-                    "view": false,
-                    "groupBy": false,
-                    "sortBy": false,
-                    "dataTextAlign": "Center",
-                    "viewProp": false
-                },
-                {
-                    "name": "تاريخ الحركة",
-                    "view": false,
-                    "groupBy": false,
-                    "sortBy": false,
-                    "dataTextAlign": "Center",
-                    "viewProp": false
-                },
-                {
-                    "name": "محتوى الحركة",
-                    "view": false,
-                    "groupBy": false,
-                    "sortBy": false,
-                    "dataTextAlign": "Center",
-                    "viewProp": false
-                },
-                {
-                    "name": "مدخل الحركة",
-                    "view": false,
-                    "groupBy": false,
-                    "sortBy": false,
-                    "dataTextAlign": "Center",
-                    "viewProp": false
-                }
-            ];
-
-            $scope.selected = {};
-
-            $scope.selectedOperation = {};
-
-            ReportModelService.findAll().then(function (data) {
-                $scope.reportModels = data;
-            });
-
-            PersonService.findPersonUnderMeSummery().then(function (data) {
-                $scope.persons = data;
-                $scope.buffer.person = data[0];
-            });
-
-        }, 2000);
+        $scope.selectedOperation = {};
 
         $scope.refreshTask = function () {
             TaskService.findOne($scope.selected.id).then(function (data) {
@@ -154,10 +50,6 @@ app.controller("taskCtrl", ['TaskService', 'TaskToService', 'TaskWarnService', '
             TaskCloseRequestService.filter(search.join("")).then(function (data) {
                 $scope.selected.taskCloseRequests = data;
             })
-        };
-
-        $scope.setReportProp = function () {
-            $scope.reportProp = JSON.parse($scope.buffer.reportModel.template);
         };
 
         $scope.filter = function () {
@@ -228,23 +120,23 @@ app.controller("taskCtrl", ['TaskService', 'TaskToService', 'TaskWarnService', '
                 $rootScope.showNotify("المهام", "تم التحميل بنجاح، يمكنك متابعة عملك الآن", "success", "fa-black-tie");
 
                 $scope.items = [];
-                $scope.items.push({'id': 1, 'type': 'link', 'name': 'البرامج', 'link': 'menu'});
+                $scope.items.push({'id': 1, 'type': 'link', 'name': $rootScope.lang==='AR' ? 'البرامج' : 'Applications', 'link': 'menu'});
 
                 if ($scope.buffer.taskType) {
-                    $scope.items.push({'id': 2, 'type': 'title', 'name': 'المهام الواردة'});
+                    $scope.items.push({'id': 2, 'type': 'title', 'name': $rootScope.lang==='AR' ? 'المهام الواردة' : 'Incoming Tasks'});
                 } else {
-                    $scope.items.push({'id': 2, 'type': 'title', 'name': 'المهام الصادرة'});
+                    $scope.items.push({'id': 2, 'type': 'title', 'name': $rootScope.lang==='AR' ? 'المهام الصادرة' : 'Outgoing Tasks'});
                 }
 
                 switch ($scope.buffer.closeType) {
                     case 'Pending':
-                        $scope.items.push({'id': 3, 'type': 'title', 'name': 'تحت التنفيذ'});
+                        $scope.items.push({'id': 3, 'type': 'title', 'name': $rootScope.lang==='AR' ? 'تحت التنفيذ' : 'Pending'});
                         break;
                     case 'Auto':
-                        $scope.items.push({'id': 3, 'type': 'title', 'name': 'تلقائي'});
+                        $scope.items.push({'id': 3, 'type': 'title', 'name': $rootScope.lang==='AR' ? 'تلقائي' : 'Closed'});
                         break;
                     case 'Manual':
-                        $scope.items.push({'id': 3, 'type': 'title', 'name': 'ارشيف'});
+                        $scope.items.push({'id': 3, 'type': 'title', 'name': $rootScope.lang==='AR' ? 'ارشيف' : 'Archive'});
                         break;
                 }
 
@@ -252,68 +144,12 @@ app.controller("taskCtrl", ['TaskService', 'TaskToService', 'TaskWarnService', '
                     {'id': 4, 'type': 'title', 'name': $scope.buffer.person.nickname},
                     {'id': 5, 'type': 'title', 'name': $scope.buffer.person.name}
                 );
+
+                $timeout(function () {
+                    window.componentHandler.upgradeAllRegistered();
+                }, 500);
+
             });
-        };
-
-        $scope.printFilteredTasks = function () {
-            $rootScope.showNotify("المهام", "جاري إعداد التقرير، فضلاً انتظر قليلاً", "warning", "fa-black-tie");
-            var search = [];
-
-            if ($scope.buffer.codeFrom) {
-                search.push('codeFrom=');
-                search.push($scope.buffer.codeFrom);
-                search.push('&');
-            }
-            if ($scope.buffer.codeTo) {
-                search.push('codeTo=');
-                search.push($scope.buffer.codeTo);
-                search.push('&');
-            }
-            if ($scope.buffer.startDateTo) {
-                search.push('startDateTo=');
-                search.push($scope.buffer.startDateTo.getTime());
-                search.push('&');
-            }
-            if ($scope.buffer.startDateFrom) {
-                search.push('startDateFrom=');
-                search.push($scope.buffer.startDateFrom.getTime());
-                search.push('&');
-            }
-            if ($scope.buffer.endDateTo) {
-                search.push('endDateTo=');
-                search.push($scope.buffer.endDateTo.getTime());
-                search.push('&');
-            }
-            if ($scope.buffer.endDateFrom) {
-                search.push('endDateFrom=');
-                search.push($scope.buffer.endDateFrom.getTime());
-                search.push('&');
-            }
-
-            search.push('isTaskOpen=');
-            search.push($scope.buffer.isTaskOpen);
-            search.push('&');
-
-            search.push('timeType=');
-            search.push('All');
-            search.push('&');
-
-            search.push('taskType=');
-            search.push($scope.buffer.taskType);
-            search.push('&');
-
-            search.push('person=');
-            search.push($scope.buffer.person.id);
-            search.push('&');
-
-            console.info(search.join(""));
-
-            TaskService.reportFilteredTasks(search.join(""), $scope.reportProp);
-        };
-
-        $scope.onclose = function () {
-            $scope.showFilter = false;
-            $scope.showCommentOperation = false
         };
 
         $scope.setSelected = function (object) {
@@ -342,10 +178,6 @@ app.controller("taskCtrl", ['TaskService', 'TaskToService', 'TaskWarnService', '
             }
         };
 
-        $scope.reload = function () {
-            $state.reload();
-        };
-
         $scope.clear = function () {
             $scope.buffer = {};
             $scope.buffer.person = $scope.persons[0];
@@ -367,8 +199,10 @@ app.controller("taskCtrl", ['TaskService', 'TaskToService', 'TaskWarnService', '
             });
         };
 
-        $scope.openCreateModel = function () {
-            ModalProvider.openTaskCreateModel();
+        $scope.newTask = function () {
+            ModalProvider.openTaskCreateModel().result.then(function (data) {
+                $scope.tasks.splice(0, 0, data);
+            });
         };
 
         $scope.openUpdateModel = function (task) {
@@ -491,18 +325,6 @@ app.controller("taskCtrl", ['TaskService', 'TaskToService', 'TaskWarnService', '
             ModalProvider.openTaskExtensionModel($scope.selected);
         };
 
-        $scope.showSlideFilter = function () {
-            $scope.showSlide = true;
-            $scope.sideSize = '50%';
-            $scope.showFilter = true;
-        };
-
-        $scope.showSlideOperation = function () {
-            $scope.showSlide = true;
-            $scope.sideSize = '100%';
-            $scope.showOperation = true;
-        };
-
         $scope.findTaskOperations = function () {
             TaskOperationService.findByTask($scope.selected).then(function (data) {
                 $scope.selected.taskOperations = data;
@@ -545,123 +367,89 @@ app.controller("taskCtrl", ['TaskService', 'TaskToService', 'TaskWarnService', '
             });
         };
 
-        $scope.rowMenu = [];
-
-        if ($rootScope.contains($rootScope.authorities, ['ROLE_TASK_CREATE'])) {
-            $scope.rowMenu.push(
-                {
-                    html: '<div style="cursor: pointer;padding: 10px;text-align: right"> اضافة مهمة <span class="fa fa-plus fa-lg"></span></div>',
-                    enabled: function () {
-                        return true
-                    },
-                    click: function ($itemScope, $event, value) {
-                        $scope.openCreateModel();
-                    }
-                });
-        }
-        if ($rootScope.contains($rootScope.authorities, ['ROLE_TASK_UPDATE'])) {
-            $scope.rowMenu.push(
-                {
-                    html: '<div style="cursor: pointer;padding: 10px;text-align: right"> تعديل بيانات مهمة <span class="fa fa-edit fa-lg"></span></div>',
-                    enabled: function () {
-                        return true
-                    },
-                    click: function ($itemScope, $event, value) {
-                        $scope.openUpdateModel($itemScope.task);
-                    }
-                });
-        }
-        if ($rootScope.contains($rootScope.authorities, ['ROLE_TASK_UPDATE'])) {
-            $scope.rowMenu.push(
-                {
-                    html: '<div style="cursor: pointer;padding: 10px;text-align: right"> تمديد مهمة <span class="fa fa-battery fa-lg"></span></div>',
-                    enabled: function () {
-                        return true
-                    },
-                    click: function ($itemScope, $event, value) {
-                        $scope.openExtensionModel($itemScope.task);
-                    }
-                });
-        }
-        if ($rootScope.contains($rootScope.authorities, ['ROLE_TASK_DELETE'])) {
-            $scope.rowMenu.push(
-                {
-                    html: '<div style="cursor: pointer;padding: 10px;text-align: right"> حذف مهمة <span class="fa fa-trash fa-lg"></span></div>',
-                    enabled: function () {
-                        return true
-                    },
-                    click: function ($itemScope, $event, value) {
-                        $scope.delete($itemScope.task);
-                    }
-                });
-        }
-        if ($rootScope.contains($rootScope.authorities, ['ROLE_TASK_OPERATION_CREATE'])) {
-            $scope.rowMenu.push(
-                {
-                    html: '<div style="cursor: pointer;padding: 10px;text-align: right"> اضافة حركة <span class="fa fa-plus fa-lg"></span></div>',
-                    enabled: function () {
-                        return true
-                    },
-                    click: function ($itemScope, $event, value) {
-                        $scope.openCreateOperationModel($itemScope.task);
-                    }
-                });
-        }
-        $scope.rowMenu.push(
+        $scope.rowMenu = [
             {
-                html: '<div style="cursor: pointer;padding: 10px;text-align: right"> طلب إغلاق <span class="fa fa-power-off fa-lg"></span></div>',
+                html: '<div class="drop-menu"> اضافة مهمة <span class="fa fa-plus fa-lg"></span></div>',
+                enabled: function () {
+                    return $rootScope.contains($rootScope.me.team.authorities, ['ROLE_TASK_CREATE']);
+                },
+                click: function ($itemScope, $event, value) {
+                    ModalProvider.openTaskCreateModel();
+                }
+            },
+            {
+                html: '<div class="drop-menu"> تعديل بيانات المهمة <span class="fa fa-edit fa-lg"></span></div>',
+                enabled: function () {
+                    return $rootScope.contains($rootScope.me.team.authorities, ['ROLE_TASK_UPDATE']);
+                },
+                click: function ($itemScope, $event, value) {
+                    $scope.openUpdateModel($itemScope.task);
+                }
+            },
+            {
+                html: '<div class="drop-menu"> تمديد المهمة <span class="fa fa-battery fa-lg"></span></div>',
+                enabled: function () {
+                    return $rootScope.contains($rootScope.me.team.authorities, ['ROLE_TASK_UPDATE']);
+                },
+                click: function ($itemScope, $event, value) {
+                    $scope.openExtensionModel($itemScope.task);
+                }
+            },
+            {
+                html: '<div class="drop-menu"> حذف المهمة <span class="fa fa-minus-square-o fa-lg"></span></div>',
+                enabled: function () {
+                    return $rootScope.contains($rootScope.me.team.authorities, ['ROLE_TASK_DELETE']);
+                },
+                click: function ($itemScope, $event, value) {
+                    $scope.delete($itemScope.task);
+                }
+            },
+            {
+                html: '<div class="drop-menu"> اضافة حركة <span class="fa fa-plus fa-lg"></span></div>',
+                enabled: function () {
+                    return $rootScope.contains($rootScope.me.team.authorities, ['ROLE_TASK_OPERATION_CREATE']);
+                },
+                click: function ($itemScope, $event, value) {
+                    $scope.openCreateOperationModel($itemScope.task);
+                }
+            },
+            {
+                html: '<div class="drop-menu"> طلب إغلاق <span class="fa fa-power-off fa-lg"></span></div>',
                 enabled: function () {
                     return true
                 },
                 click: function ($itemScope, $event, value) {
                     $scope.openRequestCloseModel($itemScope.task);
                 }
-            });
-
-        $scope.rowMenu.push(
+            },
             {
-                html: '<div style="cursor: pointer;padding: 10px;text-align: right"> طلب تمديد <span class="fa fa-battery fa-lg"></span></div>',
+                html: '<div class="drop-menu"> طلب تمديد <span class="fa fa-battery fa-lg"></span></div>',
                 enabled: function () {
                     return true
                 },
                 click: function ($itemScope, $event, value) {
                     $scope.openRequestExtensionModel($itemScope.task);
                 }
-            });
-
-        $scope.rowMenu.push(
+            },
             {
-                html: '<div style="cursor: pointer;padding: 10px;text-align: right"> تحديد نسبة الإنجاز <span class="fa fa-hourglass-2 fa-lg"></span></div>',
+                html: '<div class="drop-menu"> تحديد نسبة الإنجاز <span class="fa fa-hourglass-2 fa-lg"></span></div>',
                 enabled: function () {
                     return true
                 },
                 click: function ($itemScope, $event, value) {
                     $scope.openProgressModel($itemScope.task);
                 }
-            });
-
-        $scope.rowMenu.push(
+            },
             {
-                html: '<div style="cursor: pointer;padding: 10px;text-align: right">لوحة التحكم <span class="fa fa-gears fa-lg"></span></div>',
-                enabled: function () {
-                    return true
-                },
-                click: function ($itemScope, $event, value) {
-                    $scope.showSlideOperation();
-                    $scope.setSelected($itemScope.task);
-                }
-            });
-
-        $scope.rowMenu.push(
-            {
-                html: '<div style="cursor: pointer;padding: 10px;text-align: right"> التفاصيل <span class="fa fa-info fa-lg"></span></div>',
+                html: '<div class="drop-menu"> التفاصيل <span class="fa fa-info fa-lg"></span></div>',
                 enabled: function () {
                     return true
                 },
                 click: function ($itemScope, $event, value) {
                     $scope.openDetailsModel($itemScope.task);
                 }
-            });
+            }
+        ];
 
 
         $scope.openFetchIncomingPending = function () {
@@ -676,7 +464,7 @@ app.controller("taskCtrl", ['TaskService', 'TaskToService', 'TaskWarnService', '
                 keyboard: false,
                 resolve: {
                     title: function () {
-                        return 'المهام الواردة / تحت التنفيذ';
+                        return $rootScope.lang==='AR' ? 'المهام الواردة - تحت التنفيذ' : 'Incoming Tasks - Pending';
                     },
                     taskType: function () {
                         return true;
@@ -751,16 +539,19 @@ app.controller("taskCtrl", ['TaskService', 'TaskToService', 'TaskWarnService', '
 
                     $scope.items = [];
 
-                    $scope.items.push({'id': 1, 'type': 'link', 'name': 'البرامج', 'link': 'menu'});
+                    $scope.items.push({'id': 1, 'type': 'link', 'name': $rootScope.lang==='AR' ? 'البرامج' : 'Applications', 'link': 'menu'});
 
-                    $scope.items.push({'id': 2, 'type': 'title', 'name': 'المهام الواردة'});
+                    $scope.items.push({'id': 2, 'type': 'title', 'name': $rootScope.lang==='AR' ? 'المهام الواردة' : 'Incoming Tasks'});
 
-                    $scope.items.push({'id': 3, 'type': 'title', 'name': 'تحت التنفيذ'});
+                    $scope.items.push({'id': 3, 'type': 'title', 'name': $rootScope.lang==='AR' ? 'تحت التنفيذ' : 'Pending'});
 
                     $scope.items.push(
                         {'id': 4, 'type': 'title', 'name': $scope.buffer.person.nickname},
                         {'id': 5, 'type': 'title', 'name': $scope.buffer.person.name}
                     );
+                    $timeout(function () {
+                        window.componentHandler.upgradeAllRegistered();
+                    }, 500);
 
                 });
             }, function () {
@@ -780,7 +571,7 @@ app.controller("taskCtrl", ['TaskService', 'TaskToService', 'TaskWarnService', '
                 keyboard: false,
                 resolve: {
                     title: function () {
-                        return 'المهام الواردة / المغلقة تلقائي';
+                        return $rootScope.lang==='AR' ? 'المهام الواردة - المغلقة تلقائي' : 'Incoming Tasks - Closed';
                     },
                     taskType: function () {
                         return true;
@@ -855,16 +646,19 @@ app.controller("taskCtrl", ['TaskService', 'TaskToService', 'TaskWarnService', '
 
                     $scope.items = [];
 
-                    $scope.items.push({'id': 1, 'type': 'link', 'name': 'البرامج', 'link': 'menu'});
+                    $scope.items.push({'id': 1, 'type': 'link', 'name': $rootScope.lang==='AR' ? 'البرامج' : 'Applications', 'link': 'menu'});
 
-                    $scope.items.push({'id': 2, 'type': 'title', 'name': 'المهام الواردة'});
+                    $scope.items.push({'id': 2, 'type': 'title', 'name': $rootScope.lang==='AR' ? 'المهام الواردة' : 'Incoming Tasks'});
 
-                    $scope.items.push({'id': 3, 'type': 'title', 'name': 'تلقائي'});
+                    $scope.items.push({'id': 3, 'type': 'title', 'name': $rootScope.lang==='AR' ? 'تلقائي' : 'Pending'});
 
                     $scope.items.push(
                         {'id': 4, 'type': 'title', 'name': $scope.buffer.person.nickname},
                         {'id': 5, 'type': 'title', 'name': $scope.buffer.person.name}
                     );
+                    $timeout(function () {
+                        window.componentHandler.upgradeAllRegistered();
+                    }, 500);
 
                 });
             }, function () {
@@ -884,7 +678,7 @@ app.controller("taskCtrl", ['TaskService', 'TaskToService', 'TaskWarnService', '
                 keyboard: false,
                 resolve: {
                     title: function () {
-                        return 'المهام الواردة / الارشيف';
+                        return $rootScope.lang==='AR' ? 'المهام الواردة - الارشيف' : 'Incoming Tasks - Archive';
                     },
                     taskType: function () {
                         return true;
@@ -959,16 +753,19 @@ app.controller("taskCtrl", ['TaskService', 'TaskToService', 'TaskWarnService', '
 
                     $scope.items = [];
 
-                    $scope.items.push({'id': 1, 'type': 'link', 'name': 'البرامج', 'link': 'menu'});
+                    $scope.items.push({'id': 1, 'type': 'link', 'name': $rootScope.lang==='AR' ? 'البرامج' : 'Applications', 'link': 'menu'});
 
-                    $scope.items.push({'id': 2, 'type': 'title', 'name': 'المهام الواردة'});
+                    $scope.items.push({'id': 2, 'type': 'title', 'name': $rootScope.lang==='AR' ? 'المهام الواردة' : 'Incoming Tasks'});
 
-                    $scope.items.push({'id': 3, 'type': 'title', 'name': 'ارشيف'});
+                    $scope.items.push({'id': 3, 'type': 'title', 'name': $rootScope.lang==='AR' ? 'ارشيف' : 'Archive'});
 
                     $scope.items.push(
                         {'id': 4, 'type': 'title', 'name': $scope.buffer.person.nickname},
                         {'id': 5, 'type': 'title', 'name': $scope.buffer.person.name}
                     );
+                    $timeout(function () {
+                        window.componentHandler.upgradeAllRegistered();
+                    }, 500);
 
                 });
             }, function () {
@@ -1000,16 +797,19 @@ app.controller("taskCtrl", ['TaskService', 'TaskToService', 'TaskWarnService', '
 
                 $scope.items = [];
 
-                $scope.items.push({'id': 1, 'type': 'link', 'name': 'البرامج', 'link': 'menu'});
+                $scope.items.push({'id': 1, 'type': 'link', 'name': $rootScope.lang==='AR' ? 'البرامج' : 'Applications', 'link': 'menu'});
 
-                $scope.items.push({'id': 2, 'type': 'title', 'name': 'المهام الواردة'});
+                $scope.items.push({'id': 2, 'type': 'title', 'name': $rootScope.lang==='AR' ? 'المهام الواردة' : 'Incoming Tasks'});
 
-                $scope.items.push({'id': 3, 'type': 'title', 'name': 'تحت التنفيذ'});
+                $scope.items.push({'id': 3, 'type': 'title', 'name': $rootScope.lang==='AR' ? 'تحت التنفيذ' : 'Pending'});
 
                 $scope.items.push(
                     {'id': 4, 'type': 'title', 'name': $rootScope.me.nickname},
                     {'id': 5, 'type': 'title', 'name': $rootScope.me.name}
                 );
+                $timeout(function () {
+                    window.componentHandler.upgradeAllRegistered();
+                }, 500);
 
             });
         };
@@ -1038,16 +838,19 @@ app.controller("taskCtrl", ['TaskService', 'TaskToService', 'TaskWarnService', '
 
                 $scope.items = [];
 
-                $scope.items.push({'id': 1, 'type': 'link', 'name': 'البرامج', 'link': 'menu'});
+                $scope.items.push({'id': 1, 'type': 'link', 'name': $rootScope.lang==='AR' ? 'البرامج' : 'Applications', 'link': 'menu'});
 
-                $scope.items.push({'id': 2, 'type': 'title', 'name': 'المهام الواردة'});
+                $scope.items.push({'id': 2, 'type': 'title', 'name': $rootScope.lang==='AR' ? 'المهام الواردة' : 'Incoming Tasks'});
 
-                $scope.items.push({'id': 3, 'type': 'title', 'name': 'تلقائي'});
+                $scope.items.push({'id': 3, 'type': 'title', 'name': $rootScope.lang==='AR' ? 'تلقائي' : 'Closed'});
 
                 $scope.items.push(
                     {'id': 4, 'type': 'title', 'name': $rootScope.me.nickname},
                     {'id': 5, 'type': 'title', 'name': $rootScope.me.name}
                 );
+                $timeout(function () {
+                    window.componentHandler.upgradeAllRegistered();
+                }, 500);
 
             });
         };
@@ -1076,16 +879,19 @@ app.controller("taskCtrl", ['TaskService', 'TaskToService', 'TaskWarnService', '
 
                 $scope.items = [];
 
-                $scope.items.push({'id': 1, 'type': 'link', 'name': 'البرامج', 'link': 'menu'});
+                $scope.items.push({'id': 1, 'type': 'link', 'name': $rootScope.lang==='AR' ? 'البرامج' : 'Applications', 'link': 'menu'});
 
-                $scope.items.push({'id': 2, 'type': 'title', 'name': 'المهام الواردة'});
+                $scope.items.push({'id': 2, 'type': 'title', 'name': $rootScope.lang==='AR' ? 'المهام الواردة' : 'Incoming Tasks'});
 
-                $scope.items.push({'id': 3, 'type': 'title', 'name': 'ارشيف'});
+                $scope.items.push({'id': 3, 'type': 'title', 'name': $rootScope.lang==='AR' ? 'ارشيف' : 'Archive'});
 
                 $scope.items.push(
                     {'id': 4, 'type': 'title', 'name': $rootScope.me.nickname},
                     {'id': 5, 'type': 'title', 'name': $rootScope.me.name}
                 );
+                $timeout(function () {
+                    window.componentHandler.upgradeAllRegistered();
+                }, 500);
 
             });
         };
@@ -1102,7 +908,7 @@ app.controller("taskCtrl", ['TaskService', 'TaskToService', 'TaskWarnService', '
                 keyboard: false,
                 resolve: {
                     title: function () {
-                        return 'المهام الصادرة / تحت التنفيذ';
+                        return $rootScope.lang==='AR' ? 'المهام الصادرة - تحت التنفيذ' : 'Outgoing Tasks - Pending';
                     },
                     taskType: function () {
                         return false;
@@ -1176,16 +982,20 @@ app.controller("taskCtrl", ['TaskService', 'TaskToService', 'TaskWarnService', '
                     $rootScope.showNotify("ادارة المهام", "تم تحميل جميع المهام الصادرة بنجاح", "success", "fa-black-tie");
 
                     $scope.items = [];
-                    $scope.items.push({'id': 1, 'type': 'link', 'name': 'البرامج', 'link': 'menu'});
+                    $scope.items.push({'id': 1, 'type': 'link', 'name': $rootScope.lang==='AR' ? 'البرامج' : 'Applications', 'link': 'menu'});
 
-                    $scope.items.push({'id': 2, 'type': 'title', 'name': 'المهام الصادرة'});
+                    $scope.items.push({'id': 2, 'type': 'title', 'name': $rootScope.lang==='AR' ? 'المهام الصادرة' : 'Outgoing Tasks'});
 
-                    $scope.items.push({'id': 3, 'type': 'title', 'name': 'تحت التنفيذ'});
+                    $scope.items.push({'id': 3, 'type': 'title', 'name': $rootScope.lang==='AR' ? 'تحت التنفيذ' : 'Pending'});
 
                     $scope.items.push(
                         {'id': 4, 'type': 'title', 'name': $scope.buffer.person.nickname},
                         {'id': 5, 'type': 'title', 'name': $scope.buffer.person.name}
                     );
+                    $timeout(function () {
+                        window.componentHandler.upgradeAllRegistered();
+                    }, 500);
+
                 });
             }, function () {
                 $log.info('Modal dismissed at: ' + new Date());
@@ -1204,7 +1014,7 @@ app.controller("taskCtrl", ['TaskService', 'TaskToService', 'TaskWarnService', '
                 keyboard: false,
                 resolve: {
                     title: function () {
-                        return 'المهام الصادرة / المغلقة تلقائي';
+                        return $rootScope.lang==='AR' ? 'المهام الصادرة - المغلقة تلقائي' : 'Outgoing Tasks - Closed';
                     },
                     taskType: function () {
                         return false;
@@ -1278,16 +1088,20 @@ app.controller("taskCtrl", ['TaskService', 'TaskToService', 'TaskWarnService', '
                     $rootScope.showNotify("ادارة المهام", "تم تحميل جميع المهام الصادرة بنجاح", "success", "fa-black-tie");
 
                     $scope.items = [];
-                    $scope.items.push({'id': 1, 'type': 'link', 'name': 'البرامج', 'link': 'menu'});
+                    $scope.items.push({'id': 1, 'type': 'link', 'name': $rootScope.lang==='AR' ? 'البرامج' : 'Applications', 'link': 'menu'});
 
-                    $scope.items.push({'id': 2, 'type': 'title', 'name': 'المهام الصادرة'});
+                    $scope.items.push({'id': 2, 'type': 'title', 'name': $rootScope.lang==='AR' ? 'المهام الصادرة' : 'Outgoing Tasks'});
 
-                    $scope.items.push({'id': 3, 'type': 'title', 'name': 'تلقائي'});
+                    $scope.items.push({'id': 3, 'type': 'title', 'name': $rootScope.lang==='AR' ? 'تلقائي' : 'Closed'});
 
                     $scope.items.push(
                         {'id': 4, 'type': 'title', 'name': $scope.buffer.person.nickname},
                         {'id': 5, 'type': 'title', 'name': $scope.buffer.person.name}
                     );
+                    $timeout(function () {
+                        window.componentHandler.upgradeAllRegistered();
+                    }, 500);
+
                 });
             }, function () {
                 $log.info('Modal dismissed at: ' + new Date());
@@ -1306,7 +1120,7 @@ app.controller("taskCtrl", ['TaskService', 'TaskToService', 'TaskWarnService', '
                 keyboard: false,
                 resolve: {
                     title: function () {
-                        return 'المهام الصادرة / الارشيف';
+                        return $rootScope.lang==='AR' ? 'المهام الصادرة - الارشيف' : 'Outgoing Tasks - Archive';
                     },
                     taskType: function () {
                         return false;
@@ -1380,16 +1194,20 @@ app.controller("taskCtrl", ['TaskService', 'TaskToService', 'TaskWarnService', '
                     $rootScope.showNotify("ادارة المهام", "تم تحميل جميع المهام الصادرة بنجاح", "success", "fa-black-tie");
 
                     $scope.items = [];
-                    $scope.items.push({'id': 1, 'type': 'link', 'name': 'البرامج', 'link': 'menu'});
+                    $scope.items.push({'id': 1, 'type': 'link', 'name': $rootScope.lang==='AR' ? 'البرامج' : 'Applications', 'link': 'menu'});
 
-                    $scope.items.push({'id': 2, 'type': 'title', 'name': 'المهام الصادرة'});
+                    $scope.items.push({'id': 2, 'type': 'title', 'name': $rootScope.lang==='AR' ? 'المهام الصادرة' : 'Outgoing Tasks'});
 
-                    $scope.items.push({'id': 3, 'type': 'title', 'name': 'ارشيف'});
+                    $scope.items.push({'id': 3, 'type': 'title', 'name': $rootScope.lang==='AR' ? 'ارشيف' : 'Archive'});
 
                     $scope.items.push(
                         {'id': 4, 'type': 'title', 'name': $scope.buffer.person.nickname},
                         {'id': 5, 'type': 'title', 'name': $scope.buffer.person.name}
                     );
+                    $timeout(function () {
+                        window.componentHandler.upgradeAllRegistered();
+                    }, 500);
+
                 });
             }, function () {
                 $log.info('Modal dismissed at: ' + new Date());
@@ -1420,16 +1238,20 @@ app.controller("taskCtrl", ['TaskService', 'TaskToService', 'TaskWarnService', '
 
                 $scope.items = [];
 
-                $scope.items.push({'id': 1, 'type': 'link', 'name': 'البرامج', 'link': 'menu'});
+                $scope.items.push({'id': 1, 'type': 'link', 'name': $rootScope.lang==='AR' ? 'البرامج' : 'Applications', 'link': 'menu'});
 
-                $scope.items.push({'id': 2, 'type': 'title', 'name': 'المهام الصادرة'});
+                $scope.items.push({'id': 2, 'type': 'title', 'name': $rootScope.lang==='AR' ? 'المهام الصادرة' : 'Outgoing Tasks'});
 
-                $scope.items.push({'id': 3, 'type': 'title', 'name': 'تحت التنفيذ'});
+                $scope.items.push({'id': 3, 'type': 'title', 'name': $rootScope.lang==='AR' ? 'تحت التنفيذ' : 'Pending'});
 
                 $scope.items.push(
                     {'id': 4, 'type': 'title', 'name': $rootScope.me.nickname},
                     {'id': 5, 'type': 'title', 'name': $rootScope.me.name}
                 );
+
+                $timeout(function () {
+                    window.componentHandler.upgradeAllRegistered();
+                }, 500);
 
             });
         };
@@ -1458,16 +1280,20 @@ app.controller("taskCtrl", ['TaskService', 'TaskToService', 'TaskWarnService', '
 
                 $scope.items = [];
 
-                $scope.items.push({'id': 1, 'type': 'link', 'name': 'البرامج', 'link': 'menu'});
+                $scope.items.push({'id': 1, 'type': 'link', 'name': $rootScope.lang==='AR' ? 'البرامج' : 'Applications', 'link': 'menu'});
 
-                $scope.items.push({'id': 2, 'type': 'title', 'name': 'المهام الصادرة'});
+                $scope.items.push({'id': 2, 'type': 'title', 'name': $rootScope.lang==='AR' ? 'المهام الصادرة' : 'Outgoing Tasks'});
 
-                $scope.items.push({'id': 3, 'type': 'title', 'name': 'تلقائي'});
+                $scope.items.push({'id': 3, 'type': 'title', 'name': $rootScope.lang==='AR' ? 'تلقائي' : 'Closed'});
 
                 $scope.items.push(
                     {'id': 4, 'type': 'title', 'name': $rootScope.me.nickname},
                     {'id': 5, 'type': 'title', 'name': $rootScope.me.name}
                 );
+
+                $timeout(function () {
+                    window.componentHandler.upgradeAllRegistered();
+                }, 500);
 
             });
         };
@@ -1496,16 +1322,20 @@ app.controller("taskCtrl", ['TaskService', 'TaskToService', 'TaskWarnService', '
 
                 $scope.items = [];
 
-                $scope.items.push({'id': 1, 'type': 'link', 'name': 'البرامج', 'link': 'menu'});
+                $scope.items.push({'id': 1, 'type': 'link', 'name': $rootScope.lang==='AR' ? 'البرامج' : 'Applications', 'link': 'menu'});
 
-                $scope.items.push({'id': 2, 'type': 'title', 'name': 'المهام الصادرة'});
+                $scope.items.push({'id': 2, 'type': 'title', 'name': $rootScope.lang==='AR' ? 'المهام الصادرة' : 'Outgoing Tasks'});
 
-                $scope.items.push({'id': 3, 'type': 'title', 'name': 'ارشيف'});
+                $scope.items.push({'id': 3, 'type': 'title', 'name': $rootScope.lang==='AR' ? 'ارشيف' : 'Archive'});
 
                 $scope.items.push(
                     {'id': 4, 'type': 'title', 'name': $rootScope.me.nickname},
                     {'id': 5, 'type': 'title', 'name': $rootScope.me.name}
                 );
+
+                $timeout(function () {
+                    window.componentHandler.upgradeAllRegistered();
+                }, 500);
 
             });
         };
@@ -1559,6 +1389,11 @@ app.controller("taskCtrl", ['TaskService', 'TaskToService', 'TaskWarnService', '
         };
 
         $timeout(function () {
+            PersonService.findPersonUnderMeSummery().then(function (data) {
+                $scope.persons = data;
+                $scope.buffer.person = data[0];
+                $scope.filter();
+            });
             window.componentHandler.upgradeAllRegistered();
         }, 1500);
 

@@ -1,4 +1,8 @@
 package com.besafx.app.entity;
+
+import com.besafx.app.entity.enums.CloseType;
+import com.besafx.app.entity.enums.CommentType;
+import com.besafx.app.entity.enums.Importance;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonView;
@@ -112,6 +116,30 @@ public class Task implements Serializable {
     @JsonView(Views.Summery.class)
     private List<TaskDeduction> taskDeductions = new ArrayList<>();
 
+    public String getCloseTypeInArabic() {
+        try{
+            return this.closeType.getName();
+        }catch (Exception ex){
+            return "";
+        }
+    }
+
+    public String getImportanceInArabic() {
+        try{
+            return this.importance.getName();
+        }catch (Exception ex){
+            return "";
+        }
+    }
+
+    public String getCommentTypeInArabic() {
+        try{
+            return this.commentType.getName();
+        }catch (Exception ex){
+            return "";
+        }
+    }
+
     @JsonCreator
     public static Task Create(String jsonString) throws IOException {
         ObjectMapper mapper = new ObjectMapper();
@@ -119,15 +147,4 @@ public class Task implements Serializable {
         return task;
     }
 
-    public enum Importance {
-        Regular, Important, Critical
-    }
-
-    public enum CloseType {
-        Pending, Auto, Manual
-    }
-
-    public enum CommentType {
-        Day, Week, Month
-    }
 }

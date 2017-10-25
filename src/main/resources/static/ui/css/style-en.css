@@ -487,17 +487,15 @@ WebKit inertia scrolling is being added here for any present/future devices that
   padding-bottom: 16px;
 }
 
-.mdl-navigation > a{
+.mdl-navigation > a {
     text-decoration: none !important;
 }
 
-.mdl-navigation__link:hover{
-    background-color: white !important;
-    font-weight: bolder !important;
+.mdl-navigation__link-active,
+.mdl-navigation__link-active .mdl-list__item-primary-content .mdl-list__item-icon {
+    color: white !important;
 }
 
-.mdl-navigation__link-active{
-    background-color: #e0e0e0 !important;
-    color: #000 !important;
-    font-weight: bolder !important;
+.mdl-layout__drawer .mdl-navigation .mdl-navigation__link{
+    padding: 12px 40px 12px 40px !important;
 }

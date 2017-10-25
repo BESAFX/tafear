@@ -5,6 +5,7 @@ import com.besafx.app.entity.Person;
 import com.besafx.app.entity.Task;
 import com.besafx.app.entity.TaskOperation;
 import com.besafx.app.entity.TaskOperationAttach;
+import com.besafx.app.entity.enums.CloseType;
 import com.besafx.app.search.TaskSearch;
 import com.besafx.app.service.PersonService;
 import com.besafx.app.service.TaskOperationAttachService;
@@ -65,7 +66,7 @@ public class TaskOperationRest {
     }
 
     public TaskOperation create(TaskOperation taskOperation, Person person) throws IOException {
-        if (taskOperation.getTask().getCloseType().equals(Task.CloseType.Manual)) {
+        if (taskOperation.getTask().getCloseType().equals(CloseType.Manual)) {
             throw new CustomException("لا يمكن القيام بأي عمليات على مهام الارشيف.");
         }
         taskOperation.getTask().getTaskTos()
@@ -124,7 +125,7 @@ public class TaskOperationRest {
     @RequestMapping(value = "update", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public TaskOperation update(@RequestBody TaskOperation taskOperation, Principal principal) {
-        if (taskOperation.getTask().getCloseType().equals(Task.CloseType.Manual)) {
+        if (taskOperation.getTask().getCloseType().equals(CloseType.Manual)) {
             throw new CustomException("لا يمكن القيام بأي عمليات على مهام الارشيف.");
         }
         if (!taskOperation.getSender().getEmail().equals(principal.getName())) {
