@@ -512,3 +512,7 @@ WebKit inertia scrolling is being added here for any present/future devices that
 .mdl-tabs__tab-bar{
     justify-content: right !important;
 }
+
+.table > thead > tr > th{
+    text-align: right !important;
+}

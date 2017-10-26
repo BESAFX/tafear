@@ -3,6 +3,7 @@ import com.besafx.app.config.CustomException;
 import com.besafx.app.config.EmailSender;
 import com.besafx.app.entity.*;
 import com.besafx.app.entity.enums.CloseType;
+import com.besafx.app.entity.enums.OperationType;
 import com.besafx.app.service.*;
 import com.besafx.app.util.DateConverter;
 import com.besafx.app.ws.Notification;
@@ -111,7 +112,7 @@ public class TaskAction {
                         taskOperation.setDate(new Date());
                         taskOperation.setSender(caller);
                         taskOperation.setTask(task);
-                        taskOperation.setType(TaskOperation.OperationType.OpenTaskOnPersonAuto);
+                        taskOperation.setType(OperationType.OpenTaskOnPersonAuto);
                         taskOperation.setContent("فتح المهمة تلقائي على الموظف / " + taskTos.get(0).getPerson().getName() + " بعد تمديد تاريخ استلام المهمة بمقدار " + days + " أيام.");
                         taskOperationService.save(taskOperation);
                         log.info("حفظ الحركة الجديدة بنجاح.");
@@ -145,7 +146,7 @@ public class TaskAction {
                 taskOperation.setDate(new Date());
                 taskOperation.setSender(caller);
                 taskOperation.setTask(task);
-                taskOperation.setType(TaskOperation.OperationType.IncreaseEndDate);
+                taskOperation.setType(OperationType.IncreaseEndDate);
                 taskOperation.setContent(message);
                 taskOperationService.save(taskOperation);
                 log.info("حفظ الحركة الجديدة بنجاح.");
@@ -202,7 +203,7 @@ public class TaskAction {
                 taskOperation.setDate(new Date());
                 taskOperation.setSender(task.getPerson());
                 taskOperation.setTask(task);
-                taskOperation.setType(TaskOperation.OperationType.DecreaseEndDate);
+                taskOperation.setType(OperationType.DecreaseEndDate);
                 taskOperation.setContent(message);
                 taskOperationService.save(taskOperation);
                 return task;
@@ -255,10 +256,10 @@ public class TaskAction {
                 taskOperation.setSender(taskCloseRequest.getTask().getPerson());
                 taskOperation.setTask(taskCloseRequest.getTask());
                 if (taskCloseRequest.getType()) {
-                    taskOperation.setType(TaskOperation.OperationType.DeclineCloseRequest);
+                    taskOperation.setType(OperationType.DeclineCloseRequest);
                     taskOperation.setContent("تم رفض طلب إغلاق " + taskCloseRequest.getPerson().getNickname() + " / " + taskCloseRequest.getPerson().getName());
                 } else {
-                    taskOperation.setType(TaskOperation.OperationType.DeclineIncreaseEndDateRequest);
+                    taskOperation.setType(OperationType.DeclineIncreaseEndDateRequest);
                     taskOperation.setContent("تم رفض طلب تمديد " + taskCloseRequest.getPerson().getNickname() + " / " + taskCloseRequest.getPerson().getName());
                 }
                 taskOperationService.save(taskOperation);
@@ -313,10 +314,10 @@ public class TaskAction {
                 taskOperation.setSender(taskCloseRequest.getTask().getPerson());
                 taskOperation.setTask(taskCloseRequest.getTask());
                 if (taskCloseRequest.getType()) {
-                    taskOperation.setType(TaskOperation.OperationType.AcceptCloseRequest);
+                    taskOperation.setType(OperationType.AcceptCloseRequest);
                     taskOperation.setContent("تم قبول طلب إغلاق " + taskCloseRequest.getPerson().getNickname() + " / " + taskCloseRequest.getPerson().getName());
                 } else {
-                    taskOperation.setType(TaskOperation.OperationType.AcceptIncreaseEndDateRequest);
+                    taskOperation.setType(OperationType.AcceptIncreaseEndDateRequest);
                     taskOperation.setContent("تم قبول طلب تمديد " + taskCloseRequest.getPerson().getNickname() + " / " + taskCloseRequest.getPerson().getName());
                 }
                 taskOperationService.save(taskOperation);
@@ -373,7 +374,7 @@ public class TaskAction {
                     taskOperation.setDate(new Date());
                     taskOperation.setSender(task.getPerson());
                     taskOperation.setTask(task);
-                    taskOperation.setType(TaskOperation.OperationType.CloseTaskOnPerson);
+                    taskOperation.setType(OperationType.CloseTaskOnPerson);
                     taskOperation.setContent(message);
                     taskOperationService.save(taskOperation);
                     log.info("إنهاء العمل على الحركة");
@@ -394,7 +395,7 @@ public class TaskAction {
                     taskOperation.setDate(new Date());
                     taskOperation.setSender(task.getPerson());
                     taskOperation.setTask(task);
-                    taskOperation.setType(TaskOperation.OperationType.CloseTaskCompletely);
+                    taskOperation.setType(OperationType.CloseTaskCompletely);
                     taskOperation.setContent("تم نقل المهمة إلى الارشيف نظراً لإغلاق المهمة على كل الموظفين.");
                     taskOperationService.save(taskOperation);
                     log.info("إنهاء العمل على الحركة");
@@ -448,7 +449,7 @@ public class TaskAction {
                 taskOperation.setDate(new Date());
                 taskOperation.setSender(task.getPerson());
                 taskOperation.setTask(task);
-                taskOperation.setType(TaskOperation.OperationType.CloseTaskCompletely);
+                taskOperation.setType(OperationType.CloseTaskCompletely);
                 taskOperation.setContent("إغلاق المهمة نهائياً - نقل إلى الارشيف");
                 taskOperationService.save(taskOperation);
                 log.info("إنهاء العمل على الحركة");
@@ -544,7 +545,7 @@ public class TaskAction {
             taskOperation.setDate(new Date());
             taskOperation.setSender(task.getPerson());
             taskOperation.setTask(task);
-            taskOperation.setType(TaskOperation.OperationType.AddPerson);
+            taskOperation.setType(OperationType.AddPerson);
             taskOperation.setContent("تحويل المهمة إلى " + person.getNickname() + " / " + person.getName() + " [ " + message + " ] ");
             taskOperationService.save(taskOperation);
             log.info("تم اضافة الحركة الجديدة بنجاح.");
@@ -594,7 +595,7 @@ public class TaskAction {
             taskOperation.setDate(new Date());
             taskOperation.setSender(task.getPerson());
             taskOperation.setTask(task);
-            taskOperation.setType(TaskOperation.OperationType.AddPerson);
+            taskOperation.setType(OperationType.AddPerson);
             taskOperation.setContent("حذف تكليف المهمة من " + person.getNickname() + " / " + person.getName() + " [ " + message + " ] ");
             taskOperationService.save(taskOperation);
             log.info("تم اضافة الحركة الجديدة بنجاح.");
@@ -752,7 +753,7 @@ public class TaskAction {
             taskOperation.setDate(new Date());
             taskOperation.setSender(caller);
             taskOperation.setTask(task);
-            taskOperation.setType(TaskOperation.OperationType.OpenTaskOnPerson);
+            taskOperation.setType(OperationType.OpenTaskOnPerson);
             taskOperation.setContent("فتح المهمة على الموظف / " + person.getName() + " [ " + message + " ] ");
             taskOperationService.save(taskOperation);
             log.info("تم حفظ الحركة الجديدة بنجاح.");

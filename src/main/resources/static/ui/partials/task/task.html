@@ -621,7 +621,7 @@
                                 <tr ng-repeat-end="" ng-if="task.checked">
                                     <td colspan="10">
                                         <div class="form-group row">
-                                            <button uib-tooltip="نسخ المهمة"
+                                            <button uib-tooltip="{{lang==='AR' ? 'نسخ المهمة' : 'Copy...'}}"
                                                     tooltip-append-to-body="true"
                                                     type="button"
                                                     ng-if="contains(me.team.authorities, ['ROLE_TASK_CREATE'])"
@@ -629,7 +629,7 @@
                                                     class="mdl-button mdl-js-button mdl-js-ripple-effect col-xs-1 col-sm-1 col-md-1 col-lg-1">
                                                 <i class="material-icons">content_copy</i>
                                             </button>
-                                            <button uib-tooltip="تعديل بيانات المهمة"
+                                            <button uib-tooltip="{{lang==='AR' ? 'تعديل بيانات المهمة' : 'Edit...'}}"
                                                     tooltip-append-to-body="true"
                                                     type="button"
                                                     ng-click="openUpdateModel(task)"
@@ -637,7 +637,7 @@
                                                     class="mdl-button mdl-js-button mdl-js-ripple-effect col-xs-1 col-sm-1 col-md-1 col-lg-1">
                                                 <i class="material-icons">edit</i>
                                             </button>
-                                            <button uib-tooltip="حذف المهمة"
+                                            <button uib-tooltip="{{lang==='AR' ? 'حذف المهمة' : 'Delete'}}"
                                                     tooltip-append-to-body="true"
                                                     type="button"
                                                     ng-click="delete(task)"
@@ -645,7 +645,7 @@
                                                     class="mdl-button mdl-js-button mdl-js-ripple-effect col-xs-1 col-sm-1 col-md-1 col-lg-1">
                                                 <i class="material-icons">delete</i>
                                             </button>
-                                            <button uib-tooltip="ارشفة المهمة"
+                                            <button uib-tooltip="{{lang==='AR' ? 'ارشفة المهمة' : 'Archive'}}"
                                                     tooltip-append-to-body="true"
                                                     type="button"
                                                     ng-click="closeTaskCompletely(task)"
@@ -653,7 +653,7 @@
                                                     class="mdl-button mdl-js-button mdl-js-ripple-effect col-xs-1 col-sm-1 col-md-1 col-lg-1">
                                                 <i class="material-icons">archive</i>
                                             </button>
-                                            <button uib-tooltip="حذف التحذيرات"
+                                            <button uib-tooltip="{{lang==='AR' ? 'حذف التحذيرات' : 'Clear Warns'}}"
                                                     tooltip-append-to-body="true"
                                                     type="button"
                                                     ng-click="clearTaskWarns(task)"
@@ -661,7 +661,7 @@
                                                     class="mdl-button mdl-js-button mdl-js-ripple-effect col-xs-1 col-sm-1 col-md-1 col-lg-1">
                                                 <i class="material-icons">delete</i>
                                             </button>
-                                            <button uib-tooltip="حذف الخصومات"
+                                            <button uib-tooltip="{{lang==='AR' ? 'حذف الخصومات' : 'Clear Deductions'}}"
                                                     tooltip-append-to-body="true"
                                                     type="button"
                                                     ng-click="clearTaskDeductions(task)"
@@ -669,7 +669,7 @@
                                                     class="mdl-button mdl-js-button mdl-js-ripple-effect col-xs-1 col-sm-1 col-md-1 col-lg-1">
                                                 <i class="material-icons">delete</i>
                                             </button>
-                                            <button uib-tooltip="اضافة حركة"
+                                            <button uib-tooltip="{{lang==='AR' ? 'تعليق' : 'Comment...'}}"
                                                     tooltip-append-to-body="true"
                                                     type="button"
                                                     ng-click="openCreateOperationModel(task)"
@@ -677,21 +677,21 @@
                                                     class="mdl-button mdl-js-button mdl-js-ripple-effect col-xs-1 col-sm-1 col-md-1 col-lg-1">
                                                 <i class="material-icons">timer</i>
                                             </button>
-                                            <button uib-tooltip="طلب إغلاق"
+                                            <button uib-tooltip="{{lang==='AR' ? 'طلب إغلاق' : 'Close Request...'}}"
                                                     tooltip-append-to-body="true"
                                                     type="button"
                                                     ng-click="openRequestCloseModel(task)"
                                                     class="mdl-button mdl-js-button mdl-js-ripple-effect col-xs-1 col-sm-1 col-md-1 col-lg-1">
                                                 <i class="material-icons">close</i>
                                             </button>
-                                            <button uib-tooltip="طلب تمديد"
+                                            <button uib-tooltip="{{lang==='AR' ? 'طلب تمديد' : 'Extend Request...'}}"
                                                     tooltip-append-to-body="true"
                                                     type="button"
                                                     ng-click="openRequestExtensionModel(task)"
                                                     class="mdl-button mdl-js-button mdl-js-ripple-effect col-xs-1 col-sm-1 col-md-1 col-lg-1">
                                                 <i class="material-icons">battery_full</i>
                                             </button>
-                                            <button uib-tooltip="التفاصيل"
+                                            <button uib-tooltip="{{lang==='AR' ? 'التفاصيل' : 'Details...'}}"
                                                     tooltip-append-to-body="true"
                                                     type="button"
                                                     ng-click="openDetailsModel(task)"
@@ -702,21 +702,33 @@
                                         <div class="form-group row">
                                             <div class="mdl-tabs mdl-js-tabs mdl-js-ripple-effect">
                                                 <div class="mdl-tabs__tab-bar">
-                                                    <a href="#starks-panel" class="mdl-tabs__tab is-active">
+                                                    <a href="#panel-1-{{$index}}" class="mdl-tabs__tab is-active">
                                                         <span ng-if="lang==='AR'">التفاصيل</span>
                                                         <span ng-if="lang==='EN'">Details</span>
                                                     </a>
-                                                    <a href="#lannisters-panel" class="mdl-tabs__tab">
+                                                    <a href="#panel-2-{{$index}}" class="mdl-tabs__tab">
                                                         <span ng-if="lang==='AR'">التعليقات</span>
                                                         <span ng-if="lang==='EN'">Comments</span>
+                                                        <span ng-if="task.taskOperations.length > 0" class="mdl-badge" data-badge="{{task.taskOperations.length}}"></span>
                                                     </a>
-                                                    <a href="#targaryens-panel" class="mdl-tabs__tab">
+                                                    <a href="#panel-3-{{$index}}" class="mdl-tabs__tab">
                                                         <span ng-if="lang==='AR'">التحذيرات</span>
                                                         <span ng-if="lang==='EN'">Warns</span>
+                                                        <span ng-if="task.taskWarns.length > 0" class="mdl-badge" data-badge="{{task.taskWarns.length}}"></span>
+                                                    </a>
+                                                    <a href="#panel-4-{{$index}}" class="mdl-tabs__tab">
+                                                        <span ng-if="lang==='AR'">الخصومات</span>
+                                                        <span ng-if="lang==='EN'">Deductions</span>
+                                                        <span ng-if="task.taskDeductions.length > 0" class="mdl-badge" data-badge="{{task.taskDeductions.length}}"></span>
+                                                    </a>
+                                                    <a href="#panel-5-{{$index}}" class="mdl-tabs__tab">
+                                                        <span ng-if="lang==='AR'">طلبات الإغلاق والتمديد</span>
+                                                        <span ng-if="lang==='EN'">Close / Extend Requests</span>
+                                                        <span ng-if="task.taskCloseRequests.length > 0" class="mdl-badge" data-badge="{{task.taskCloseRequests.length}}"></span>
                                                     </a>
                                                 </div>
 
-                                                <div class="mdl-tabs__panel is-active" id="starks-panel">
+                                                <div class="mdl-tabs__panel is-active" id="panel-1-{{$index}}">
                                                     <div class="form-group row">
                                                         <div class="table-responsive">
                                                             <table class="table table-bordered">
@@ -766,15 +778,22 @@
                                                                     </td>
                                                                     <td>{{task.deductionOnAutoClose}} SAR</td>
                                                                 </tr>
+                                                                <tr>
+                                                                    <td>
+                                                                        <strong ng-if="lang==='AR'">إجمالي الحسومات حتى الآن</strong>
+                                                                        <strong ng-if="lang==='EN'">Total Deduction Until Now</strong>
+                                                                    </td>
+                                                                    <td>{{task.deductionsSum}} SAR</td>
+                                                                </tr>
                                                                 </tbody>
                                                             </table>
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="mdl-tabs__panel" id="lannisters-panel">
+                                                <div class="mdl-tabs__panel" id="panel-2-{{$index}}">
                                                     <div class="form-group row">
                                                         <div class="table-responsive">
-                                                            <table st-safe-src="task.taskOperations"
+                                                            <table st-table="taskOperationsCollection" st-safe-src="task.taskOperations"
                                                                    class="table table-bordered">
                                                                 <thead>
                                                                 <tr>
@@ -801,7 +820,7 @@
                                                                 </tr>
                                                                 </thead>
                                                                 <tbody>
-                                                                <tr ng-repeat="taskOperation in task.taskOperations"
+                                                                <tr ng-repeat="taskOperation in taskOperationsCollection"
                                                                     ng-class="{'info':(taskOperation.sender.id===me.manager.id)}">
                                                                     <td>{{taskOperation.code}}</td>
                                                                     <td class="fit">
@@ -813,24 +832,8 @@
                                                                         <span class="label label-success">{{taskOperation.date | date:'h:m a'}}</span>
                                                                     </td>
                                                                     <td>
-                                        <span class="label label-default">
-                                            {{taskOperation.type==='Comment' ? 'تعليق' : ''}}
-                                            {{taskOperation.type==='IncreaseEndDate' ? 'تمديد تاريخ إستلام' : ''}}
-                                            {{taskOperation.type==='DecreaseEndDate' ? 'تعجيل تاريخ إستلام' : ''}}
-                                            {{taskOperation.type==='CloseTaskOnPerson' ? 'إغلاق المهمة لموظف' : ''}}
-                                            {{taskOperation.type==='CloseTaskCompletely' ? 'أرشفة المهمة' : ''}}
-                                            {{taskOperation.type==='CloseTaskAuto' ? 'إغلاق تلقائي' : ''}}
-                                            {{taskOperation.type==='AddPerson' ? 'تحويل' : ''}}
-                                            {{taskOperation.type==='RemovePerson' ? 'حذف موظف' : ''}}
-                                            {{taskOperation.type==='AcceptCloseRequest' ? 'قبول طلب إغلاق' : ''}}
-                                            {{taskOperation.type==='AcceptIncreaseEndDateRequest' ? 'قبول طلب تمديد' : ''}}
-                                            {{taskOperation.type==='AcceptDecreaseEndDateRequest' ? 'قبول طلب تعجيل' : ''}}
-                                            {{taskOperation.type==='DeclineCloseRequest' ? 'رفض طلب إغلاق' : ''}}
-                                            {{taskOperation.type==='DeclineIncreaseEndDateRequest' ? 'رفض طلب تمديد' : ''}}
-                                            {{taskOperation.type==='DeclineDecreaseEndDateRequest' ? 'رفض طلب تعجيل' : ''}}
-                                            {{taskOperation.type==='OpenTaskOnPersonAuto' ? 'فتح المهمة على موظف تلقائي' : ''}}
-                                            {{taskOperation.type==='OpenTaskOnPerson' ? 'فتح المهمة على موظف' : ''}}
-                                        </span>
+                                                                        <span ng-if="lang==='AR'" class="label label-default">{{taskOperation.typeInArabic}}</span>
+                                                                        <span ng-if="lang==='EN'" class="label label-default">{{taskOperation.type}}</span>
                                                                         {{taskOperation.content}}
                                                                         <span ng-repeat="taskOperationAttach in taskOperation.taskOperationAttaches"><a
                                                                                 uib-tooltip="{{taskOperationAttach.name}}" tooltip-append-to-body="true"
@@ -847,19 +850,233 @@
                                                                 </tr>
                                                                 <tr class="blank_row"
                                                                     style="height: 10px !important; background-color: #FFFFFF;"
-                                                                    ng-show="!task.taskOperations || task.taskOperations.length ==0">
-                                                                    <td colspan="5">لا توجد حركات</td>
+                                                                    ng-show="!taskOperationsCollection || taskOperationsCollection.length ==0">
+                                                                    <td colspan="5">
+                                                                        <span ng-if="lang==='AR'">لا توجد حركات</span>
+                                                                        <span ng-if="lang==='EN'">No Comments</span>
+                                                                    </td>
+                                                                </tr>
+                                                                </tbody>
+                                                                <tfoot>
+                                                                <tr>
+                                                                    <td colspan="5">
+                                                                        <div st-pagination="" st-items-by-page="5" st-displayed-pages="10"></div>
+                                                                    </td>
+                                                                </tr>
+                                                                </tfoot>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="mdl-tabs__panel" id="panel-3-{{$index}}">
+                                                    <div class="form-group row">
+                                                        <div class="table-responsive">
+                                                            <table st-table="taskWarnsCollection" st-safe-src="task.taskWarns" class="table table-bordered">
+                                                                <thead>
+                                                                <tr>
+                                                                    <th st-sort="code" class="text-center fit">
+                                                                        <span ng-if="lang==='AR'">رقم التحذير</span>
+                                                                        <span ng-if="lang==='EN'">Code</span>
+                                                                    </th>
+                                                                    <th st-sort="type" class="text-center fit">
+                                                                        <span ng-if="lang==='AR'">نوع التحذير</span>
+                                                                        <span ng-if="lang==='EN'">Type</span>
+                                                                    </th>
+                                                                    <th st-sort="toPerson.name" class="text-center">
+                                                                        <span ng-if="lang==='AR'">الموظف</span>
+                                                                        <span ng-if="lang==='EN'">Employee</span>
+                                                                    </th>
+                                                                    <th st-sort="date" st-sort-default="reverse" class="text-center fit">
+                                                                        <span ng-if="lang==='AR'">التاريخ</span>
+                                                                        <span ng-if="lang==='EN'">Date</span>
+                                                                    </th>
+                                                                    <th st-sort="content" class="text-center">
+                                                                        <span ng-if="lang==='AR'">المضمون</span>
+                                                                        <span ng-if="lang==='EN'">Content</span>
+                                                                    </th>
+                                                                </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                <tr ng-repeat="taskWarn in taskWarnsCollection">
+                                                                    <td>{{taskWarn.code}}</td>
+                                                                    <td>{{taskWarn.type}}</td>
+                                                                    <td class="fit">{{taskWarn.toPerson.nickname}} / {{taskWarn.toPerson.name}}</td>
+                                                                    <td class="fit">
+                                                                        <span ng-show="dateType==='H'">{{taskWarn.date | kdate: 'yyyy-mm-dd' : 'ar' : 'ummalqura'}}</span>
+                                                                        <span ng-show="dateType==='G'">{{taskWarn.date | date: 'yyyy-MM-dd'}}</span>
+                                                                        <span class="label label-success">{{taskWarn.date | date:'HH:mm'}}</span>
+                                                                    </td>
+                                                                    <td>{{taskWarn.content}}</td>
+                                                                </tr>
+                                                                <tr class="blank_row"
+                                                                    style="height: 10px !important; background-color: #FFFFFF;"
+                                                                    ng-show="!taskWarnsCollection || taskWarnsCollection.length ==0">
+                                                                    <td colspan="5">
+                                                                        <span ng-if="lang==='AR'">لا توجد تحذيرات</span>
+                                                                        <span ng-if="lang==='EN'">No Wrans</span>
+                                                                    </td>
+                                                                </tr>
+                                                                </tbody>
+                                                                <tfoot>
+                                                                <tr>
+                                                                    <td colspan="5">
+                                                                        <div st-pagination="" st-items-by-page="5" st-displayed-pages="10"></div>
+                                                                    </td>
+                                                                </tr>
+                                                                </tfoot>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="mdl-tabs__panel" id="panel-4-{{$index}}">
+                                                    <div class="form-group row">
+                                                        <div class="table-responsive">
+                                                            <table st-table="taskDeductionsCollection" st-safe-src="task.taskDeductions"
+                                                                   class="table table-bordered">
+                                                                <thead>
+                                                                <tr>
+                                                                    <th st-sort="code" class="text-center fit">
+                                                                        <span ng-if="lang==='AR'">رقم الخصم</span>
+                                                                        <span ng-if="lang==='EN'">Code</span>
+                                                                    </th>
+                                                                    <th st-sort="type" class="text-center fit">
+                                                                        <span ng-if="lang==='AR'">نوع الخصم</span>
+                                                                        <span ng-if="lang==='EN'">Type</span>
+                                                                    </th>
+                                                                    <th st-sort="deduction" class="text-center fit">
+                                                                        <span ng-if="lang==='AR'">قيمة الخصم</span>
+                                                                        <span ng-if="lang==='EN'">Type</span>
+                                                                    </th>
+                                                                    <th st-sort="toPerson.name" class="text-center">
+                                                                        <span ng-if="lang==='AR'">الموظف</span>
+                                                                        <span ng-if="lang==='EN'">Employee</span>
+                                                                    </th>
+                                                                    <th st-sort="date" st-sort-default="reverse" class="text-center fit">
+                                                                        <span ng-if="lang==='AR'">التاريخ</span>
+                                                                        <span ng-if="lang==='EN'">Date</span>
+                                                                    </th>
+                                                                    <th st-sort="content" class="text-center">
+                                                                        <span ng-if="lang==='AR'">المضمون</span>
+                                                                        <span ng-if="lang==='EN'">Content</span>
+                                                                    </th>
+                                                                </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                <tr ng-repeat="taskDeduction in taskDeductionsCollection">
+                                                                    <td>{{taskDeduction.code}}</td>
+                                                                    <td>{{taskDeduction.type}}</td>
+                                                                    <td>{{taskDeduction.deduction}} SAR</td>
+                                                                    <td class="fit">{{taskDeduction.toPerson.nickname}} / {{taskDeduction.toPerson.name}}</td>
+                                                                    <td class="fit">
+                                                                        <span ng-show="dateType==='H'">{{taskDeduction.date | kdate: 'yyyy-mm-dd' : 'ar' : 'ummalqura'}}</span>
+                                                                        <span ng-show="dateType==='G'">{{taskDeduction.date | date: 'yyyy-MM-dd'}}</span>
+                                                                        <span class="label label-success">{{taskDeduction.date | date:'h:m a'}}</span>
+                                                                    </td>
+                                                                    <td>{{taskDeduction.content}}</td>
+                                                                </tr>
+                                                                <tr class="blank_row"
+                                                                    style="height: 10px !important; background-color: #FFFFFF;"
+                                                                    ng-show="!taskDeductionsCollection || taskDeductionsCollection.length ==0">
+                                                                    <td colspan="6">
+                                                                        <span ng-if="lang==='AR'">لا توجد خصومات</span>
+                                                                        <span ng-if="lang==='EN'">No Deductions</span>
+                                                                    </td>
+                                                                </tr>
+                                                                </tbody>
+                                                                <tfoot>
+                                                                <tr>
+                                                                    <td colspan="6">
+                                                                        <div st-pagination="" st-items-by-page="5" st-displayed-pages="10"></div>
+                                                                    </td>
+                                                                </tr>
+                                                                </tfoot>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="mdl-tabs__panel" id="panel-5-{{$index}}">
+                                                    <div class="form-group row">
+                                                        <div class="table-responsive">
+                                                            <table st-table="taskCloseRequestsCollection" st-safe-src="task.taskCloseRequests"
+                                                                   class="table table-bordered">
+                                                                <thead>
+                                                                <tr>
+                                                                    <th class="fit" st-sort="code">
+                                                                        <span ng-if="lang==='AR'">رقم الطلب</span>
+                                                                        <span ng-if="lang==='EN'">Code</span>
+                                                                    </th>
+                                                                    <th class="fit" st-sort="type">
+                                                                        <span ng-if="lang==='AR'">نوع الطلب</span>
+                                                                        <span ng-if="lang==='EN'">Type</span>
+                                                                    </th>
+                                                                    <th st-sort="taskCloseRequest.person">
+                                                                        <span ng-if="lang==='AR'">المرسل</span>
+                                                                        <span ng-if="lang==='EN'">Sender</span>
+                                                                    </th>
+                                                                    <th st-sort="taskCloseRequest.date" st-sort-default="reverse">
+                                                                        <span ng-if="lang==='AR'">التاريخ</span>
+                                                                        <span ng-if="lang==='EN'">Date</span>
+                                                                    </th>
+                                                                    <th>
+                                                                        <span ng-if="lang==='AR'">التعليق</span>
+                                                                        <span ng-if="lang==='EN'">Comment</span>
+                                                                    </th>
+                                                                    <th>
+                                                                        <span ng-if="lang==='AR'">الرد</span>
+                                                                        <span ng-if="lang==='EN'">Response</span>
+                                                                    </th>
+                                                                    <th>
+                                                                        <span ng-if="lang==='AR'">تاريخ الرد</span>
+                                                                        <span ng-if="lang==='EN'">Response Date</span>
+                                                                    </th>
+                                                                </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                <tr ng-repeat="taskCloseRequest in taskCloseRequestsCollection">
+                                                                    <td class="fit">{{taskCloseRequest.code}}</td>
+                                                                    <td class="fit">
+                                                                        <strong ng-class="{'label label-danger':taskCloseRequest.type, 'label label-warning':!taskCloseRequest.type}">
+                                                                            {{taskCloseRequest.type ? "طلب إغلاق" : "طلب تمديد"}}</strong>
+                                                                    </td>
+                                                                    <td class="fit">
+                                                                        {{taskCloseRequest.person.nickname}} / {{taskCloseRequest.person.name}}
+                                                                    </td>
+                                                                    <td class="fit">
+                                                                        <span ng-show="dateType==='H'">{{taskCloseRequest.date | kdate: 'yyyy-mm-dd' : 'ar' :'ummalqura'}}</span>
+                                                                        <span ng-show="dateType==='G'">{{taskCloseRequest.date | date: 'yyyy-MM-dd'}}</span>
+                                                                        <span class="label label-success">{{taskCloseRequest.date | date:'h:m a'}}</span>
+                                                                    </td>
+                                                                    <td>
+                                                                        {{taskCloseRequest.note}}
+                                                                        <span ng-if="task.endDate > today && taskCloseRequest.approved === null">
+                                                                            <a href="" ng-click="acceptRequest(taskCloseRequest)"
+                                                                               ng-if="task.person.id===me.id">موافق</a>
+                                                                            <a href="" ng-click="declineRequest(taskCloseRequest)"
+                                                                               ng-if="task.person.id===me.id">غير موافق</a>
+                                                                        </span>
+                                                                    </td>
+                                                                    <td>
+                                                                        {{taskCloseRequest.approved === null ? 'قيد الانتظار' : ''}}
+                                                                        {{taskCloseRequest.approved === true ? 'موافقة' : ''}}
+                                                                        {{taskCloseRequest.approved === false ? 'مرفوض' : ''}}
+                                                                    </td>
+                                                                    <td class="fit">
+                                                                        <span ng-show="dateType==='H'">{{taskCloseRequest.approvedDate ? (taskCloseRequest.approvedDate | kdate: 'yyyy-mm-dd' : 'ar' :'ummalqura') : '---'}}</span>
+                                                                        <span ng-show="dateType==='G'">{{taskCloseRequest.approvedDate ? (taskCloseRequest.approvedDate | date: 'yyyy-MM-dd') : '---'}}</span>
+                                                                        <span class="label label-success">{{taskCloseRequest.approvedDate ? (taskCloseRequest.approvedDate | date:'h:m a') : ''}}</span>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr class="blank_row" style="height: 10px !important; background-color: #FFFFFF;"
+                                                                    ng-show="!taskCloseRequestsCollection || taskCloseRequestsCollection.length ==0">
+                                                                    <td colspan="7">
+                                                                        <span ng-if="lang==='AR'">لا توجد طلبات</span>
+                                                                        <span ng-if="lang==='EN'">No Requests</span>
+                                                                    </td>
                                                                 </tr>
                                                                 </tbody>
                                                             </table>
                                                         </div>
                                                     </div>
-                                                </div>
-                                                <div class="mdl-tabs__panel" id="targaryens-panel">
-                                                    <ul>
-                                                        <li>Viserys</li>
-                                                        <li>Daenerys</li>
-                                                    </ul>
                                                 </div>
                                             </div>
                                         </div>

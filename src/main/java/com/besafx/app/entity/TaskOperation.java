@@ -1,4 +1,5 @@
 package com.besafx.app.entity;
+import com.besafx.app.entity.enums.OperationType;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonView;
@@ -67,6 +68,14 @@ public class TaskOperation implements Serializable {
     @JsonView(Views.Summery.class)
     private List<TaskOperationAttach> taskOperationAttaches = new ArrayList<>();
 
+    public String getTypeInArabic() {
+        try{
+            return this.type.getName();
+        }catch (Exception ex){
+            return "";
+        }
+    }
+
     @JsonCreator
     public static TaskOperation Create(String jsonString) throws IOException {
         ObjectMapper mapper = new ObjectMapper();
@@ -74,22 +83,4 @@ public class TaskOperation implements Serializable {
         return taskOperation;
     }
 
-    public enum OperationType {
-        Comment,
-        IncreaseEndDate,
-        DecreaseEndDate,
-        CloseTaskOnPerson,
-        CloseTaskCompletely,
-        CloseTaskAuto,
-        AddPerson,
-        RemovePerson,
-        AcceptCloseRequest,
-        AcceptIncreaseEndDateRequest,
-        AcceptDecreaseEndDateRequest,
-        DeclineCloseRequest,
-        DeclineIncreaseEndDateRequest,
-        DeclineDecreaseEndDateRequest,
-        OpenTaskOnPersonAuto,
-        OpenTaskOnPerson
-    }
 }

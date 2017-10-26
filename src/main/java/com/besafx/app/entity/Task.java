@@ -116,6 +116,14 @@ public class Task implements Serializable {
     @JsonView(Views.Summery.class)
     private List<TaskDeduction> taskDeductions = new ArrayList<>();
 
+    public Double getDeductionsSum() {
+        try{
+            return this.taskDeductions.stream().mapToDouble(TaskDeduction::getDeduction).sum();
+        }catch (Exception ex){
+            return 0.0;
+        }
+    }
+
     public String getCloseTypeInArabic() {
         try{
             return this.closeType.getName();

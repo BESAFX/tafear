@@ -3,6 +3,7 @@ import com.besafx.app.config.CustomException;
 import com.besafx.app.config.EmailSender;
 import com.besafx.app.entity.TaskOperation;
 import com.besafx.app.entity.TaskTo;
+import com.besafx.app.entity.enums.OperationType;
 import com.besafx.app.service.TaskOperationService;
 import com.besafx.app.service.TaskToService;
 import com.besafx.app.util.DateConverter;
@@ -81,7 +82,7 @@ public class TaskToRest {
         taskOperation.setDate(new Date());
         taskOperation.setSender(taskTo.getTask().getPerson());
         taskOperation.setTask(taskTo.getTask());
-        taskOperation.setType(TaskOperation.OperationType.AddPerson);
+        taskOperation.setType(OperationType.AddPerson);
         taskOperation.setContent("تحويل المهمة إلى " + taskTo.getPerson().getNickname() + " / " + taskTo.getPerson().getName());
         taskOperationService.save(taskOperation);
         log.info("تم اضافة الحركة الجديدة بنجاح.");

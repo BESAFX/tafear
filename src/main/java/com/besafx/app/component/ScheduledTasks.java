@@ -3,6 +3,7 @@ import com.besafx.app.config.EmailSender;
 import com.besafx.app.controller.ReportTaskController;
 import com.besafx.app.entity.*;
 import com.besafx.app.entity.enums.CloseType;
+import com.besafx.app.entity.enums.OperationType;
 import com.besafx.app.search.TaskSearch;
 import com.besafx.app.service.*;
 import com.besafx.app.util.AppOptions;
@@ -343,7 +344,7 @@ public class ScheduledTasks {
                 taskOperation.setDate(new Date());
                 taskOperation.setSender(task.getPerson());
                 taskOperation.setTask(task);
-                taskOperation.setType(TaskOperation.OperationType.CloseTaskAuto);
+                taskOperation.setType(OperationType.CloseTaskAuto);
                 taskOperation.setContent("إغلاق المهمة تلقائي من خلال الفحص اليومي على الموظف / " + taskTo.getPerson().getName());
                 taskOperationService.save(taskOperation);
                 log.info("تحديث بيانات المهمة");

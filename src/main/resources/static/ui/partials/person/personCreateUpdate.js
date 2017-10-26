@@ -22,8 +22,7 @@ app.controller('personCreateUpdateCtrl',
                 switch ($scope.action) {
                     case 'create' :
                         PersonService.create($scope.person).then(function (data) {
-                            $scope.person = {};
-                            $scope.from.$setPristine();
+                            $uibModalInstance.close(data);
                         });
                         break;
                     case 'update' :

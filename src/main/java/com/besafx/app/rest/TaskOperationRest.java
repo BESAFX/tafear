@@ -6,6 +6,7 @@ import com.besafx.app.entity.Task;
 import com.besafx.app.entity.TaskOperation;
 import com.besafx.app.entity.TaskOperationAttach;
 import com.besafx.app.entity.enums.CloseType;
+import com.besafx.app.entity.enums.OperationType;
 import com.besafx.app.search.TaskSearch;
 import com.besafx.app.service.PersonService;
 import com.besafx.app.service.TaskOperationAttachService;
@@ -86,7 +87,7 @@ public class TaskOperationRest {
         }
         taskOperation.setDate(new Date());
         taskOperation.setSender(person);
-        taskOperation.setType(TaskOperation.OperationType.Comment);
+        taskOperation.setType(OperationType.Comment);
         taskOperation = taskOperationService.save(taskOperation);
         ListIterator<TaskOperationAttach> listIterator = taskOperation.getTaskOperationAttaches().listIterator();
         while (listIterator.hasNext()) {
