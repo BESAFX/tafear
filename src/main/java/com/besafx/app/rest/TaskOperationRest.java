@@ -1,15 +1,14 @@
 package com.besafx.app.rest;
+
 import com.besafx.app.config.CustomException;
 import com.besafx.app.config.EmailSender;
 import com.besafx.app.entity.Person;
 import com.besafx.app.entity.Task;
 import com.besafx.app.entity.TaskOperation;
-import com.besafx.app.entity.TaskOperationAttach;
 import com.besafx.app.entity.enums.CloseType;
 import com.besafx.app.entity.enums.OperationType;
 import com.besafx.app.search.TaskSearch;
 import com.besafx.app.service.PersonService;
-import com.besafx.app.service.TaskOperationAttachService;
 import com.besafx.app.service.TaskOperationService;
 import com.besafx.app.service.TaskService;
 import com.besafx.app.util.DateConverter;
@@ -30,7 +29,6 @@ import java.security.Principal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.ListIterator;
 import java.util.stream.Collectors;
 
 @RestController
@@ -47,9 +45,6 @@ public class TaskOperationRest {
 
     @Autowired
     private TaskOperationService taskOperationService;
-
-    @Autowired
-    private TaskOperationAttachService taskOperationAttachService;
 
     @Autowired
     private TaskSearch taskSearch;
@@ -89,13 +84,6 @@ public class TaskOperationRest {
         taskOperation.setSender(person);
         taskOperation.setType(OperationType.Comment);
         taskOperation = taskOperationService.save(taskOperation);
-        ListIterator<TaskOperationAttach> listIterator = taskOperation.getTaskOperationAttaches().listIterator();
-        while (listIterator.hasNext()) {
-            TaskOperationAttach taskOperationAttach = listIterator.next();
-            log.info("Name File: " + taskOperationAttach.getName());
-            taskOperationAttach.setTaskOperation(taskOperation);
-            taskOperationAttachService.save(taskOperationAttach);
-        }
         notificationService.notifyOne(Notification
                 .builder()
                 .title("العمليات على المهام")

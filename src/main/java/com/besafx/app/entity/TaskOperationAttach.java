@@ -1,4 +1,5 @@
 package com.besafx.app.entity;
+
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonView;
@@ -40,6 +41,8 @@ public class TaskOperationAttach implements Serializable {
     @Type(type = "org.hibernate.type.TextType")
     @JsonView(Views.Summery.class)
     private String link;
+
+    private Long size;
 
     @ManyToOne
     @JoinColumn(name = "task_operation")

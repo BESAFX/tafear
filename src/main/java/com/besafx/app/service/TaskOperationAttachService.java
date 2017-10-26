@@ -13,4 +13,5 @@ import java.util.List;
 public interface TaskOperationAttachService extends PagingAndSortingRepository<TaskOperationAttach, Long>, JpaSpecificationExecutor<TaskOperationAttach> {
 
     List<TaskOperationAttach> findByLink(String link);
+    List<TaskOperationAttach> findByTaskOperationId(Long id);
 }

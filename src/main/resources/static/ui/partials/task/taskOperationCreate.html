@@ -2,80 +2,21 @@
       focus-group-head="loop" focus-group-tail="loop">
 
     <div class="modal-header">
-        <h3 class="modal-title text-center" id="modal-title">اضافة حركة / تعليق لمهمة</h3>
+        <a class="pull-left" href="" ng-click="cancel()">
+            <span class="fa fa-close fa-2x"></span>
+        </a>
+        <h3 class="panel-title mdl-list__item pull-right">
+            <span class="mdl-list__item-primary-content">
+                <i class="material-icons mdl-list__item-icon">comment</i>
+                <strong ng-if="lang==='AR'">تعليق على المهمة رقم / {{taskOperation.task.code}}</strong>
+                <strong ng-if="lang==='EN'">Comment On Task Number \ {{taskOperation.task.code}}</strong>
+            </span>
+        </h3>
     </div>
 
     <div class="modal-body" id="modal-body">
 
         <div class="row">
-
-            <div class="form-group text-right col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                <div class="panel panel-success">
-                    <div class="panel-heading">
-                        <div class="panel-title-box pull-right">
-                            <h3>البيانات الاساسية</h3>
-                        </div>
-                    </div>
-                    <div class="panel-body panel-body">
-                        <div class="table-responsive">
-                            <table class="table table-bordered">
-                                <tbody>
-                                <tr>
-                                    <td>رقم المهمة</td>
-                                    <td>{{taskOperation.task.code}}</td>
-                                </tr>
-                                <tr>
-                                    <td>عنوان المهمة</td>
-                                    <td>{{taskOperation.task.title}}</td>
-                                </tr>
-                                <tr>
-                                    <td>تفاصيل المهمة</td>
-                                    <td>{{taskOperation.task.content}}</td>
-                                </tr>
-                                <tr>
-                                    <td>الحد الأقصى للتحذيرات</td>
-                                    <td>{{taskOperation.task.warn}}</td>
-                                </tr>
-                                <tr>
-                                    <td class="fit">مقدار الحسم عند الوصول للحد الاقصي للتحذيرات</td>
-                                    <td>{{taskOperation.task.deduction}} ريال سعودي</td>
-                                </tr>
-                                <tr>
-                                    <td>مقدار الحسم عند إغلاق المهمة تلقائياً</td>
-                                    <td>{{taskOperation.task.deductionOnAutoClose}} ريال سعودي</td>
-                                </tr>
-                                <tr>
-                                    <td>تاريخ الإنشاء</td>
-                                    <td>
-                                        <span ng-show="dateType==='H'">{{taskOperation.task.startDate | kdate: 'yyyy-mm-dd' : 'ar' : 'ummalqura'}}</span>
-                                        <span ng-show="dateType==='G'">{{taskOperation.task.startDate | date: 'yyyy-MM-dd'}}</span>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>تاريخ التسليم</td>
-                                    <td>
-                                        <span ng-show="dateType==='H'">{{taskOperation.task.endDate | kdate: 'yyyy-mm-dd' : 'ar' : 'ummalqura'}}</span>
-                                        <span ng-show="dateType==='G'">{{taskOperation.task.endDate | date: 'yyyy-MM-dd'}}</span>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>جهة التكليف</td>
-                                    <td>{{taskOperation.task.person.nickname}} / {{taskOperation.task.person.name}}</td>
-                                </tr>
-                                <tr>
-                                    <td>الموظفون</td>
-                                    <td>
-                                    <span class="label label-info"
-                                          ng-repeat="to in taskOperation.task.taskTos"
-                                          style="margin: 2px">{{to.person.name}}</span>
-                                    </td>
-                                </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-            </div>
 
             <div class="form-group text-right col-xs-12 col-sm-12 col-md-12 col-lg-12">
                 <div class="alert alert-info" role="alert">
@@ -89,18 +30,25 @@
             </div>
 
             <div class="form-group text-right col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <input id="uploader" style="display: none" type="file" onchange="angular.element(this).scope().files=this.files;" multiple/>
                 <div class="panel panel-danger">
                     <div class="panel-heading">
-                        <div class="pull-left">
-                            <toggle-switch
-                                    dir="ltr"
-                                    style="width: 100%"
-                                    ng-model="showAttach"
-                                    class="switch-success"
-                                    on-label="مرفقات"
-                                    off-label="مرفقات">
-                            </toggle-switch>
-                        </div>
+                        <ul class="panel-controls pull-left" style="margin-top: 2px;">
+                            <li>
+                                <a href=""
+                                   ng-click="uploadFiles()"
+                                   tooltip-append-to-body="true"
+                                   uib-tooltip="مرفق جديد">
+                                    <span class="fa fa-paperclip"></span>
+                                </a>
+                                <a href=""
+                                   ng-click="scanToJpg()"
+                                   tooltip-append-to-body="true"
+                                   uib-tooltip="فحص">
+                                    <span class="fa fa-file-image-o"></span>
+                                </a>
+                            </li>
+                        </ul>
                         <div class="panel-title-box pull-right">
                             <h3>البيانات المطلوبة</h3>
                         </div>
@@ -122,105 +70,46 @@
                         </div>
 
                         <div class="form-group text-right col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                            <label for="attaches" class="control-label">المرفقات</label>
+                            <div id="attaches">
+                                <div class="table-responsive">
+                                    <table class="table table-bordered">
+                                        <thead>
+                                        <tr>
+                                            <th class="text-center">م</th>
+                                            <th class="text-center">اسم الملف</th>
+                                            <th class="text-center">حجم الملف</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr class="text-right" ng-repeat="file in files" ng-class="{'success':file.link, 'danger' : !file.link}">
+                                            <td>{{$index+1}}</td>
+                                            <td>
+                                                <a ng-href="{{file.link ? file.link : ''}}" target="_blank">
+                                                    <i class="fa fa-files-o"></i>
+                                                    {{file.name}}
+                                                </a>
+                                            </td>
+                                            <td>{{file.size/1024/1024|number:2}} MB</td>
+                                        </tr>
+                                        <tr class="blank_row"
+                                            style="height: 10px !important; background-color: #FFFFFF;"
+                                            ng-show="!files || files.length ==0">
+                                            <td colspan="3">فضلاً قم برفع الملفات</td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group text-right col-xs-12 col-sm-12 col-md-12 col-lg-12">
                             <div class="alert alert-warning" role="alert">
                                 <strong>ملحوظة هامة : لا يمكن تعديل الحركات/التعليقات فيما بعد فاحرص على كتابة كل ما
                                     أنجزته</strong>
                             </div>
                         </div>
 
-                    </div>
-                </div>
-            </div>
-
-            <div class="form-group text-right col-xs-12 col-sm-12 col-md-12 col-lg-12" ng-show="showAttach">
-                <div class="panel panel-success">
-                    <div class="panel-heading">
-                        <div class="pull-left">
-                            <input type="file" nv-file-select="" accept=".pdf" uploader="uploader" multiple/>
-                        </div>
-                        <div class="panel-title-box pull-right">
-                            <h3>المرفقات</h3>
-                        </div>
-                    </div>
-                    <div class="panel panel-body">
-                        <div class="table-responsive">
-                            <table class="table table-bordered table-striped">
-                                <thead>
-                                <tr>
-                                    <th class="text-right">اسم الملف</th>
-                                    <th class="text-right">رابط الملف</th>
-                                    <th class="text-right" ng-show="uploader.isHTML5">الحجم</th>
-                                    <th class="text-right" ng-show="uploader.isHTML5">معدل التحميل</th>
-                                    <th class="text-right">الحالة</th>
-                                    <th class="text-right">العمليات</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <tr ng-repeat="item in uploader.queue">
-                                    <td><strong>{{ item.file.name }}</strong></td>
-                                    <td><a ng-href="{{item.file.url}}" target="_blank" href="">اضغط هنا</a></td>
-                                    <td ng-show="uploader.isHTML5" nowrap>{{ item.file.size/1024/1024|number:2 }} ميجا
-                                    </td>
-                                    <td ng-show="uploader.isHTML5">
-                                        <div class="progress" style="margin-bottom: 0;">
-                                            <div class="progress-bar" role="progressbar"
-                                                 ng-style="{ 'width': item.progress + '%' }"></div>
-                                        </div>
-                                    </td>
-                                    <td class="text-center">
-                                        <span ng-show="item.isSuccess"><i class="fa fa-check-square-o"></i></span>
-                                        <span ng-show="item.isCancel"><i class="fa fa-ban"></i></span>
-                                        <span ng-show="item.isError"><i class="fa fa-times"></i></span>
-                                    </td>
-                                    <td class="fit">
-                                        <button type="button"
-                                                class="btn btn-success btn-xs"
-                                                ng-click="item.upload()"
-                                                ng-disabled="item.isReady || item.isUploading || item.isSuccess">
-                                            <span>رفع</span>
-                                            <i class="fa fa-upload"></i>
-                                        </button>
-                                        <button type="button"
-                                                class="btn btn-warning btn-xs"
-                                                ng-click="item.cancel()"
-                                                ng-disabled="!item.isUploading">
-                                            <span>إلغاء</span>
-                                            <i class="fa fa-ban"></i>
-                                        </button>
-                                        <button type="button" class="btn btn-danger btn-xs" ng-click="item.remove()">
-                                            <span>حذف</span>
-                                            <i class="fa fa-trash"></i>
-                                        </button>
-                                    </td>
-                                </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                    <div class="panel-footer">
-                        <div class="btn-group btn-group-justified">
-                            <a ng-click="uploader.uploadAll()" ng-disabled="!uploader.getNotUploadedItems().length"
-                               uib-tooltip="رفع الكل"
-                               tooltip-append-to-body="true"
-                               type="button"
-                               class="btn btn-primary">
-                                <i class="fa fa-upload fa-lg"></i>
-                            </a>
-                            <a ng-click="uploader.cancelAll()" ng-disabled="!uploader.isUploading"
-                               uib-tooltip="إلغاء الكل"
-                               tooltip-append-to-body="true"
-                               type="button"
-                               class="btn btn-primary">
-                                <i class="fa fa-close fa-lg"></i>
-                            </a>
-                            <a ng-click="uploader.clearQueue()" ng-disabled="!uploader.queue.length"
-                               uib-tooltip="حذف الكل"
-                               tooltip-append-to-body="true"
-                               type="button"
-                               class="btn btn-primary">
-                                <i class="fa fa-trash fa-lg"></i>
-                            </a>
-                        </div>
                     </div>
                 </div>
             </div>
