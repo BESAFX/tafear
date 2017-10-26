@@ -531,7 +531,7 @@
                     <div class="panel-body panel-body-table">
                         <div class="table-responsive">
                             <table st-table="collection1" st-safe-src="tasks"
-                                   class="table table-bordered table-hover">
+                                   class="table table-bordered">
                                 <thead>
                                 <tr>
                                     <th></th>
@@ -584,6 +584,7 @@
                                 <tbody>
                                 <tr ng-repeat-start="task in collection1"
                                     context-menu="rowMenu"
+                                    ng-class="{'mdl-shadow--8dp' : task.checked}"
                                     ng-click="setSelected(task)"
                                     ng-right-click="setSelected(task)"
                                     st-select-mode="single">
@@ -609,9 +610,10 @@
                                         <span ng-if="lang==='EN'">{{task.closeType}}</span>
                                     </td>
                                     <td st-select-row-custom="task">
-                                    <span ng-repeat="to in task.taskTos"
-                                          ng-class="{'label label-success':to.closed===false, 'label label-default':to.closed===true}"
-                                          style="margin: 2px">{{to.person.name}}</span>
+                                        <span ng-repeat="to in task.taskTos"
+                                              ng-class="{'label label-success':to.closed===false, 'label label-default':to.closed===true}"
+                                              style="margin: 2px">{{to.person.name}}
+                                        </span>
                                     </td>
                                     <td st-select-row-custom="task" class="fit">
                                         <span ng-show="dateType==='H'">{{task.endDate | kdate: 'yyyy-mm-dd' : 'ar' : 'ummalqura'}}</span>
@@ -1086,6 +1088,7 @@
                                                         </div>
                                                     </div>
                                                 </div>
+
                                             </div>
                                         </div>
                                     </td>
