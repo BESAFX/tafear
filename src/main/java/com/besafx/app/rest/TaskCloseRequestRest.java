@@ -9,6 +9,7 @@ import com.besafx.app.search.TaskCloseRequestSearch;
 import com.besafx.app.service.PersonService;
 import com.besafx.app.service.TaskCloseRequestService;
 import com.besafx.app.service.TaskService;
+import com.besafx.app.service.TaskToService;
 import com.besafx.app.ws.Notification;
 import com.besafx.app.ws.NotificationService;
 import com.google.common.collect.Lists;
@@ -41,6 +42,9 @@ public class TaskCloseRequestRest {
     private TaskService taskService;
 
     @Autowired
+    private TaskToService taskToService;
+
+    @Autowired
     private TaskCloseRequestService taskCloseRequestService;
 
     @Autowired
@@ -58,7 +62,7 @@ public class TaskCloseRequestRest {
         if (taskCloseRequest.getTask().getCloseType().equals(CloseType.Manual)) {
             throw new CustomException("لا يمكن القيام بأي عمليات على مهام الارشيف.");
         }
-        if (!taskCloseRequest.getTask().getTaskTos().stream().map(to -> to.getPerson().getEmail()).collect(Collectors.toList()).contains(principal.getName())) {
+        if (!taskToService.findByTask(taskCloseRequest.getTask()).stream().map(to -> to.getPerson().getEmail()).collect(Collectors.toList()).contains(principal.getName())) {
             throw new CustomException("غير مصرح لك القيام بهذة العملية، فقط الموظفين المكلفين بإمكانهم ذلك.");
         }
         try {
