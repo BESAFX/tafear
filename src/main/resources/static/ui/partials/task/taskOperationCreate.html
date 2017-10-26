@@ -1,11 +1,11 @@
-<form dir="rtl" name="form" ng-submit="submit()" novalidate="novalidate" focus-group="" focus-stack=""
+<form name="form" ng-submit="submit()" novalidate="novalidate" focus-group="" focus-stack=""
       focus-group-head="loop" focus-group-tail="loop">
 
     <div class="modal-header">
-        <a class="pull-left" href="" ng-click="cancel()">
+        <a ng-class="{'pull-left' : lang==='AR', 'pull-right' : lang==='EN'}" href="" ng-click="cancel()">
             <span class="fa fa-close fa-2x"></span>
         </a>
-        <h3 class="panel-title mdl-list__item pull-right">
+        <h3 class="panel-title mdl-list__item" ng-class="{'pull-right' : lang==='AR', 'pull-left' : lang==='EN'}">
             <span class="mdl-list__item-primary-content">
                 <i class="material-icons mdl-list__item-icon">comment</i>
                 <strong ng-if="lang==='AR'">تعليق على المهمة رقم / {{taskOperation.task.code}}</strong>
@@ -20,11 +20,15 @@
 
             <div class="form-group text-right col-xs-12 col-sm-12 col-md-12 col-lg-12">
                 <div class="alert alert-info" role="alert">
-                    <strong>ذكرك لإنجازاتك فى خلال فترة زمنية من العمل له عدة فوائد فهو:</strong>
+                    <strong ng-if="lang==='AR'">ذكرك لإنجازاتك فى خلال فترة زمنية من العمل له عدة فوائد فهو:</strong>
+                    <strong ng-if="lang==='EN'">Reminding your achievements during a period of time of work has several benefits:</strong>
                     <ul>
-                        <li>يقيك من المسائلة من قبل مدرائك</li>
-                        <li>يسهل من تقييمك و تقييم الآخرين لآدائك فى العمل</li>
-                        <li>يحفظ حقوقك</li>
+                        <li ng-if="lang==='AR'">يقيك من المسائلة من قبل مدرائك</li>
+                        <li ng-if="lang==='EN'">Keeps you accountable by your managers</li>
+                        <li ng-if="lang==='AR'">يسهل من تقييمك و تقييم الآخرين لآدائك فى العمل</li>
+                        <li ng-if="lang==='EN'">Facilitate your assessment and evaluate others for your performance at work</li>
+                        <li ng-if="lang==='AR'">يحفظ حقوقك</li>
+                        <li ng-if="lang==='EN'">Protecting Your Rights</li>
                     </ul>
                 </div>
             </div>
@@ -33,30 +37,42 @@
                 <input id="uploader" style="display: none" type="file" onchange="angular.element(this).scope().files=this.files;" multiple/>
                 <div class="panel panel-danger">
                     <div class="panel-heading">
-                        <ul class="panel-controls pull-left" style="margin-top: 2px;">
+                        <ul class="panel-controls" ng-class="{'pull-left' : lang==='AR', 'pull-right' : lang==='EN'}" style="margin-top: 2px;">
                             <li>
                                 <a href=""
                                    ng-click="uploadFiles()"
                                    tooltip-append-to-body="true"
-                                   uib-tooltip="مرفق جديد">
+                                   uib-tooltip="{{lang==='AR' ? 'مرفق جديد' : 'Upload File...'}}">
                                     <span class="fa fa-paperclip"></span>
                                 </a>
                                 <a href=""
                                    ng-click="scanToJpg()"
                                    tooltip-append-to-body="true"
-                                   uib-tooltip="فحص">
+                                   uib-tooltip="{{lang==='AR' ? 'فحص' : 'Scan File...'}}">
                                     <span class="fa fa-file-image-o"></span>
                                 </a>
                             </li>
                         </ul>
-                        <div class="panel-title-box pull-right">
-                            <h3>البيانات المطلوبة</h3>
+                        <div class="panel-title-box" ng-class="{'pull-right' : lang==='AR', 'pull-left' : lang==='EN'}">
+                            <h3 ng-if="lang==='AR'">البيانات المطلوبة</h3>
+                            <h3 ng-if="lang==='EN'">Required Information</h3>
                         </div>
                     </div>
                     <div class="panel-body">
 
+                        <div class="form-group text-right col-xs-12 col-sm-12 col-md-12 col-lg-12"
+                             ng-show="form.$invalid && form.$submitted">
+                            <div class="alert alert-danger" role="alert">
+                                <strong ng-if="lang==='AR'">فضلاً اكمل الحقول المطلوبة</strong>
+                                <strong ng-if="lang==='EN'">Please Complete Required Fields</strong>
+                            </div>
+                        </div>
+
                         <div class="form-group text-right col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                            <label for="note" class="control-label">الحركة / التعليق</label>
+                            <label for="note" class="control-label">
+                                <span ng-if="lang==='AR'">التعليق</span>
+                                <span ng-if="lang==='EN'">Comment</span>
+                            </label>
                             <textarea id="note"
                                       type="text"
                                       focus-autofocus="1"
@@ -64,25 +80,33 @@
                                       required="required"
                                       class="form-control text-right"
                                       disable-validation-message=""
-                                      placeholder="اذكر باختصار منجزات العمل"
                                       ng-model="taskOperation.content">
                              </textarea>
                         </div>
 
                         <div class="form-group text-right col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                            <label for="attaches" class="control-label">المرفقات</label>
+                            <label for="attaches" class="control-label">
+                                <span ng-if="lang==='AR'">المرفقات</span>
+                                <span ng-if="lang==='EN'">Attachments</span>
+                            </label>
                             <div id="attaches">
                                 <div class="table-responsive">
                                     <table class="table table-bordered">
                                         <thead>
                                         <tr>
-                                            <th class="text-center">م</th>
-                                            <th class="text-center">اسم الملف</th>
-                                            <th class="text-center">حجم الملف</th>
+                                            <th>#</th>
+                                            <th>
+                                                <span ng-if="lang==='AR'">اسم الملف</span>
+                                                <span ng-if="lang==='EN'">File Name</span>
+                                            </th>
+                                            <th>
+                                                <span ng-if="lang==='AR'">حجم الملف</span>
+                                                <span ng-if="lang==='EN'">File Size</span>
+                                            </th>
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        <tr class="text-right" ng-repeat="file in files" ng-class="{'success':file.link, 'danger' : !file.link}">
+                                        <tr ng-repeat="file in files" ng-class="{'success':file.link, 'danger' : !file.link}">
                                             <td>{{$index+1}}</td>
                                             <td>
                                                 <a ng-href="{{file.link ? file.link : ''}}" target="_blank">
@@ -95,7 +119,12 @@
                                         <tr class="blank_row"
                                             style="height: 10px !important; background-color: #FFFFFF;"
                                             ng-show="!files || files.length ==0">
-                                            <td colspan="3">فضلاً قم برفع الملفات</td>
+                                            <td colspan="3">
+                                                <a href="" ng-click="uploadFiles()">
+                                                    <span ng-if="lang==='AR'">فضلاً قم برفع الملفات</span>
+                                                    <span ng-if="lang==='EN'">Upload Files Here...</span>
+                                                </a>
+                                            </td>
                                         </tr>
                                         </tbody>
                                     </table>
@@ -105,8 +134,8 @@
 
                         <div class="form-group text-right col-xs-12 col-sm-12 col-md-12 col-lg-12">
                             <div class="alert alert-warning" role="alert">
-                                <strong>ملحوظة هامة : لا يمكن تعديل الحركات/التعليقات فيما بعد فاحرص على كتابة كل ما
-                                    أنجزته</strong>
+                                <strong ng-if="lang==='AR'">ملحوظة هامة : لا يمكن تعديل التعليق فيما بعد فاحرص على كتابة كل ما أنجزته</strong>
+                                <strong ng-if="lang==='EN'">Note: The Comments Cannot Be Edited, So Make Sure before Saving</strong>
                             </div>
                         </div>
 
@@ -121,20 +150,20 @@
     <div class="modal-footer">
 
         <div class="row">
-            <button uib-tooltip="اضافة"
+            <button uib-tooltip="{{lang==='AR' ? 'اضافة' : 'Save'}}"
                     tooltip-append-to-body="true"
                     type="submit"
                     class="mdl-button mdl-js-button mdl-js-ripple-effect col-xs-4 col-sm-4 col-md-4">
                 <i class="material-icons">add</i>
             </button>
-            <button uib-tooltip="مسح الحقول"
+            <button uib-tooltip="{{lang==='AR' ? 'مسح الحقول' : 'Clear'}}"
                     tooltip-append-to-body="true"
                     type="reset"
                     ng-click="form.$setPristine()"
                     class="mdl-button mdl-js-button mdl-js-ripple-effect col-xs-4 col-sm-4 col-md-4">
                 <i class="material-icons">delete</i>
             </button>
-            <button uib-tooltip="خروج"
+            <button uib-tooltip="{{lang==='AR' ? 'خروج' : 'Close'}}"
                     tooltip-append-to-body="true"
                     type="button"
                     ng-click="cancel()"

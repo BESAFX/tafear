@@ -288,18 +288,18 @@ app.controller("taskCtrl", ['TaskService', 'TaskToService', 'TaskWarnService', '
 
         $scope.openRequestCloseModel = function (task) {
             if (task) {
-                ModalProvider.openTaskRequestCloseModel(task, true);
+                ModalProvider.openTaskRequestCloseModel(task);
                 return;
             }
-            ModalProvider.openTaskRequestCloseModel($scope.selected, true);
+            ModalProvider.openTaskRequestCloseModel($scope.selected);
         };
 
         $scope.openRequestExtensionModel = function (task) {
             if (task) {
-                ModalProvider.openTaskRequestCloseModel(task, false);
+                ModalProvider.openTaskRequestExtendModel(task);
                 return;
             }
-            ModalProvider.openTaskRequestCloseModel($scope.selected, false);
+            ModalProvider.openTaskRequestExtendModel($scope.selected);
         };
 
         $scope.openProgressModel = function (task) {

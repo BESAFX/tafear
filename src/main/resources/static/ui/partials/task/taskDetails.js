@@ -45,11 +45,11 @@ app.controller('taskDetailsCtrl', ['ModalProvider', 'TaskToService', 'TaskServic
         };
 
         $scope.openRequestCloseModel = function () {
-            ModalProvider.openTaskRequestCloseModel($scope.task, true);
+            ModalProvider.openTaskRequestCloseModel($scope.task);
         };
 
         $scope.openRequestExtensionModel = function () {
-            ModalProvider.openTaskRequestCloseModel($scope.task, false);
+            ModalProvider.openTaskRequestExtendModel($scope.task);
         };
 
         $scope.openReportTaskOperationsModel = function () {

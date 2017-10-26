@@ -818,6 +818,14 @@
                                                                         <span ng-if="lang==='EN'">Left Time</span>
                                                                     </th>
                                                                 </tr>
+                                                                <tr>
+                                                                    <th colspan="5">
+                                                                        <input st-search=""
+                                                                               class="form-control"
+                                                                               placeholder="{{lang==='AR' ? 'بحث شامل وسريع...' : 'Search...'}}"
+                                                                               type="text"/>
+                                                                    </th>
+                                                                </tr>
                                                                 </thead>
                                                                 <tbody>
                                                                 <tr ng-repeat="taskOperation in taskOperationsCollection"

@@ -586,7 +586,7 @@ app.service('ModalProvider', ['$uibModal', '$log', '$rootScope', function ($uibM
         });
     };
 
-    this.openTaskRequestCloseModel = function (task, type) {
+    this.openTaskRequestCloseModel = function (task) {
         return $uibModal.open({
             animation: true,
             ariaLabelledBy: 'modal-title',
@@ -601,10 +601,34 @@ app.service('ModalProvider', ['$uibModal', '$log', '$rootScope', function ($uibM
                     return task;
                 },
                 type: function () {
-                    return type;
+                    return true;
                 },
                 title: function () {
-                    return type ? 'طلب إغلاق مهمة' : 'طلب تمديد مهمة';
+                    return $rootScope.lang==='AR' ? 'طلب إغلاق' : 'Closing Request'
+                }
+            }
+        });
+    };
+
+    this.openTaskRequestExtendModel = function (task) {
+        return $uibModal.open({
+            animation: true,
+            ariaLabelledBy: 'modal-title',
+            ariaDescribedBy: 'modal-body',
+            templateUrl: '/ui/partials/task/taskRequestClose.html',
+            controller: 'taskRequestCloseCtrl',
+            backdrop: 'static',
+            keyboard: false,
+            size: 'lg',
+            resolve: {
+                task: function () {
+                    return task;
+                },
+                type: function () {
+                    return false;
+                },
+                title: function () {
+                    return $rootScope.lang==='AR' ? 'طلب تمديد' : 'Extending Request'
                 }
             }
         });
