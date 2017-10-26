@@ -321,6 +321,7 @@ ul.breadcrumb {
     list-style: none;
     background-color: #eee;
     font-size: 17px !important;
+    text-transform: uppercase !important;
 }
 
 ul.breadcrumb li {

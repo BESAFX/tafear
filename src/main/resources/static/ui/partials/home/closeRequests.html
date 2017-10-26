@@ -1,13 +1,13 @@
-<div class="row" ng-init="showBody='true';hideWidget='false'"
-     ng-hide="hideWidget=='true'">
-    <div class="col-md-12">
+<div class="row" ng-init="showBody='true';hideWidget='false'" ng-hide="hideWidget=='true'">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
         <div class="panel panel-danger">
             <div class="panel-heading">
-                <ul class="panel-controls pull-left" style="margin-top: 2px;">
+                <ul class="panel-controls" ng-class="{'pull-left' : lang==='AR', 'pull-right' : lang==='EN'}" style="margin-top: 2px;">
                     <button id="close-requests-menu-lower-left" class="mdl-button mdl-js-button mdl-button--icon">
                         <i class="material-icons">more_vert</i>
                     </button>
-                    <ul class="mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect"
+                    <ul ng-class="{'mdl-menu--bottom-left' : lang==='AR', 'mdl-menu--bottom-right' : lang==='EN'}"
+                        class="mdl-menu mdl-js-menu mdl-js-ripple-effect"
                         for="close-requests-menu-lower-left">
                         <li class="mdl-menu__item mdl-list__item"
                             ng-click="showBody=='true' ? showBody='false' : showBody='true'">
@@ -38,7 +38,7 @@
                         </li>
                     </ul>
                 </ul>
-                <div class="panel-title-box pull-right">
+                <div class="panel-title-box" ng-class="{'pull-right' : lang==='AR', 'pull-left' : lang==='EN'}">
                     <h3>{{!viewType? 'طلبات الإغلاق/التمديد حسب الوقت' : viewType}}</h3>
                     <span>طلبات الإغلاق/التمديد من المكلفين حسب الوقت، ويمكنك التخصيص من خلال عرض</span>
                 </div>
