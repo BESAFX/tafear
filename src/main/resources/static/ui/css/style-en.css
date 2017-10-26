@@ -231,26 +231,26 @@ input[type=checkbox] {
     margin-left: 0px !important;
 }
 
-.mdl-data-table {
-    width: 100%;
-}
+/*.mdl-data-table {*/
+    /*width: 100%;*/
+/*}*/
 
-.mdl-data-table th {
-    font-size: 12px;
-}
+/*.mdl-data-table th {*/
+    /*font-size: 12px;*/
+/*}*/
 
-.mdl-data-table tbody tr td {
-    font-size: 12px;
-}
+/*.mdl-data-table tbody tr td {*/
+    /*font-size: 12px;*/
+/*}*/
 
-.mdl-data-table thead tr {
-    background-color: lightgray;
-}
+/*.mdl-data-table thead tr {*/
+    /*background-color: lightgray;*/
+/*}*/
 
-.mdl-data-table th, .mdl-data-table tbody tr, .mdl-data-table tbody tr td {
-    line-height: 15px;
-    height: 30px;
-}
+/*.mdl-data-table th, .mdl-data-table tbody tr, .mdl-data-table tbody tr td {*/
+    /*line-height: 15px;*/
+    /*height: 30px;*/
+/*}*/
 
 .material-icons.md-18 {
     font-size: 18px;
@@ -394,11 +394,11 @@ select {
     direction: ltr !important;
 }
 
-.mdl-data-table thead th,
-.mdl-data-table tbody tr,
-.mdl-data-table tbody tr td{
-    text-align: left !important;
-}
+/*.mdl-data-table thead th,*/
+/*.mdl-data-table tbody tr,*/
+/*.mdl-data-table tbody tr td{*/
+    /*text-align: left !important;*/
+/*}*/
 
 .help-block, .modal-header {
     direction: ltr !important;
