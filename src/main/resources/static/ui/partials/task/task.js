@@ -1,5 +1,5 @@
-app.controller("taskCtrl", ['TaskService', 'TaskToService', 'TaskWarnService', 'TaskDeductionService', 'TaskOperationService', 'TaskCloseRequestService', 'PersonService', 'ReportModelService', 'ModalProvider', '$scope', '$rootScope', '$log', '$timeout', '$state', '$uibModal',
-    function (TaskService, TaskToService, TaskWarnService, TaskDeductionService, TaskOperationService, TaskCloseRequestService, PersonService, ReportModelService, ModalProvider, $scope, $rootScope, $log, $timeout, $state, $uibModal) {
+app.controller("taskCtrl", ['TaskService', 'TaskToService', 'TaskWarnService', 'TaskDeductionService', 'TaskOperationService', 'TaskCloseRequestService', 'PersonService', 'ModalProvider', '$scope', '$rootScope', '$log', '$timeout', '$state', '$uibModal',
+    function (TaskService, TaskToService, TaskWarnService, TaskDeductionService, TaskOperationService, TaskCloseRequestService, PersonService, ModalProvider, $scope, $rootScope, $log, $timeout, $state, $uibModal) {
 
         $scope.items = [];
         $scope.items.push(

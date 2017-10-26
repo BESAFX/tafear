@@ -21,9 +21,6 @@ gulp.task('css', function () {
         './css/font-awesome-animation.css',
         './kdate/css/jquery.calendars.picker.css',
         './chosen/chosen.css'
-        // './css/mdl-style.css',
-        // './css/theme-black.css',
-        // './css/style.css'
     ])
         .pipe(replace('/*!', '/*'))
         .pipe(concat('app.css'))
@@ -104,7 +101,6 @@ gulp.task('scripts', function () {
         './init/factory/employeeFactory.js',
         './init/factory/personFactory.js',
         './init/factory/regionFactory.js',
-        './init/factory/screenFactory.js',
         './init/factory/taskFactory.js',
         './init/factory/taskOperationAttachFactory.js',
         './init/factory/taskOperationFactory.js',
@@ -113,7 +109,6 @@ gulp.task('scripts', function () {
         './init/factory/taskCloseRequestFactory.js',
         './init/factory/taskToFactory.js',
         './init/factory/teamFactory.js',
-        './init/factory/reportModelFactory.js',
 
         './init/service/service.js',
         './init/directive/directive.js',
@@ -162,8 +157,6 @@ gulp.task('scripts', function () {
         './partials/team/teamCreateUpdate.js',
         './partials/person/person.js',
         './partials/person/personCreateUpdate.js',
-        './partials/reportModel/reportModel.js',
-        './partials/reportModel/reportModelCreateUpdate.js',
 
         './partials/report/task/taskOperationsIn.js',
         './partials/report/task/taskTosIn.js',

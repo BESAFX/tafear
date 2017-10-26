@@ -240,17 +240,6 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$cssPr
             templateUrl: "/ui/partials/task/task.html",
             controller: "taskCtrl"
         });
-
-        /**************************************************************
-         *                                                            *
-         * ReportModel State                                          *
-         *                                                            *
-         *************************************************************/
-        $stateProvider.state("reportModel", {
-            url: "/reportModel",
-            templateUrl: "/ui/partials/reportModel/reportModel.html",
-            controller: "reportModelCtrl"
-        });
     }
 ]);
 

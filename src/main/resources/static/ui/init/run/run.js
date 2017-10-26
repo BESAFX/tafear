@@ -133,17 +133,6 @@ app.run(['$http', '$location', '$state', '$stateParams', '$timeout', '$window', 
                     $rootScope.applyCssLang();
                     break;
                 }
-                case 'reportModel': {
-                    $rootScope.applyTitleLang();
-                    $rootScope.MDLIcon = 'print';
-                    $css.removeAll();
-                    $css.add([
-                        '/ui/css/mdl-style-indigo-pink.css',
-                        '/ui/css/theme-black.css'
-                    ]);
-                    $rootScope.applyCssLang();
-                    break;
-                }
                 case 'help': {
                     $rootScope.applyTitleLang();
                     $rootScope.MDLIcon = 'help';
@@ -288,13 +277,6 @@ app.run(['$http', '$location', '$state', '$stateParams', '$timeout', '$window', 
                             $rootScope.pageTitle = 'المهام';
                         } else {
                             $rootScope.pageTitle = 'Tasks';
-                        }
-                        break;
-                    case 'reportModel':
-                        if ($rootScope.lang === 'AR') {
-                            $rootScope.pageTitle = 'نماذج التقارير';
-                        } else {
-                            $rootScope.pageTitle = 'Report Customization';
                         }
                         break;
                     case 'help':

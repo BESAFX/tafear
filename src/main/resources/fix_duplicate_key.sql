@@ -4,8 +4,6 @@ SELECT setval('department_sequence', (SELECT MAX(id) FROM department) + 1);
 SELECT setval('employee_sequence', (SELECT MAX(id) FROM employee) + 1);
 SELECT setval('person_sequence', (SELECT MAX(id) FROM person) + 1);
 SELECT setval('region_sequence', (SELECT MAX(id) FROM region) + 1);
-SELECT setval('report_model_sequence', (SELECT MAX(id) FROM report_model) + 1);
-SELECT setval('screen_sequence', (SELECT MAX(id) FROM screen) + 1);
 SELECT setval('task_sequence', (SELECT MAX(id) FROM task) + 1);
 SELECT setval('task_close_request_sequence', (SELECT MAX(id) FROM task_close_request) + 1);
 SELECT setval('task_deduction_sequence', (SELECT MAX(id) FROM task_deduction) + 1);

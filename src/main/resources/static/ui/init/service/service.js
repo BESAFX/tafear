@@ -796,59 +796,6 @@ app.service('ModalProvider', ['$uibModal', '$log', '$rootScope', function ($uibM
         });
     };
 
-    /**************************************************************
-     *                                                            *
-     * ReportModel Model                                          *
-     *                                                            *
-     *************************************************************/
-    this.openReportModelCreateModel = function () {
-        return $uibModal.open({
-            animation: true,
-            ariaLabelledBy: 'modal-title',
-            ariaDescribedBy: 'modal-body',
-            templateUrl: '/ui/partials/reportModel/reportModelCreateUpdate.html',
-            controller: 'reportModelCreateUpdateCtrl',
-            backdrop: 'static',
-            keyboard: false,
-            size: 'lg',
-            resolve: {
-                title: function () {
-                    return $rootScope.lang==='AR' ? 'انشاء نموذج طباعة جديد' : 'New Model';
-                },
-                action: function () {
-                    return 'create';
-                },
-                reportModel: function () {
-                    return undefined;
-                }
-            }
-        });
-    };
-
-    this.openReportModelUpdateModel = function (reportModel) {
-        return $uibModal.open({
-            animation: true,
-            ariaLabelledBy: 'modal-title',
-            ariaDescribedBy: 'modal-body',
-            templateUrl: '/ui/partials/reportModel/reportModelCreateUpdate.html',
-            controller: 'reportModelCreateUpdateCtrl',
-            backdrop: 'static',
-            keyboard: false,
-            size: 'lg',
-            resolve: {
-                title: function () {
-                    return 'تعديل بيانات نموذج طباعة';
-                },
-                action: function () {
-                    return 'update';
-                },
-                reportModel: function () {
-                    return reportModel;
-                }
-            }
-        });
-    };
-
 }]);
 
 app.service('NotificationProvider', ['$http', function ($http) {

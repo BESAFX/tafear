@@ -1,5 +1,5 @@
 package com.besafx.app.controller;
-import com.besafx.app.entity.Company;
+
 import com.besafx.app.entity.Person;
 import com.besafx.app.service.PersonService;
 import com.besafx.app.util.JSONConverter;
@@ -8,8 +8,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.session.SessionRegistry;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -75,7 +73,6 @@ public class PartialController {
             "/team",
             "/person",
             "/task",
-            "/reportModel",
             "/help",
             "/profile",
             "/about"

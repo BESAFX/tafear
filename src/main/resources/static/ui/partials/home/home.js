@@ -1,13 +1,9 @@
-app.controller("homeCtrl", ['$scope', '$rootScope', '$timeout', 'TaskService', 'TaskOperationService', 'TaskCloseRequestService', 'PersonService', 'ModalProvider', 'ReportModelService',
-    function ($scope, $rootScope, $timeout, TaskService, TaskOperationService, TaskCloseRequestService, PersonService, ModalProvider, ReportModelService) {
+app.controller("homeCtrl", ['$scope', '$rootScope', '$timeout', 'TaskService', 'TaskOperationService', 'TaskCloseRequestService', 'PersonService', 'ModalProvider',
+    function ($scope, $rootScope, $timeout, TaskService, TaskOperationService, TaskCloseRequestService, PersonService, ModalProvider) {
 
         // PersonService.findActivePerson().then(function (data) {
         //     $scope.me = data;
         // });
-
-        ReportModelService.findAll().then(function (data) {
-            $scope.reportModels = data;
-        });
 
         $scope.delete = function (task) {
             $.noty.clearQueue(); // Clears the notification queue
