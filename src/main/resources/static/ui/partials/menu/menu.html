@@ -126,7 +126,7 @@
                 <div class="form-group row">
 
                     <div class="col-xs-6 col-sm-4 col-md-3 col-lg-2 text-center">
-                        <a href="" ng-click="goToHome()" class="card-square mdl-card mdl-shadow--8dp">
+                        <a href="" ui-sref="home" class="card-square mdl-card mdl-shadow--8dp">
                             <i class="material-icons md-48">dashboard</i>
                             <p ng-if="lang==='AR'">الرئيسية</p>
                             <p ng-if="lang==='EN'">DASHBOARD</p>
@@ -135,7 +135,7 @@
 
                     <div class="col-xs-6 col-sm-4 col-md-3 col-lg-2 text-center"
                          ng-if="contains(me.team.authorities, ['ROLE_COMPANY_CREATE', 'ROLE_COMPANY_UPDATE', 'ROLE_COMPANY_DELETE', 'ROLE_COMPANY_REPORT'])">
-                        <a href="" ng-click="goToCompany()" class="card-square mdl-card mdl-shadow--8dp">
+                        <a href="" ui-sref="company" class="card-square mdl-card mdl-shadow--8dp">
                             <i class="material-icons md-48">business</i>
                             <p ng-if="lang==='AR'">الشركة</p>
                             <p ng-if="lang==='EN'">COMPANY</p>
@@ -144,7 +144,7 @@
 
                     <div class="col-xs-6 col-sm-4 col-md-3 col-lg-2 text-center"
                          ng-if="contains(me.team.authorities, ['ROLE_REGION_CREATE', 'ROLE_REGION_UPDATE', 'ROLE_REGION_DELETE', 'ROLE_REGION_REPORT'])">
-                        <a href="" ng-click="goToRegion()" class="card-square mdl-card mdl-shadow--8dp">
+                        <a href="" ui-sref="region" class="card-square mdl-card mdl-shadow--8dp">
                             <i class="material-icons md-48">place</i>
                             <p ng-if="lang==='AR'">المناطق</p>
                             <p ng-if="lang==='EN'">REGIONS</p>
@@ -153,7 +153,7 @@
 
                     <div class="col-xs-6 col-sm-4 col-md-3 col-lg-2 text-center"
                          ng-if="contains(me.team.authorities, ['ROLE_BRANCH_CREATE', 'ROLE_BRANCH_UPDATE', 'ROLE_BRANCH_DELETE', 'ROLE_BRANCH_REPORT'])">
-                        <a href="" ng-click="goToBranch()" class="card-square mdl-card mdl-shadow--8dp">
+                        <a href="" ui-sref="branch" class="card-square mdl-card mdl-shadow--8dp">
                             <i class="material-icons md-48">layers</i>
                             <p ng-if="lang==='AR'">الفروع</p>
                             <p ng-if="lang==='EN'">BRANCHES</p>
@@ -162,7 +162,7 @@
 
                     <div class="col-xs-6 col-sm-4 col-md-3 col-lg-2 text-center"
                          ng-if="contains(me.team.authorities, ['ROLE_DEPARTMENT_CREATE', 'ROLE_DEPARTMENT_UPDATE', 'ROLE_DEPARTMENT_DELETE', 'ROLE_DEPARTMENT_REPORT'])">
-                        <a href="" ng-click="goToDepartment()" class="card-square mdl-card mdl-shadow--8dp">
+                        <a href="" ui-sref="department" class="card-square mdl-card mdl-shadow--8dp">
                             <i class="material-icons md-48">store</i>
                             <p ng-if="lang==='AR'">الأقسام</p>
                             <p ng-if="lang==='EN'">DEPARTMENTS</p>
@@ -171,7 +171,7 @@
 
                     <div class="col-xs-6 col-sm-4 col-md-3 col-lg-2 text-center"
                          ng-if="contains(me.team.authorities, ['ROLE_EMPLOYEE_CREATE', 'ROLE_EMPLOYEE_UPDATE', 'ROLE_EMPLOYEE_DELETE', 'ROLE_EMPLOYEE_REPORT'])">
-                        <a href="" ng-click="goToEmployee()" class="card-square mdl-card mdl-shadow--8dp">
+                        <a href="" ui-sref="employee" class="card-square mdl-card mdl-shadow--8dp">
                             <i class="material-icons md-48">person_pin</i>
                             <p ng-if="lang==='AR'">الموظفون</p>
                             <p ng-if="lang==='EN'">EMPLOYEES</p>
@@ -180,7 +180,7 @@
 
                     <div class="col-xs-6 col-sm-4 col-md-3 col-lg-2 text-center"
                          ng-if="contains(me.team.authorities, ['ROLE_TEAM_CREATE', 'ROLE_TEAM_UPDATE', 'ROLE_TEAM_DELETE', 'ROLE_TEAM_REPORT'])">
-                        <a href="" ng-click="goToTeam()" class="card-square mdl-card mdl-shadow--8dp">
+                        <a href="" ui-sref="team" class="card-square mdl-card mdl-shadow--8dp">
                             <i class="material-icons md-48">security</i>
                             <p ng-if="lang==='AR'">الصلاحيات</p>
                             <p ng-if="lang==='EN'">PRIVILEGES</p>
@@ -189,7 +189,7 @@
 
                     <div class="col-xs-6 col-sm-4 col-md-3 col-lg-2 text-center"
                          ng-if="contains(me.team.authorities, ['ROLE_PERSON_CREATE', 'ROLE_PERSON_UPDATE', 'ROLE_PERSON_DELETE', 'ROLE_PERSON_REPORT'])">
-                        <a href="" ng-click="goToPerson()" class="card-square mdl-card mdl-shadow--8dp">
+                        <a href="" ui-sref="person" class="card-square mdl-card mdl-shadow--8dp">
                             <i class="material-icons md-48">lock</i>
                             <p ng-if="lang==='AR'">المستخدمون</p>
                             <p ng-if="lang==='EN'">USERS</p>
@@ -198,7 +198,7 @@
 
                     <div class="col-xs-6 col-sm-4 col-md-3 col-lg-2 text-center"
                          ng-if="contains(me.team.authorities, ['ROLE_TASK_CREATE', 'ROLE_TASK_UPDATE', 'ROLE_TASK_DELETE', 'ROLE_TASK_REPORT'])">
-                        <a href="" ng-click="goToTask()" class="card-square mdl-card mdl-shadow--8dp">
+                        <a href="" ui-sref="task" class="card-square mdl-card mdl-shadow--8dp">
                             <i class="material-icons md-48">assignment</i>
                             <p ng-if="lang==='AR'">المهام</p>
                             <p ng-if="lang==='EN'">TASKS</p>
@@ -206,7 +206,7 @@
                     </div>
 
                     <div class="col-xs-6 col-sm-4 col-md-3 col-lg-2 text-center">
-                        <a href="" ng-click="goToAbout()" class="card-square mdl-card mdl-shadow--8dp">
+                        <a href="" ui-sref="about" class="card-square mdl-card mdl-shadow--8dp">
                             <i class="material-icons md-48">info</i>
                             <p ng-if="lang==='AR'">عن البرنامج</p>
                             <p ng-if="lang==='EN'">ABOUT</p>
@@ -214,7 +214,7 @@
                     </div>
 
                     <div class="col-xs-6 col-sm-4 col-md-3 col-lg-2 text-center">
-                        <a href="" ng-click="goToProfile()" class="card-square mdl-card mdl-shadow--8dp">
+                        <a href="" ui-sref="profile" class="card-square mdl-card mdl-shadow--8dp">
                             <i class="material-icons md-48">account_circle</i>
                             <p ng-if="lang==='AR'">الحساب الشخصي</p>
                             <p ng-if="lang==='EN'">PROFILE</p>

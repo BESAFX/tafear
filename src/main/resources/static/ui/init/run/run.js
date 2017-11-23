@@ -8,150 +8,85 @@ app.run(['$http', '$location', '$state', '$stateParams', '$timeout', '$window', 
             errorMessages['fieldRequired'] = 'هذا الحقل مطلوب';
         });
 
-        $rootScope.$on('$stateChangeStart', function (event, toState, toParams, fromState, fromParams, options) {
+        $rootScope.$on('$stateChangeSuccess', function (event, toState, toParams, fromState, fromParams, options) {
             $.noty.clearQueue(); // Clears the notification queue
             $.noty.closeAll(); // Close all notifications
             switch (toState.name) {
                 case 'home': {
                     $rootScope.applyTitleLang();
                     $rootScope.MDLIcon = 'dashboard';
-                    $css.removeAll();
-                    $css.add([
-                        '/ui/css/mdl-style.css',
-                        '/ui/css/theme-black.css'
-                    ]);
                     $rootScope.applyCssLang();
                     break;
                 }
                 case 'menu': {
                     $rootScope.applyTitleLang();
                     $rootScope.MDLIcon = 'widgets';
-                    $css.removeAll();
-                    $css.add([
-                        '/ui/css/mdl-style.css',
-                        '/ui/css/theme-black.css'
-                    ]);
                     $rootScope.applyCssLang();
                     break;
                 }
                 case 'company': {
                     $rootScope.applyTitleLang();
                     $rootScope.MDLIcon = 'business';
-                    $css.removeAll();
-                    $css.add([
-                        '/ui/css/mdl-style-purple-pink.css',
-                        '/ui/css/theme-black.css'
-                    ]);
                     $rootScope.applyCssLang();
                     break;
                 }
                 case 'region': {
                     $rootScope.applyTitleLang();
                     $rootScope.MDLIcon = 'place';
-                    $css.removeAll();
-                    $css.add([
-                        '/ui/css/mdl-style-lime-orange.css',
-                        '/ui/css/theme-black.css'
-                    ]);
                     $rootScope.applyCssLang();
                     break;
                 }
                 case 'branch': {
                     $rootScope.applyTitleLang();
                     $rootScope.MDLIcon = 'layers';
-                    $css.removeAll();
-                    $css.add([
-                        '/ui/css/mdl-style-indigo-pink.css',
-                        '/ui/css/theme-black.css'
-                    ]);
                     $rootScope.applyCssLang();
                     break;
                 }
                 case 'department': {
                     $rootScope.applyTitleLang();
                     $rootScope.MDLIcon = 'store';
-                    $css.removeAll();
-                    $css.add([
-                        '/ui/css/mdl-style-grey-deep_orange.css',
-                        '/ui/css/theme-black.css'
-                    ]);
                     $rootScope.applyCssLang();
                     break;
                 }
                 case 'employee': {
                     $rootScope.applyTitleLang();
                     $rootScope.MDLIcon = 'person_pin';
-                    $css.removeAll();
-                    $css.add([
-                        '/ui/css/mdl-style-indigo-pink.css',
-                        '/ui/css/theme-black.css'
-                    ]);
                     $rootScope.applyCssLang();
                     break;
                 }
                 case 'team': {
                     $rootScope.applyTitleLang();
                     $rootScope.MDLIcon = 'security';
-                    $css.removeAll();
-                    $css.add([
-                        '/ui/css/mdl-style-green-orange.css',
-                        '/ui/css/theme-black.css'
-                    ]);
                     $rootScope.applyCssLang();
                     break;
                 }
                 case 'person': {
                     $rootScope.applyTitleLang();
                     $rootScope.MDLIcon = 'lock';
-                    $css.removeAll();
-                    $css.add([
-                        '/ui/css/mdl-style-brown-deep_orange.css',
-                        '/ui/css/theme-black.css'
-                    ]);
                     $rootScope.applyCssLang();
                     break;
                 }
                 case 'profile': {
                     $rootScope.applyTitleLang();
                     $rootScope.MDLIcon = 'account_circle';
-                    $css.removeAll();
-                    $css.add([
-                        '/ui/css/mdl-style-light_green-lime.css',
-                        '/ui/css/theme-black.css'
-                    ]);
                     $rootScope.applyCssLang();
                     break;
                 }
                 case 'task': {
                     $rootScope.applyTitleLang();
                     $rootScope.MDLIcon = 'assignment';
-                    $css.removeAll();
-                    $css.add([
-                        '/ui/css/mdl-style-red-deep_orange.css',
-                        '/ui/css/theme-black.css'
-                    ]);
                     $rootScope.applyCssLang();
                     break;
                 }
                 case 'help': {
                     $rootScope.applyTitleLang();
                     $rootScope.MDLIcon = 'help';
-                    $css.removeAll();
-                    $css.add([
-                        '/ui/css/mdl-style-indigo-pink.css',
-                        '/ui/css/theme-black.css'
-                    ]);
                     $rootScope.applyCssLang();
                     break;
                 }
                 case 'about': {
                     $rootScope.applyTitleLang();
                     $rootScope.MDLIcon = 'info';
-                    $css.removeAll();
-                    $css.add([
-                        '/ui/css/mdl-style-indigo-pink.css',
-                        '/ui/css/theme-black.css'
-                    ]);
                     $rootScope.applyCssLang();
                     break;
                 }
@@ -174,10 +109,6 @@ app.run(['$http', '$location', '$state', '$stateParams', '$timeout', '$window', 
         $rootScope.switchDateType = function () {
             $rootScope.dateType === 'H' ? $rootScope.dateType = 'G' : $rootScope.dateType = 'H';
             PersonService.setDateType($rootScope.dateType);
-        };
-
-        $rootScope.switchNotyBox = function (title, icon, message) {
-            return '<div class="activity-item text-center"><div class="activity">' + message + '</div></div>';
         };
 
         $rootScope.switchLang = function () {
@@ -362,7 +293,7 @@ app.run(['$http', '$location', '$state', '$stateParams', '$timeout', '$window', 
                 layout: 'bottomCenter',
                 theme: 'relax', // or relax, metroui
                 type: type, // success, error, warning, information, notification
-                text: $rootScope.switchNotyBox(title, icon, message),
+                text: '<div class="activity-item text-center"><div class="activity">' + message + '</div></div>',
                 dismissQueue: true, // [boolean] If you want to use queue feature set this true
                 force: true, // [boolean] adds notification to the beginning of queue when set to true
                 maxVisible: 3, // [integer] you can set max visible notification count for dismissQueue true option,
@@ -480,50 +411,5 @@ app.run(['$http', '$location', '$state', '$stateParams', '$timeout', '$window', 
             }, {'headers': 'notify'});
         });
         $rootScope.today = new Date();
-
-        /**************************************************************
-         *                                                            *
-         * Navigation Callers                                         *
-         *                                                            *
-         *************************************************************/
-        $rootScope.goToCompany = function () {
-            $state.go('company');
-        };
-        $rootScope.goToRegion = function () {
-            $state.go('region');
-        };
-        $rootScope.goToBranch = function () {
-            $state.go('branch');
-        };
-        $rootScope.goToDepartment = function () {
-            $state.go('department');
-        };
-        $rootScope.goToEmployee = function () {
-            $state.go('employee');
-        };
-        $rootScope.goToTeam = function () {
-            $state.go('team');
-        };
-        $rootScope.goToPerson = function () {
-            $state.go('person');
-        };
-        $rootScope.goToReportModel = function () {
-            $state.go('reportModel');
-        };
-        $rootScope.goToTask = function () {
-            $state.go('task');
-        };
-        $rootScope.goToHome = function () {
-            $state.go('home');
-        };
-        $rootScope.goToHelp = function () {
-            $state.go('help');
-        };
-        $rootScope.goToProfile = function () {
-            $state.go('profile');
-        };
-        $rootScope.goToAbout = function () {
-            $state.go('about');
-        };
 
     }]);
